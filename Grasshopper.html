@@ -2986,7 +2986,7 @@ const STORE_KEY='projectdocs_v3';
 // Bump SEED_VERSION any time SEED_DOCS content changes (e.g. a new Grasshopper
 // command page is added) to re-sync all visitors automatically, even ones
 // with old data already saved locally.
-const SEED_VERSION=2;
+const SEED_VERSION=3;
 const SEED_DOCS=[
   {id:'seed-grasshopper',title:'Grasshopper',section:'default',parentId:null,content:'',images:[],textBoxes:[],createdAt:'2026-07-18T00:00:00.000Z',updatedAt:'2026-07-18T00:00:00.000Z'},
   {id:'seed-deconstruct-brep',title:'Deconstruct Brep',section:'default',parentId:'seed-grasshopper',images:[],textBoxes:[],createdAt:'2026-07-18T00:00:00.000Z',updatedAt:'2026-07-18T00:00:00.000Z',content:`<h1>Deconstruct Brep</h1>
@@ -3020,7 +3020,38 @@ const SEED_DOCS=[
 <div class="cf-panel warning" contenteditable="false"><span class="cf-panel-icon">⚠️</span><div class="cf-panel-content" contenteditable="true">Input B phải là Brep hợp lệ (kín hoặc hở đều được), không nhận Mesh. Nếu đang có Mesh, dùng Mesh to Brep hoặc đổi sang Deconstruct Mesh.</div></div>
 <hr>
 <h2>Ví dụ trong dự án Voronoi</h2>
-<p>Pattern Voronoi xoắn ốc trong project này làm việc chủ yếu ở mặt phẳng 2D (Line → Polar Array → Maelstrom → Divide Curve) nên ít cần Deconstruct Brep trực tiếp. Lệnh này hữu ích hơn khi phân tích khối 3D của "vành xe Voronoi" (video showcase) — ví dụ lấy Surface bao ngoài của vành xe làm Boundary cho Voronoi 3D.</p>`}
+<p>Pattern Voronoi xoắn ốc trong project này làm việc chủ yếu ở mặt phẳng 2D (Line → Polar Array → Maelstrom → Divide Curve) nên ít cần Deconstruct Brep trực tiếp. Lệnh này hữu ích hơn khi phân tích khối 3D của "vành xe Voronoi" (video showcase) — ví dụ lấy Surface bao ngoài của vành xe làm Boundary cho Voronoi 3D.</p>`},
+  {id:'seed-voronoi',title:'Voronoi',section:'default',parentId:'seed-grasshopper',images:[],textBoxes:[],createdAt:'2026-07-18T00:00:00.000Z',updatedAt:'2026-07-18T00:00:00.000Z',content:`<h1>Voronoi</h1>
+<div class="cf-panel info" contenteditable="false"><span class="cf-panel-icon">ℹ️</span><div class="cf-panel-content" contenteditable="true">🟡 Trung bình — Chia mặt phẳng thành các ô, mỗi ô là vùng gần 1 điểm gieo nhất. Đây là lệnh LÕI của toàn bộ pattern Voronoi trong dự án.</div></div>
+<h2>Chức năng</h2>
+<p>Voronoi nhận vào 1 tập điểm (Points) và chia mặt phẳng thành các ô đa giác (cells) — mỗi ô bao quanh đúng 1 điểm, và mọi vị trí trong ô đó đều gần điểm này hơn bất kỳ điểm nào khác. Kết quả là 1 lưới các ô khít nhau, không chồng lấn, không có khoảng trống — chính là hoạ tiết "Voronoi pattern" quen thuộc.</p>
+<h2>Input / Output</h2>
+<table style="width:100%;border-collapse:collapse;margin-bottom:24px;font-size:13px">
+<thead><tr>
+<th style="padding:8px 12px;background:var(--tbl-header-bg);border:1px solid var(--tbl-border);text-align:left;font-weight:600;color:var(--text2)">Cổng</th>
+<th style="padding:8px 12px;background:var(--tbl-header-bg);border:1px solid var(--tbl-border);text-align:left;font-weight:600;color:var(--text2)">Loại dữ liệu</th>
+<th style="padding:8px 12px;background:var(--tbl-header-bg);border:1px solid var(--tbl-border);text-align:left;font-weight:600;color:var(--text2)">Ý nghĩa</th>
+</tr></thead>
+<tbody>
+<tr><td style="padding:8px 12px;border:1px solid var(--tbl-border)">P (Points)</td><td style="padding:8px 12px;border:1px solid var(--tbl-border)">Point, danh sách (phải Flatten)</td><td style="padding:8px 12px;border:1px solid var(--tbl-border)">Tập điểm gieo — mỗi điểm sinh ra 1 ô</td></tr>
+<tr><td style="padding:8px 12px;border:1px solid var(--tbl-border)">B (Boundary)</td><td style="padding:8px 12px;border:1px solid var(--tbl-border)">Curve/Brep, tùy chọn</td><td style="padding:8px 12px;border:1px solid var(--tbl-border)">Ranh giới cắt các ô, tránh ô ở rìa kéo dài vô hạn</td></tr>
+<tr><td style="padding:8px 12px;border:1px solid var(--tbl-border)">C (Cells)</td><td style="padding:8px 12px;border:1px solid var(--tbl-border)">Curve, danh sách</td><td style="padding:8px 12px;border:1px solid var(--tbl-border)">Các ô đa giác kín, mỗi ô ứng với 1 điểm input</td></tr>
+</tbody>
+</table>
+<h2>Cách dùng</h2>
+<ol>
+<li>Chuẩn bị tập điểm 2D (vd từ Divide Curve, Populate Geometry, hoặc lưới điểm tự dựng)</li>
+<li>Gõ "Voronoi" tìm component (tab Mesh &gt; Triangulation), thả vào canvas</li>
+<li><strong>Flatten</strong> input Points trước khi nối vào P (nếu không Flatten, mỗi nhánh dữ liệu sẽ tính Voronoi riêng biệt, ra kết quả sai)</li>
+<li>(Tuỳ chọn) Nối 1 Curve bao quanh (hình chữ nhật/tròn) vào B để giới hạn các ô, tránh ô rìa kéo dài vô hạn</li>
+<li>Output C trả về danh sách Curve kín — dùng Boundary Surfaces hoặc Extrude để biến thành mặt/khối nếu cần</li>
+</ol>
+<h2>Minh họa</h2>
+<img src="assets/voronoi-minhhoa.svg" style="max-width:100%;border-radius:8px;border:1px solid var(--border);display:block;margin:12px 0" alt="Sơ đồ Voronoi: tập điểm → component Voronoi → các ô đa giác bao quanh từng điểm">
+<div class="cf-panel warning" contenteditable="false"><span class="cf-panel-icon">⚠️</span><div class="cf-panel-content" contenteditable="true">Quên Flatten Points là lỗi hay gặp nhất — kết quả trông như "vỡ" thành nhiều cụm rời rạc thay vì 1 lưới liền mạch. Không nối B thì các ô ở rìa ngoài sẽ kéo dài ra vô cực, làm chậm hoặc lỗi khi bake.</div></div>
+<hr>
+<h2>Ví dụ trong dự án Voronoi</h2>
+<p>Đây chính là bước trung tâm của toàn bộ pattern: sau khi có tập điểm xoắn ốc từ chuỗi <code>Line SDL → Polar Array → Maelstrom → Divide Curve → Cull</code>, tập điểm đó được Flatten rồi nối thẳng vào input P của Voronoi để tạo ra các ô hoa văn xoắn ốc đặc trưng của dự án.</p>`}
 ];
 let state={projectName:'My Project',username:'User',sections:['default'],docs:[],currentDocId:null};
 let saveTimer,dirty=false,ctxImgIdx=null,docCtxId=null,_savedRange=null,_bubbleHideTimer=null;
