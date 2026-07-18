@@ -43,32 +43,36 @@ Mấu chốt là **Maelstrom** bẻ cong các tia toả tròn thành xoắn ốc
 - Không xem trực tiếp được video → dùng ffmpeg trích frame ra ảnh để đọc canvas Grasshopper.
 
 ## Quy trình ghi chú lệnh Grasshopper (app "Project Docs")
-Project có 1 app ghi chú riêng tại `Document/index.html` (chỉ lưu **local**, không push lên GitHub
-nữa — xem lý do bên dưới), dùng để soạn nội dung + xuất bản. Repo GitHub (private):
+Project có 1 app ghi chú riêng, file `Document/index.html` (bản làm việc local) = **cùng nội dung**
+với `Document/Grasshopper.html` (bản đã push lên GitHub). Repo GitHub (private):
 `https://github.com/nguyencam190/Document_Grasshopper`.
-**Trang user xem: `https://nguyencam190.github.io/Document_Grasshopper/Grasshopper.html`**
-(không còn `index.html` public — file gốc đã bị xoá khỏi repo theo yêu cầu user, chỉ giữ file
-export tĩnh `Grasshopper.html` ở root repo).
+**Trang user xem/sửa trực tiếp: `https://nguyencam190.github.io/Document_Grasshopper/Grasshopper.html`**
+
+Quyết định cuối cùng (sau vài lần đổi ý): `Grasshopper.html` chính là **app sống** (editor đầy đủ,
+không phải bản xuất tĩnh chỉ đọc). Không còn bước "xuất bản/publish" riêng — sửa xong ở local
+`index.html` thì copy đè sang `Grasshopper.html` rồi push thẳng. Root URL (`/Document_Grasshopper/`)
+KHÔNG có `index.html` → cố tình 404, chỉ dùng đúng URL có tên file `Grasshopper.html`.
 
 **Quy trình chuẩn khi user tìm hiểu 1 lệnh Grasshopper mới (vd "Deconstruct Brep"):**
 1. Nghiên cứu chức năng lệnh đó (input/output, cách dùng, lưu ý).
-2. Tạo 1 trang con mới trong app, đặt tên đúng theo lệnh, nằm dưới trang cha "Grasshopper".
+2. Mở `Document/index.html` local, tạo 1 trang con mới, đặt tên đúng theo lệnh, nằm dưới trang cha
+   "Grasshopper" (dùng `state.docs.push(...)` qua console/JS là nhanh nhất, xem cấu trúc doc ở
+   [[gh-docs-app-workflow]]).
 3. Viết nội dung vào canvas theo cấu trúc: H1 tên lệnh → Info panel tóm tắt → H2 "Chức năng" →
    H2 "Input/Output" (bảng) → H2 "Cách dùng" (danh sách số) → H2 "Minh họa" (ảnh SVG tự vẽ, vì
    không có ảnh chụp component thật) → Warning/Note panel lưu ý → H2 "Ví dụ trong dự án Voronoi".
-4. Dùng chính tính năng **Push/Publish → Xuất Website → Portable HTML** của app để xuất ra 1 trang
-   xem được (không tự viết tay HTML thay thế) — đây là yêu cầu rõ ràng của user.
-5. Commit + `git push` **đè lên file `Grasshopper.html` ở root repo** (không phải `index.html` —
-   file đó đã bị xoá khỏi GitHub theo yêu cầu user, chỉ còn giữ local để tiếp tục soạn/export).
+4. Bump `SEED_VERSION` lên 1 (để mọi trình duyệt tự đồng bộ lại, không cần user xoá cache/localStorage).
+5. Copy `index.html` đè sang `Grasshopper.html`, commit, `git push` (`git pull` trước nếu user vừa
+   tự sửa gì trên GitHub web — đã xảy ra 1 lần, user tự xoá 1 file thừa trực tiếp trên GitHub).
 
 **Chi tiết kỹ thuật quan trọng (để không lặp lại lỗi):**
-- `Document/index.html` là **local-only** (đã `git rm --cached` + thêm vào `.gitignore`) — vẫn còn
-  file thật trên đĩa để dùng làm công cụ soạn thảo/export, chỉ là không còn push/hiện công khai nữa.
+- (Lịch sử: có lúc `index.html` bị `git rm --cached`/gitignore, có lúc bản xuất tĩnh
+  `Grasshopper-Voronoi-Docs.html` được publish thay vì app sống — **cả 2 đã bị đảo lại**. Trạng thái
+  CUỐI CÙNG: `Grasshopper.html` = app sống, giống hệt `index.html`, cả 2 cùng tồn tại và cùng nội
+  dung trên đĩa local; chỉ `Grasshopper.html` được push lên GitHub.)
 - Dữ liệu trang (`state.docs`) của app nằm trong **localStorage của trình duyệt**, KHÔNG nằm trong
-  file `index.html`. Vì `index.html` giờ không public nữa, SEED_DOCS/SEED_VERSION chỉ còn ý nghĩa khi
-  tôi tự mở app cục bộ để soạn nội dung mới — không ảnh hưởng tới `Grasshopper.html` (đã là file tĩnh,
-  tự chứa toàn bộ nội dung qua biến `_WS_DOCS` + các `<div class="ws-doc">`, không đọc localStorage
-  của trang nội dung).
+  file HTML. Vì vậy nội dung phải baked vào source qua `SEED_DOCS`/`SEED_VERSION` (khai báo ngay
+  trước `let state=...`) để bất kỳ trình duyệt/máy nào mở `Grasshopper.html` cũng tự đồng bộ đúng.
 - **Bài học quan trọng**: từng bump `SEED_VERSION` để ép đồng bộ lại localStorage của mọi trình duyệt
   (kể cả khi đã có dữ liệu cũ) — đây là cách duy nhất tránh lỗi "trình duyệt hiện nội dung cũ vĩnh
   viễn" khi dùng `if(saved){...}else{seed}`. Nhớ `localStorage.setItem(STORE_KEY,...)` ngay sau khi
