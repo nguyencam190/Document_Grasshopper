@@ -120,6 +120,14 @@ nhưng không dùng nó để sửa nữa). Quy trình lấy/ghi file qua API (r
       bước này thì mọi khách ghé thăm mới sẽ thấy ảnh vỡ (đã tự kiểm chứng bằng cách xoá sạch
       localStorage + IndexedDB rồi tải lại — ảnh hiện đúng VÀ khi tự bấm Publish trong app, ZIP xuất
       ra có đủ cả 2 ảnh).
+      **Bẫy race-condition (đã gặp thật khi lên 13 ảnh cùng lúc)**: nếu đoạn fetch+`_idbPut` này chạy
+      kiểu "fire-and-forget" (`.forEach(async...)` không đợi), `renderSidebar()`/`openDoc()` có thể
+      chạy TRƯỚC khi ảnh kịp nạp xong vào IndexedDB → trang hiện ra nhưng ảnh trống (đúng lỗi user báo
+      "không hiển thị hình minh họa"). Bắt buộc gói toàn bộ đoạn nạp ảnh trong 1 IIFE `async` dùng
+      `await Promise.all(...)`, và di chuyển `updateUserUI();renderSidebar();if(state.currentDocId)
+      openDoc(...)` vào SAU dòng `await` đó — đảm bảo không trang nào được vẽ ra trước khi toàn bộ
+      ảnh trong `SEED_ASSETS` đã có sẵn trong IndexedDB. Đã tự test lại: mở nhiều trang liên tiếp chỉ
+      cách nhau 100ms sau khi xoá sạch dữ liệu trình duyệt — ảnh vẫn hiện đúng 100%.
    i. Xoá file ảnh cũ (nếu có, đường dẫn phẳng `assets/{ten}.svg` kiểu cũ) bằng
       `DELETE /repos/.../contents/{path}` kèm `sha` hiện tại, tránh rác thừa trong repo.
    j. Bump `SEED_VERSION`, `PUT Grasshopper.html` như bước 5 cũ.
