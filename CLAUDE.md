@@ -100,14 +100,29 @@ nhưng không dùng nó để sửa nữa). Quy trình lấy/ghi file qua API (r
       `Expand-Archive` (PowerShell, có sẵn, không cần cài gì).
    f. Lấy đúng file ảnh vừa giải nén (`assets/images/{id}.svg`), `PUT` lên GitHub tại
       `assets/images/{id}.svg` (file mới, không cần `sha`).
-   g. Sửa `Grasshopper.html`: đổi `<img src="...">` trỏ sang `assets/images/{id}.svg` — **dùng thẻ
-      `<img>` thường, KHÔNG dùng `.cf-img-block`/`data-cfimgid`** trong `SEED_DOCS`, vì `data-cfimgid`
-      chỉ tra được ảnh từ IndexedDB của TRÌNH DUYỆT ĐANG SỬA — khách ghé thăm khác (hoặc chính user mở
-      máy khác) sẽ không có blob đó trong IndexedDB của họ, ảnh sẽ vỡ. `<img src="file-thật">` mới
-      hiển thị đúng cho MỌI người ghé thăm.
-   h. Xoá file ảnh cũ (nếu có, đường dẫn phẳng `assets/{ten}.svg` kiểu cũ) bằng
+   g. **Sửa `SEED_DOCS` dùng ĐÚNG khối `.cf-img-block` + `data-cfimgid="{id}"`** (không dùng `<img
+      src="...">` trần — đã thử cách đó và BỊ LỖI: khi user tự bấm nút Publish trong app, hàm xuất chỉ
+      gom được ảnh có `data-cfimgid`, ảnh `<img src>` trần bị bỏ qua hoàn toàn → xuất ra thư mục khác
+      là mất ảnh, đúng lỗi user báo cáo). Cấu trúc khối cần chèn (xem `_cfBuildImgBlock`):
+      ```html
+      <div class="cf-img-block" data-cfimgid="{id}" data-cfimgtype="image" data-align="center" data-name="{ten-file}">
+        <div class="cf-img-wrap"><div class="cf-img-inner">
+          <img alt="{mo-ta}"><div class="cf-img-resize-h left"></div><div class="cf-img-resize-h right"></div>
+        </div></div>
+        <div class="cf-img-caption"></div>
+      </div>
+      ```
+      (không cần set `src` cho `<img>` — app tự nạp từ IndexedDB lúc mở trang, xem bước (h)).
+   h. **Bắt buộc thêm vào `SEED_ASSETS`** (khai báo cạnh `SEED_DOCS`): `{id: 'ext'}` cho mỗi ảnh mới.
+      Trong `init()`, đoạn code sau seed force-sync phải fetch từng ảnh trong `SEED_ASSETS` từ
+      `assets/images/{id}.{ext}` rồi `_idbPut(id, blob)` — bước này bắt buộc, KHÔNG được bỏ, vì
+      `data-cfimgid` chỉ hiển thị được nếu IndexedDB của TRÌNH DUYỆT ĐANG XEM có sẵn blob đó. Không có
+      bước này thì mọi khách ghé thăm mới sẽ thấy ảnh vỡ (đã tự kiểm chứng bằng cách xoá sạch
+      localStorage + IndexedDB rồi tải lại — ảnh hiện đúng VÀ khi tự bấm Publish trong app, ZIP xuất
+      ra có đủ cả 2 ảnh).
+   i. Xoá file ảnh cũ (nếu có, đường dẫn phẳng `assets/{ten}.svg` kiểu cũ) bằng
       `DELETE /repos/.../contents/{path}` kèm `sha` hiện tại, tránh rác thừa trong repo.
-   i. Bump `SEED_VERSION`, `PUT Grasshopper.html` như bước 5 cũ.
+   j. Bump `SEED_VERSION`, `PUT Grasshopper.html` như bước 5 cũ.
 
 **Chi tiết kỹ thuật quan trọng (để không lặp lại lỗi):**
 - (Lịch sử: có lúc `index.html` bị `git rm --cached`/gitignore, có lúc bản xuất tĩnh
