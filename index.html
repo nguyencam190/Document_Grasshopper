@@ -2982,10 +2982,11 @@ body[data-focus="1"] .doc-outline{width:0!important;border:none}
 
 // STATE
 const STORE_KEY='projectdocs_v3';
-// Seed content shown to first-time visitors (empty localStorage) so the
-// hosted GitHub Pages copy always shows the curated Grasshopper docs.
-// Once a visitor edits/saves, their own localStorage takes over and this
-// seed is ignored on subsequent loads.
+// Seed content force-synced into every visitor's browser (see init() below).
+// Bump SEED_VERSION any time SEED_DOCS content changes (e.g. a new Grasshopper
+// command page is added) to re-sync all visitors automatically, even ones
+// with old data already saved locally.
+const SEED_VERSION=2;
 const SEED_DOCS=[
   {id:'seed-grasshopper',title:'Grasshopper',section:'default',parentId:null,content:'',images:[],textBoxes:[],createdAt:'2026-07-18T00:00:00.000Z',updatedAt:'2026-07-18T00:00:00.000Z'},
   {id:'seed-deconstruct-brep',title:'Deconstruct Brep',section:'default',parentId:'seed-grasshopper',images:[],textBoxes:[],createdAt:'2026-07-18T00:00:00.000Z',updatedAt:'2026-07-18T00:00:00.000Z',content:`<h1>Deconstruct Brep</h1>
@@ -3343,7 +3344,15 @@ function init(){
   if(localStorage.getItem('sb_collapsed')==='1')sbCollapse();
   const saved=localStorage.getItem(STORE_KEY);
   if(saved){try{state=JSON.parse(saved);}catch(e){console.error('[init] localStorage corrupted, starting fresh:',e);if(typeof toast==='function')toast('Dữ liệu lưu trữ bị lỗi, bắt đầu dự án mới','error');}}
-  else if(typeof SEED_DOCS!=='undefined'&&SEED_DOCS.length){state.docs=SEED_DOCS;state.projectName='Grasshopper Voronoi Docs';}
+  // Force-sync to the latest published seed content regardless of any stale/old
+  // localStorage a visitor's browser may already have (e.g. from an earlier
+  // visit before this content existed). Bumping SEED_VERSION in the source
+  // re-syncs every visitor automatically — no manual "clear site data" needed.
+  if(typeof SEED_DOCS!=='undefined'&&SEED_DOCS.length&&localStorage.getItem('seed_version')!==String(SEED_VERSION)){
+    state.docs=JSON.parse(JSON.stringify(SEED_DOCS));
+    state.projectName='Grasshopper Voronoi Docs';
+    localStorage.setItem('seed_version',String(SEED_VERSION));
+  }
   if(!state.docs)state.docs=[];
   if(!state.sections||!state.sections.length)state.sections=['default'];
   // Migrate all docs to the single default section
