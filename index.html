@@ -3343,7 +3343,7 @@ function init(){
   if(localStorage.getItem('sb_collapsed')==='1')sbCollapse();
   const saved=localStorage.getItem(STORE_KEY);
   if(saved){try{state=JSON.parse(saved);}catch(e){console.error('[init] localStorage corrupted, starting fresh:',e);if(typeof toast==='function')toast('Dữ liệu lưu trữ bị lỗi, bắt đầu dự án mới','error');}}
-  else if(typeof SEED_DOCS!=='undefined'&&SEED_DOCS.length){state.docs=SEED_DOCS;}
+  else if(typeof SEED_DOCS!=='undefined'&&SEED_DOCS.length){state.docs=SEED_DOCS;state.projectName='Grasshopper Voronoi Docs';}
   if(!state.docs)state.docs=[];
   if(!state.sections||!state.sections.length)state.sections=['default'];
   // Migrate all docs to the single default section
