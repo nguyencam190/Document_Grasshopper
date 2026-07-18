@@ -43,27 +43,26 @@ Mấu chốt là **Maelstrom** bẻ cong các tia toả tròn thành xoắn ốc
 - Không xem trực tiếp được video → dùng ffmpeg trích frame ra ảnh để đọc canvas Grasshopper.
 
 ## Quy trình ghi chú lệnh Grasshopper (app "Project Docs")
-Project có 1 app ghi chú riêng, file `Document/index.html` (bản làm việc local) = **cùng nội dung**
-với `Document/Grasshopper.html` (bản đã push lên GitHub). Repo GitHub (private):
-`https://github.com/nguyencam190/Document_Grasshopper`.
-**Trang user xem/sửa trực tiếp: `https://nguyencam190.github.io/Document_Grasshopper/Grasshopper.html`**
+Project có 1 app ghi chú riêng: **`Document/Grasshopper.html`** là file DUY NHẤT cần sửa (app sống
+đầy đủ, không phải bản xuất tĩnh chỉ đọc) — sửa trực tiếp file này, không có bản local riêng nào khác
+nữa. Repo GitHub (private): `https://github.com/nguyencam190/Document_Grasshopper`.
 
-Quyết định cuối cùng (sau vài lần đổi ý): `Grasshopper.html` chính là **app sống** (editor đầy đủ,
-không phải bản xuất tĩnh chỉ đọc). Không còn bước "xuất bản/publish" riêng — sửa xong ở local
-`index.html` thì copy đè sang `Grasshopper.html` rồi push thẳng. Root URL (`/Document_Grasshopper/`)
-KHÔNG có `index.html` → cố tình 404, chỉ dùng đúng URL có tên file `Grasshopper.html`.
+- **Link chính user dùng: `https://nguyencam190.github.io/Document_Grasshopper/Grasshopper.html`**
+- `Document/index.html` chỉ còn là **1 file redirect tí hon** (`<meta http-equiv="refresh">` +
+  `location.replace`) trỏ sang `Grasshopper.html`, để link gốc
+  `https://nguyencam190.github.io/Document_Grasshopper/` (nút "Visit site" trong GitHub Settings
+  luôn trỏ vào đây) cũng chạy được, không bị 404. KHÔNG chứa nội dung app.
 
 **Quy trình chuẩn khi user tìm hiểu 1 lệnh Grasshopper mới (vd "Deconstruct Brep"):**
 1. Nghiên cứu chức năng lệnh đó (input/output, cách dùng, lưu ý).
-2. Mở `Document/index.html` local, tạo 1 trang con mới, đặt tên đúng theo lệnh, nằm dưới trang cha
-   "Grasshopper" (dùng `state.docs.push(...)` qua console/JS là nhanh nhất, xem cấu trúc doc ở
-   [[gh-docs-app-workflow]]).
+2. Sửa trực tiếp `Document/Grasshopper.html`: thêm 1 trang con mới vào biến `SEED_DOCS`, đặt tên
+   đúng theo lệnh, `parentId` trỏ vào trang cha "Grasshopper" (xem cấu trúc doc ở [[gh-docs-app-workflow]]).
 3. Viết nội dung vào canvas theo cấu trúc: H1 tên lệnh → Info panel tóm tắt → H2 "Chức năng" →
    H2 "Input/Output" (bảng) → H2 "Cách dùng" (danh sách số) → H2 "Minh họa" (ảnh SVG tự vẽ, vì
    không có ảnh chụp component thật) → Warning/Note panel lưu ý → H2 "Ví dụ trong dự án Voronoi".
 4. Bump `SEED_VERSION` lên 1 (để mọi trình duyệt tự đồng bộ lại, không cần user xoá cache/localStorage).
-5. Copy `index.html` đè sang `Grasshopper.html`, commit, `git push` (`git pull` trước nếu user vừa
-   tự sửa gì trên GitHub web — đã xảy ra 1 lần, user tự xoá 1 file thừa trực tiếp trên GitHub).
+5. Commit `Grasshopper.html`, `git push` (`git pull` trước nếu user vừa tự sửa gì trên GitHub web —
+   đã xảy ra 1 lần, user tự xoá 1 file thừa trực tiếp trên GitHub).
 
 **Chi tiết kỹ thuật quan trọng (để không lặp lại lỗi):**
 - (Lịch sử: có lúc `index.html` bị `git rm --cached`/gitignore, có lúc bản xuất tĩnh
