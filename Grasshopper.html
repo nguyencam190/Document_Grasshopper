@@ -15326,6 +15326,7 @@ async function _compressForExportBlob(blob){
   const {mode,maxDim,quality}=_getExportSettings();
   if(blob.type.startsWith('video/'))return blob;
   if(blob.type==='image/gif')return blob;
+  if(blob.type==='image/svg+xml')return blob; // vector — rasterizing to JPG/PNG would lose quality, never compress SVGs
   if(mode==='original')return blob;
   return new Promise(res=>{
     const img=new Image();
