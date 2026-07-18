@@ -3543,22 +3543,6 @@ function init(){
     localStorage.setItem('seed_version',String(SEED_VERSION));
     try{localStorage.setItem(STORE_KEY,JSON.stringify(state));}catch(e){}
   }
-  // Pre-populate THIS visitor's own IndexedDB with the seed image assets so
-  // .cf-img-block[data-cfimgid] blocks in SEED_DOCS render correctly for
-  // everyone, and so this visitor's own Publish/Export later on picks up
-  // these images too (checked idempotently — skips ones already present).
-  if(typeof SEED_ASSETS!=='undefined'){
-    Object.keys(SEED_ASSETS).forEach(async assetId=>{
-      try{
-        const existing=await _idbGet(assetId);
-        if(existing)return;
-        const resp=await fetch('assets/images/'+assetId+'.'+SEED_ASSETS[assetId]);
-        if(!resp.ok)return;
-        const blob=await resp.blob();
-        await _idbPut(assetId,blob);
-      }catch(e){}
-    });
-  }
   if(!state.docs)state.docs=[];
   if(!state.sections||!state.sections.length)state.sections=['default'];
   // Migrate all docs to the single default section
@@ -3578,10 +3562,31 @@ function init(){
   // Restore saved accent color
   const _savedAccent=localStorage.getItem('accent_color');
   if(_savedAccent&&typeof _accentApply==='function')_accentApply(_savedAccent);
-  updateUserUI();renderSidebar();
-  if(state.currentDocId)openDoc(state.currentDocId);
-  // Show welcome/restore modal if no data (new file or new path)
-  setTimeout(_checkShowWelcome, 300);
+  // Pre-populate THIS visitor's own IndexedDB with the seed image assets
+  // BEFORE rendering anything — awaited so no doc ever opens with an image
+  // reference that hasn't finished loading into IndexedDB yet (race condition
+  // that showed up once real content had ~13 images loading concurrently).
+  // .cf-img-block[data-cfimgid] blocks in SEED_DOCS render correctly for
+  // everyone, and this visitor's own Publish/Export later on picks up these
+  // images too (checked idempotently — skips ones already present).
+  (async()=>{
+    if(typeof SEED_ASSETS!=='undefined'){
+      await Promise.all(Object.keys(SEED_ASSETS).map(async assetId=>{
+        try{
+          const existing=await _idbGet(assetId);
+          if(existing)return;
+          const resp=await fetch('assets/images/'+assetId+'.'+SEED_ASSETS[assetId]);
+          if(!resp.ok)return;
+          const blob=await resp.blob();
+          await _idbPut(assetId,blob);
+        }catch(e){}
+      }));
+    }
+    updateUserUI();renderSidebar();
+    if(state.currentDocId)openDoc(state.currentDocId);
+    // Show welcome/restore modal if no data (new file or new path)
+    setTimeout(_checkShowWelcome, 300);
+  })();
   const tw=document.getElementById('drawTableWrap');
   const tg=document.getElementById('tableGrid');
   if(tw)tw.addEventListener('mouseleave',()=>{_tgHideTimer=setTimeout(hideTableGrid,200);});
