@@ -2982,6 +2982,45 @@ body[data-focus="1"] .doc-outline{width:0!important;border:none}
 
 // STATE
 const STORE_KEY='projectdocs_v3';
+// Seed content shown to first-time visitors (empty localStorage) so the
+// hosted GitHub Pages copy always shows the curated Grasshopper docs.
+// Once a visitor edits/saves, their own localStorage takes over and this
+// seed is ignored on subsequent loads.
+const SEED_DOCS=[
+  {id:'seed-grasshopper',title:'Grasshopper',section:'default',parentId:null,content:'',images:[],textBoxes:[],createdAt:'2026-07-18T00:00:00.000Z',updatedAt:'2026-07-18T00:00:00.000Z'},
+  {id:'seed-deconstruct-brep',title:'Deconstruct Brep',section:'default',parentId:'seed-grasshopper',images:[],textBoxes:[],createdAt:'2026-07-18T00:00:00.000Z',updatedAt:'2026-07-18T00:00:00.000Z',content:`<h1>Deconstruct Brep</h1>
+<div class="cf-panel info" contenteditable="false"><span class="cf-panel-icon">ℹ️</span><div class="cf-panel-content" contenteditable="true">🟢 Cơ bản — Tháo rời 1 khối Brep (3D) thành 3 thành phần cơ bản: mặt, cạnh, đỉnh.</div></div>
+<h2>Chức năng</h2>
+<p>Brep (Boundary Representation) là cách Rhino mô tả 1 khối 3D thông qua các mặt bao quanh nó. Deconstruct Brep "tháo rời" khối đó ra thành danh sách các Mặt (Face), Cạnh (Edge) và Đỉnh (Vertex) để mình lấy riêng từng phần ra xử lý — ví dụ chỉ lấy 1 mặt để làm Boundary cho Voronoi, hoặc lấy các cạnh để offset.</p>
+<h2>Input / Output</h2>
+<table style="width:100%;border-collapse:collapse;margin-bottom:24px;font-size:13px">
+<thead><tr>
+<th style="padding:8px 12px;background:var(--tbl-header-bg);border:1px solid var(--tbl-border);text-align:left;font-weight:600;color:var(--text2)">Cổng</th>
+<th style="padding:8px 12px;background:var(--tbl-header-bg);border:1px solid var(--tbl-border);text-align:left;font-weight:600;color:var(--text2)">Loại dữ liệu</th>
+<th style="padding:8px 12px;background:var(--tbl-header-bg);border:1px solid var(--tbl-border);text-align:left;font-weight:600;color:var(--text2)">Ý nghĩa</th>
+</tr></thead>
+<tbody>
+<tr><td style="padding:8px 12px;border:1px solid var(--tbl-border)">B (Brep)</td><td style="padding:8px 12px;border:1px solid var(--tbl-border)">Brep</td><td style="padding:8px 12px;border:1px solid var(--tbl-border)">Khối 3D cần tháo rời (input)</td></tr>
+<tr><td style="padding:8px 12px;border:1px solid var(--tbl-border)">F (Faces)</td><td style="padding:8px 12px;border:1px solid var(--tbl-border)">Surface, danh sách</td><td style="padding:8px 12px;border:1px solid var(--tbl-border)">Các mặt tạo nên khối</td></tr>
+<tr><td style="padding:8px 12px;border:1px solid var(--tbl-border)">E (Edges)</td><td style="padding:8px 12px;border:1px solid var(--tbl-border)">Curve, danh sách</td><td style="padding:8px 12px;border:1px solid var(--tbl-border)">Các cạnh tạo nên khối</td></tr>
+<tr><td style="padding:8px 12px;border:1px solid var(--tbl-border)">V (Vertices)</td><td style="padding:8px 12px;border:1px solid var(--tbl-border)">Point, danh sách</td><td style="padding:8px 12px;border:1px solid var(--tbl-border)">Các đỉnh tạo nên khối</td></tr>
+</tbody>
+</table>
+<h2>Cách dùng</h2>
+<ol>
+<li>Kéo 1 khối Brep vào canvas (Box, Sphere, hoặc kết quả Boolean Union...)</li>
+<li>Gõ "DeBrep" hoặc tìm "Deconstruct Brep" trong tab Surface &gt; Analysis, thả vào canvas</li>
+<li>Nối output của khối Brep vào input B</li>
+<li>Ba output F, E, V tự động hiện danh sách tương ứng</li>
+<li>Dùng List Item để lấy đúng 1 mặt/cạnh/đỉnh theo số thứ tự cần</li>
+</ol>
+<h2>Minh họa</h2>
+<img src="assets/deconstruct-brep-minhhoa.svg" style="max-width:100%;border-radius:8px;border:1px solid var(--border);display:block;margin:12px 0" alt="Sơ đồ Deconstruct Brep: Brep tách thành Faces, Edges, Vertices">
+<div class="cf-panel warning" contenteditable="false"><span class="cf-panel-icon">⚠️</span><div class="cf-panel-content" contenteditable="true">Input B phải là Brep hợp lệ (kín hoặc hở đều được), không nhận Mesh. Nếu đang có Mesh, dùng Mesh to Brep hoặc đổi sang Deconstruct Mesh.</div></div>
+<hr>
+<h2>Ví dụ trong dự án Voronoi</h2>
+<p>Pattern Voronoi xoắn ốc trong project này làm việc chủ yếu ở mặt phẳng 2D (Line → Polar Array → Maelstrom → Divide Curve) nên ít cần Deconstruct Brep trực tiếp. Lệnh này hữu ích hơn khi phân tích khối 3D của "vành xe Voronoi" (video showcase) — ví dụ lấy Surface bao ngoài của vành xe làm Boundary cho Voronoi 3D.</p>`}
+];
 let state={projectName:'My Project',username:'User',sections:['default'],docs:[],currentDocId:null};
 let saveTimer,dirty=false,ctxImgIdx=null,docCtxId=null,_savedRange=null,_bubbleHideTimer=null;
 
@@ -3304,6 +3343,7 @@ function init(){
   if(localStorage.getItem('sb_collapsed')==='1')sbCollapse();
   const saved=localStorage.getItem(STORE_KEY);
   if(saved){try{state=JSON.parse(saved);}catch(e){console.error('[init] localStorage corrupted, starting fresh:',e);if(typeof toast==='function')toast('Dữ liệu lưu trữ bị lỗi, bắt đầu dự án mới','error');}}
+  else if(typeof SEED_DOCS!=='undefined'&&SEED_DOCS.length){state.docs=SEED_DOCS;}
   if(!state.docs)state.docs=[];
   if(!state.sections||!state.sections.length)state.sections=['default'];
   // Migrate all docs to the single default section
