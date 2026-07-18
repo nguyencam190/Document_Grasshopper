@@ -2986,7 +2986,12 @@ const STORE_KEY='projectdocs_v3';
 // Bump SEED_VERSION any time SEED_DOCS content changes (e.g. a new Grasshopper
 // command page is added) to re-sync all visitors automatically, even ones
 // with old data already saved locally.
-const SEED_VERSION=4;
+const SEED_VERSION=5;
+// Real image assets referenced by SEED_DOCS via data-cfimgid — every visitor's
+// browser needs these in its OWN IndexedDB (see init() below) so images both
+// (a) display correctly, and (b) get recognized by the app's own Optimized
+// Website export if the user runs Publish themselves later.
+const SEED_ASSETS={'mrq6ny91akmb8zar':'svg','mrq6t7tlqqfhm3kv':'svg'};
 const SEED_DOCS=[
   {id:'seed-grasshopper',title:'Grasshopper',section:'default',parentId:null,content:'',images:[],textBoxes:[],createdAt:'2026-07-18T00:00:00.000Z',updatedAt:'2026-07-18T00:00:00.000Z'},
   {id:'seed-deconstruct-brep',title:'Deconstruct Brep',section:'default',parentId:'seed-grasshopper',images:[],textBoxes:[],createdAt:'2026-07-18T00:00:00.000Z',updatedAt:'2026-07-18T00:00:00.000Z',content:`<h1>Deconstruct Brep</h1>
@@ -3016,7 +3021,7 @@ const SEED_DOCS=[
 <li>Dùng List Item để lấy đúng 1 mặt/cạnh/đỉnh theo số thứ tự cần</li>
 </ol>
 <h2>Minh họa</h2>
-<img src="assets/images/mrq6ny91akmb8zar.svg" style="max-width:100%;border-radius:8px;border:1px solid var(--border);display:block;margin:12px 0" alt="Sơ đồ Deconstruct Brep: Brep tách thành Faces, Edges, Vertices">
+<div class="cf-img-block" data-cfimgid="mrq6ny91akmb8zar" data-cfimgtype="image" data-align="center" data-name="deconstruct-brep-minhhoa.svg"><div class="cf-img-wrap"><div class="cf-img-inner"><img alt="Sơ đồ Deconstruct Brep: Brep tách thành Faces, Edges, Vertices"><div class="cf-img-resize-h left"></div><div class="cf-img-resize-h right"></div></div></div><div class="cf-img-caption"></div></div>
 <div class="cf-panel warning" contenteditable="false"><span class="cf-panel-icon">⚠️</span><div class="cf-panel-content" contenteditable="true">Input B phải là Brep hợp lệ (kín hoặc hở đều được), không nhận Mesh. Nếu đang có Mesh, dùng Mesh to Brep hoặc đổi sang Deconstruct Mesh.</div></div>
 <hr>
 <h2>Ví dụ trong dự án Voronoi</h2>
@@ -3047,7 +3052,7 @@ const SEED_DOCS=[
 <li>Output C trả về danh sách Curve kín — dùng Boundary Surfaces hoặc Extrude để biến thành mặt/khối nếu cần</li>
 </ol>
 <h2>Minh họa</h2>
-<img src="assets/images/mrq6t7tlqqfhm3kv.svg" style="max-width:100%;border-radius:8px;border:1px solid var(--border);display:block;margin:12px 0" alt="Sơ đồ Voronoi: tập điểm → component Voronoi → các ô đa giác bao quanh từng điểm">
+<div class="cf-img-block" data-cfimgid="mrq6t7tlqqfhm3kv" data-cfimgtype="image" data-align="center" data-name="voronoi-minhhoa.svg"><div class="cf-img-wrap"><div class="cf-img-inner"><img alt="Sơ đồ Voronoi: tập điểm → component Voronoi → các ô đa giác bao quanh từng điểm"><div class="cf-img-resize-h left"></div><div class="cf-img-resize-h right"></div></div></div><div class="cf-img-caption"></div></div>
 <div class="cf-panel warning" contenteditable="false"><span class="cf-panel-icon">⚠️</span><div class="cf-panel-content" contenteditable="true">Quên Flatten Points là lỗi hay gặp nhất — kết quả trông như "vỡ" thành nhiều cụm rời rạc thay vì 1 lưới liền mạch. Không nối B thì các ô ở rìa ngoài sẽ kéo dài ra vô cực, làm chậm hoặc lỗi khi bake.</div></div>
 <hr>
 <h2>Ví dụ trong dự án Voronoi</h2>
@@ -3384,6 +3389,22 @@ function init(){
     state.projectName='Grasshopper Voronoi Docs';
     localStorage.setItem('seed_version',String(SEED_VERSION));
     try{localStorage.setItem(STORE_KEY,JSON.stringify(state));}catch(e){}
+  }
+  // Pre-populate THIS visitor's own IndexedDB with the seed image assets so
+  // .cf-img-block[data-cfimgid] blocks in SEED_DOCS render correctly for
+  // everyone, and so this visitor's own Publish/Export later on picks up
+  // these images too (checked idempotently — skips ones already present).
+  if(typeof SEED_ASSETS!=='undefined'){
+    Object.keys(SEED_ASSETS).forEach(async assetId=>{
+      try{
+        const existing=await _idbGet(assetId);
+        if(existing)return;
+        const resp=await fetch('assets/images/'+assetId+'.'+SEED_ASSETS[assetId]);
+        if(!resp.ok)return;
+        const blob=await resp.blob();
+        await _idbPut(assetId,blob);
+      }catch(e){}
+    });
   }
   if(!state.docs)state.docs=[];
   if(!state.sections||!state.sections.length)state.sections=['default'];
