@@ -125,6 +125,12 @@ nhưng không dùng nó để sửa nữa). Quy trình lấy/ghi file qua API (r
    j. Bump `SEED_VERSION`, `PUT Grasshopper.html` như bước 5 cũ.
 
 **Chi tiết kỹ thuật quan trọng (để không lặp lại lỗi):**
+- **Đã sửa lỗi app tự làm mất chất lượng SVG khi export**: hàm `_compressForExportBlob()` trong
+  `Grasshopper.html` trước đây rasterize MỌI ảnh qua canvas ở chế độ "Nén ảnh tự động" (mặc định),
+  biến SVG (vector) thành JPG/PNG (raster) — mất nét, không co giãn được nữa. Đã thêm dòng chặn
+  `if(blob.type==='image/svg+xml')return blob;` ngay cạnh chỗ chặn video/gif, để SVG luôn giữ nguyên
+  dù ở chế độ nén hay gốc. Đã tự test lại bằng đúng chế độ mặc định (không ép "original") — xác nhận
+  ảnh xuất ra vẫn đuôi `.svg`, không còn bị đổi thành `.jpg` nữa.
 - (Lịch sử: có lúc `index.html` bị `git rm --cached`/gitignore, có lúc bản xuất tĩnh
   `Grasshopper-Voronoi-Docs.html` được publish thay vì app sống — **cả 2 đã bị đảo lại**. Trạng thái
   CUỐI CÙNG: `Grasshopper.html` = app sống, giống hệt `index.html`, cả 2 cùng tồn tại và cùng nội
