@@ -78,8 +78,14 @@ nhưng không dùng nó để sửa nữa). Quy trình lấy/ghi file qua API (r
    H2 "Input/Output" (bảng) → H2 "Cách dùng" (danh sách số) → H2 "Minh họa" (ảnh SVG tự vẽ, vì
    không có ảnh chụp component thật) → Warning/Note panel lưu ý → H2 "Ví dụ trong dự án Voronoi".
 4. Bump `SEED_VERSION` lên 1 (để mọi trình duyệt tự đồng bộ lại, không cần user xoá cache/localStorage).
-5. `PUT` thẳng lên GitHub qua Contents API (bước 5 ở trên) — không tạo commit local, không cần
-   `git pull`/`git push`.
+5. **Luôn publish kèm cả ảnh minh họa** (yêu cầu rõ ràng của user, tự động mỗi lần đổi nội dung):
+   - Ảnh SVG mới vẽ cho lệnh này → `PUT /repos/.../contents/assets/{ten-lenh}-minhhoa.svg` (file mới
+     nên KHÔNG cần field `sha` trong body).
+   - `Grasshopper.html` tham chiếu ảnh qua đường dẫn tương đối `assets/{ten-lenh}-minhhoa.svg`.
+   - `PUT` thẳng lên GitHub qua Contents API cho cả 2 file (HTML + ảnh) — không tạo commit local,
+     không cần `git pull`/`git push`. Thư mục `assets/` trên GitHub hiện có sẵn (repo:
+     `nguyencam190/Document_Grasshopper`, xem trước bằng
+     `GET /repos/.../contents/assets?ref=main` để biết ảnh nào đã có, tránh trùng tên).
 
 **Chi tiết kỹ thuật quan trọng (để không lặp lại lỗi):**
 - (Lịch sử: có lúc `index.html` bị `git rm --cached`/gitignore, có lúc bản xuất tĩnh
