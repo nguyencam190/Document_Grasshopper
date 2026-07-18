@@ -53,16 +53,33 @@ nữa. Repo GitHub (private): `https://github.com/nguyencam190/Document_Grasshop
   `https://nguyencam190.github.io/Document_Grasshopper/` (nút "Visit site" trong GitHub Settings
   luôn trỏ vào đây) cũng chạy được, không bị 404. KHÔNG chứa nội dung app.
 
+**QUY TẮC MỚI — KHÔNG động vào ổ đĩa local nữa, chỉ làm việc thẳng qua GitHub:**
+User yêu cầu rõ: mọi thao tác sửa file phải qua GitHub API, không tạo/sửa file trong thư mục project
+trên ổ D: của họ nữa (thư mục `D:\...\Document` git clone cũ vẫn còn nguyên trên máy, không đụng tới,
+nhưng không dùng nó để sửa nữa). Quy trình lấy/ghi file qua API (repo: `nguyencam190/Document_Grasshopper`):
+1. Lấy sha hiện tại của file: `GET /repos/.../contents/Grasshopper.html?ref=main` (field `sha`).
+2. Lấy nội dung thật (file >1MB nên Contents API trả `content:""`): dùng
+   `raw.githubusercontent.com/nguyencam190/Document_Grasshopper/main/Grasshopper.html` kèm header
+   `Authorization: token TOKEN`.
+3. Lấy token từ Git Credential Manager đã cache sẵn:
+   `printf "protocol=https\nhost=github.com\n\n" | git credential fill` (không cần thư mục repo local
+   để chạy lệnh này, credential nằm ở Windows Credential Manager, dùng được từ bất kỳ đâu).
+4. Ghi nội dung mới ra file **tạm trong scratchpad session** (KHÔNG phải thư mục project) để dùng
+   Edit/Write tool sửa (các tool này bắt buộc cần đường dẫn file thật), rồi encode base64.
+5. `PUT /repos/.../contents/Grasshopper.html` với body `{message, content: base64, sha, branch:"main"}`
+   để commit thẳng lên GitHub — không qua `git add/commit/push` cục bộ nữa.
+
 **Quy trình chuẩn khi user tìm hiểu 1 lệnh Grasshopper mới (vd "Deconstruct Brep"):**
 1. Nghiên cứu chức năng lệnh đó (input/output, cách dùng, lưu ý).
-2. Sửa trực tiếp `Document/Grasshopper.html`: thêm 1 trang con mới vào biến `SEED_DOCS`, đặt tên
-   đúng theo lệnh, `parentId` trỏ vào trang cha "Grasshopper" (xem cấu trúc doc ở [[gh-docs-app-workflow]]).
+2. Lấy nội dung `Grasshopper.html` hiện tại từ GitHub (theo quy trình API trên), thêm 1 trang con mới
+   vào biến `SEED_DOCS`, đặt tên đúng theo lệnh, `parentId` trỏ vào trang cha "Grasshopper" (xem cấu
+   trúc doc ở [[gh-docs-app-workflow]]).
 3. Viết nội dung vào canvas theo cấu trúc: H1 tên lệnh → Info panel tóm tắt → H2 "Chức năng" →
    H2 "Input/Output" (bảng) → H2 "Cách dùng" (danh sách số) → H2 "Minh họa" (ảnh SVG tự vẽ, vì
    không có ảnh chụp component thật) → Warning/Note panel lưu ý → H2 "Ví dụ trong dự án Voronoi".
 4. Bump `SEED_VERSION` lên 1 (để mọi trình duyệt tự đồng bộ lại, không cần user xoá cache/localStorage).
-5. Commit `Grasshopper.html`, `git push` (`git pull` trước nếu user vừa tự sửa gì trên GitHub web —
-   đã xảy ra 1 lần, user tự xoá 1 file thừa trực tiếp trên GitHub).
+5. `PUT` thẳng lên GitHub qua Contents API (bước 5 ở trên) — không tạo commit local, không cần
+   `git pull`/`git push`.
 
 **Chi tiết kỹ thuật quan trọng (để không lặp lại lỗi):**
 - (Lịch sử: có lúc `index.html` bị `git rm --cached`/gitignore, có lúc bản xuất tĩnh
