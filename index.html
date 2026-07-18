@@ -3352,6 +3352,7 @@ function init(){
     state.docs=JSON.parse(JSON.stringify(SEED_DOCS));
     state.projectName='Grasshopper Voronoi Docs';
     localStorage.setItem('seed_version',String(SEED_VERSION));
+    try{localStorage.setItem(STORE_KEY,JSON.stringify(state));}catch(e){}
   }
   if(!state.docs)state.docs=[];
   if(!state.sections||!state.sections.length)state.sections=['default'];
