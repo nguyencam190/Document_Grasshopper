@@ -47,6 +47,14 @@ Project có 1 app ghi chú riêng: **`Document/Grasshopper.html`** là file DUY 
 đầy đủ, không phải bản xuất tĩnh chỉ đọc) — sửa trực tiếp file này, không có bản local riêng nào khác
 nữa. Repo GitHub (private): `https://github.com/nguyencam190/Document_Grasshopper`.
 
+> ⚠️ **QUY TẮC TUYỆT ĐỐI — SỬA `SEED_DOCS` HAY BẤT KỲ NỘI DUNG NÀO CŨNG PHẢI BUMP `SEED_VERSION`**,
+> kể cả khi chỉ sửa 1 dòng CSS/style nhỏ, không phải chỉ khi thêm trang mới. Quên bước này từng gây
+> ra 1 buổi debug rất dài: sửa xong tưởng đã đúng, push lên, nhưng trình duyệt NÀO ĐÃ TỪNG GHÉ THĂM
+> trước đó (kể cả của chính Claude khi tự test) vẫn thấy bản CŨ y nguyên — vì `if(seed_version
+> khớp){bỏ qua, dùng localStorage cũ}` khớp version nên không bao giờ đọc lại `SEED_DOCS` mới. Đây
+> KHÔNG phải lỗi cache HTTP/CDN (đã loại trừ bằng cửa sổ ẩn danh) — mà là chính logic app tự thiết kế
+> để bỏ qua re-seed khi version không đổi. Luôn tăng số này trong CÙNG 1 lần sửa, không tách riêng.
+
 - **Link chính user dùng: `https://nguyencam190.github.io/Document_Grasshopper/Grasshopper.html`**
 - `Document/index.html` chỉ còn là **1 file redirect tí hon** (`<meta http-equiv="refresh">` +
   `location.replace`) trỏ sang `Grasshopper.html`, để link gốc
@@ -107,11 +115,16 @@ nhưng không dùng nó để sửa nữa). Quy trình lấy/ghi file qua API (r
       ```html
       <div class="cf-img-block" data-cfimgid="{id}" data-cfimgtype="image" data-align="center" data-name="{ten-file}">
         <div class="cf-img-wrap"><div class="cf-img-inner">
-          <img alt="{mo-ta}"><div class="cf-img-resize-h left"></div><div class="cf-img-resize-h right"></div>
+          <img style="width:100%;max-width:320px;height:auto;display:block" alt="{mo-ta}"><div class="cf-img-resize-h left"></div><div class="cf-img-resize-h right"></div>
         </div></div>
         <div class="cf-img-caption"></div>
       </div>
       ```
+      **BẮT BUỘC có `style="width:...;height:auto;display:block"` ngay trên thẻ `<img>`** — nếu thiếu,
+      ảnh vẫn tải đúng dữ liệu (naturalWidth đúng, complete=true) nhưng hiển thị co lại còn ~3×3px gần
+      như vô hình (đã tự gặp lỗi thật này, mất nhiều vòng debug mới tìm ra — bình thường app tự đo
+      kích thước ảnh sau khi người dùng upload qua UI thật rồi gán width, nhưng ảnh dựng bằng tay qua
+      SEED_DOCS thì không có bước đó nên bắt buộc set style tay).
       (không cần set `src` cho `<img>` — app tự nạp từ IndexedDB lúc mở trang, xem bước (h)).
    h. **Bắt buộc thêm vào `SEED_ASSETS`** (khai báo cạnh `SEED_DOCS`): `{id: 'ext'}` cho mỗi ảnh mới.
       Trong `init()`, đoạn code sau seed force-sync phải fetch từng ảnh trong `SEED_ASSETS` từ
