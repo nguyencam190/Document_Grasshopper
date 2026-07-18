@@ -2986,15 +2986,231 @@ const STORE_KEY='projectdocs_v3';
 // Bump SEED_VERSION any time SEED_DOCS content changes (e.g. a new Grasshopper
 // command page is added) to re-sync all visitors automatically, even ones
 // with old data already saved locally.
-const SEED_VERSION=6;
+const SEED_VERSION=7;
 // Real image assets referenced by SEED_DOCS via data-cfimgid — every visitor's
 // browser needs these in its OWN IndexedDB (see init() below) so images both
 // (a) display correctly, and (b) get recognized by the app's own Optimized
 // Website export if the user runs Publish themselves later.
-const SEED_ASSETS={};
+const SEED_ASSETS={'tab-params':'svg','tab-maths':'svg','tab-sets':'svg','tab-vector':'svg','tab-curve':'svg','tab-surface':'svg','tab-mesh':'svg','tab-intersect':'svg','tab-transform':'svg','tab-display':'svg','tab-rhino':'svg','tab-kangaroo2':'svg','tab-wb':'svg'};
 const SEED_DOCS=[
   {id:'seed-grasshopper',title:'Grasshopper',section:'default',parentId:null,content:'',images:[],textBoxes:[],createdAt:'2026-07-18T00:00:00.000Z',updatedAt:'2026-07-18T00:00:00.000Z'},
-];
+  {id:'seed-tab-params',title:'Params',section:'default',parentId:'seed-grasshopper',images:[],textBoxes:[],createdAt:'2026-07-18T00:00:00.000Z',updatedAt:'2026-07-18T00:00:00.000Z',content:`<h1>Params</h1>
+<div class="cf-panel info" contenteditable="false"><span class="cf-panel-icon">ℹ️</span><div class="cf-panel-content" contenteditable="true">🟢 Cơ bản — Nơi khai báo và giữ dữ liệu (Points, Curves, Breps, Lists, Trees...) để dùng xuyên suốt file Grasshopper.</div></div>
+<h2>Chức năng</h2>
+<p>Tab Params KHÔNG chứa lệnh xử lý — đây là nơi "khai báo biến". Mỗi component trong tab này là 1 hộp chứa dữ liệu: hoặc để bạn nhập tay (Number Slider, Panel), hoặc để tham chiếu 1 đối tượng có sẵn trong Rhino (Point, Curve, Brep), hoặc để đặt tên/nhóm dữ liệu cho dễ quản lý khi file lớn dần lên.</p>
+<h2>Các lệnh tiêu biểu</h2>
+<ul>
+<li><strong>Number Slider</strong> — thanh trượt kéo để đổi 1 số, hay dùng nhất trong toàn bộ Grasshopper</li>
+<li><strong>Panel</strong> — hộp hiển thị nội dung dữ liệu chảy qua dây, dùng để debug xem giá trị</li>
+<li><strong>Point / Curve / Brep</strong> — tham chiếu geometry có sẵn trong Rhino vào Grasshopper</li>
+<li><strong>Geometry Pipeline</strong> — tự động đồng bộ khi geometry gốc trong Rhino thay đổi</li>
+<li><strong>Data Dam</strong> — tạm dừng luồng dữ liệu, hữu ích khi cần debug từng bước</li>
+</ul>
+<h2>Minh họa</h2>
+<div class="cf-img-block" data-cfimgid="tab-params" data-cfimgtype="image" data-align="center" data-name="tab-params.svg"><div class="cf-img-wrap"><div class="cf-img-inner"><img alt="Params: hộp chứa dữ liệu"><div class="cf-img-resize-h left"></div><div class="cf-img-resize-h right"></div></div></div><div class="cf-img-caption"></div></div>
+<hr>
+<h2>Ví dụ trong dự án Voronoi</h2>
+<p>Toàn bộ các <strong>Number Slider</strong> điều khiển Polar Count, Maelstrom Angle, Divide Curve Count... đều nằm trong tab Params — đây là những "núm vặn" chính bạn sẽ chỉnh để thay đổi hình dạng pattern.</p>`},
+  {id:'seed-tab-maths',title:'Maths',section:'default',parentId:'seed-grasshopper',images:[],textBoxes:[],createdAt:'2026-07-18T00:00:00.000Z',updatedAt:'2026-07-18T00:00:00.000Z',content:`<h1>Maths</h1>
+<div class="cf-panel info" contenteditable="false"><span class="cf-panel-icon">ℹ️</span><div class="cf-panel-content" contenteditable="true">🟡 Trung bình — Các phép toán, biểu thức, hàm số và logic dùng để tính toán giá trị điều khiển geometry.</div></div>
+<h2>Chức năng</h2>
+<p>Tab Maths chứa các công cụ xử lý SỐ (không phải hình học trực tiếp) — cộng trừ nhân chia, viết công thức tùy chỉnh, tạo dãy số, ánh xạ (remap) 1 khoảng giá trị sang khoảng khác, hay so sánh logic đúng/sai. Đây là "bộ não" tính toán đứng sau các bước biến đổi hình học.</p>
+<h2>Các lệnh tiêu biểu</h2>
+<ul>
+<li><strong>Expression</strong> — viết công thức tùy ý (vd <code>x/2</code>), input/output linh hoạt</li>
+<li><strong>Series</strong> — tạo dãy số cách đều (0,1,2,...N), hay dùng để tạo index cho List</li>
+<li><strong>Range</strong> — chia đều 1 khoảng giá trị thành N bước</li>
+<li><strong>Remap Numbers</strong> — ánh xạ số từ khoảng này sang khoảng khác (vd 0-100 → 0-360°)</li>
+<li><strong>Graph Mapper</strong> — vẽ đường cong tùy chỉnh để ánh xạ giá trị phi tuyến tính</li>
+</ul>
+<h2>Minh họa</h2>
+<div class="cf-img-block" data-cfimgid="tab-maths" data-cfimgtype="image" data-align="center" data-name="tab-maths.svg"><div class="cf-img-wrap"><div class="cf-img-inner"><img alt="Maths: phép toán và công thức"><div class="cf-img-resize-h left"></div><div class="cf-img-resize-h right"></div></div></div><div class="cf-img-caption"></div></div>
+<hr>
+<h2>Ví dụ trong dự án Voronoi</h2>
+<p><strong>Expression</strong> với công thức <code>x/2</code> được dùng ở các Series bước Cull (Step=x/2, Count=x/2, Start=x/2−1) — chuyển số N do user nhập thành các thông số chia đôi chính xác cho từng vòng Cull.</p>`},
+  {id:'seed-tab-sets',title:'Sets',section:'default',parentId:'seed-grasshopper',images:[],textBoxes:[],createdAt:'2026-07-18T00:00:00.000Z',updatedAt:'2026-07-18T00:00:00.000Z',content:`<h1>Sets</h1>
+<div class="cf-panel info" contenteditable="false"><span class="cf-panel-icon">ℹ️</span><div class="cf-panel-content" contenteditable="true">🟡 Trung bình — Quản lý danh sách (List) và cây dữ liệu (Data Tree): lọc, sắp xếp, chia nhánh.</div></div>
+<h2>Chức năng</h2>
+<p>Trong Grasshopper, dữ liệu không chỉ là 1 giá trị đơn mà thường là cả danh sách (list) hoặc cây phân nhánh (data tree, vd kết quả Divide Curve trên nhiều đường cùng lúc). Tab Sets chứa các công cụ để lọc bớt, cắt bỏ theo quy luật, đổi thứ tự, gộp/tách nhánh — đây là nhóm lệnh <strong>bắt buộc phải hiểu</strong> nếu muốn làm chủ Grasshopper.</p>
+<h2>Các lệnh tiêu biểu</h2>
+<ul>
+<li><strong>List Item</strong> — lấy đúng 1 phần tử theo số thứ tự (index)</li>
+<li><strong>Sort List</strong> — sắp xếp danh sách theo giá trị tăng/giảm</li>
+<li><strong>Cull Pattern / Cull Index</strong> — xoá bớt phần tử theo quy luật true/false hoặc theo số thứ tự</li>
+<li><strong>Dispatch</strong> — chia 1 danh sách thành 2 nhánh xen kẽ theo quy luật</li>
+<li><strong>Graft / Flatten</strong> — Graft tách mỗi phần tử thành 1 nhánh riêng; Flatten gộp hết về 1 nhánh duy nhất</li>
+</ul>
+<h2>Minh họa</h2>
+<div class="cf-img-block" data-cfimgid="tab-sets" data-cfimgtype="image" data-align="center" data-name="tab-sets.svg"><div class="cf-img-wrap"><div class="cf-img-inner"><img alt="Sets: danh sách và cây dữ liệu"><div class="cf-img-resize-h left"></div><div class="cf-img-resize-h right"></div></div></div><div class="cf-img-caption"></div></div>
+<hr>
+<h2>Ví dụ trong dự án Voronoi</h2>
+<p>Nhóm lệnh quan trọng nhất của cả pattern: <strong>Cull Index</strong> xoá điểm trùng ở tâm trước Voronoi; <strong>Cull Series</strong> xoá vòng ô ở tâm/ngoài; <strong>Dispatch</strong> tạo khe hở giữa các dải; và bắt buộc <strong>Flatten</strong> điểm trước khi đưa vào Voronoi.</p>`},
+  {id:'seed-tab-vector',title:'Vector',section:'default',parentId:'seed-grasshopper',images:[],textBoxes:[],createdAt:'2026-07-18T00:00:00.000Z',updatedAt:'2026-07-18T00:00:00.000Z',content:`<h1>Vector</h1>
+<div class="cf-panel info" contenteditable="false"><span class="cf-panel-icon">ℹ️</span><div class="cf-panel-content" contenteditable="true">🟡 Trung bình — Vector (hướng + độ dài), mặt phẳng (Plane) và các phép biến đổi dựa trên chúng.</div></div>
+<h2>Chức năng</h2>
+<p>Vector mô tả 1 "hướng đi kèm độ dài" trong không gian — nền tảng để di chuyển, xoay, hoặc định hướng geometry. Plane (mặt phẳng làm việc, gồm 1 gốc toạ độ + 3 trục XYZ riêng) cũng nằm trong tab này — hầu hết lệnh biến đổi hình học (Transform) đều cần 1 Plane hoặc Vector làm tham chiếu.</p>
+<h2>Các lệnh tiêu biểu</h2>
+<ul>
+<li><strong>Vector XYZ</strong> — tạo vector từ 3 thành phần toạ độ</li>
+<li><strong>Unit Vector</strong> — vector đơn vị theo trục X/Y/Z</li>
+<li><strong>Plane Normal</strong> — tạo mặt phẳng từ 1 điểm + vector pháp tuyến</li>
+<li><strong>Amplitude</strong> — đổi độ dài (độ lớn) của 1 vector có sẵn</li>
+<li><strong>Vector 2Pt</strong> — tạo vector nối giữa 2 điểm</li>
+</ul>
+<h2>Minh họa</h2>
+<div class="cf-img-block" data-cfimgid="tab-vector" data-cfimgtype="image" data-align="center" data-name="tab-vector.svg"><div class="cf-img-wrap"><div class="cf-img-inner"><img alt="Vector: hướng và độ dài"><div class="cf-img-resize-h left"></div><div class="cf-img-resize-h right"></div></div></div><div class="cf-img-caption"></div></div>
+<hr>
+<h2>Ví dụ trong dự án Voronoi</h2>
+<p>Plane gốc (thường là World XY Plane) làm tâm tham chiếu cho <strong>Polar Array</strong> (xoay nhân bản quanh gốc) và <strong>Maelstrom</strong> (xoắn quanh gốc) — nếu đổi Plane, toàn bộ pattern sẽ xoay/dịch theo.</p>`},
+  {id:'seed-tab-curve',title:'Curve',section:'default',parentId:'seed-grasshopper',images:[],textBoxes:[],createdAt:'2026-07-18T00:00:00.000Z',updatedAt:'2026-07-18T00:00:00.000Z',content:`<h1>Curve</h1>
+<div class="cf-panel info" contenteditable="false"><span class="cf-panel-icon">ℹ️</span><div class="cf-panel-content" contenteditable="true">🟢 Cơ bản — Tạo và chỉnh sửa đường cong: từ đường thẳng đơn giản tới đường cong phức tạp.</div></div>
+<h2>Chức năng</h2>
+<p>Tab Curve chứa mọi lệnh liên quan tới đường 1 chiều (curve) — dựng đường mới, chỉnh sửa đường có sẵn (bo góc, offset song song), phân tích đường (tìm điểm gần nhất, chia điểm đều), hoặc các phép biến dạng đặc biệt như xoắn (Maelstrom).</p>
+<h2>Các lệnh tiêu biểu</h2>
+<ul>
+<li><strong>Line</strong> (SDL: Start-Direction-Length) — dựng đường thẳng từ điểm gốc + hướng + độ dài</li>
+<li><strong>Divide Curve</strong> — chia đường thành N điểm cách đều</li>
+<li><strong>Offset Curve</strong> — tạo đường song song cách 1 khoảng</li>
+<li><strong>Fillet</strong> — bo tròn góc nhọn của đường</li>
+<li><strong>Maelstrom</strong> — xoắn 1 vùng phẳng quanh tâm theo góc chỉ định (nhóm Curve &gt; Util)</li>
+</ul>
+<h2>Minh họa</h2>
+<div class="cf-img-block" data-cfimgid="tab-curve" data-cfimgtype="image" data-align="center" data-name="tab-curve.svg"><div class="cf-img-wrap"><div class="cf-img-inner"><img alt="Curve: đường cong"><div class="cf-img-resize-h left"></div><div class="cf-img-resize-h right"></div></div></div><div class="cf-img-caption"></div></div>
+<hr>
+<h2>Ví dụ trong dự án Voronoi</h2>
+<p>Đây là tab nền tảng của cả pattern: <strong>Line SDL</strong> tạo tia gốc, <strong>Divide Curve</strong> chia điểm trên từng tia sau khi nhân bản, và mấu chốt nhất — <strong>Maelstrom</strong> bẻ cong các tia toả tròn thành hình xoắn ốc trước khi lấy điểm.</p>`},
+  {id:'seed-tab-surface',title:'Surface',section:'default',parentId:'seed-grasshopper',images:[],textBoxes:[],createdAt:'2026-07-18T00:00:00.000Z',updatedAt:'2026-07-18T00:00:00.000Z',content:`<h1>Surface</h1>
+<div class="cf-panel info" contenteditable="false"><span class="cf-panel-icon">ℹ️</span><div class="cf-panel-content" contenteditable="true">🟡 Trung bình — Tạo và chỉnh sửa mặt (Surface): Loft, Extrude, Trim, phân tích mặt.</div></div>
+<h2>Chức năng</h2>
+<p>Surface (mặt/bề mặt) là đối tượng 2D nằm trong không gian 3D — vd 1 tấm phẳng cong. Tab này chứa lệnh tạo mặt từ đường cong (Loft nối nhiều đường, Extrude kéo đường thành mặt), cũng như chỉnh sửa/phân tích mặt và khối Brep (Boundary Representation — khối được ghép từ nhiều mặt).</p>
+<h2>Các lệnh tiêu biểu</h2>
+<ul>
+<li><strong>Loft</strong> — nối nhiều đường cong thành 1 mặt mượt</li>
+<li><strong>Extrude</strong> — kéo đường/mặt theo 1 hướng để tạo khối</li>
+<li><strong>Boundary Surfaces</strong> — biến đường cong kín thành mặt phẳng đặc</li>
+<li><strong>Surface Split</strong> — cắt mặt bằng 1 đường cong khác</li>
+<li><strong>Deconstruct Brep</strong> — tháo khối thành Faces/Edges/Vertices (nhóm Analysis)</li>
+</ul>
+<h2>Minh họa</h2>
+<div class="cf-img-block" data-cfimgid="tab-surface" data-cfimgtype="image" data-align="center" data-name="tab-surface.svg"><div class="cf-img-wrap"><div class="cf-img-inner"><img alt="Surface: mặt cong"><div class="cf-img-resize-h left"></div><div class="cf-img-resize-h right"></div></div></div><div class="cf-img-caption"></div></div>
+<hr>
+<h2>Ví dụ trong dự án Voronoi</h2>
+<p><strong>Boundary Surfaces</strong> dùng để biến mỗi ô Voronoi (vốn chỉ là đường cong kín) thành 1 mặt phẳng đặc — bước cần thiết trước khi render hoặc xuất bản vẽ 2D.</p>`},
+  {id:'seed-tab-mesh',title:'Mesh',section:'default',parentId:'seed-grasshopper',images:[],textBoxes:[],createdAt:'2026-07-18T00:00:00.000Z',updatedAt:'2026-07-18T00:00:00.000Z',content:`<h1>Mesh</h1>
+<div class="cf-panel info" contenteditable="false"><span class="cf-panel-icon">ℹ️</span><div class="cf-panel-content" contenteditable="true">🟡 Trung bình — Làm việc với lưới tam giác/đa giác (Mesh): nhẹ hơn Surface/Brep.</div></div>
+<h2>Chức năng</h2>
+<p>Mesh là cách mô tả hình 3D bằng lưới các mặt tam giác/tứ giác nhỏ (khác với Surface là mặt cong toán học NURBS). Mesh nhẹ, dựng nhanh, phù hợp cho phân tích không gian, in 3D, hoặc thuật toán dựa trên điểm — và đây cũng chính là nơi lệnh <strong>Voronoi</strong> thực sự nằm trong Grasshopper!</p>
+<h2>Các lệnh tiêu biểu</h2>
+<ul>
+<li><strong>Mesh Box</strong> — tạo khối hộp dạng lưới tam giác</li>
+<li><strong>Triangulation</strong> (nhóm con) — chứa Delaunay Mesh và <strong>Voronoi</strong></li>
+<li><strong>Delaunay Mesh</strong> — nối các điểm thành lưới tam giác tối ưu</li>
+<li><strong>Mesh Boolean</strong> — cộng/trừ/giao giữa các khối Mesh</li>
+</ul>
+<h2>Minh họa</h2>
+<div class="cf-img-block" data-cfimgid="tab-mesh" data-cfimgtype="image" data-align="center" data-name="tab-mesh.svg"><div class="cf-img-wrap"><div class="cf-img-inner"><img alt="Mesh: lưới tam giác"><div class="cf-img-resize-h left"></div><div class="cf-img-resize-h right"></div></div></div><div class="cf-img-caption"></div></div>
+<hr>
+<h2>Ví dụ trong dự án Voronoi</h2>
+<p>Chính lệnh <strong>Voronoi</strong> (đã có trang riêng trước đây) nằm trong tab Mesh &gt; Triangulation — nhận tập điểm xoắn ốc đã Flatten, chia mặt phẳng thành các ô đa giác đặc trưng của pattern.</p>`},
+  {id:'seed-tab-intersect',title:'Intersect',section:'default',parentId:'seed-grasshopper',images:[],textBoxes:[],createdAt:'2026-07-18T00:00:00.000Z',updatedAt:'2026-07-18T00:00:00.000Z',content:`<h1>Intersect</h1>
+<div class="cf-panel info" contenteditable="false"><span class="cf-panel-icon">ℹ️</span><div class="cf-panel-content" contenteditable="true">🟡 Trung bình — Tìm giao nhau giữa các đối tượng hình học: điểm giao, đường giao, mặt cắt.</div></div>
+<h2>Chức năng</h2>
+<p>Tab Intersect trả lời câu hỏi "2 đối tượng này có chạm/cắt nhau ở đâu?" — vd 2 đường cong cắt nhau tại điểm nào, 1 mặt phẳng cắt qua 1 khối tại đường nào. Rất hữu ích khi cần phân tích hoặc cắt lát 1 mô hình 3D phức tạp để xem mặt cắt bên trong.</p>
+<h2>Các lệnh tiêu biểu</h2>
+<ul>
+<li><strong>Curve|Curve</strong> — tìm điểm giao giữa 2 đường cong</li>
+<li><strong>Brep|Plane Section</strong> — cắt 1 khối bằng mặt phẳng, trả về đường mặt cắt</li>
+<li><strong>Physical (ray trace)</strong> — bắn tia và tìm điểm va chạm với geometry</li>
+<li><strong>Curve Plane</strong> — tìm giao điểm giữa đường cong và mặt phẳng</li>
+</ul>
+<h2>Minh họa</h2>
+<div class="cf-img-block" data-cfimgid="tab-intersect" data-cfimgtype="image" data-align="center" data-name="tab-intersect.svg"><div class="cf-img-wrap"><div class="cf-img-inner"><img alt="Intersect: giao nhau"><div class="cf-img-resize-h left"></div><div class="cf-img-resize-h right"></div></div></div><div class="cf-img-caption"></div></div>
+<hr>
+<h2>Ví dụ trong dự án Voronoi</h2>
+<p>Không dùng trực tiếp trong pattern 2D, nhưng hữu ích khi phân tích khối 3D "vành xe Voronoi" — dùng <strong>Brep|Plane Section</strong> để cắt lát xem cấu trúc bên trong của vành xe.</p>`},
+  {id:'seed-tab-transform',title:'Transform',section:'default',parentId:'seed-grasshopper',images:[],textBoxes:[],createdAt:'2026-07-18T00:00:00.000Z',updatedAt:'2026-07-18T00:00:00.000Z',content:`<h1>Transform</h1>
+<div class="cf-panel info" contenteditable="false"><span class="cf-panel-icon">ℹ️</span><div class="cf-panel-content" contenteditable="true">🟢 Cơ bản — Biến đổi hình học trong không gian: di chuyển, xoay, phóng to/nhỏ, đối xứng, mảng lưới.</div></div>
+<h2>Chức năng</h2>
+<p>Tab Transform chứa các lệnh thay đổi VỊ TRÍ/HÌNH DẠNG của geometry mà không tạo ra geometry hoàn toàn mới — di chuyển, xoay quanh 1 trục, phóng to/thu nhỏ, lấy đối xứng gương, hoặc nhân bản theo mảng (lưới vuông, lưới tròn). Đây là nhóm lệnh trực tiếp tạo ra các bản sao lặp lại trong pattern.</p>
+<h2>Các lệnh tiêu biểu</h2>
+<ul>
+<li><strong>Move</strong> — di chuyển theo 1 vector</li>
+<li><strong>Rotate</strong> — xoay quanh 1 trục theo góc chỉ định</li>
+<li><strong>Scale</strong> — phóng to/thu nhỏ theo tâm</li>
+<li><strong>Mirror</strong> — lấy đối xứng qua 1 mặt phẳng</li>
+<li><strong>Polar Array</strong> — nhân bản xoay tròn quanh tâm theo số lượng chỉ định</li>
+<li><strong>Maelstrom</strong> — xoắn vùng phẳng (cũng xuất hiện ở đây do bản chất là 1 phép biến đổi)</li>
+</ul>
+<h2>Minh họa</h2>
+<div class="cf-img-block" data-cfimgid="tab-transform" data-cfimgtype="image" data-align="center" data-name="tab-transform.svg"><div class="cf-img-wrap"><div class="cf-img-inner"><img alt="Transform: biến đổi hình học"><div class="cf-img-resize-h left"></div><div class="cf-img-resize-h right"></div></div></div><div class="cf-img-caption"></div></div>
+<hr>
+<h2>Ví dụ trong dự án Voronoi</h2>
+<p>2 bước then chốt nhất của toàn bộ pattern đều nằm ở đây: <strong>Polar Array</strong> nhân bản 1 tia gốc thành 32 tia toả tròn, sau đó <strong>Maelstrom</strong> bẻ cong 32 tia đó thành hình xoắn ốc đặc trưng.</p>`},
+  {id:'seed-tab-display',title:'Display',section:'default',parentId:'seed-grasshopper',images:[],textBoxes:[],createdAt:'2026-07-18T00:00:00.000Z',updatedAt:'2026-07-18T00:00:00.000Z',content:`<h1>Display</h1>
+<div class="cf-panel info" contenteditable="false"><span class="cf-panel-icon">ℹ️</span><div class="cf-panel-content" contenteditable="true">🟢 Cơ bản — Điều chỉnh hiển thị trên canvas Rhino: preview màu, custom preview, ghi chú text.</div></div>
+<h2>Chức năng</h2>
+<p>Tab Display KHÔNG thay đổi geometry thật — chỉ thay đổi CÁCH nó hiển thị trên màn hình Rhino (màu sắc, độ trong suốt, chữ ghi chú). Rất hữu ích để trực quan hoá kết quả, tô màu phân biệt các nhóm dữ liệu, hoặc debug bằng cách hiện số/text ngay trên canvas 3D.</p>
+<h2>Các lệnh tiêu biểu</h2>
+<ul>
+<li><strong>Custom Preview</strong> — gán màu tùy chỉnh cho 1 nhóm geometry cụ thể</li>
+<li><strong>Colour Swatch</strong> — chọn 1 màu để dùng làm input cho lệnh khác</li>
+<li><strong>Gradient</strong> — tạo dải màu chuyển tiếp theo giá trị số</li>
+<li><strong>Text Tag</strong> — hiện chữ/số ngay tại vị trí trong không gian 3D</li>
+<li><strong>Dot</strong> — hiện 1 điểm kèm nhãn text, hay dùng để debug index</li>
+</ul>
+<h2>Minh họa</h2>
+<div class="cf-img-block" data-cfimgid="tab-display" data-cfimgtype="image" data-align="center" data-name="tab-display.svg"><div class="cf-img-wrap"><div class="cf-img-inner"><img alt="Display: hiển thị màu sắc"><div class="cf-img-resize-h left"></div><div class="cf-img-resize-h right"></div></div></div><div class="cf-img-caption"></div></div>
+<hr>
+<h2>Ví dụ trong dự án Voronoi</h2>
+<p><strong>Custom Preview</strong> hữu ích để tô màu Gradient cho các ô Voronoi theo khoảng cách tới tâm — giúp nhìn rõ cấu trúc xoắn ốc trước khi quyết định bake ra Rhino.</p>`},
+  {id:'seed-tab-rhino',title:'Rhino',section:'default',parentId:'seed-grasshopper',images:[],textBoxes:[],createdAt:'2026-07-18T00:00:00.000Z',updatedAt:'2026-07-18T00:00:00.000Z',content:`<h1>Rhino</h1>
+<div class="cf-panel info" contenteditable="false"><span class="cf-panel-icon">ℹ️</span><div class="cf-panel-content" contenteditable="true">🟢 Cơ bản — Cầu nối dữ liệu giữa Grasshopper và file Rhino.</div></div>
+<h2>Chức năng</h2>
+<p>Grasshopper là 1 plugin chạy BÊN TRONG Rhino — mọi kết quả cuối cùng thường cần đưa (bake) ngược trở lại thành geometry thật trong file Rhino để tiếp tục làm việc (in 3D, xuất bản vẽ, render). Tab Rhino chứa các lệnh quản lý mối liên kết 2 chiều này.</p>
+<h2>Các lệnh tiêu biểu</h2>
+<ul>
+<li><strong>Geometry Pipeline</strong> — tự động lấy toàn bộ object trong 1 Layer Rhino vào Grasshopper</li>
+<li><strong>Layer</strong> — tham chiếu tới 1 layer cụ thể trong Rhino</li>
+<li><strong>Bake</strong> (chuột phải vào component) — xuất geometry từ Grasshopper thành object thật trong Rhino</li>
+<li><strong>Bounding Box</strong> từ object Rhino — lấy kích thước bao ngoài</li>
+</ul>
+<h2>Minh họa</h2>
+<div class="cf-img-block" data-cfimgid="tab-rhino" data-cfimgtype="image" data-align="center" data-name="tab-rhino.svg"><div class="cf-img-wrap"><div class="cf-img-inner"><img alt="Rhino: cầu nối 2 chiều"><div class="cf-img-resize-h left"></div><div class="cf-img-resize-h right"></div></div></div><div class="cf-img-caption"></div></div>
+<hr>
+<h2>Ví dụ trong dự án Voronoi</h2>
+<p>Sau khi hoàn thiện pattern, dùng <strong>Bake</strong> để xuất toàn bộ các ô Voronoi cuối cùng ra 1 layer riêng trong Rhino — phục vụ in 3D hoặc xuất bản vẽ CAD.</p>`},
+  {id:'seed-tab-kangaroo2',title:'Kangaroo2',section:'default',parentId:'seed-grasshopper',images:[],textBoxes:[],createdAt:'2026-07-18T00:00:00.000Z',updatedAt:'2026-07-18T00:00:00.000Z',content:`<h1>Kangaroo2</h1>
+<div class="cf-panel info" contenteditable="false"><span class="cf-panel-icon">ℹ️</span><div class="cf-panel-content" contenteditable="true">🔴 Nâng cao — Plugin mô phỏng vật lý (physics simulation): lực căng, va chạm, trọng lực.</div></div>
+<h2>Chức năng</h2>
+<p>Kangaroo2 là plugin mô phỏng vật lý thời gian thực — thay vì tính toán hình học bằng công thức cố định, Kangaroo "thả" hệ vật lý (lò xo, trọng lực, va chạm...) chạy tới khi ổn định, cho ra hình dạng tự nhiên (form-finding), vd mái vòm, lưới căng, vải rủ.</p>
+<h2>Các lệnh tiêu biểu</h2>
+<ul>
+<li><strong>Solver</strong> — bộ giải chính, chạy vòng lặp mô phỏng liên tục</li>
+<li><strong>Length (Spring)</strong> — lực lò xo giữa 2 điểm, giữ khoảng cách mong muốn</li>
+<li><strong>OnMesh</strong> — ràng buộc điểm phải nằm trên bề mặt 1 Mesh</li>
+<li><strong>Show</strong> — hiển thị kết quả mô phỏng real-time trên canvas</li>
+</ul>
+<h2>Minh họa</h2>
+<div class="cf-img-block" data-cfimgid="tab-kangaroo2" data-cfimgtype="image" data-align="center" data-name="tab-kangaroo2.svg"><div class="cf-img-wrap"><div class="cf-img-inner"><img alt="Kangaroo2: mô phỏng vật lý"><div class="cf-img-resize-h left"></div><div class="cf-img-resize-h right"></div></div></div><div class="cf-img-caption"></div></div>
+<hr>
+<h2>Ví dụ trong dự án Voronoi</h2>
+<p>Không dùng trong bản pattern phẳng hiện tại (dùng công thức Maelstrom thuần toán học), nhưng nếu muốn làm vành xe Voronoi "phồng" tự nhiên theo lực vật lý thay vì áp đặt công thức, đây là công cụ phù hợp — hướng phát triển tiềm năng cho dự án.</p>`},
+  {id:'seed-tab-wb',title:'Wb (Weaverbird)',section:'default',parentId:'seed-grasshopper',images:[],textBoxes:[],createdAt:'2026-07-18T00:00:00.000Z',updatedAt:'2026-07-18T00:00:00.000Z',content:`<h1>Wb (Weaverbird)</h1>
+<div class="cf-panel info" contenteditable="false"><span class="cf-panel-icon">ℹ️</span><div class="cf-panel-content" contenteditable="true">🔴 Nâng cao — Plugin xử lý Mesh nâng cao: Subdivision (làm mịn), chuyển đổi Mesh ↔ NURBS.</div></div>
+<h2>Chức năng</h2>
+<p>Weaverbird chuyên xử lý Mesh ở mức sâu hơn nhóm Mesh cơ bản — đặc biệt là thuật toán <strong>Subdivision</strong> (chia nhỏ + làm mịn dần, giống cách Pixar làm mịn mô hình hoạt hình), giúp biến 1 khối Mesh góc cạnh thô thành bề mặt mượt mà tự nhiên.</p>
+<h2>Các lệnh tiêu biểu</h2>
+<ul>
+<li><strong>Catmull-Clark Subdivision</strong> — thuật toán làm mịn mesh phổ biến nhất</li>
+<li><strong>Mesh Smooth</strong> — làm mịn nhẹ, giữ hình dạng gần với gốc</li>
+<li><strong>Dual Mesh</strong> — tạo mesh "đối ngẫu" (đổi mặt thành đỉnh và ngược lại)</li>
+<li><strong>Loop Subdivision</strong> — thuật toán làm mịn khác, tối ưu cho mesh tam giác</li>
+</ul>
+<h2>Minh họa</h2>
+<div class="cf-img-block" data-cfimgid="tab-wb" data-cfimgtype="image" data-align="center" data-name="tab-wb.svg"><div class="cf-img-wrap"><div class="cf-img-inner"><img alt="Weaverbird: làm mịn mesh"><div class="cf-img-resize-h left"></div><div class="cf-img-resize-h right"></div></div></div><div class="cf-img-caption"></div></div>
+<hr>
+<h2>Ví dụ trong dự án Voronoi</h2>
+<p>Có thể dùng <strong>Catmull-Clark Subdivision</strong> để làm mịn bề mặt khối 3D "vành xe Voronoi" sau khi bake, tạo cảm giác mượt mà hơn thay vì để nguyên các mặt phẳng góc cạnh từ Boundary Surfaces.</p>`}];
 let state={projectName:'My Project',username:'User',sections:['default'],docs:[],currentDocId:null};
 let saveTimer,dirty=false,ctxImgIdx=null,docCtxId=null,_savedRange=null,_bubbleHideTimer=null;
 
