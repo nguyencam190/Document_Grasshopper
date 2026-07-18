@@ -78,14 +78,36 @@ nhưng không dùng nó để sửa nữa). Quy trình lấy/ghi file qua API (r
    H2 "Input/Output" (bảng) → H2 "Cách dùng" (danh sách số) → H2 "Minh họa" (ảnh SVG tự vẽ, vì
    không có ảnh chụp component thật) → Warning/Note panel lưu ý → H2 "Ví dụ trong dự án Voronoi".
 4. Bump `SEED_VERSION` lên 1 (để mọi trình duyệt tự đồng bộ lại, không cần user xoá cache/localStorage).
-5. **Luôn publish kèm cả ảnh minh họa** (yêu cầu rõ ràng của user, tự động mỗi lần đổi nội dung):
-   - Ảnh SVG mới vẽ cho lệnh này → `PUT /repos/.../contents/assets/{ten-lenh}-minhhoa.svg` (file mới
-     nên KHÔNG cần field `sha` trong body).
-   - `Grasshopper.html` tham chiếu ảnh qua đường dẫn tương đối `assets/{ten-lenh}-minhhoa.svg`.
-   - `PUT` thẳng lên GitHub qua Contents API cho cả 2 file (HTML + ảnh) — không tạo commit local,
-     không cần `git pull`/`git push`. Thư mục `assets/` trên GitHub hiện có sẵn (repo:
-     `nguyencam190/Document_Grasshopper`, xem trước bằng
-     `GET /repos/.../contents/assets?ref=main` để biết ảnh nào đã có, tránh trùng tên).
+5. **Luôn publish kèm ảnh minh họa, tạo bằng CHÍNH pipeline thật của app** (yêu cầu rõ ràng của user —
+   "làm đúng" như nút Publish, không tự chế) — quy trình đầy đủ (đã test thành công với "Voronoi"):
+   a. Trong 1 tab trình duyệt đã mở `Grasshopper.html` sống (qua `mcp__Claude_Browser`), với ảnh SVG
+      mới đã có sẵn ở đâu đó truy cập được (vd fetch từ 1 URL tạm), đăng ký ảnh "đúng chuẩn" của app:
+      `const blob=await(await fetch(url)).blob(); const id=uid(); await _idbPut(id,blob);` rồi thay
+      thẻ `<img>` thô trong `doc.content` bằng khối `.cf-img-block` có `data-cfimgid="ID"` (xem cấu
+      trúc ở `_cfBuildImgBlock` trong `Grasshopper.html`).
+   b. **Bẫy quan trọng**: nếu trang đang sửa đang là `state.currentDocId` (đang mở trong editor), bước
+      xuất ở dưới sẽ tự động ghi đè `doc.content` bằng snapshot DOM sống (Phase 0 của
+      `doExportOptimized`/`doExportWebsite`) — xoá mất chỉnh sửa string vừa làm! Phải set
+      `state.currentDocId=null` (đóng hết trang đang mở) trước khi export.
+   c. Set chế độ ảnh gốc (không nén thành JPG mất chi tiết SVG):
+      `document.querySelector('input[name="imgQuality"][value="original"]').checked=true` (mở modal
+      export 1 lần trước đó nếu radio chưa tồn tại trong DOM: `openExportWebsiteModal()`).
+   d. Patch `window._saveFile` để bắt Blob thay vì tải xuống (sandbox chặn download thật), gọi
+      `await doExportOptimized({docs: state.docs.filter(d=>!d._deleted), title:'...'})` — trả về 1
+      file ZIP (không phải HTML đơn), ảnh nằm ở `assets/images/{id}.{ext}` bên trong ZIP.
+   e. `fetch()` Blob ZIP đó lên local relay server (POST /upload, xem mục kỹ thuật bên dưới) → lưu
+      **vào scratchpad session, TUYỆT ĐỐI không lưu vào ổ D:** → giải nén bằng
+      `Expand-Archive` (PowerShell, có sẵn, không cần cài gì).
+   f. Lấy đúng file ảnh vừa giải nén (`assets/images/{id}.svg`), `PUT` lên GitHub tại
+      `assets/images/{id}.svg` (file mới, không cần `sha`).
+   g. Sửa `Grasshopper.html`: đổi `<img src="...">` trỏ sang `assets/images/{id}.svg` — **dùng thẻ
+      `<img>` thường, KHÔNG dùng `.cf-img-block`/`data-cfimgid`** trong `SEED_DOCS`, vì `data-cfimgid`
+      chỉ tra được ảnh từ IndexedDB của TRÌNH DUYỆT ĐANG SỬA — khách ghé thăm khác (hoặc chính user mở
+      máy khác) sẽ không có blob đó trong IndexedDB của họ, ảnh sẽ vỡ. `<img src="file-thật">` mới
+      hiển thị đúng cho MỌI người ghé thăm.
+   h. Xoá file ảnh cũ (nếu có, đường dẫn phẳng `assets/{ten}.svg` kiểu cũ) bằng
+      `DELETE /repos/.../contents/{path}` kèm `sha` hiện tại, tránh rác thừa trong repo.
+   i. Bump `SEED_VERSION`, `PUT Grasshopper.html` như bước 5 cũ.
 
 **Chi tiết kỹ thuật quan trọng (để không lặp lại lỗi):**
 - (Lịch sử: có lúc `index.html` bị `git rm --cached`/gitignore, có lúc bản xuất tĩnh
