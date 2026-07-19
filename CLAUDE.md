@@ -86,9 +86,18 @@ nhưng không dùng nó để sửa nữa). Quy trình lấy/ghi file qua API (r
    để commit thẳng lên GitHub — không qua `git add/commit/push` cục bộ nữa.
 
 **Quy trình chuẩn khi user tìm hiểu 1 lệnh Grasshopper mới (vd "Deconstruct Brep"):**
+
+> ⚠️ **BƯỚC 0 — BẮT BUỘC kiểm tra trùng trước khi làm bất cứ gì khác**: lấy `Grasshopper.html` hiện
+> tại từ GitHub (theo quy trình API trên), tìm trong biến `SEED_DOCS` xem component/lệnh này **đã có
+> trang riêng chưa** (so khớp theo tên lệnh, kể cả tên gần giống/viết tắt/khác hoa-thường). Nếu đã có
+> trang rồi thì **DỪNG LẠI**: không nghiên cứu lại, không viết lại nội dung, không tạo thêm trang mới
+> trùng lặp — chỉ báo cho user biết trang đã tồn tại (nêu rõ tên/vị trí trang) và hỏi user có muốn cập
+> nhật/bổ sung trang cũ đó hay không. Chỉ tiếp tục từ bước 1 trở xuống khi xác nhận component **chưa**
+> có trang nào trong `SEED_DOCS`.
+
 1. Nghiên cứu chức năng lệnh đó (input/output, cách dùng, lưu ý).
-2. Lấy nội dung `Grasshopper.html` hiện tại từ GitHub (theo quy trình API trên), thêm 1 trang con mới
-   vào biến `SEED_DOCS`, đặt tên đúng theo lệnh, `parentId` trỏ vào trang cha "Grasshopper" (xem cấu
+2. Thêm 1 trang con mới vào biến `SEED_DOCS` (dùng nội dung `Grasshopper.html` đã lấy ở bước 0),
+   đặt tên đúng theo lệnh, `parentId` trỏ vào trang cha "Grasshopper" (xem cấu
    trúc doc ở [[gh-docs-app-workflow]]).
 3. Viết nội dung vào canvas theo cấu trúc: H1 tên lệnh → Info panel tóm tắt → H2 "Chức năng" →
    H2 "Input/Output" (bảng) → H2 "Cách dùng" (danh sách số) → H2 "Minh họa" (ảnh SVG tự vẽ, vì
