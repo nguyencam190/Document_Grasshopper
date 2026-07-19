@@ -166,7 +166,12 @@ nhưng không dùng nó để sửa nữa). Quy trình lấy/ghi file qua API (r
    không có ảnh chụp component thật — **phải mô phỏng đúng diện mạo thật của Grasshopper canvas/Rhino
    viewport** theo chuẩn ở `.claude/skills/nghien-cuu-grasshopper/references/phong-cach-minh-hoa.md`,
    không vẽ sơ đồ hộp-mũi tên chung chung) → Warning/Note panel lưu ý → H2 "Ví dụ ứng dụng thực tế"
-   (nếu có ví dụ liên quan tới dự án Voronoi hoặc dự án khác đang làm, nêu ở đây).
+   (nếu có ví dụ liên quan tới dự án Voronoi hoặc dự án khác đang làm, nêu ở đây). **Mục "Ví dụ ứng
+   dụng thực tế" cũng PHẢI có hình minh họa riêng** (cùng chuẩn `.cf-img-block` + publish qua asset
+   thật như mục "Minh họa" ở trên, không chỉ có text) — minh họa cho đúng ví dụ ứng dụng cụ thể đang
+   mô tả (vd cảnh dựng vỏ kiến trúc từ mặt cắt), không dùng lại y nguyên ảnh của mục "Minh họa" phía
+   trên (2 ảnh phục vụ 2 mục đích khác nhau: 1 ảnh giải thích cách nối dây/component, 1 ảnh minh họa
+   ngữ cảnh ứng dụng thực tế).
 5. Bump `SEED_VERSION` lên 1 (để mọi trình duyệt tự đồng bộ lại, không cần user xoá cache/localStorage).
 6. **Luôn publish kèm ảnh minh họa, tạo bằng CHÍNH pipeline thật của app** (yêu cầu rõ ràng của user —
    "làm đúng" như nút Publish, không tự chế) — quy trình đầy đủ (đã test thành công với "Voronoi"):
