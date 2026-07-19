@@ -255,3 +255,11 @@ Khác với trang tham khảo 1 component đơn lẻ (nhét vào 1 trong 13 tran
   thể vẫn thấy bản cũ vài phút dù server đã có bản mới. Nếu cần xem ngay: thêm `?v=x` vào cuối URL.
 - Push cần set `git config user.email` dạng `<username>@users.noreply.github.com` — email thật bị
   GitHub chặn (GH007, "would publish a private email address") nếu tài khoản đang bật ẩn email.
+
+## Git workflow
+User muốn mọi commit trong repo này **push/merge thẳng vào nhánh `main`**, không giữ lại lâu trên
+nhánh nhánh làm việc riêng chờ review — đây là repo tài liệu cá nhân, không cần quy trình PR. Nếu 1
+phiên làm việc bị hệ thống gán 1 nhánh tính năng riêng (vd `claude/...`) để phát triển, vẫn commit ở
+đó theo yêu cầu hệ thống, nhưng ngay khi có thể (user xác nhận, hoặc cuối phiên) phải **merge nhánh đó
+thẳng vào `main` và push**, không để `main` bị tụt lại phía sau — vì trang live (GitHub Pages) chạy từ
+`main`, tụt nhánh nghĩa là thay đổi không lên được trang thật.
