@@ -2,6 +2,14 @@
 
 Dự án Rhino + Grasshopper tạo pattern Voronoi dạng **hoa hướng dương / xoắn ốc (phyllotaxis)**.
 
+## Phạm vi nghiên cứu Grasshopper (quan trọng)
+Nhu cầu học Grasshopper của user **KHÔNG giới hạn trong dự án Voronoi** — user muốn tìm hiểu sâu
+bất kỳ Component/Graph nào của Grasshopper nói chung, kể cả khi không liên quan gì đến pattern
+Voronoi/phyllotaxis trong repo này. Khi user hỏi về 1 component GH cụ thể (vd "Deconstruct Brep",
+"Graph Mapper", "Cull Pattern"...), dùng skill **`nghien-cuu-grasshopper`**
+(`.claude/skills/nghien-cuu-grasshopper/SKILL.md`) để trả lời theo cấu trúc 11 mục cố định, không
+tự giới hạn câu trả lời vào bối cảnh dự án Voronoi trừ khi user hỏi rõ về dự án này.
+
 ## Cấu trúc
 - `Video/Voronoi Pattern (Grasshopper Tutorial).mp4` — video tutorial gốc (Parametric House, ~15 phút, 720p).
 - `Video/voronoi-alpha-1-wheel-system-youtube_2USQihHa.mp4` — showcase **vành xe Voronoi** (Handlebar3D,
