@@ -101,7 +101,9 @@ nhưng không dùng nó để sửa nữa). Quy trình lấy/ghi file qua API (r
    trúc doc ở [[gh-docs-app-workflow]]).
 3. Viết nội dung vào canvas theo cấu trúc: H1 tên lệnh → Info panel tóm tắt → H2 "Chức năng" →
    H2 "Input/Output" (bảng) → H2 "Cách dùng" (danh sách số) → H2 "Minh họa" (ảnh SVG tự vẽ, vì
-   không có ảnh chụp component thật) → Warning/Note panel lưu ý → H2 "Ví dụ trong dự án Voronoi".
+   không có ảnh chụp component thật — **phải mô phỏng đúng diện mạo thật của Grasshopper canvas/Rhino
+   viewport** theo chuẩn ở `.claude/skills/nghien-cuu-grasshopper/references/phong-cach-minh-hoa.md`,
+   không vẽ sơ đồ hộp-mũi tên chung chung) → Warning/Note panel lưu ý → H2 "Ví dụ trong dự án Voronoi".
 4. Bump `SEED_VERSION` lên 1 (để mọi trình duyệt tự đồng bộ lại, không cần user xoá cache/localStorage).
 5. **Luôn publish kèm ảnh minh họa, tạo bằng CHÍNH pipeline thật của app** (yêu cầu rõ ràng của user —
    "làm đúng" như nút Publish, không tự chế) — quy trình đầy đủ (đã test thành công với "Voronoi"):

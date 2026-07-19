@@ -79,8 +79,11 @@ thích khác biệt hành vi giữa từng kiểu.
 **10. Ví dụ** — bắt buộc tối thiểu 2 ví dụ: 1 ví dụ đơn giản + 1 ví dụ thực tế. Mỗi ví dụ phải có
 đủ: Input, Component, Output, kết quả cuối, và workflow của chính ví dụ đó. Ví dụ phải ngắn gọn,
 dễ tái tạo lại trên canvas thật.
-   - **Bắt buộc có hình minh hoạ cho mỗi ví dụ.** Ưu tiên hình/sơ đồ trực quan (mô tả bố cục canvas,
-     sơ đồ dây nối, hoặc mô tả hình học kết quả); chỉ dùng sơ đồ ASCII khi không dựng được hình phù hợp.
+   - **Bắt buộc có hình minh hoạ cho mỗi ví dụ, và hình phải mô phỏng đúng diện mạo thật của
+     Grasshopper canvas / Rhino viewport** (khối component bo góc xám có núm input/output, dây nối
+     cong, viewport nền trắng có lưới phối cảnh...) — không vẽ sơ đồ hộp-mũi tên chung chung kiểu
+     flowchart trừ khi thực sự không có ảnh phù hợp. Xem chi tiết màu sắc/hình dạng/khung SVG mẫu ở
+     `references/phong-cach-minh-hoa.md`. Chỉ dùng sơ đồ ASCII khi không dựng được SVG phù hợp.
 
 **11. Lưu ý** — lỗi thường gặp khi dùng component này, giới hạn/hạn chế thực tế, mẹo dùng hiệu quả.
 
