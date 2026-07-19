@@ -4109,14 +4109,15 @@ function _hdrLogoInit(){
   const hdrBox=document.getElementById('hdrLogoBox');const hdrTxt=document.getElementById('hdrLogoText');
   if(hdrBox&&hdrTxt){
     if(H.imgDataUrl){
-      // Rail logo is a fixed 40×40 square frame → the image FILLS the frame
-      // (object-fit:cover), it does NOT resize the frame to the image.
+      // Rail logo is a fixed 40×40 square frame — the image is shown IN FULL
+      // (object-fit:contain), letterboxed if not square, instead of being
+      // cropped to fill. The frame itself does not resize to the image.
       hdrBox.style.cssText='width:40px;height:40px;border-radius:9px;overflow:hidden;background:transparent;box-shadow:none;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0';
       hdrTxt.style.display='none';
       let img=hdrBox.querySelector('img');
       if(!img){img=document.createElement('img');hdrBox.insertBefore(img,hdrBox.firstChild);}
       img.src=H.imgDataUrl;
-      img.style.cssText='width:100%;height:100%;object-fit:cover;display:block';
+      img.style.cssText='width:100%;height:100%;object-fit:contain;display:block';
     } else {
       hdrBox.style.cssText='';
       hdrBox.style.background=H.color||'var(--accent)';

@@ -257,6 +257,17 @@ Khác với trang tham khảo 1 component đơn lẻ (nhét vào 1 trong 13 tran
   `_buildViewerShellCss()` (dùng chung bởi `doExportWebsite()` và `doExportOptimized()`, ~dòng 16045)
   — thiếu 1 trong 2 chỗ vẫn còn bug ở nơi chưa sửa. Ảnh đã tự resize thủ công trước đó không bị ảnh
   hưởng vì inline style luôn thắng style class.
+- **App có 2 hệ thống logo dự án RIÊNG BIỆT — dễ sửa nhầm chỗ (đã tự mắc lỗi này 1 lần)**:
+  1. `state.projectLogo` → phần tử `#sbSpaceIcon` trong sidebar cũ — ở "new UI" hiện tại phần tử này
+     bị `display:none!important` (xem CSS comment "Logo now lives in the rail... sidebar header is
+     text-only", dòng ~2004) nên **sửa CSS ở đây KHÔNG có tác dụng gì cả**, vì user không nhìn thấy nó.
+  2. `state.headerLogo` → phần tử `#headerLogoWrap`/`#hdrLogoBox`, đây là **logo thật sự hiển thị**,
+     nằm ở đầu thanh rail icon dọc bên trái (`#mainHeader`, 56px, nền tối `#09090f`). Set style qua JS
+     trong hàm `_hdrLogoInit()` (dòng ~4106), không phải qua class CSS tĩnh.
+  Khi user báo lỗi "logo không vừa khung"/"logo bị cắt", **luôn hỏi rõ vị trí trước khi sửa** (icon ở
+  rìa trái ngoài cùng = rail logo/`#hdrLogoBox`, icon phía trên chữ "Recent" trong sidebar = phần tử
+  cũ hiện đã ẩn) — đã từng sửa nhầm hệ thống (1) trong khi user nói về hệ thống (2), mất 1 vòng hỏi
+  lại mới phát hiện ra.
 
 ## Git workflow
 User muốn mọi commit trong repo này **push/merge thẳng vào nhánh `main`**, không giữ lại lâu trên
