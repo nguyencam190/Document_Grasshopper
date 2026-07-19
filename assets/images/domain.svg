@@ -1,0 +1,68 @@
+<svg width="900" height="380" viewBox="0 0 900 380" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, Arial, sans-serif">
+<defs>
+  <linearGradient id="domBody" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0%" stop-color="#9ED94A"/>
+    <stop offset="100%" stop-color="#6FA82A"/>
+  </linearGradient>
+  <pattern id="dotgridD" width="18" height="18" patternUnits="userSpaceOnUse">
+    <circle cx="1" cy="1" r="1" fill="#E0E0DA"/>
+  </pattern>
+</defs>
+
+<rect x="0" y="0" width="520" height="380" fill="url(#dotgridD)"/>
+<rect x="0" y="0" width="520" height="380" fill="#F7F7F2" opacity="0.35"/>
+
+<!-- A=0 slider -->
+<g>
+  <rect x="20" y="80" width="130" height="30" rx="5" fill="#F0F0F0" stroke="#8C8C8C"/>
+  <rect x="28" y="90" width="60" height="10" rx="3" fill="#E4E4E4" stroke="#B0B0B0"/>
+  <circle cx="34" cy="95" r="5" fill="#8C8C8C"/>
+  <text x="126" y="100" text-anchor="start" font-size="10" fill="#333">A=0</text>
+</g>
+<!-- B=10 slider -->
+<g>
+  <rect x="20" y="140" width="130" height="30" rx="5" fill="#F0F0F0" stroke="#8C8C8C"/>
+  <rect x="28" y="150" width="60" height="10" rx="3" fill="#E4E4E4" stroke="#B0B0B0"/>
+  <circle cx="70" cy="155" r="5" fill="#8C8C8C"/>
+  <text x="126" y="160" text-anchor="start" font-size="10" fill="#333">B=10</text>
+</g>
+<g>
+  <rect x="150" y="88" width="10" height="14" rx="3" fill="#E8E8E8" stroke="#8C8C8C"/><circle cx="155" cy="95" r="2.3" fill="#4A4A4A"/>
+  <rect x="150" y="148" width="10" height="14" rx="3" fill="#E8E8E8" stroke="#8C8C8C"/><circle cx="155" cy="155" r="2.3" fill="#4A4A4A"/>
+</g>
+
+<!-- wires into Construct Domain -->
+<path d="M 155,95 C 190,95 190,120 227,120" stroke="#4A4A4A" stroke-width="1.4" fill="none"/>
+<path d="M 155,155 C 190,155 190,156 227,156" stroke="#4A4A4A" stroke-width="1.4" fill="none"/>
+
+<!-- Construct Domain box: x=230 y=100 w=150 h=80 (spans 100-180) -->
+<g>
+  <rect x="230" y="100" width="150" height="80" rx="6" fill="url(#domBody)" stroke="#1f3d0a" stroke-width="1.5"/>
+  <text x="305" y="122" text-anchor="middle" font-size="12" font-weight="bold" fill="#0d1f04">Construct Domain</text>
+  <rect x="222" y="112" width="10" height="16" rx="3" fill="#E8E8E8" stroke="#1f3d0a"/><circle cx="227" cy="120" r="2.3" fill="#1f3d0a"/><text x="238" y="124" font-size="11" fill="#0d1f04">A</text>
+  <rect x="222" y="148" width="10" height="16" rx="3" fill="#E8E8E8" stroke="#1f3d0a"/><circle cx="227" cy="156" r="2.3" fill="#1f3d0a"/><text x="238" y="160" font-size="11" fill="#0d1f04">B</text>
+  <rect x="378" y="132" width="10" height="16" rx="3" fill="#E8E8E8" stroke="#1f3d0a"/><circle cx="383" cy="140" r="2.3" fill="#1f3d0a"/>
+  <text x="368" y="144" text-anchor="end" font-size="11" fill="#0d1f04">I</text>
+</g>
+
+<!-- wire to panel -->
+<path d="M 388,140 C 405,140 405,140 420,140" stroke="#4A4A4A" stroke-width="1.4" fill="none"/>
+
+<!-- Panel showing result text -->
+<rect x="422" y="126" width="80" height="28" fill="#FFFFFF" stroke="#8C8C8C" stroke-width="1"/>
+<text x="462" y="144" text-anchor="middle" font-size="11" fill="#222">0 To 10</text>
+
+<!-- Right side: abstract number-line diagram (not Rhino viewport — Domain has no 3D geometry) -->
+<rect x="520" y="0" width="380" height="380" fill="#FFFFFF" stroke="#B0B0B0"/>
+<text x="530" y="24" font-family="Consolas, monospace" font-size="12" fill="#555">Number line</text>
+
+<line x1="570" y1="180" x2="850" y2="180" stroke="#D0D0D0" stroke-width="2"/>
+<rect x="570" y="174" width="280" height="12" fill="#8ecb3f" opacity="0.5"/>
+<line x1="570" y1="165" x2="570" y2="195" stroke="#1f3d0a" stroke-width="2"/>
+<line x1="850" y1="165" x2="850" y2="195" stroke="#1f3d0a" stroke-width="2"/>
+<text x="570" y="215" text-anchor="middle" font-size="13" fill="#1f3d0a">0 (A)</text>
+<text x="850" y="215" text-anchor="middle" font-size="13" fill="#1f3d0a">10 (B)</text>
+<text x="710" y="160" text-anchor="middle" font-size="11" fill="#555">Domain = khoảng [0, 10]</text>
+
+<text x="530" y="350" font-size="11" fill="#555">Construct Domain gộp 2 số A/B thành 1 khoảng giá trị (Domain), hiển thị dạng "0 To 10"</text>
+</svg>

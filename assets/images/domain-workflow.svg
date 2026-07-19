@@ -1,0 +1,74 @@
+<svg width="900" height="260" viewBox="0 0 900 260" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, Arial, sans-serif">
+<defs>
+  <linearGradient id="domBody2" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0%" stop-color="#9ED94A"/>
+    <stop offset="100%" stop-color="#6FA82A"/>
+  </linearGradient>
+  <linearGradient id="ghBodyD2" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0%" stop-color="#F0F0F0"/>
+    <stop offset="100%" stop-color="#D8D8D8"/>
+  </linearGradient>
+  <pattern id="dotgridD2" width="18" height="18" patternUnits="userSpaceOnUse">
+    <circle cx="1" cy="1" r="1" fill="#E0E0DA"/>
+  </pattern>
+</defs>
+
+<rect x="0" y="0" width="900" height="260" fill="#FAFAF7"/>
+<rect x="0" y="0" width="900" height="260" fill="url(#dotgridD2)"/>
+
+<!-- Box 1: Construct Domain, box x=30 y=100 w=140 h=70 (spans 100-170) -->
+<g>
+  <rect x="30" y="100" width="140" height="70" rx="6" fill="url(#domBody2)" stroke="#1f3d0a" stroke-width="1.3"/>
+  <text x="100" y="122" text-anchor="middle" font-size="11" font-weight="bold" fill="#0d1f04">Construct Domain</text>
+  <rect x="162" y="127" width="10" height="16" rx="3" fill="#E8E8E8" stroke="#1f3d0a"/>
+  <circle cx="167" cy="135" r="2.5" fill="#1f3d0a"/>
+  <text x="157" y="131" text-anchor="end" font-size="9" fill="#0d1f04">I</text>
+</g>
+<text x="100" y="184" text-anchor="middle" font-size="10" fill="#888">A=0, B=10</text>
+
+<!-- wire 1 -->
+<path d="M 172,135 C 205,135 205,135 238,135" stroke="#4A4A4A" stroke-width="1.5" fill="none"/>
+
+<!-- Box 2: Remap Numbers (box x=240 y=95 w=150 h=90, spans 95-185) -->
+<g>
+  <rect x="240" y="95" width="150" height="90" rx="6" fill="url(#ghBodyD2)" stroke="#8C8C8C" stroke-width="1.3"/>
+  <text x="315" y="126" text-anchor="middle" font-size="12" font-weight="600" fill="#222">Remap</text>
+  <text x="315" y="142" text-anchor="middle" font-size="12" font-weight="600" fill="#222">Numbers</text>
+  <rect x="232" y="127" width="10" height="16" rx="3" fill="#E8E8E8" stroke="#8C8C8C"/>
+  <circle cx="237" cy="135" r="2.5" fill="#4A4A4A"/>
+  <text x="224" y="139" text-anchor="end" font-size="9" fill="#888">S</text>
+  <rect x="388" y="127" width="10" height="16" rx="3" fill="#E8E8E8" stroke="#8C8C8C"/>
+  <circle cx="393" cy="135" r="2.5" fill="#4A4A4A"/>
+</g>
+
+<!-- wire 2 -->
+<path d="M 398,135 C 420,135 420,135 442,135" stroke="#4A4A4A" stroke-width="1.5" fill="none"/>
+
+<!-- Box 3: Number list output param -->
+<g>
+  <rect x="444" y="111" width="100" height="48" rx="6" fill="url(#ghBodyD2)" stroke="#8C8C8C" stroke-width="1"/>
+  <text x="494" y="139" text-anchor="middle" font-size="12" fill="#222">Numbers</text>
+  <rect x="540" y="127" width="10" height="16" rx="3" fill="#E8E8E8" stroke="#8C8C8C"/>
+  <circle cx="545" cy="135" r="2.5" fill="#4A4A4A"/>
+</g>
+
+<!-- wire to result -->
+<path d="M 550,135 C 570,135 570,135 596,135" stroke="#4A4A4A" stroke-width="1.5" stroke-dasharray="3,3" fill="none"/>
+
+<!-- Number line result -->
+<g>
+  <rect x="598" y="60" width="264" height="140" fill="#FFFFFF" stroke="#B0B0B0"/>
+  <text x="606" y="76" font-family="Consolas, monospace" font-size="10" fill="#555">Remapped values</text>
+  <line x1="620" y1="150" x2="840" y2="150" stroke="#D0D0D0" stroke-width="2"/>
+  <g fill="#c0392b">
+    <circle cx="625" cy="150" r="3"/>
+    <circle cx="670" cy="150" r="3"/>
+    <circle cx="715" cy="150" r="3"/>
+    <circle cx="760" cy="150" r="3"/>
+    <circle cx="805" cy="150" r="3"/>
+    <circle cx="835" cy="150" r="3"/>
+  </g>
+</g>
+
+<text x="20" y="230" font-size="12" fill="#555">Workflow phổ biến: Construct Domain → Remap Numbers → giá trị đã ánh xạ vào khoảng [0,10]</text>
+</svg>

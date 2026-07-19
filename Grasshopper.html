@@ -2986,12 +2986,12 @@ const STORE_KEY='projectdocs_v3';
 // Bump SEED_VERSION any time SEED_DOCS content changes (e.g. a new Grasshopper
 // command page is added) to re-sync all visitors automatically, even ones
 // with old data already saved locally.
-const SEED_VERSION=36;
+const SEED_VERSION=37;
 // Real image assets referenced by SEED_DOCS via data-cfimgid — every visitor's
 // browser needs these in its OWN IndexedDB (see init() below) so images both
 // (a) display correctly, and (b) get recognized by the app's own Optimized
 // Website export if the user runs Publish themselves later.
-const SEED_ASSETS={'tab-params':'svg','tab-maths':'svg','tab-sets':'svg','tab-vector':'svg','tab-curve':'svg','tab-surface':'svg','tab-mesh':'svg','tab-intersect':'svg','tab-transform':'svg','tab-display':'svg','tab-rhino':'svg','tab-kangaroo2':'svg','tab-wb':'svg','fitloft2':'svg','fitloft-example':'svg','extrude2':'svg','extrude-example':'svg','fitloft-workflow2':'svg','extrude-workflow2':'svg','series':'svg','series-workflow':'svg','series-example':'svg','point':'svg','point-workflow':'svg','point-example':'svg','coincident':'svg','coincident-workflow':'svg','coincident-example':'svg','maelstrom':'svg','maelstrom-workflow':'svg','maelstrom-example':'svg'};
+const SEED_ASSETS={'tab-params':'svg','tab-maths':'svg','tab-sets':'svg','tab-vector':'svg','tab-curve':'svg','tab-surface':'svg','tab-mesh':'svg','tab-intersect':'svg','tab-transform':'svg','tab-display':'svg','tab-rhino':'svg','tab-kangaroo2':'svg','tab-wb':'svg','fitloft2':'svg','fitloft-example':'svg','extrude2':'svg','extrude-example':'svg','fitloft-workflow2':'svg','extrude-workflow2':'svg','series':'svg','series-workflow':'svg','series-example':'svg','point':'svg','point-workflow':'svg','point-example':'svg','coincident':'svg','coincident-workflow':'svg','coincident-example':'svg','maelstrom':'svg','maelstrom-workflow':'svg','maelstrom-example':'svg','domain':'svg','domain-workflow':'svg','domain-example':'svg'};
 // Default project logo baked into the seed (path in the repo, not an IDB-blob id like
 // SEED_ASSETS — headerLogo/projectLogo store a data: URL directly in state, see init()).
 const SEED_HEADER_LOGO='assets/images/logo-grasshopper.png';
@@ -3156,7 +3156,63 @@ const SEED_DOCS=[
 <p><em>Đây là 1 panel (nhóm lệnh con) trong tab Params của Grasshopper. Các lệnh cụ thể thuộc panel này sẽ được thêm dần vào đây dưới dạng trang con khi được nghiên cứu.</em></p>`},
   {id:'seed-panel-maths-domain',title:'Domain',section:'default',parentId:'seed-tab-maths',images:[],textBoxes:[],createdAt:'2026-07-19T00:00:00.000Z',updatedAt:'2026-07-19T00:00:00.000Z',content:`<h1>Domain</h1>
 <div class="cf-panel info" contenteditable="false"><span class="cf-panel-icon">ℹ️</span><div class="cf-panel-content" contenteditable="true">Panel trong tab Maths, chứa component tạo/tách "domain" — 1 khoảng giá trị (interval) giữa 2 số, ví dụ khoảng từ 0 đến 10.</div></div>
-<p><em>Đây là 1 panel (nhóm lệnh con) trong tab Maths của Grasshopper. Các lệnh cụ thể thuộc panel này sẽ được thêm dần vào đây dưới dạng trang con khi được nghiên cứu.</em></p>`},
+<h2>Danh sách component</h2>
+<div class="tbl-frame"><div class="tbl-outer"><table style="border-collapse: collapse; font-size: 14px; table-layout: fixed; width: 100%;" data-colwidths="36px,8.1%,14.9%,77%"><thead><tr><th style="text-align: center; padding: 8px 6px; border-bottom: 2px solid var(--border); position: relative; min-width: 40px;" contenteditable="true">Icon</th><th style="text-align: left; padding: 8px 10px; border-bottom: 2px solid var(--border); position: relative; min-width: 40px;" contenteditable="true">Tên</th><th style="text-align: left; padding: 8px 10px; border-bottom: 2px solid var(--border); position: relative; min-width: 40px;" contenteditable="true">Chức năng</th></tr></thead><tbody><tr><td style="text-align: center; padding: 6px; border-bottom: 1px solid var(--border); position: relative; min-width: 40px;" contenteditable="true"><span style="display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;background:#242424;border-radius:7px"><i class="ti ti-ruler-2" style="color:#e8e8e8;font-size:17px"></i></span></td><td style="padding: 6px 10px; border-bottom: 1px solid var(--border); position: relative; min-width: 40px; vertical-align: middle;" contenteditable="true"><strong>Construct Domain</strong></td><td style="padding: 6px 10px; border-bottom: 1px solid var(--border); position: relative; min-width: 40px; vertical-align: middle;" contenteditable="true">Gộp 2 số Start/End thành 1 khoảng giá trị (Domain).</td></tr></tbody></table></div></div>`},
+  {id:'seed-cmd-constructdomain',locked:true,title:'Construct Domain',section:'default',parentId:'seed-panel-maths-domain',images:[],textBoxes:[],createdAt:'2026-07-19T00:00:00.000Z',updatedAt:'2026-07-19T00:00:00.000Z',content:`<h1>Construct Domain</h1>
+<div class="cf-panel info" contenteditable="false"><span class="cf-panel-icon">ℹ️</span><div class="cf-panel-content" contenteditable="true">🟢 Cơ bản — Gộp 2 số thành 1 khoảng giá trị (Domain), vd "0 To 10".</div></div>
+<h2>Chức năng</h2>
+<p>Construct Domain nhận 2 số A (đầu) và B (cuối), gộp thành 1 kiểu dữ liệu Domain (còn gọi Interval) — đại diện cho 1 khoảng giá trị liên tục, hiển thị dạng "A To B" (vd "0 To 10").</p>
+<h2>Khi nào sử dụng</h2>
+<p>Dùng khi 1 component khác cần input kiểu Domain (Range, Remap Numbers, Divide Domain, Graph Mapper...) mà chỉ có 2 số rời rạc. Không cần dùng nếu component đó đã tự nhận 2 số min/max riêng — 1 số component cho phép nhập trực tiếp không cần gộp Domain trước.</p>
+<h2>Input/Output</h2>
+<div class="tbl-frame"><div class="tbl-outer"><table style="border-collapse:collapse;font-size:14px;table-layout:fixed;width:100%" data-colwidths="36px,20.02%,20.02%,59.959%">
+<thead><tr><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Tên</th><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Kiểu dữ liệu</th><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Mô tả</th></tr></thead>
+<tbody>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>A</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Number</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Giá trị đầu (minimum) của khoảng.</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>B</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Number</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Giá trị cuối (maximum) của khoảng.</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>I</strong> — output</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Domain</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Khoảng giá trị kết quả (A To B).</td></tr>
+</tbody></table></div></div>
+<h2>Thuộc tính</h2>
+<p>Không có Options/Modes riêng qua right-click. A có thể lớn hơn B — khi đó tạo ra Domain "ngược" (giảm dần), vẫn hợp lệ với nhiều component nhận Domain.</p>
+<h2>Cách dùng</h2>
+<ol>
+<li>Nối Number Slider vào <strong>A</strong> (giá trị đầu).</li>
+<li>Nối Number Slider vào <strong>B</strong> (giá trị cuối).</li>
+<li>Dùng output <strong>I</strong> làm input Domain cho component khác (Remap Numbers, Range, Divide Domain...).</li>
+</ol>
+<div class="cf-img-block" data-cfimgid="domain" data-cfimgtype="image" data-align="center" data-name="domain.svg"><div class="cf-img-wrap"><div class="cf-img-inner" style="width:100%;max-width:640px"><img style="width:100%;height:auto;display:block" alt="A=0 và B=10 nối vào Construct Domain, xuất ra I hiển thị '0 To 10'; bên phải là sơ đồ đường thẳng số minh hoạ khoảng [0,10]"><div class="cf-img-resize-h left"></div><div class="cf-img-resize-h right"></div></div></div><div class="cf-img-caption"></div></div>
+<h2>Ứng dụng</h2>
+<p>Parametric Modeling — cung cấp Domain cho các phép Remap/Divide/Graph Mapper, thường dùng để chuẩn hoá dữ liệu (đưa số về khoảng [0,1]) hoặc định nghĩa khoảng chia đều cho pattern/gradient.</p>
+<h2>Kết nối</h2>
+<p><strong>Nhận dữ liệu từ:</strong></p>
+<table style="width:100%;border-collapse:collapse;font-size:14px">
+<thead><tr><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Component</th><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Data Type</th><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Có thể nối</th></tr></thead>
+<tbody>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Number Slider, Panel (số)</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Number</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Có — vào A/B</td></tr>
+</tbody></table>
+<p><strong>Xuất dữ liệu đến:</strong></p>
+<table style="width:100%;border-collapse:collapse;font-size:14px">
+<thead><tr><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Component</th><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Data Type</th><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Có thể nối</th></tr></thead>
+<tbody>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Remap Numbers, Range, Divide Domain, Graph Mapper</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Domain</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Có — nhận thẳng output I</td></tr>
+</tbody></table>
+<p><strong>Không thể kết nối:</strong></p>
+<table style="width:100%;border-collapse:collapse;font-size:14px">
+<thead><tr><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Component</th><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Lý do</th></tr></thead>
+<tbody>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Component chỉ nhận Domain 2 chiều (vd Divide Domain²)</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Construct Domain tạo Domain 1 chiều (1 khoảng số) — cần <strong>Construct Domain²</strong> để tạo Domain 2 chiều (UV) cho các component đó.</td></tr>
+</tbody></table>
+<h2>Workflow phổ biến</h2>
+<p>Construct Domain → Remap Numbers → giá trị đã ánh xạ vào khoảng mới</p>
+<p>Construct Domain → Range → danh sách số chia đều trong khoảng</p>
+<div class="cf-img-block" data-cfimgid="domain-workflow" data-cfimgtype="image" data-align="center" data-name="domain-workflow.svg"><div class="cf-img-wrap"><div class="cf-img-inner" style="width:100%;max-width:640px"><img style="width:100%;height:auto;display:block" alt="Chuỗi component workflow phổ biến: Construct Domain nối vào Remap Numbers, xuất ra danh sách số đã ánh xạ vào khoảng [0,10]"><div class="cf-img-resize-h left"></div><div class="cf-img-resize-h right"></div></div></div><div class="cf-img-caption"></div></div>
+<h2>Kiểu dữ liệu</h2>
+<p>Input: Number (A, B). Output: Domain (Interval) — kiểu dữ liệu đại diện 1 khoảng giá trị liên tục, không phải Number đơn lẻ.</p>
+<hr>
+<div class="cf-panel warning" contenteditable="false"><span class="cf-panel-icon">⚠️</span><div class="cf-panel-content" contenteditable="true">Construct Domain tạo Domain <strong>1 chiều</strong> (1 khoảng số). Nếu cần Domain 2 chiều (dùng cho UV của Surface, vd Divide Domain²), phải dùng <strong>Construct Domain²</strong> — 2 component khác nhau, không thay thế cho nhau được.</div></div>
+<h2>Ví dụ ứng dụng thực tế</h2>
+<p>Dùng Construct Domain [0,1] làm khoảng remap độ mờ (opacity) cho các tấm ốp mặt đứng công trình — tạo hiệu ứng gradient dần từ nhạt sang đậm theo từng cột tấm ốp.</p>
+<div class="cf-img-block" data-cfimgid="domain-example" data-cfimgtype="image" data-align="center" data-name="domain-example.svg"><div class="cf-img-wrap"><div class="cf-img-inner" style="width:100%;max-width:640px"><img style="width:100%;height:auto;display:block" alt="Mặt đứng công trình với các tấm ốp có độ mờ tăng dần theo gradient từ trái sang phải, dựa trên Domain [0,1]"><div class="cf-img-resize-h left"></div><div class="cf-img-resize-h right"></div></div></div><div class="cf-img-caption"></div></div>`},
   {id:'seed-panel-maths-matrix',title:'Matrix',section:'default',parentId:'seed-tab-maths',images:[],textBoxes:[],createdAt:'2026-07-19T00:00:00.000Z',updatedAt:'2026-07-19T00:00:00.000Z',content:`<h1>Matrix</h1>
 <div class="cf-panel info" contenteditable="false"><span class="cf-panel-icon">ℹ️</span><div class="cf-panel-content" contenteditable="true">Panel trong tab Maths, chứa công cụ dựng và chỉnh sửa ma trận (bảng số xếp theo hàng/cột).</div></div>
 <p><em>Đây là 1 panel (nhóm lệnh con) trong tab Maths của Grasshopper. Các lệnh cụ thể thuộc panel này sẽ được thêm dần vào đây dưới dạng trang con khi được nghiên cứu.</em></p>`},

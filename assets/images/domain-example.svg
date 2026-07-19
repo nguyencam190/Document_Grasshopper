@@ -1,0 +1,52 @@
+<svg width="640" height="380" viewBox="0 0 640 380" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, Arial, sans-serif">
+<rect x="0" y="0" width="640" height="380" fill="#FFFFFF" stroke="#B0B0B0"/>
+<g stroke="#D8D8D8" stroke-width="1">
+  <line x1="0" y1="330" x2="640" y2="330"/>
+  <line x1="0" y1="300" x2="640" y2="300"/>
+  <line x1="0" y1="275" x2="640" y2="275"/>
+</g>
+<text x="12" y="24" font-family="Consolas, monospace" font-size="12" fill="#555">Perspective — mặt đứng công trình (facade gradient)</text>
+
+<!-- facade grid with panels shaded by remapped domain value (opacity gradient) -->
+<rect x="80" y="80" width="58" height="38" fill="#6FA82A" opacity="0.15" stroke="#333" stroke-width="0.6"/>
+<rect x="140" y="80" width="58" height="38" fill="#6FA82A" opacity="0.26" stroke="#333" stroke-width="0.6"/>
+<rect x="200" y="80" width="58" height="38" fill="#6FA82A" opacity="0.36" stroke="#333" stroke-width="0.6"/>
+<rect x="260" y="80" width="58" height="38" fill="#6FA82A" opacity="0.47" stroke="#333" stroke-width="0.6"/>
+<rect x="320" y="80" width="58" height="38" fill="#6FA82A" opacity="0.58" stroke="#333" stroke-width="0.6"/>
+<rect x="380" y="80" width="58" height="38" fill="#6FA82A" opacity="0.69" stroke="#333" stroke-width="0.6"/>
+<rect x="440" y="80" width="58" height="38" fill="#6FA82A" opacity="0.79" stroke="#333" stroke-width="0.6"/>
+<rect x="500" y="80" width="58" height="38" fill="#6FA82A" opacity="0.90" stroke="#333" stroke-width="0.6"/>
+<rect x="80" y="120" width="58" height="38" fill="#6FA82A" opacity="0.15" stroke="#333" stroke-width="0.6"/>
+<rect x="140" y="120" width="58" height="38" fill="#6FA82A" opacity="0.26" stroke="#333" stroke-width="0.6"/>
+<rect x="200" y="120" width="58" height="38" fill="#6FA82A" opacity="0.36" stroke="#333" stroke-width="0.6"/>
+<rect x="260" y="120" width="58" height="38" fill="#6FA82A" opacity="0.47" stroke="#333" stroke-width="0.6"/>
+<rect x="320" y="120" width="58" height="38" fill="#6FA82A" opacity="0.58" stroke="#333" stroke-width="0.6"/>
+<rect x="380" y="120" width="58" height="38" fill="#6FA82A" opacity="0.69" stroke="#333" stroke-width="0.6"/>
+<rect x="440" y="120" width="58" height="38" fill="#6FA82A" opacity="0.79" stroke="#333" stroke-width="0.6"/>
+<rect x="500" y="120" width="58" height="38" fill="#6FA82A" opacity="0.90" stroke="#333" stroke-width="0.6"/>
+<rect x="80" y="160" width="58" height="38" fill="#6FA82A" opacity="0.15" stroke="#333" stroke-width="0.6"/>
+<rect x="140" y="160" width="58" height="38" fill="#6FA82A" opacity="0.26" stroke="#333" stroke-width="0.6"/>
+<rect x="200" y="160" width="58" height="38" fill="#6FA82A" opacity="0.36" stroke="#333" stroke-width="0.6"/>
+<rect x="260" y="160" width="58" height="38" fill="#6FA82A" opacity="0.47" stroke="#333" stroke-width="0.6"/>
+<rect x="320" y="160" width="58" height="38" fill="#6FA82A" opacity="0.58" stroke="#333" stroke-width="0.6"/>
+<rect x="380" y="160" width="58" height="38" fill="#6FA82A" opacity="0.69" stroke="#333" stroke-width="0.6"/>
+<rect x="440" y="160" width="58" height="38" fill="#6FA82A" opacity="0.79" stroke="#333" stroke-width="0.6"/>
+<rect x="500" y="160" width="58" height="38" fill="#6FA82A" opacity="0.90" stroke="#333" stroke-width="0.6"/>
+<rect x="80" y="200" width="58" height="38" fill="#6FA82A" opacity="0.15" stroke="#333" stroke-width="0.6"/>
+<rect x="140" y="200" width="58" height="38" fill="#6FA82A" opacity="0.26" stroke="#333" stroke-width="0.6"/>
+<rect x="200" y="200" width="58" height="38" fill="#6FA82A" opacity="0.36" stroke="#333" stroke-width="0.6"/>
+<rect x="260" y="200" width="58" height="38" fill="#6FA82A" opacity="0.47" stroke="#333" stroke-width="0.6"/>
+<rect x="320" y="200" width="58" height="38" fill="#6FA82A" opacity="0.58" stroke="#333" stroke-width="0.6"/>
+<rect x="380" y="200" width="58" height="38" fill="#6FA82A" opacity="0.69" stroke="#333" stroke-width="0.6"/>
+<rect x="440" y="200" width="58" height="38" fill="#6FA82A" opacity="0.79" stroke="#333" stroke-width="0.6"/>
+<rect x="500" y="200" width="58" height="38" fill="#6FA82A" opacity="0.90" stroke="#333" stroke-width="0.6"/>
+<rect x="80" y="240" width="58" height="38" fill="#6FA82A" opacity="0.15" stroke="#333" stroke-width="0.6"/>
+<rect x="140" y="240" width="58" height="38" fill="#6FA82A" opacity="0.26" stroke="#333" stroke-width="0.6"/>
+<rect x="200" y="240" width="58" height="38" fill="#6FA82A" opacity="0.36" stroke="#333" stroke-width="0.6"/>
+<rect x="260" y="240" width="58" height="38" fill="#6FA82A" opacity="0.47" stroke="#333" stroke-width="0.6"/>
+<rect x="320" y="240" width="58" height="38" fill="#6FA82A" opacity="0.58" stroke="#333" stroke-width="0.6"/>
+<rect x="380" y="240" width="58" height="38" fill="#6FA82A" opacity="0.69" stroke="#333" stroke-width="0.6"/>
+<rect x="440" y="240" width="58" height="38" fill="#6FA82A" opacity="0.79" stroke="#333" stroke-width="0.6"/>
+<rect x="500" y="240" width="58" height="38" fill="#6FA82A" opacity="0.90" stroke="#333" stroke-width="0.6"/>
+<text x="12" y="358" font-size="12" fill="#555">Construct Domain [0,1] làm khoảng remap độ mờ tấm ốp mặt đứng — tạo hiệu ứng gradient dần theo cột</text>
+</svg>
