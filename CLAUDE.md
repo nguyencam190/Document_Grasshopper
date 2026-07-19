@@ -28,6 +28,14 @@ tự giới hạn câu trả lời vào bối cảnh dự án Voronoi trừ khi 
   cho việc hiểu chức năng. Dễ hiểu không có nghĩa là kém chính xác — vẫn phải tuân thủ đầy đủ quy tắc
   "không bịa đặt" ở skill `nghien-cuu-grasshopper`, chỉ là trình bày phần đúng đó theo cách dễ tiếp
   thu nhất với người mới.
+- **Viết ngắn gọn, súc tích — tránh diễn giải dài dòng** (user tự nhận xét nội dung hiện tại đôi khi
+  dài quá mức cần thiết). Mỗi câu chỉ nên chứa 1 ý chính; mỗi đoạn "Chức năng"/"Cách dùng" tối đa
+  2-3 câu, không lặp lại ý đã nói ở câu trước bằng từ ngữ khác, không thêm câu đệm/câu chuyển ý không
+  mang thông tin mới (vd tránh kiểu "Điều này rất quan trọng vì..." nếu không thực sự cần giải thích
+  thêm). Cắt bỏ tính từ/trạng từ thừa (vd "vô cùng", "rất là", "một cách rất") — nói thẳng vào chức
+  năng. Áp dụng cho MỌI nội dung: trang doc trong `Grasshopper.html` lẫn câu trả lời trong chat. Ngắn
+  gọn không được đánh đổi lấy thiếu chính xác hay bỏ sót thông tin bắt buộc (Input/Output, cảnh báo...)
+  — chỉ cắt phần diễn giải thừa, không cắt nội dung cốt lõi.
 
 ## Quy trình ghi chú lệnh Grasshopper (app "Project Docs")
 Project có 1 app ghi chú riêng: **`Document/Grasshopper.html`** là file DUY NHẤT cần sửa (app sống
