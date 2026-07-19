@@ -1,0 +1,37 @@
+<svg width="640" height="380" viewBox="0 0 640 380" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, Arial, sans-serif">
+<rect x="0" y="0" width="640" height="380" fill="#FFFFFF" stroke="#B0B0B0"/>
+<g stroke="#D8D8D8" stroke-width="1">
+  <line x1="0" y1="330" x2="640" y2="330"/>
+  <line x1="0" y1="300" x2="640" y2="300"/>
+  <line x1="0" y1="275" x2="640" y2="275"/>
+</g>
+<text x="12" y="24" font-family="Consolas, monospace" font-size="12" fill="#555">Perspective</text>
+
+<!-- Building floors stacked by Series values (0, 1, 2, 3... x floor height) -->
+<g stroke="#111" stroke-width="1.2">
+  <rect x="200" y="270" width="240" height="40" fill="#E8E2D6"/>
+  <rect x="200" y="230" width="240" height="40" fill="#DCD5C6"/>
+  <rect x="200" y="190" width="240" height="40" fill="#D0C8B6"/>
+  <rect x="200" y="150" width="240" height="40" fill="#C4BBA6"/>
+  <rect x="200" y="110" width="240" height="40" fill="#B8AE96"/>
+</g>
+<g stroke="#111" stroke-width="1" fill="none">
+  <line x1="200" y1="150" x2="200" y2="310"/>
+  <line x1="440" y1="150" x2="440" y2="310"/>
+  <line x1="200" y1="190" x2="440" y2="190"/>
+  <line x1="200" y1="230" x2="440" y2="230"/>
+  <line x1="200" y1="270" x2="440" y2="270"/>
+</g>
+
+<!-- floor level markers from Series -->
+<g font-size="10" fill="#c0392b" text-anchor="start">
+  <line x1="450" y1="110" x2="450" y2="310" stroke="#c0392b" stroke-width="1"/>
+  <text x="456" y="114">Z=4×h</text>
+  <text x="456" y="154">Z=3×h</text>
+  <text x="456" y="194">Z=2×h</text>
+  <text x="456" y="234">Z=1×h</text>
+  <text x="456" y="274">Z=0×h</text>
+</g>
+
+<text x="12" y="358" font-size="12" fill="#555">Series (0,1,2,3,4) × chiều cao tầng h → cao độ Z từng tầng, dựng nhanh khối nhà nhiều tầng</text>
+</svg>

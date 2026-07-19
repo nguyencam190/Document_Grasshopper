@@ -1,0 +1,77 @@
+<svg width="900" height="260" viewBox="0 0 900 260" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, Arial, sans-serif">
+<defs>
+  <linearGradient id="ghBody3" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0%" stop-color="#F0F0F0"/>
+    <stop offset="100%" stop-color="#D8D8D8"/>
+  </linearGradient>
+  <pattern id="dotgrid3" width="18" height="18" patternUnits="userSpaceOnUse">
+    <circle cx="1" cy="1" r="1" fill="#E0E0DA"/>
+  </pattern>
+</defs>
+
+<rect x="0" y="0" width="900" height="260" fill="#FAFAF7"/>
+<rect x="0" y="0" width="900" height="260" fill="url(#dotgrid3)"/>
+
+<!-- Box 1: Series (box x=30 y=88 w=130 h=104, spans 88-192) -->
+<g>
+  <rect x="30" y="88" width="130" height="104" rx="6" fill="url(#ghBody3)" stroke="#8C8C8C" stroke-width="1.2"/>
+  <text x="95" y="108" text-anchor="middle" font-size="13" font-weight="600" fill="#222">Series</text>
+  <!-- output nub: center=140 (box middle) -->
+  <rect x="152" y="132" width="10" height="16" rx="3" fill="#E8E8E8" stroke="#8C8C8C"/>
+  <circle cx="157" cy="140" r="2.5" fill="#4A4A4A"/>
+</g>
+<text x="95" y="212" text-anchor="middle" font-size="10" fill="#888">S=0, N=1, C=8</text>
+
+<!-- wire 1 -->
+<path d="M 162,140 C 195,140 195,140 228,140" stroke="#4A4A4A" stroke-width="1.5" fill="none"/>
+
+<!-- Box 2: Construct Point (box x=230 y=100 w=140 h=80, spans 100-180) -->
+<g>
+  <rect x="230" y="100" width="140" height="80" rx="6" fill="url(#ghBody3)" stroke="#8C8C8C" stroke-width="1.3"/>
+  <text x="300" y="144" text-anchor="middle" font-size="13" font-weight="600" fill="#222">Construct</text>
+  <text x="300" y="160" text-anchor="middle" font-size="13" font-weight="600" fill="#222">Point</text>
+  <!-- input nub X: center=140 (matches Series output) -->
+  <rect x="222" y="132" width="10" height="16" rx="3" fill="#E8E8E8" stroke="#8C8C8C"/>
+  <circle cx="227" cy="140" r="2.5" fill="#4A4A4A"/>
+  <text x="214" y="144" text-anchor="end" font-size="10" fill="#888">X</text>
+  <!-- output nub -->
+  <rect x="368" y="132" width="10" height="16" rx="3" fill="#E8E8E8" stroke="#8C8C8C"/>
+  <circle cx="373" cy="140" r="2.5" fill="#4A4A4A"/>
+</g>
+
+<!-- wire 2 -->
+<path d="M 378,140 C 405,140 405,140 432,140" stroke="#4A4A4A" stroke-width="1.5" fill="none"/>
+
+<!-- Box 3: Points param -->
+<g>
+  <rect x="434" y="116" width="100" height="48" rx="6" fill="url(#ghBody3)" stroke="#8C8C8C" stroke-width="1"/>
+  <text x="484" y="144" text-anchor="middle" font-size="13" fill="#222">Points</text>
+  <rect x="530" y="132" width="10" height="16" rx="3" fill="#E8E8E8" stroke="#8C8C8C"/>
+  <circle cx="535" cy="140" r="2.5" fill="#4A4A4A"/>
+</g>
+
+<!-- wire to viewport -->
+<path d="M 540,140 C 570,140 570,140 596,140" stroke="#4A4A4A" stroke-width="1.5" stroke-dasharray="3,3" fill="none"/>
+
+<!-- Mini Rhino viewport result -->
+<g>
+  <rect x="598" y="40" width="264" height="180" fill="#FFFFFF" stroke="#B0B0B0"/>
+  <g stroke="#D8D8D8" stroke-width="1">
+    <line x1="598" y1="190" x2="862" y2="190"/>
+    <line x1="598" y1="170" x2="862" y2="170"/>
+  </g>
+  <text x="606" y="56" font-family="Consolas, monospace" font-size="10" fill="#555">Perspective</text>
+  <g fill="#c0392b">
+    <circle cx="620" cy="130" r="3"/>
+    <circle cx="655" cy="130" r="3"/>
+    <circle cx="690" cy="130" r="3"/>
+    <circle cx="725" cy="130" r="3"/>
+    <circle cx="760" cy="130" r="3"/>
+    <circle cx="795" cy="130" r="3"/>
+    <circle cx="830" cy="130" r="3"/>
+  </g>
+  <line x1="605" y1="130" x2="845" y2="130" stroke="#D8D8D8" stroke-width="1"/>
+</g>
+
+<text x="20" y="245" font-size="12" fill="#555">Workflow phổ biến: Series → Construct Point (X) → dãy điểm cách đều trên trục</text>
+</svg>

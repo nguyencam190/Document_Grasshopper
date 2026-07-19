@@ -2986,12 +2986,12 @@ const STORE_KEY='projectdocs_v3';
 // Bump SEED_VERSION any time SEED_DOCS content changes (e.g. a new Grasshopper
 // command page is added) to re-sync all visitors automatically, even ones
 // with old data already saved locally.
-const SEED_VERSION=31;
+const SEED_VERSION=32;
 // Real image assets referenced by SEED_DOCS via data-cfimgid — every visitor's
 // browser needs these in its OWN IndexedDB (see init() below) so images both
 // (a) display correctly, and (b) get recognized by the app's own Optimized
 // Website export if the user runs Publish themselves later.
-const SEED_ASSETS={'tab-params':'svg','tab-maths':'svg','tab-sets':'svg','tab-vector':'svg','tab-curve':'svg','tab-surface':'svg','tab-mesh':'svg','tab-intersect':'svg','tab-transform':'svg','tab-display':'svg','tab-rhino':'svg','tab-kangaroo2':'svg','tab-wb':'svg','fitloft2':'svg','fitloft-example':'svg','extrude2':'svg','extrude-example':'svg','fitloft-workflow2':'svg','extrude-workflow2':'svg'};
+const SEED_ASSETS={'tab-params':'svg','tab-maths':'svg','tab-sets':'svg','tab-vector':'svg','tab-curve':'svg','tab-surface':'svg','tab-mesh':'svg','tab-intersect':'svg','tab-transform':'svg','tab-display':'svg','tab-rhino':'svg','tab-kangaroo2':'svg','tab-wb':'svg','fitloft2':'svg','fitloft-example':'svg','extrude2':'svg','extrude-example':'svg','fitloft-workflow2':'svg','extrude-workflow2':'svg','series':'svg','series-workflow':'svg','series-example':'svg'};
 // Default project logo baked into the seed (path in the repo, not an IDB-blob id like
 // SEED_ASSETS — headerLogo/projectLogo store a data: URL directly in state, see init()).
 const SEED_HEADER_LOGO='assets/images/logo-grasshopper.png';
@@ -3128,7 +3128,66 @@ const SEED_DOCS=[
 <p><em>Đây là 1 panel (nhóm lệnh con) trong tab Sets của Grasshopper. Các lệnh cụ thể thuộc panel này sẽ được thêm dần vào đây dưới dạng trang con khi được nghiên cứu.</em></p>`},
   {id:'seed-panel-sets-sequence',title:'Sequence',section:'default',parentId:'seed-tab-sets',images:[],textBoxes:[],createdAt:'2026-07-19T00:00:00.000Z',updatedAt:'2026-07-19T00:00:00.000Z',content:`<h1>Sequence</h1>
 <div class="cf-panel info" contenteditable="false"><span class="cf-panel-icon">ℹ️</span><div class="cf-panel-content" contenteditable="true">Panel trong tab Sets, chứa component tạo dãy số theo quy luật (Series, Range, Random...).</div></div>
-<p><em>Đây là 1 panel (nhóm lệnh con) trong tab Sets của Grasshopper. Các lệnh cụ thể thuộc panel này sẽ được thêm dần vào đây dưới dạng trang con khi được nghiên cứu.</em></p>`},
+<h2>Danh sách component</h2>
+<div class="tbl-frame"><div class="tbl-outer"><table style="border-collapse: collapse; font-size: 14px; table-layout: fixed; width: 100%;" data-colwidths="36px,8.1%,14.9%,77%"><thead><tr><th style="text-align: center; padding: 8px 6px; border-bottom: 2px solid var(--border); position: relative; min-width: 40px;" contenteditable="true">Icon</th><th style="text-align: left; padding: 8px 10px; border-bottom: 2px solid var(--border); position: relative; min-width: 40px;" contenteditable="true">Tên</th><th style="text-align: left; padding: 8px 10px; border-bottom: 2px solid var(--border); position: relative; min-width: 40px;" contenteditable="true">Chức năng</th></tr></thead><tbody><tr><td style="text-align: center; padding: 6px; border-bottom: 1px solid var(--border); position: relative; min-width: 40px;" contenteditable="true"><span style="display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;background:#242424;border-radius:7px"><i class="ti ti-list-numbers" style="color:#e8e8e8;font-size:17px"></i></span></td><td style="padding: 6px 10px; border-bottom: 1px solid var(--border); position: relative; min-width: 40px; vertical-align: middle;" contenteditable="true"><strong>Series</strong></td><td style="padding: 6px 10px; border-bottom: 1px solid var(--border); position: relative; min-width: 40px; vertical-align: middle;" contenteditable="true">Tạo 1 dãy số cách đều từ giá trị Start, cộng dồn theo Step, đủ Count số.</td></tr></tbody></table></div></div>`},
+  {id:'seed-cmd-series',title:'Series',section:'default',parentId:'seed-panel-sets-sequence',images:[],textBoxes:[],createdAt:'2026-07-19T00:00:00.000Z',updatedAt:'2026-07-19T00:00:00.000Z',content:`<h1>Series</h1>
+<div class="cf-panel info" contenteditable="false"><span class="cf-panel-icon">ℹ️</span><div class="cf-panel-content" contenteditable="true">🟢 Cơ bản — Tạo 1 dãy số cách đều, kiểm soát được khoảng cách giữa các số.</div></div>
+<h2>Chức năng</h2>
+<p>Series tạo ra 1 danh sách số bắt đầu từ Start, mỗi số sau cộng thêm Step, tổng cộng đủ Count số. Ví dụ Start=0, Step=1, Count=10 → dãy 0,1,2...9.</p>
+<h2>Khi nào sử dụng</h2>
+<p>Dùng khi cần kiểm soát chính xác khoảng cách (step) giữa các số, không quan tâm giá trị cuối cùng là bao nhiêu. Nếu cần chia đều 1 khoảng giá trị cố định (domain) thành N đoạn — dùng <strong>Range</strong> thay vì Series.</p>
+<h2>Input/Output</h2>
+<div class="tbl-frame"><div class="tbl-outer"><table style="border-collapse:collapse;font-size:14px;table-layout:fixed;width:100%" data-colwidths="36px,20.02%,20.02%,59.959%">
+<thead><tr><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Tên</th><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Kiểu dữ liệu</th><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Mô tả</th></tr></thead>
+<tbody>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>Start (S)</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Number</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Giá trị bắt đầu dãy số. Mặc định 0 nếu không nối.</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>Step (N)</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Number</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Khoảng cách cộng dồn giữa 2 số liên tiếp. Mặc định 1.</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>Count (C)</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Integer</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Số lượng giá trị cần tạo. Mặc định 10.</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>Series (S)</strong> — output</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Number (list)</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Danh sách số kết quả.</td></tr>
+</tbody></table></div></div>
+<h2>Thuộc tính</h2>
+<p>Không có Options/Modes riêng qua right-click. Nếu không nối input nào, Series tự dùng giá trị mặc định (S=0, N=1, C=10) và vẫn xuất ra kết quả.</p>
+<h2>Cách dùng</h2>
+<ol>
+<li>Nối Number Slider vào <strong>Start (S)</strong> — hoặc bỏ trống để dùng mặc định 0.</li>
+<li>Nối Number Slider vào <strong>Step (N)</strong> để chỉnh khoảng cách giữa các số.</li>
+<li>Nối Number Slider (Integer) vào <strong>Count (C)</strong> để chỉnh số lượng giá trị.</li>
+<li>Dùng output <strong>Series (S)</strong> làm input cho component khác (Construct Point, Move, Multiplication...).</li>
+</ol>
+<div class="cf-img-block" data-cfimgid="series" data-cfimgtype="image" data-align="center" data-name="series.svg"><div class="cf-img-wrap"><div class="cf-img-inner" style="width:100%;max-width:640px"><img style="width:100%;height:auto;display:block" alt="Start/Step/Count nối vào Series, xuất ra dãy số; bên phải là dãy điểm đỏ cách đều trong viewport dùng chính dãy số đó làm toạ độ X"><div class="cf-img-resize-h left"></div><div class="cf-img-resize-h right"></div></div></div><div class="cf-img-caption"></div></div>
+<h2>Ứng dụng</h2>
+<p>Parametric Modeling, Pattern Generation — tạo lưới điểm/mảng đối tượng cách đều, tính cao độ tầng nhà, chia khoảng cách bất kỳ theo bước nhảy tuỳ chỉnh.</p>
+<h2>Kết nối</h2>
+<p><strong>Nhận dữ liệu từ:</strong></p>
+<table style="width:100%;border-collapse:collapse;font-size:14px">
+<thead><tr><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Component</th><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Data Type</th><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Có thể nối</th></tr></thead>
+<tbody>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Number Slider</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Number</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Có — vào Start/Step</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Number Slider (Integer)</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Integer</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Có — vào Count</td></tr>
+</tbody></table>
+<p><strong>Xuất dữ liệu đến:</strong></p>
+<table style="width:100%;border-collapse:collapse;font-size:14px">
+<thead><tr><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Component</th><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Data Type</th><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Có thể nối</th></tr></thead>
+<tbody>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Construct Point, Multiplication, Move (Amplitude)</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Number</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Có — nhận thẳng output Series (S)</td></tr>
+</tbody></table>
+<p><strong>Không thể kết nối:</strong></p>
+<table style="width:100%;border-collapse:collapse;font-size:14px">
+<thead><tr><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Component</th><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Lý do</th></tr></thead>
+<tbody>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Component chỉ nhận Boolean trực tiếp (vd Dispatch)</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Output là Number, không phải Boolean — cần qua Larger Than/Smaller Than để so sánh trước.</td></tr>
+</tbody></table>
+<h2>Workflow phổ biến</h2>
+<p>Series → Construct Point (X) → dãy điểm cách đều</p>
+<p>Series → Multiplication (Unit Z) → Move → mảng đối tượng cách đều theo trục</p>
+<div class="cf-img-block" data-cfimgid="series-workflow" data-cfimgtype="image" data-align="center" data-name="series-workflow.svg"><div class="cf-img-wrap"><div class="cf-img-inner" style="width:100%;max-width:640px"><img style="width:100%;height:auto;display:block" alt="Chuỗi component workflow phổ biến: Series nối vào Construct Point ở toạ độ X, xuất ra dãy điểm cách đều trên trục trong viewport"><div class="cf-img-resize-h left"></div><div class="cf-img-resize-h right"></div></div></div><div class="cf-img-caption"></div></div>
+<h2>Kiểu dữ liệu</h2>
+<p>Input: Number (Start, Step), Integer (Count). Output: Number (list).</p>
+<hr>
+<div class="cf-panel warning" contenteditable="false"><span class="cf-panel-icon">⚠️</span><div class="cf-panel-content" contenteditable="true">Series không giới hạn giá trị cuối — nếu cần chia đều 1 khoảng giá trị CỐ ĐỊNH (vd luôn từ 0 đến 1) thành N đoạn, dùng <strong>Range</strong> thay vì Series.</div></div>
+<h2>Ví dụ ứng dụng thực tế</h2>
+<p>Dùng Series (0,1,2,3,4) nhân với chiều cao 1 tầng, ra cao độ Z của từng tầng — dựng nhanh khối nhà nhiều tầng mà không cần đặt tay từng cao độ.</p>
+<div class="cf-img-block" data-cfimgid="series-example" data-cfimgtype="image" data-align="center" data-name="series-example.svg"><div class="cf-img-wrap"><div class="cf-img-inner" style="width:100%;max-width:640px"><img style="width:100%;height:auto;display:block" alt="Khối nhà 5 tầng với cao độ Z từng tầng tính từ dãy Series (0,1,2,3,4) nhân chiều cao 1 tầng"><div class="cf-img-resize-h left"></div><div class="cf-img-resize-h right"></div></div></div><div class="cf-img-caption"></div></div>`},
   {id:'seed-panel-sets-sets',title:'Sets',section:'default',parentId:'seed-tab-sets',images:[],textBoxes:[],createdAt:'2026-07-19T00:00:00.000Z',updatedAt:'2026-07-19T00:00:00.000Z',content:`<h1>Sets</h1>
 <div class="cf-panel info" contenteditable="false"><span class="cf-panel-icon">ℹ️</span><div class="cf-panel-content" contenteditable="true">Panel trong tab Sets, chứa các phép toán tập hợp (hợp, giao, hiệu...) áp dụng cho danh sách.</div></div>
 <p><em>Đây là 1 panel (nhóm lệnh con) trong tab Sets của Grasshopper. Các lệnh cụ thể thuộc panel này sẽ được thêm dần vào đây dưới dạng trang con khi được nghiên cứu.</em></p>`},
