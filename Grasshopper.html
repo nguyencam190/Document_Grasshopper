@@ -2986,7 +2986,7 @@ const STORE_KEY='projectdocs_v3';
 // Bump SEED_VERSION any time SEED_DOCS content changes (e.g. a new Grasshopper
 // command page is added) to re-sync all visitors automatically, even ones
 // with old data already saved locally.
-const SEED_VERSION=22;
+const SEED_VERSION=23;
 // Real image assets referenced by SEED_DOCS via data-cfimgid — every visitor's
 // browser needs these in its OWN IndexedDB (see init() below) so images both
 // (a) display correctly, and (b) get recognized by the app's own Optimized
@@ -3264,15 +3264,15 @@ const SEED_DOCS=[
 <h2>Chức năng</h2>
 <p>Fit Loft dựng 1 mặt (Surface) đi gần đúng qua tập đường cong section — không bắt buộc khớp chính xác từng điểm như <strong>Loft</strong> thường. Số điểm điều khiển và bậc (degree) quyết định mặt mượt tới đâu.</p>
 <h2>Input/Output</h2>
-<table style="width:100%;border-collapse:collapse;font-size:14px">
-<thead><tr><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Tên</th><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Kiểu dữ liệu</th><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Mô tả</th></tr></thead>
+<div class="tbl-frame"><div class="tbl-outer"><table style="border-collapse: collapse; font-size: 14px; table-layout: fixed; width: 100%;" data-colwidths="36px,16.073%,12.92%,71.007%">
+<thead><tr><th style="text-align: left; padding: 8px 10px; border-bottom: 2px solid var(--border); position: relative; min-width: 40px;" contenteditable="true">Tên</th><th style="text-align: left; padding: 8px 10px; border-bottom: 2px solid var(--border); position: relative; min-width: 40px;" contenteditable="true">Kiểu dữ liệu</th><th style="text-align: left; padding: 8px 10px; border-bottom: 2px solid var(--border); position: relative; min-width: 40px;" contenteditable="true">Mô tả</th></tr></thead>
 <tbody>
-<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>Curves (C)</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Curve</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Đường cong section để loft qua (tối thiểu 2 đường).</td></tr>
-<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>Count U (Nu)</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Integer</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Số điểm điều khiển theo hướng U (dọc mỗi đường cong).</td></tr>
-<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>Degree U (Du)</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Integer</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Bậc mặt theo hướng U.</td></tr>
-<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>Degree V (Dv)</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Integer</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Bậc mặt theo hướng V (hướng loft qua các đường).</td></tr>
-<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>Surface (S)</strong> — output</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Surface</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Mặt kết quả.</td></tr>
-</tbody></table>
+<tr><td style="padding: 6px 10px; border-bottom: 1px solid var(--border); position: relative; min-width: 40px;" contenteditable="true"><strong>Curves (C)</strong></td><td style="padding: 6px 10px; border-bottom: 1px solid var(--border); position: relative; min-width: 40px;" contenteditable="true">Curve</td><td style="padding: 6px 10px; border-bottom: 1px solid var(--border); position: relative; min-width: 40px;" contenteditable="true">Đường cong section để loft qua (tối thiểu 2 đường).</td></tr>
+<tr><td style="padding: 6px 10px; border-bottom: 1px solid var(--border); position: relative; min-width: 40px;" contenteditable="true"><strong>Count U (Nu)</strong></td><td style="padding: 6px 10px; border-bottom: 1px solid var(--border); position: relative; min-width: 40px;" contenteditable="true">Integer</td><td style="padding: 6px 10px; border-bottom: 1px solid var(--border); position: relative; min-width: 40px;" contenteditable="true">Số điểm điều khiển theo hướng U (dọc mỗi đường cong).</td></tr>
+<tr><td style="padding: 6px 10px; border-bottom: 1px solid var(--border); position: relative; min-width: 40px;" contenteditable="true"><strong>Degree U (Du)</strong></td><td style="padding: 6px 10px; border-bottom: 1px solid var(--border); position: relative; min-width: 40px;" contenteditable="true">Integer</td><td style="padding: 6px 10px; border-bottom: 1px solid var(--border); position: relative; min-width: 40px;" contenteditable="true">Bậc mặt theo hướng U.</td></tr>
+<tr><td style="padding: 6px 10px; border-bottom: 1px solid var(--border); position: relative; min-width: 40px;" contenteditable="true"><strong>Degree V (Dv)</strong></td><td style="padding: 6px 10px; border-bottom: 1px solid var(--border); position: relative; min-width: 40px;" contenteditable="true">Integer</td><td style="padding: 6px 10px; border-bottom: 1px solid var(--border); position: relative; min-width: 40px;" contenteditable="true">Bậc mặt theo hướng V (hướng loft qua các đường).</td></tr>
+<tr><td style="padding: 6px 10px; border-bottom: 1px solid var(--border); position: relative; min-width: 40px;" contenteditable="true"><strong>Surface (S)</strong> — output</td><td style="padding: 6px 10px; border-bottom: 1px solid var(--border); position: relative; min-width: 40px;" contenteditable="true">Surface</td><td style="padding: 6px 10px; border-bottom: 1px solid var(--border); position: relative; min-width: 40px;" contenteditable="true">Mặt kết quả.</td></tr>
+</tbody></table></div></div>
 <h2>Cách dùng</h2>
 <ol>
 <li>Chuẩn bị tối thiểu 2 đường cong section (Curve param hoặc tham chiếu từ Rhino).</li>
@@ -3281,12 +3281,12 @@ const SEED_DOCS=[
 <li>Bật Preview để xem <strong>Surface (S)</strong> trong viewport.</li>
 </ol>
 <h2>Minh họa</h2>
-<div class="cf-img-block" data-cfimgid="fitloft" data-cfimgtype="image" data-align="center" data-name="fitloft.svg"><div class="cf-img-wrap"><div class="cf-img-inner" style="width:100%;max-width:640px"><img style="width:100%;height:auto;display:block" alt="Fit Loft: Curves + Count U/Degree U/Degree V nối vào Fit Loft, xuất ra Surface; bên phải là mặt fit loft mượt qua các đường cong gốc trong viewport Rhino"><div class="cf-img-resize-h left"></div><div class="cf-img-resize-h right"></div></div></div><div class="cf-img-caption"></div></div>
+<div class="cf-img-block" data-cfimgid="fitloft" data-cfimgtype="image" data-align="center" data-name="fitloft.svg"><div class="cf-img-wrap"><div class="cf-img-inner" style="width:100%;max-width:640px"><img style="width:100%;height:auto;display:block" alt="Fit Loft: Curves + Count U/Degree U/Degree V nối vào Fit Loft, xuất ra Surface; bên phải là mặt fit loft mượt qua các đường cong gốc trong viewport Rhino"></div></div><div class="cf-img-caption"></div></div>
 <hr>
 <div class="cf-panel warning" contenteditable="false"><span class="cf-panel-icon">⚠️</span><div class="cf-panel-content" contenteditable="true"><strong>Khác với Loft thường</strong>: Loft đi chính xác qua từng đường; Fit Loft chỉ đi gần đúng. Dùng Fit Loft khi đường cong gốc không đều và muốn mặt mượt hơn.</div></div>
 <h2>Ví dụ ứng dụng thực tế</h2>
 <p>Case study Voronoi hiện tại dùng <strong>Boundary Surfaces</strong>, không cần Fit Loft. Component này hợp hơn cho dự án dựng vỏ kiến trúc cong mượt từ nhiều mặt cắt đo thực tế không đều nhau.</p>
-<div class="cf-img-block" data-cfimgid="fitloft-example" data-cfimgtype="image" data-align="center" data-name="fitloft-example.svg"><div class="cf-img-wrap"><div class="cf-img-inner" style="width:100%;max-width:640px"><img style="width:100%;height:auto;display:block" alt="Vỏ kiến trúc cong mượt được Fit Loft qua 5 mặt cắt đo ngoài thực tế, các điểm đo không hoàn toàn đều nhau"><div class="cf-img-resize-h left"></div><div class="cf-img-resize-h right"></div></div></div><div class="cf-img-caption"></div></div>`},
+<div class="cf-img-block" data-cfimgid="fitloft-example" data-cfimgtype="image" data-align="center" data-name="fitloft-example.svg"><div class="cf-img-wrap"><div class="cf-img-inner" style="width:100%;max-width:640px"><img style="width:100%;height:auto;display:block" alt="Vỏ kiến trúc cong mượt được Fit Loft qua 5 mặt cắt đo ngoài thực tế, các điểm đo không hoàn toàn đều nhau"></div></div><div class="cf-img-caption"></div></div>`},
   {id:'seed-panel-surface-primitive',title:'Primitive',section:'default',parentId:'seed-tab-surface',images:[],textBoxes:[],createdAt:'2026-07-19T00:00:00.000Z',updatedAt:'2026-07-19T00:00:00.000Z',content:`<h1>Primitive</h1>
 <div class="cf-panel info" contenteditable="false"><span class="cf-panel-icon">ℹ️</span><div class="cf-panel-content" contenteditable="true">Panel trong tab Surface, chứa component dựng mặt hình dạng cơ bản (Box, Sphere, Cylinder, Plane Surface...).</div></div>
 <p><em>Đây là 1 panel (nhóm lệnh con) trong tab Surface của Grasshopper. Các lệnh cụ thể thuộc panel này sẽ được thêm dần vào đây dưới dạng trang con khi được nghiên cứu.</em></p>`},
