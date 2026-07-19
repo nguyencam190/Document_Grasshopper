@@ -2986,7 +2986,7 @@ const STORE_KEY='projectdocs_v3';
 // Bump SEED_VERSION any time SEED_DOCS content changes (e.g. a new Grasshopper
 // command page is added) to re-sync all visitors automatically, even ones
 // with old data already saved locally.
-const SEED_VERSION=8;
+const SEED_VERSION=9;
 // Real image assets referenced by SEED_DOCS via data-cfimgid — every visitor's
 // browser needs these in its OWN IndexedDB (see init() below) so images both
 // (a) display correctly, and (b) get recognized by the app's own Optimized
@@ -3539,7 +3539,7 @@ function init(){
   // re-syncs every visitor automatically — no manual "clear site data" needed.
   if(typeof SEED_DOCS!=='undefined'&&SEED_DOCS.length&&localStorage.getItem('seed_version')!==String(SEED_VERSION)){
     state.docs=JSON.parse(JSON.stringify(SEED_DOCS));
-    state.projectName='Grasshopper Voronoi Docs';
+    state.projectName='Grasshopper Docs';
     localStorage.setItem('seed_version',String(SEED_VERSION));
     try{localStorage.setItem(STORE_KEY,JSON.stringify(state));}catch(e){}
   }
