@@ -144,14 +144,31 @@ nhưng không dùng nó để sửa nữa). Quy trình lấy/ghi file qua API (r
    ra hoặc không chắc chắn lệnh thuộc tab nào, PHẢI dừng lại hỏi user thay vì tự đoán và gán bừa —
    gán sai tab còn tệ hơn không phân loại, vì sẽ làm sai cấu trúc doc lâu dài. Xem cấu trúc doc ở
    [[gh-docs-app-workflow]].
-3. Viết nội dung vào canvas theo cấu trúc: H1 tên lệnh → Info panel tóm tắt → H2 "Chức năng" →
+3. **Trước khi viết trang con chi tiết, thêm/cập nhật 1 dòng cho lệnh đó vào bảng tổng hợp trên
+   ĐÚNG trang panel cha** (vd lệnh "Loft" → bảng trên trang panel `seed-panel-surface-freeform`):
+   - Nếu trang panel cha **CHƯA có bảng tổng hợp** — tạo mới theo đúng mẫu đã dùng ở trang "Geometry"
+     (`seed-panel-params-geometry`, xem trực tiếp trong `Grasshopper.html` làm ví dụ tham chiếu):
+     bảng 3 cột **Icon | Tên | Chức năng**, icon dùng badge vuông bo góc nền tối `#242424` chứa 1
+     icon Tabler (`<i class="ti ti-{tên-icon}">`, font đã sẵn có trong app — xem danh sách class hợp
+     lệ tại `https://tabler.io/icons` hoặc cài thử gói npm `@tabler/icons-webfont` để tra cứu chắc
+     chắn tên class tồn tại trước khi dùng, tránh bịa tên icon không có thật), không dùng icon
+     Grasshopper thật vì không có cách trích xuất chính xác trừ khi user upload ảnh gốc lên GitHub.
+   - Nếu trang panel cha **ĐÃ có bảng** (thường là do trước đó đã liệt kê sẵn toàn bộ dropdown panel,
+     giống cách đã làm với Geometry) — tìm đúng dòng có tên lệnh đó, cập nhật lại cột "Chức năng"
+     cho khớp với nội dung đã nghiên cứu kỹ (thường mô tả cũ chỉ là 1 câu chung chung, tạm thời).
+   - **Sau khi sửa bảng, luôn dùng lại đúng kỹ thuật đã kiểm chứng**: nếu cần chỉnh độ rộng cột, PHẢI
+     dùng thao tác kéo cột thật của app qua Playwright (mở trang trong trình duyệt local, drag đúng
+     `.tbl-col-resize-handle`, đọc lại `doc.content` sau khi kéo) — **KHÔNG tự viết `<colgroup>` tay**,
+     vì app tự chèn thêm 1 cột "#" ẩn (class `tbl-row-num`) làm lệch toàn bộ phép tính cột nếu viết
+     colgroup thủ công, từng gây vỡ layout thật.
+4. Viết nội dung vào canvas theo cấu trúc: H1 tên lệnh → Info panel tóm tắt → H2 "Chức năng" →
    H2 "Input/Output" (bảng) → H2 "Cách dùng" (danh sách số) → H2 "Minh họa" (ảnh SVG tự vẽ, vì
    không có ảnh chụp component thật — **phải mô phỏng đúng diện mạo thật của Grasshopper canvas/Rhino
    viewport** theo chuẩn ở `.claude/skills/nghien-cuu-grasshopper/references/phong-cach-minh-hoa.md`,
    không vẽ sơ đồ hộp-mũi tên chung chung) → Warning/Note panel lưu ý → H2 "Ví dụ ứng dụng thực tế"
    (nếu có ví dụ liên quan tới dự án Voronoi hoặc dự án khác đang làm, nêu ở đây).
-4. Bump `SEED_VERSION` lên 1 (để mọi trình duyệt tự đồng bộ lại, không cần user xoá cache/localStorage).
-5. **Luôn publish kèm ảnh minh họa, tạo bằng CHÍNH pipeline thật của app** (yêu cầu rõ ràng của user —
+5. Bump `SEED_VERSION` lên 1 (để mọi trình duyệt tự đồng bộ lại, không cần user xoá cache/localStorage).
+6. **Luôn publish kèm ảnh minh họa, tạo bằng CHÍNH pipeline thật của app** (yêu cầu rõ ràng của user —
    "làm đúng" như nút Publish, không tự chế) — quy trình đầy đủ (đã test thành công với "Voronoi"):
    a. Trong 1 tab trình duyệt đã mở `Grasshopper.html` sống (qua `mcp__Claude_Browser`), với ảnh SVG
       mới đã có sẵn ở đâu đó truy cập được (vd fetch từ 1 URL tạm), đăng ký ảnh "đúng chuẩn" của app:
@@ -214,7 +231,7 @@ nhưng không dùng nó để sửa nữa). Quy trình lấy/ghi file qua API (r
       cách nhau 100ms sau khi xoá sạch dữ liệu trình duyệt — ảnh vẫn hiện đúng 100%.
    i. Xoá file ảnh cũ (nếu có, đường dẫn phẳng `assets/{ten}.svg` kiểu cũ) bằng
       `DELETE /repos/.../contents/{path}` kèm `sha` hiện tại, tránh rác thừa trong repo.
-   j. Bump `SEED_VERSION`, `PUT Grasshopper.html` như bước 5 cũ.
+   j. Bump `SEED_VERSION`, `PUT Grasshopper.html` như bước 5 cũ (bước tạo/cập nhật `SEED_VERSION`).
 
 **Trang cha riêng cho nội dung Step-by-step (quy trình dựng mẫu từ video):**
 Khác với trang tham khảo 1 component đơn lẻ (nhét vào 1 trong 13 trang danh mục ở trên), nội dung
