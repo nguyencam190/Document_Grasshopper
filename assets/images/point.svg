@@ -1,0 +1,64 @@
+<svg width="900" height="420" viewBox="0 0 900 420" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, Arial, sans-serif">
+<defs>
+  <linearGradient id="ptBody" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0%" stop-color="#E8F200"/>
+    <stop offset="100%" stop-color="#A8C400"/>
+  </linearGradient>
+  <pattern id="dotgridP" width="18" height="18" patternUnits="userSpaceOnUse">
+    <circle cx="1" cy="1" r="1" fill="#E0E0DA"/>
+  </pattern>
+</defs>
+
+<rect x="0" y="0" width="520" height="420" fill="url(#dotgridP)"/>
+<rect x="0" y="0" width="520" height="420" fill="#F7F7F2" opacity="0.35"/>
+
+<!-- annotation: how data gets set -->
+<text x="20" y="100" font-size="12" fill="#555">🖱️ Right-click →</text>
+<text x="20" y="116" font-size="12" fill="#555">"Set Multiple Points"</text>
+<path d="M 140,108 C 170,108 170,150 205,150" stroke="#888" stroke-width="1" fill="none" stroke-dasharray="3,3"/>
+
+<!-- Point (Pt) param box: x=210 y=110 w=150 h=80 (spans 110-190) -->
+<g>
+  <rect x="210" y="110" width="150" height="80" rx="6" fill="url(#ptBody)" stroke="#3d4a0a" stroke-width="1.6"/>
+  <!-- hexagon + X icon, matching real Point param icon -->
+  <g transform="translate(285,150)">
+    <polygon points="0,-18 16,-9 16,9 0,18 -16,9 -16,-9" fill="#1a1a1a"/>
+    <line x1="-7" y1="-7" x2="7" y2="7" stroke="#fff" stroke-width="3"/>
+    <line x1="7" y1="-7" x2="-7" y2="7" stroke="#fff" stroke-width="3"/>
+  </g>
+  <!-- input nub (unconnected, optional) -->
+  <rect x="202" y="142" width="10" height="16" rx="3" fill="#E8E8E8" stroke="#3d4a0a"/>
+  <circle cx="207" cy="150" r="2.3" fill="#3d4a0a"/>
+  <!-- output nub -->
+  <rect x="358" y="142" width="10" height="16" rx="3" fill="#E8E8E8" stroke="#3d4a0a"/>
+  <circle cx="363" cy="150" r="2.3" fill="#3d4a0a"/>
+</g>
+<text x="285" y="212" text-anchor="middle" font-size="12" fill="#333">Point (Pt)</text>
+
+<!-- wire to viewport -->
+<path d="M 368,150 C 400,150 400,150 430,150" stroke="#4A4A4A" stroke-width="1.4" fill="none" stroke-dasharray="3,3"/>
+
+<!-- Right side: Rhino-style viewport showing 4 referenced points -->
+<rect x="520" y="0" width="380" height="420" fill="#FFFFFF" stroke="#B0B0B0"/>
+<g stroke="#D8D8D8" stroke-width="1">
+  <line x1="520" y1="360" x2="900" y2="360"/>
+  <line x1="520" y1="325" x2="900" y2="325"/>
+  <line x1="520" y1="295" x2="900" y2="295"/>
+</g>
+<text x="530" y="24" font-family="Consolas, monospace" font-size="12" fill="#555">Perspective</text>
+
+<g fill="#c0392b">
+  <circle cx="620" cy="290" r="4"/>
+  <circle cx="760" cy="270" r="4"/>
+  <circle cx="700" cy="180" r="4"/>
+  <circle cx="820" cy="200" r="4"/>
+</g>
+<g font-size="10" fill="#c0392b">
+  <text x="628" y="294">Pt0</text>
+  <text x="768" y="274">Pt1</text>
+  <text x="708" y="184">Pt2</text>
+  <text x="828" y="204">Pt3</text>
+</g>
+
+<text x="530" y="390" font-size="11" fill="#555">Point (Pt) tham chiếu 4 điểm có sẵn trong Rhino — không cần dây nối đầu vào</text>
+</svg>
