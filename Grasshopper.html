@@ -2986,12 +2986,12 @@ const STORE_KEY='projectdocs_v3';
 // Bump SEED_VERSION any time SEED_DOCS content changes (e.g. a new Grasshopper
 // command page is added) to re-sync all visitors automatically, even ones
 // with old data already saved locally.
-const SEED_VERSION=40;
+const SEED_VERSION=41;
 // Real image assets referenced by SEED_DOCS via data-cfimgid — every visitor's
 // browser needs these in its OWN IndexedDB (see init() below) so images both
 // (a) display correctly, and (b) get recognized by the app's own Optimized
 // Website export if the user runs Publish themselves later.
-const SEED_ASSETS={'tab-params':'svg','tab-maths':'svg','tab-sets':'svg','tab-vector':'svg','tab-curve':'svg','tab-surface':'svg','tab-mesh':'svg','tab-intersect':'svg','tab-transform':'svg','tab-display':'svg','tab-rhino':'svg','tab-kangaroo2':'svg','tab-wb':'svg','fitloft2':'svg','extrude2':'svg','fitloft-workflow2':'svg','extrude-workflow2':'svg','series':'svg','series-workflow':'svg','point':'svg','point-workflow':'svg','coincident':'svg','coincident-workflow':'svg','maelstrom':'svg','maelstrom-workflow':'svg','maelstrom-example':'svg','domain':'svg','domain-workflow':'svg','domain-example':'svg','fitloft-example2':'svg','extrude-example2':'svg','series-example2':'svg','point-example2':'svg','coincident-example2':'svg','datatree':'svg','expression':'svg','setnumber':'svg','paramprops-pattern-example':'svg','rimprofile-stations':'svg'};
+const SEED_ASSETS={'tab-params':'svg','tab-maths':'svg','tab-sets':'svg','tab-vector':'svg','tab-curve':'svg','tab-surface':'svg','tab-mesh':'svg','tab-intersect':'svg','tab-transform':'svg','tab-display':'svg','tab-rhino':'svg','tab-kangaroo2':'svg','tab-wb':'svg','fitloft2':'svg','extrude2':'svg','fitloft-workflow2':'svg','extrude-workflow2':'svg','series':'svg','series-workflow':'svg','point':'svg','point-workflow':'svg','coincident':'svg','coincident-workflow':'svg','maelstrom':'svg','maelstrom-workflow':'svg','maelstrom-example':'svg','domain':'svg','domain-workflow':'svg','domain-example':'svg','fitloft-example2':'svg','extrude-example2':'svg','series-example2':'svg','point-example2':'svg','coincident-example2':'svg','datatree':'svg','expression':'svg','setnumber':'svg','paramprops-pattern-example':'svg','rimprofile-stations':'svg','rimprofile-buildsteps':'svg'};
 // Default project logo baked into the seed (path in the repo, not an IDB-blob id like
 // SEED_ASSETS — headerLogo/projectLogo store a data: URL directly in state, see init()).
 const SEED_HEADER_LOGO='assets/images/logo-grasshopper.png';
@@ -3027,6 +3027,20 @@ const SEED_DOCS=[
 <h2>Nguyên lý cốt lõi</h2>
 <p>Đây là kỹ thuật <strong>"profile theo trạm" (station-based profile)</strong>: thay vì vẽ 1 đường cong cố định, định nghĩa vài giá trị Width/Offset đặt tên tại các trạm mốc, dựng Plane tại mỗi trạm bằng phép toán đơn giản trên chính các giá trị đó, rồi dùng <strong>Vector 2Pt + Angle + Amplitude</strong> để máy tự tính độ bo góc theo hình học cục bộ. Đây là lý do panel bên phải ghi được "Any Wheel size" — đổi 1 slider là toàn bộ hệ trạm scale/bo lại theo, không vỡ hình như khi chỉnh tay 1 curve cố định.</p>
 
+<h2>Cách dựng từng bước (phiên bản đơn giản hoá)</h2>
+<div class="cf-panel note" contenteditable="false"><span class="cf-panel-icon">📝</span><div class="cf-panel-content" contenteditable="true">Đây là bài tập TÁI TẠO nguyên lý cốt lõi (Vector 2Pt + Angle + Amplitude bo góc thích ứng) để tự kéo thử trên canvas thật — KHÔNG phải chép lại chính xác từng dây nối của file gốc trong video (video quảng bá không đủ độ phân giải để đọc hết dây nối thật). Giống cách bản Voronoi hoa hướng dương trong case study của dự án này cũng là bản đơn giản hoá, không phải Fibonacci thật.</div></div>
+<ol>
+<li>Kéo 3 <strong>Number Slider</strong>, đặt tên lại: "Center Width" (~0.4), "Middle Width" (~0.6), "Top Width" (~0.9).</li>
+<li>Kéo 3 <strong>Construct Point</strong>: mỗi cái nối 1 Number Slider vào input <strong>X</strong>; input <strong>Z</strong> nối 1 giá trị tăng dần (0 / 50 / 100, gõ trực tiếp hoặc dùng Panel) để 3 điểm tách nhau dọc trục vành → được P0 (trạm Center), P1 (trạm Middle), P2 (trạm Top).</li>
+<li>Kéo 2 <strong>Vector 2Pt</strong>: V1 (A=P0, B=P1), V2 (A=P1, B=P2) — mỗi cái cho ra 1 vector nối giữa 2 trạm liền kề.</li>
+<li>Kéo <strong>Angle</strong>: A=output V1, B=output V2 → đo góc giữa 2 đoạn tại trạm giữa (P1).</li>
+<li>Kéo <strong>Amplitude</strong>: V=1 vector pháp tuyến tại P1 (hoặc dùng thẳng V2), A=output Angle → tính ra 1 vector dịch chuyển theo đúng độ "gấp khúc" tại trạm đó.</li>
+<li>Kéo <strong>Move</strong>: G=P1, T=output Amplitude → điểm P1 đã được bo/dịch theo góc.</li>
+<li>Kéo <strong>Interpolate</strong>: nối lần lượt P0 → điểm P1 đã Move (bước 6) → P2 vào input Vertices → ra 1 đường cong nửa profile mượt qua 3 trạm.</li>
+<li>Kéo <strong>Mirror</strong>: Geometry=đường cong bước 7, Plane=mặt phẳng đối xứng dọc trục vành (vd YZ tại gốc) → lấy nửa còn lại, ghép 2 nửa thành profile đầy đủ.</li>
+<li>Bật <strong>Preview</strong> (phím Ctrl+Q hoặc click phải → Preview) cho các bước cuối, kéo thử 3 Number Slider Width để thấy profile scale/bo lại theo — đây chính là điểm mạnh của kỹ thuật "profile theo trạm".</li>
+</ol>
+<div class="cf-img-block" data-cfimgid="rimprofile-buildsteps" data-cfimgtype="image" data-align="center" data-name="build-steps.svg"><div class="cf-img-wrap"><div class="cf-img-inner" style="width:100%;max-width:900px"><img style="width:100%;height:auto;display:block" alt="Chuỗi component dựng nửa profile: 3 Number Slider Width nối Construct Point tại 3 trạm P0/P1/P2, 2 Vector 2Pt tính V1 V2, Angle đo góc giữa V1 V2, Amplitude tính vector bo góc, Move dịch P1, Interpolate nối thành đường cong nửa profile"><div class="cf-img-resize-h left"></div><div class="cf-img-resize-h right"></div></div></div><div class="cf-img-caption"></div></div>
 <hr>
 <div class="cf-panel warning" contenteditable="false"><span class="cf-panel-icon">⚠️</span><div class="cf-panel-content" contenteditable="true">Phân tích dựa trên hình ảnh canvas độ phân giải thấp trong video quảng bá, KHÔNG phải file .gh gốc hay tutorial có lời giảng. Tên cụm/label (Builds Center Curves, Calculates Mid Vector...) đọc trực tiếp từ caption trong video nên chính xác; tên component cụ thể bên trong (Vector 2Pt, Angle, Construct Plane...) suy luận từ icon + số cổng khớp, độ tin cậy cao nhưng không tuyệt đối 100%. Không tái tạo được toàn bộ dây nối chi tiết do độ phân giải giới hạn.</div></div>`},
   {id:'seed-param-properties',locked:true,title:'Thuộc tính Param & Data Tree',section:'default',parentId:null,images:[],textBoxes:[],createdAt:'2026-07-19T00:00:00.000Z',updatedAt:'2026-07-19T00:00:00.000Z',content:`<h1>Thuộc tính Param & Data Tree</h1>
