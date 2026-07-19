@@ -208,19 +208,24 @@ nhưng không dùng nó để sửa nữa). Quy trình lấy/ghi file qua API (r
      thuộc tính đặc biệt — không được bỏ qua mục này.
    - H2 **"Cách dùng"** — hướng dẫn từng bước (danh sách số), giữ nguyên như trước (không phải mục
      gốc của skill nhưng hữu ích cho người mới, vẫn giữ lại).
+   - H2 **"Minh họa"** — nằm NGAY SAU "Cách dùng" (không đặt cuối trang) vì minh hoạ trực quan hoá
+     đúng các bước vừa đọc. Ảnh SVG tự vẽ (không có ảnh chụp component thật) — **phải mô phỏng đúng
+     diện mạo thật của Grasshopper canvas/Rhino viewport** theo chuẩn ở
+     `.claude/skills/nghien-cuu-grasshopper/references/phong-cach-minh-hoa.md`, không vẽ sơ đồ
+     hộp-mũi tên chung chung. Cần tối thiểu 1 ví dụ đơn giản; thêm ví dụ thứ 2 nếu có tình huống thực
+     tế đáng nêu riêng.
    - H2 **"Ứng dụng"** — lĩnh vực áp dụng (Parametric Modeling, Architecture, Pattern Generation...),
      nêu ví dụ thực tế nếu phù hợp.
    - H2 **"Kết nối"** — 3 bảng riêng: "Có thể nhận dữ liệu từ" (Component | Data Type | Có thể nối),
      "Có thể xuất dữ liệu đến" (tương tự), "Không thể kết nối" (Component | Lý do).
    - H2 **"Workflow phổ biến"** — ít nhất 2 workflow thực tế, dạng chuỗi mũi tên (vd
-     `Circle → Divide Curve → Points → Move → Polyline`), workflow phổ biến nhất nêu trước.
+     `Circle → Divide Curve → Points → Move → Polyline`), workflow phổ biến nhất nêu trước. **Sau các
+     dòng workflow text, PHẢI thêm 1 ảnh minh hoạ riêng** (cùng chuẩn `.cf-img-block` + style canvas
+     GH thật ở `phong-cach-minh-hoa.md`, không phải ảnh chụp thật) vẽ chuỗi component của workflow phổ
+     biến nhất — khác nội dung với ảnh ở mục "Minh họa" phía trên (mục đó tập trung chi tiết input/
+     output của RIÊNG component chính; ảnh này cho thấy TOÀN BỘ chuỗi nhiều component nối với nhau).
    - H2 **"Kiểu dữ liệu"** — liệt kê kiểu dữ liệu hỗ trợ (Point, Curve, Surface, Brep, Mesh, Vector,
      Plane, Number, Boolean, Text, List, Data Tree...); giải thích khác biệt nếu hỗ trợ nhiều kiểu.
-   - H2 **"Minh họa"** — ảnh SVG tự vẽ (không có ảnh chụp component thật) — **phải mô phỏng đúng diện
-     mạo thật của Grasshopper canvas/Rhino viewport** theo chuẩn ở
-     `.claude/skills/nghien-cuu-grasshopper/references/phong-cach-minh-hoa.md`, không vẽ sơ đồ
-     hộp-mũi tên chung chung. Cần tối thiểu 1 ví dụ đơn giản; thêm ví dụ thứ 2 nếu có tình huống thực
-     tế đáng nêu riêng.
    - Warning/Note panel — mục **"Lưu ý"**: lỗi thường gặp, giới hạn, mẹo dùng hiệu quả.
    - H2 **"Ví dụ ứng dụng thực tế"** (nếu có ví dụ liên quan tới dự án Voronoi hoặc dự án khác đang
      làm, nêu ở đây). **Mục này cũng PHẢI có hình minh họa riêng** (cùng chuẩn `.cf-img-block` +

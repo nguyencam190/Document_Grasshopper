@@ -2986,12 +2986,12 @@ const STORE_KEY='projectdocs_v3';
 // Bump SEED_VERSION any time SEED_DOCS content changes (e.g. a new Grasshopper
 // command page is added) to re-sync all visitors automatically, even ones
 // with old data already saved locally.
-const SEED_VERSION=26;
+const SEED_VERSION=27;
 // Real image assets referenced by SEED_DOCS via data-cfimgid — every visitor's
 // browser needs these in its OWN IndexedDB (see init() below) so images both
 // (a) display correctly, and (b) get recognized by the app's own Optimized
 // Website export if the user runs Publish themselves later.
-const SEED_ASSETS={'tab-params':'svg','tab-maths':'svg','tab-sets':'svg','tab-vector':'svg','tab-curve':'svg','tab-surface':'svg','tab-mesh':'svg','tab-intersect':'svg','tab-transform':'svg','tab-display':'svg','tab-rhino':'svg','tab-kangaroo2':'svg','tab-wb':'svg','fitloft':'svg','fitloft-example':'svg','extrude':'svg','extrude-example':'svg'};
+const SEED_ASSETS={'tab-params':'svg','tab-maths':'svg','tab-sets':'svg','tab-vector':'svg','tab-curve':'svg','tab-surface':'svg','tab-mesh':'svg','tab-intersect':'svg','tab-transform':'svg','tab-display':'svg','tab-rhino':'svg','tab-kangaroo2':'svg','tab-wb':'svg','fitloft':'svg','fitloft-example':'svg','extrude':'svg','extrude-example':'svg','fitloft-workflow':'svg','extrude-workflow':'svg'};
 // Default project logo baked into the seed (path in the repo, not an IDB-blob id like
 // SEED_ASSETS — headerLogo/projectLogo store a data: URL directly in state, see init()).
 const SEED_HEADER_LOGO='assets/images/logo-grasshopper.png';
@@ -3284,6 +3284,8 @@ const SEED_DOCS=[
 <li>(Tuỳ chọn) Nối Number Slider số nguyên vào <strong>Count U / Degree U / Degree V</strong> để chỉnh độ mượt.</li>
 <li>Bật Preview để xem <strong>Surface (S)</strong> trong viewport.</li>
 </ol>
+<h2>Minh họa</h2>
+<div class="cf-img-block" data-cfimgid="fitloft" data-cfimgtype="image" data-align="center" data-name="fitloft.svg"><div class="cf-img-wrap"><div class="cf-img-inner" style="width:100%;max-width:640px"><img style="width:100%;height:auto;display:block" alt="Fit Loft: Curves + Count U/Degree U/Degree V nối vào Fit Loft, xuất ra Surface; bên phải là mặt fit loft mượt qua các đường cong gốc trong viewport Rhino"><div class="cf-img-resize-h left"></div><div class="cf-img-resize-h right"></div></div></div><div class="cf-img-caption"></div></div>
 <h2>Ứng dụng</h2>
 <p>Surface Modeling, Architecture — dựng mặt cong lớn từ dữ liệu đo đạc/quét 3D không đều (mặt cắt công trình, địa hình...).</p>
 <h2>Kết nối</h2>
@@ -3309,10 +3311,9 @@ const SEED_DOCS=[
 <h2>Workflow phổ biến</h2>
 <p>Curve × N → Fit Loft → Surface</p>
 <p>Point Cloud → Interpolate (nhiều đường) → Fit Loft → Surface → Bake</p>
+<div class="cf-img-block" data-cfimgid="fitloft-workflow" data-cfimgtype="image" data-align="center" data-name="fitloft-workflow.svg"><div class="cf-img-wrap"><div class="cf-img-inner" style="width:100%;max-width:640px"><img style="width:100%;height:auto;display:block" alt="Chuỗi component workflow phổ biến: nhiều Curve section nối vào Fit Loft, xuất ra 1 mặt Surface mượt trong viewport"><div class="cf-img-resize-h left"></div><div class="cf-img-resize-h right"></div></div></div><div class="cf-img-caption"></div></div>
 <h2>Kiểu dữ liệu</h2>
 <p>Input: Curve (list), Integer. Output: Surface.</p>
-<h2>Minh họa</h2>
-<div class="cf-img-block" data-cfimgid="fitloft" data-cfimgtype="image" data-align="center" data-name="fitloft.svg"><div class="cf-img-wrap"><div class="cf-img-inner" style="width:100%;max-width:640px"><img style="width:100%;height:auto;display:block" alt="Fit Loft: Curves + Count U/Degree U/Degree V nối vào Fit Loft, xuất ra Surface; bên phải là mặt fit loft mượt qua các đường cong gốc trong viewport Rhino"><div class="cf-img-resize-h left"></div><div class="cf-img-resize-h right"></div></div></div><div class="cf-img-caption"></div></div>
 <hr>
 <div class="cf-panel warning" contenteditable="false"><span class="cf-panel-icon">⚠️</span><div class="cf-panel-content" contenteditable="true"><strong>Khác với Loft thường</strong>: Loft đi chính xác qua từng đường; Fit Loft chỉ đi gần đúng. Dùng Fit Loft khi đường cong gốc không đều và muốn mặt mượt hơn.</div></div>
 <h2>Ví dụ ứng dụng thực tế</h2>
@@ -3340,6 +3341,8 @@ const SEED_DOCS=[
 <li>Nối 1 Vector vào <strong>Direction (D)</strong> — vd dùng Unit Z × Number Slider để chỉnh chiều cao.</li>
 <li>Bật Preview để xem <strong>Extrusion (E)</strong>.</li>
 </ol>
+<h2>Minh họa</h2>
+<div class="cf-img-block" data-cfimgid="extrude" data-cfimgtype="image" data-align="center" data-name="extrude.svg"><div class="cf-img-wrap"><div class="cf-img-inner" style="width:100%;max-width:640px"><img style="width:100%;height:auto;display:block" alt="Base và Direction nối vào Extrude, xuất ra Extrusion; bên phải là mặt ngũ giác được đùn thành khối lăng trụ trong viewport"><div class="cf-img-resize-h left"></div><div class="cf-img-resize-h right"></div></div></div><div class="cf-img-caption"></div></div>
 <h2>Ứng dụng</h2>
 <p>Architecture, Massing — dựng nhanh khối công trình sơ bộ từ mặt bằng (đùn mặt bằng tầng theo phương đứng ra chiều cao tầng).</p>
 <h2>Kết nối</h2>
@@ -3365,10 +3368,9 @@ const SEED_DOCS=[
 <h2>Workflow phổ biến</h2>
 <p>Rectangle → Extrude → Brep → Bake</p>
 <p>Boundary Surfaces (mặt bằng tầng) → Extrude (chiều cao tầng) → Array (nhiều tầng) → Massing công trình</p>
+<div class="cf-img-block" data-cfimgid="extrude-workflow" data-cfimgtype="image" data-align="center" data-name="extrude-workflow.svg"><div class="cf-img-wrap"><div class="cf-img-inner" style="width:100%;max-width:640px"><img style="width:100%;height:auto;display:block" alt="Chuỗi component workflow phổ biến: Rectangle nối vào Extrude theo hướng Unit Z, xuất Brep rồi Bake ra hình khối thật trong Rhino"><div class="cf-img-resize-h left"></div><div class="cf-img-resize-h right"></div></div></div><div class="cf-img-caption"></div></div>
 <h2>Kiểu dữ liệu</h2>
 <p>Input: Geometry (Curve/Surface), Vector. Output: Geometry (Brep).</p>
-<h2>Minh họa</h2>
-<div class="cf-img-block" data-cfimgid="extrude" data-cfimgtype="image" data-align="center" data-name="extrude.svg"><div class="cf-img-wrap"><div class="cf-img-inner" style="width:100%;max-width:640px"><img style="width:100%;height:auto;display:block" alt="Base và Direction nối vào Extrude, xuất ra Extrusion; bên phải là mặt ngũ giác được đùn thành khối lăng trụ trong viewport"><div class="cf-img-resize-h left"></div><div class="cf-img-resize-h right"></div></div></div><div class="cf-img-caption"></div></div>
 <hr>
 <div class="cf-panel warning" contenteditable="false"><span class="cf-panel-icon">⚠️</span><div class="cf-panel-content" contenteditable="true">Extrude đùn theo đường THẲNG duy nhất. Cần đùn theo 1 đường cong dẫn hướng (path) thì dùng <strong>Extrude Along</strong> thay vì Extrude.</div></div>
 <h2>Ví dụ ứng dụng thực tế</h2>
