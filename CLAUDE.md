@@ -144,7 +144,7 @@ nhưng không dùng nó để sửa nữa). Quy trình lấy/ghi file qua API (r
       ```html
       <div class="cf-img-block" data-cfimgid="{id}" data-cfimgtype="image" data-align="center" data-name="{ten-file}">
         <div class="cf-img-wrap"><div class="cf-img-inner">
-          <img style="width:100%;max-width:320px;height:auto;display:block" alt="{mo-ta}"><div class="cf-img-resize-h left"></div><div class="cf-img-resize-h right"></div>
+          <img style="width:100%;max-width:640px;height:auto;display:block" alt="{mo-ta}"><div class="cf-img-resize-h left"></div><div class="cf-img-resize-h right"></div>
         </div></div>
         <div class="cf-img-caption"></div>
       </div>
