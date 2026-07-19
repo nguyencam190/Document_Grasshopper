@@ -243,6 +243,20 @@ Khác với trang tham khảo 1 component đơn lẻ (nhét vào 1 trong 13 tran
   ~3px nữa. Bài học: khi ảnh gốc có CẢ `width` LẪN `max-width` set riêng (không phải 1 giá trị chung),
   bản export phải giữ lại **toàn bộ 2 thuộc tính đó**, không chỉ 1 — đã sửa bằng cách đọc thêm
   `const _origMaxW=media.style.maxWidth||'100%'` và dùng cả 2 biến khi build cssText mới.
+- **Bug gốc thật sự khiến ảnh minh họa luôn hiện nhỏ trừ khi tự kéo tay resize lên 100%**: `<img>`
+  trong `.cf-img-block` set `width:100%` để co giãn theo container, nhưng container `.cf-img-inner`
+  (CSS `display:inline-block`, không set `width` mặc định) không có kích thước xác định — theo cách
+  CSS tính "shrink-to-fit"/flex-basis:auto, 1 phần tử `width:100%` bên trong 1 container không có
+  width xác định sẽ KHÔNG resolve được phần trăm đó, ảnh rơi về kích thước nội tại gốc của file
+  (thường nhỏ). Khi user tự kéo thanh resize, JS gán thẳng `style.width=Npx` (inline style) cho
+  `.cf-img-inner` → lúc đó mới có width xác định → `width:100%` của `<img>` mới resolve đúng và ảnh
+  to lên — đây là lý do "phải kéo tay lên 100% mới to". Ảnh dạng `data-float` đã tránh được bug này
+  từ trước vì có sẵn rule `.cf-img-block[data-float] .cf-img-inner{width:100%}` riêng; ảnh thường
+  (không float) thì thiếu. Đã sửa: thêm `width:100%` vào rule mặc định `.cf-img-inner{...}` — cả bản
+  trong editor sống (dòng ~1130) LẪN bản CSS riêng cho trang export/publish trong
+  `_buildViewerShellCss()` (dùng chung bởi `doExportWebsite()` và `doExportOptimized()`, ~dòng 16045)
+  — thiếu 1 trong 2 chỗ vẫn còn bug ở nơi chưa sửa. Ảnh đã tự resize thủ công trước đó không bị ảnh
+  hưởng vì inline style luôn thắng style class.
 
 ## Git workflow
 User muốn mọi commit trong repo này **push/merge thẳng vào nhánh `main`**, không giữ lại lâu trên
