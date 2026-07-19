@@ -208,12 +208,15 @@ nhưng không dùng nó để sửa nữa). Quy trình lấy/ghi file qua API (r
      thuộc tính đặc biệt — không được bỏ qua mục này.
    - H2 **"Cách dùng"** — hướng dẫn từng bước (danh sách số), giữ nguyên như trước (không phải mục
      gốc của skill nhưng hữu ích cho người mới, vẫn giữ lại).
-   - H2 **"Minh họa"** — nằm NGAY SAU "Cách dùng" (không đặt cuối trang) vì minh hoạ trực quan hoá
-     đúng các bước vừa đọc. Ảnh SVG tự vẽ (không có ảnh chụp component thật) — **phải mô phỏng đúng
-     diện mạo thật của Grasshopper canvas/Rhino viewport** theo chuẩn ở
-     `.claude/skills/nghien-cuu-grasshopper/references/phong-cach-minh-hoa.md`, không vẽ sơ đồ
-     hộp-mũi tên chung chung. Cần tối thiểu 1 ví dụ đơn giản; thêm ví dụ thứ 2 nếu có tình huống thực
-     tế đáng nêu riêng.
+   - Mục **"Minh họa"** — nằm NGAY SAU "Cách dùng" (không đặt cuối trang) vì minh hoạ trực quan hoá
+     đúng các bước vừa đọc. **KHÔNG có tiêu đề H2 riêng** (chỉ chèn thẳng khối `.cf-img-block` liền
+     sau đoạn `<ol>` của "Cách dùng", không viết `<h2>Minh họa</h2>`) — ảnh tự nó đã rõ nghĩa ngay sau
+     phần hướng dẫn, thêm heading là thừa. (Các trang tab/panel tổng quan — không theo chuẩn 11 mục
+     này — vẫn giữ nguyên `<h2>Minh họa</h2>` như cũ, không đụng vào.) Ảnh SVG tự vẽ (không có ảnh
+     chụp component thật) — **phải mô phỏng đúng diện mạo thật của Grasshopper canvas/Rhino viewport**
+     theo chuẩn ở `.claude/skills/nghien-cuu-grasshopper/references/phong-cach-minh-hoa.md`, không vẽ
+     sơ đồ hộp-mũi tên chung chung. Cần tối thiểu 1 ví dụ đơn giản; thêm ví dụ thứ 2 nếu có tình huống
+     thực tế đáng nêu riêng.
    - H2 **"Ứng dụng"** — lĩnh vực áp dụng (Parametric Modeling, Architecture, Pattern Generation...),
      nêu ví dụ thực tế nếu phù hợp.
    - H2 **"Kết nối"** — 3 bảng riêng: "Có thể nhận dữ liệu từ" (Component | Data Type | Có thể nối),
