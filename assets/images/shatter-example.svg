@@ -1,0 +1,59 @@
+<svg width="640" height="460" viewBox="0 0 640 460" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, Arial, sans-serif">
+<defs>
+  <linearGradient id="thickGrad1" x1="0" y1="0" x2="1" y2="0">
+    <stop offset="0%" stop-color="#c0392b" stop-opacity="0.85"/>
+    <stop offset="100%" stop-color="#c0392b" stop-opacity="0.35"/>
+  </linearGradient>
+  <linearGradient id="thickGrad2" x1="0" y1="0" x2="1" y2="0">
+    <stop offset="0%" stop-color="#1f8a8a" stop-opacity="0.35"/>
+    <stop offset="100%" stop-color="#1f8a8a" stop-opacity="0.85"/>
+  </linearGradient>
+</defs>
+<rect x="0" y="0" width="640" height="460" fill="#FFFFFF" stroke="#B0B0B0"/>
+<text x="14" y="26" font-family="Consolas, monospace" font-size="12" fill="#555">Top</text>
+
+<circle cx="320" cy="230" r="150" fill="none" stroke="#E5E5E0" stroke-width="1"/>
+<text x="320" y="234" text-anchor="middle" font-size="10" fill="#999">8 module quanh vòng, mỗi biên bị Shatter cắt đôi</text>
+
+<g stroke-width="6" fill="none">
+<g transform="translate(320.0,80.0) rotate(0)">
+  <path d="M -22,0 A22,22 0 0 1 22,0" stroke="url(#thickGrad1)"/>
+  <path d="M 22,0 A22,22 0 0 1 -22,0" stroke="url(#thickGrad2)"/>
+</g>
+<g transform="translate(426.1,123.9) rotate(45)">
+  <path d="M -22,0 A22,22 0 0 1 22,0" stroke="url(#thickGrad1)"/>
+  <path d="M 22,0 A22,22 0 0 1 -22,0" stroke="url(#thickGrad2)"/>
+</g>
+<g transform="translate(470.0,230.0) rotate(90)">
+  <path d="M -22,0 A22,22 0 0 1 22,0" stroke="url(#thickGrad1)"/>
+  <path d="M 22,0 A22,22 0 0 1 -22,0" stroke="url(#thickGrad2)"/>
+</g>
+<g transform="translate(426.1,336.1) rotate(135)">
+  <path d="M -22,0 A22,22 0 0 1 22,0" stroke="url(#thickGrad1)"/>
+  <path d="M 22,0 A22,22 0 0 1 -22,0" stroke="url(#thickGrad2)"/>
+</g>
+<g transform="translate(320.0,380.0) rotate(180)">
+  <path d="M -22,0 A22,22 0 0 1 22,0" stroke="url(#thickGrad1)"/>
+  <path d="M 22,0 A22,22 0 0 1 -22,0" stroke="url(#thickGrad2)"/>
+</g>
+<g transform="translate(213.9,336.1) rotate(225)">
+  <path d="M -22,0 A22,22 0 0 1 22,0" stroke="url(#thickGrad1)"/>
+  <path d="M 22,0 A22,22 0 0 1 -22,0" stroke="url(#thickGrad2)"/>
+</g>
+<g transform="translate(170.0,230.0) rotate(270)">
+  <path d="M -22,0 A22,22 0 0 1 22,0" stroke="url(#thickGrad1)"/>
+  <path d="M 22,0 A22,22 0 0 1 -22,0" stroke="url(#thickGrad2)"/>
+</g>
+<g transform="translate(213.9,123.9) rotate(315)">
+  <path d="M -22,0 A22,22 0 0 1 22,0" stroke="url(#thickGrad1)"/>
+  <path d="M 22,0 A22,22 0 0 1 -22,0" stroke="url(#thickGrad2)"/>
+</g>
+</g>
+
+<g font-size="10.5" fill="#555">
+  <circle cx="30" cy="430" r="5" fill="#c0392b"/>
+  <text x="42" y="434">Đoạn 1 (S{0}) — nét dày</text>
+  <circle cx="230" cy="430" r="5" fill="#1f8a8a"/>
+  <text x="242" y="434">Đoạn 2 (S{1}) — nét mảnh</text>
+</g>
+</svg>

@@ -1,0 +1,56 @@
+<svg width="640" height="420" viewBox="0 0 640 420" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, Arial, sans-serif">
+<rect x="0" y="0" width="640" height="420" fill="#FFFFFF" stroke="#B0B0B0"/>
+<text x="14" y="26" font-family="Consolas, monospace" font-size="12" fill="#555">Front</text>
+
+<!-- dome outline curve -->
+<path d="M 60,340 Q 60,100 320,80 Q 580,100 580,340" fill="none" stroke="#222222" stroke-width="2.4"/>
+
+<!-- ground line -->
+<line x1="30" y1="340" x2="610" y2="340" stroke="#D0D0D0" stroke-width="1.5"/>
+
+<!-- scattered attractor points (off curve, semi-random) with dashed projection to nearest point on curve -->
+<g>
+  <circle cx="150" cy="150" r="4" fill="#c0392b" opacity="0.55"/>
+  <circle cx="172" cy="176" r="4.5" fill="#1f8a8a"/>
+  <line x1="150" y1="150" x2="172" y2="176" stroke="#c0392b" stroke-width="1" stroke-dasharray="3,2"/>
+
+  <circle cx="255" cy="95" r="4" fill="#c0392b" opacity="0.55"/>
+  <circle cx="268" cy="86" r="4.5" fill="#1f8a8a"/>
+  <line x1="255" y1="95" x2="268" y2="86" stroke="#c0392b" stroke-width="1" stroke-dasharray="3,2"/>
+
+  <circle cx="390" cy="110" r="4" fill="#c0392b" opacity="0.55"/>
+  <circle cx="374" cy="90" r="4.5" fill="#1f8a8a"/>
+  <line x1="390" y1="110" x2="374" y2="90" stroke="#c0392b" stroke-width="1" stroke-dasharray="3,2"/>
+
+  <circle cx="470" cy="180" r="4" fill="#c0392b" opacity="0.55"/>
+  <circle cx="450" cy="165" r="4.5" fill="#1f8a8a"/>
+  <line x1="470" y1="180" x2="450" y2="165" stroke="#c0392b" stroke-width="1" stroke-dasharray="3,2"/>
+
+  <circle cx="105" cy="260" r="4" fill="#c0392b" opacity="0.55"/>
+  <circle cx="90" cy="245" r="4.5" fill="#1f8a8a"/>
+  <line x1="105" y1="260" x2="90" y2="245" stroke="#c0392b" stroke-width="1" stroke-dasharray="3,2"/>
+
+  <circle cx="540" cy="255" r="4" fill="#c0392b" opacity="0.55"/>
+  <circle cx="555" cy="240" r="4.5" fill="#1f8a8a"/>
+  <line x1="540" y1="255" x2="555" y2="240" stroke="#c0392b" stroke-width="1" stroke-dasharray="3,2"/>
+</g>
+
+<!-- pattern modules placed AT the snapped points, small squares oriented along curve -->
+<g fill="none" stroke="#1f8a8a" stroke-width="1.5">
+  <rect x="164" y="168" width="16" height="16" transform="rotate(-25 172 176)"/>
+  <rect x="260" y="78" width="16" height="16" transform="rotate(-5 268 86)"/>
+  <rect x="366" y="82" width="16" height="16" transform="rotate(8 374 90)"/>
+  <rect x="442" y="157" width="16" height="16" transform="rotate(30 450 165)"/>
+  <rect x="82" y="237" width="16" height="16" transform="rotate(-45 90 245)"/>
+  <rect x="547" y="232" width="16" height="16" transform="rotate(45 555 240)"/>
+</g>
+
+<g font-size="10.5" fill="#555">
+  <circle cx="30" cy="380" r="4.5" fill="#c0392b" opacity="0.55"/>
+  <text x="42" y="384">Điểm attractor gốc (rời rạc, không nằm trên Curve)</text>
+</g>
+<g font-size="10.5" fill="#555">
+  <circle cx="30" cy="398" r="4.5" fill="#1f8a8a"/>
+  <text x="42" y="402">Điểm đã snap (output P) — module pattern đặt tại đây</text>
+</g>
+</svg>

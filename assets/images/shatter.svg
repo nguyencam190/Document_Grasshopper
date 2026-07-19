@@ -1,0 +1,75 @@
+<svg width="900" height="380" viewBox="0 0 900 380" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, Arial, sans-serif">
+<defs>
+  <linearGradient id="ghBody" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0%" stop-color="#F0F0F0"/>
+    <stop offset="100%" stop-color="#D8D8D8"/>
+  </linearGradient>
+  <linearGradient id="curveParamGrad" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0%" stop-color="#E8F200"/>
+    <stop offset="100%" stop-color="#A8C400"/>
+  </linearGradient>
+  <pattern id="dotgrid" width="18" height="18" patternUnits="userSpaceOnUse">
+    <circle cx="1" cy="1" r="1" fill="#E0E0DA"/>
+  </pattern>
+</defs>
+
+<rect x="0" y="0" width="520" height="380" fill="url(#dotgrid)"/>
+<rect x="0" y="0" width="520" height="380" fill="#F7F7F2" opacity="0.35"/>
+
+<!-- Curve param source -->
+<rect x="20" y="40" width="140" height="34" rx="5" fill="url(#curveParamGrad)" stroke="#8C9400" stroke-width="1"/>
+<text x="90" y="61" text-anchor="middle" font-size="12" font-weight="600" fill="#3a3d00">Curve</text>
+<rect x="158" y="50" width="10" height="14" rx="3" fill="#E8E8E8" stroke="#8C9400"/><circle cx="163" cy="57" r="2.3" fill="#3a3d00"/>
+
+<!-- t slider -->
+<rect x="20" y="94" width="140" height="34" rx="5" fill="#F0F0F0" stroke="#8C8C8C"/>
+<rect x="28" y="105" width="70" height="10" rx="3" fill="#E4E4E4" stroke="#B0B0B0"/>
+<circle cx="68" cy="110" r="5" fill="#8C8C8C"/>
+<text x="152" y="115" text-anchor="end" font-size="10" fill="#333">t = 0.5</text>
+<rect x="158" y="104" width="10" height="14" rx="3" fill="#E8E8E8" stroke="#8C8C8C"/><circle cx="163" cy="111" r="2.3" fill="#4A4A4A"/>
+
+<!-- wires into Shatter -->
+<path d="M 163,57 C 195,57 195,90 222,90" stroke="#4A4A4A" stroke-width="1.4" fill="none"/>
+<path d="M 163,111 C 195,111 195,130 222,130" stroke="#4A4A4A" stroke-width="1.4" fill="none"/>
+
+<!-- Shatter component: box x=230 y=40 w=150 h=120 (spans 40-160) -->
+<g>
+  <rect x="230" y="40" width="150" height="120" rx="6" fill="url(#ghBody)" stroke="#8C8C8C" stroke-width="1.2"/>
+  <text x="305" y="65" text-anchor="middle" font-size="14" font-weight="bold" fill="#222">Shatter</text>
+  <line x1="245" y1="73" x2="365" y2="73" stroke="#B5B5B0" stroke-width="1"/>
+  <!-- input C center=90 -->
+  <rect x="222" y="83" width="10" height="14" rx="3" fill="#E8E8E8" stroke="#8C8C8C"/><circle cx="227" cy="90" r="2.3" fill="#4A4A4A"/>
+  <text x="240" y="94" font-size="11" fill="#333">C</text>
+  <!-- input t center=130 -->
+  <rect x="222" y="123" width="10" height="14" rx="3" fill="#E8E8E8" stroke="#8C8C8C"/><circle cx="227" cy="130" r="2.3" fill="#4A4A4A"/>
+  <text x="240" y="134" font-size="11" fill="#333">t</text>
+  <!-- output S center=110 -->
+  <rect x="378" y="103" width="10" height="14" rx="3" fill="#E8E8E8" stroke="#8C8C8C"/><circle cx="383" cy="110" r="2.3" fill="#4A4A4A"/>
+  <text x="368" y="106" text-anchor="end" font-size="11" fill="#333">S</text>
+</g>
+
+<!-- wire to result panel -->
+<path d="M 388,110 C 405,110 405,110 420,110" stroke="#4A4A4A" stroke-width="1.4" fill="none"/>
+<rect x="422" y="92" width="76" height="36" fill="#FFFFFF" stroke="#8C8C8C" stroke-width="1"/>
+<text x="460" y="107" text-anchor="middle" font-size="9" fill="#222">2 nhánh</text>
+<text x="460" y="119" text-anchor="middle" font-size="9" fill="#222">S{0}, S{1}</text>
+
+<!-- Right side: Rhino viewport showing curve split at 1 point into 2 segments -->
+<rect x="520" y="0" width="380" height="380" fill="#FFFFFF" stroke="#B0B0B0"/>
+<g stroke="#D8D8D8" stroke-width="1">
+  <line x1="520" y1="340" x2="900" y2="340"/>
+  <line x1="520" y1="310" x2="900" y2="310"/>
+  <line x1="520" y1="285" x2="900" y2="285"/>
+</g>
+<text x="530" y="24" font-family="Consolas, monospace" font-size="12" fill="#555">Perspective</text>
+
+<path d="M 560,320 Q 650,260 710,200" stroke="#222222" stroke-width="2.2" fill="none"/>
+<path d="M 710,200 Q 770,140 860,80" stroke="#1f8a8a" stroke-width="2.2" fill="none"/>
+<circle cx="710" cy="200" r="4.5" fill="#c0392b"/>
+<text x="660" y="240" text-anchor="end" font-size="10" fill="#c0392b">t = 0.5</text>
+<text x="575" y="300" font-size="11" fill="#222">Đoạn 1 (S{0})</text>
+<text x="775" y="120" font-size="11" fill="#1f8a8a">Đoạn 2 (S{1})</text>
+
+<text x="530" y="352" font-size="10.5" fill="#555">Shatter cắt Curve tại t=0.5 →</text>
+<text x="530" y="366" font-size="10.5" fill="#555">tách 1 đường thành 2 Curve riêng biệt (S{0}, S{1})</text>
+</svg>

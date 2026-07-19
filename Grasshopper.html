@@ -2986,12 +2986,12 @@ const STORE_KEY='projectdocs_v3';
 // Bump SEED_VERSION any time SEED_DOCS content changes (e.g. a new Grasshopper
 // command page is added) to re-sync all visitors automatically, even ones
 // with old data already saved locally.
-const SEED_VERSION=41;
+const SEED_VERSION=42;
 // Real image assets referenced by SEED_DOCS via data-cfimgid — every visitor's
 // browser needs these in its OWN IndexedDB (see init() below) so images both
 // (a) display correctly, and (b) get recognized by the app's own Optimized
 // Website export if the user runs Publish themselves later.
-const SEED_ASSETS={'tab-params':'svg','tab-maths':'svg','tab-sets':'svg','tab-vector':'svg','tab-curve':'svg','tab-surface':'svg','tab-mesh':'svg','tab-intersect':'svg','tab-transform':'svg','tab-display':'svg','tab-rhino':'svg','tab-kangaroo2':'svg','tab-wb':'svg','fitloft2':'svg','extrude2':'svg','fitloft-workflow2':'svg','extrude-workflow2':'svg','series':'svg','series-workflow':'svg','point':'svg','point-workflow':'svg','coincident':'svg','coincident-workflow':'svg','maelstrom':'svg','maelstrom-workflow':'svg','maelstrom-example':'svg','domain':'svg','domain-workflow':'svg','domain-example':'svg','fitloft-example2':'svg','extrude-example2':'svg','series-example2':'svg','point-example2':'svg','coincident-example2':'svg','datatree':'svg','expression':'svg','setnumber':'svg','paramprops-pattern-example':'svg','rimprofile-stations':'svg','rimprofile-buildsteps':'svg'};
+const SEED_ASSETS={'tab-params':'svg','tab-maths':'svg','tab-sets':'svg','tab-vector':'svg','tab-curve':'svg','tab-surface':'svg','tab-mesh':'svg','tab-intersect':'svg','tab-transform':'svg','tab-display':'svg','tab-rhino':'svg','tab-kangaroo2':'svg','tab-wb':'svg','fitloft2':'svg','extrude2':'svg','fitloft-workflow2':'svg','extrude-workflow2':'svg','series':'svg','series-workflow':'svg','point':'svg','point-workflow':'svg','coincident':'svg','coincident-workflow':'svg','maelstrom':'svg','maelstrom-workflow':'svg','maelstrom-example':'svg','domain':'svg','domain-workflow':'svg','domain-example':'svg','fitloft-example2':'svg','extrude-example2':'svg','series-example2':'svg','point-example2':'svg','coincident-example2':'svg','datatree':'svg','expression':'svg','setnumber':'svg','paramprops-pattern-example':'svg','rimprofile-stations':'svg','rimprofile-buildsteps':'svg','shatter':'svg','shatter-workflow':'svg','shatter-example':'svg','curveclosestpoint':'svg','curveclosestpoint-workflow':'svg','curveclosestpoint-example':'svg'};
 // Default project logo baked into the seed (path in the repo, not an IDB-blob id like
 // SEED_ASSETS — headerLogo/projectLogo store a data: URL directly in state, see init()).
 const SEED_HEADER_LOGO='assets/images/logo-grasshopper.png';
@@ -3088,6 +3088,123 @@ const SEED_DOCS=[
 
 <hr>
 <div class="cf-panel warning" contenteditable="false"><span class="cf-panel-icon">⚠️</span><div class="cf-panel-content" contenteditable="true">Flatten/Graft/Simplify chỉ đổi CẤU TRÚC cây, không đổi GIÁ TRỊ item bên trong — nếu kết quả sai giá trị (không phải sai số lượng/nhóm), lỗi nằm ở chỗ khác, không phải ở 3 thuộc tính này. <strong>Internalise data</strong> xám đi không có nghĩa là lỗi — chỉ đơn giản là param chưa có dữ liệu tham chiếu ngoài nào để nhúng.</div></div>`},
+  {id:'seed-cmd-shatter',locked:true,title:'Shatter',section:'default',parentId:'seed-panel-curve-util',images:[],textBoxes:[],createdAt:'2026-07-19T00:00:00.000Z',updatedAt:'2026-07-19T00:00:00.000Z',content:`<h1>Shatter</h1>
+<div class="cf-panel info" contenteditable="false"><span class="cf-panel-icon">ℹ️</span><div class="cf-panel-content" contenteditable="true">🟡 Trung bình — Cắt 1 đường cong thành nhiều đoạn Curve riêng biệt, tại các vị trí tham số (parameter) chỉ định.</div></div>
+<h2>Chức năng</h2>
+<p>Shatter tách 1 đường cong thành nhiều đoạn <strong>Curve riêng biệt</strong>, cắt tại các vị trí tham số (t) chỉ định. Không xoá phần nào — ghép các đoạn lại vẫn đúng bằng đường cong gốc.</p>
+<h2>Khi nào sử dụng</h2>
+<p>Dùng khi cần chia 1 đường cong thành các đoạn tại vị trí <strong>xác định trước</strong> (toạ độ cụ thể, điểm giao, mốc đo...). Không dùng khi chỉ cần chia <strong>đều</strong> theo số đoạn/khoảng cách cố định — trường hợp đó dùng <strong>Divide Curve</strong> thay vì Shatter.</p>
+<h2>Input/Output</h2>
+<div class="tbl-frame"><div class="tbl-outer"><table style="border-collapse:collapse;font-size:14px;table-layout:fixed;width:100%" data-colwidths="36px,20.02%,20.02%,59.959%">
+<thead><tr><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Tên</th><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Kiểu dữ liệu</th><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Mô tả</th></tr></thead>
+<tbody>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>C</strong> — input</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Curve</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Đường cong cần cắt.</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>t</strong> — input</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Number</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Danh sách tham số (parameter) trên đường cong, tại đó Shatter sẽ cắt.</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>S</strong> — output</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Curve</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Danh sách đoạn cong sau khi cắt. Nếu C là nhiều đường, mỗi đường ra 1 nhánh dữ liệu riêng.</td></tr>
+</tbody></table></div></div>
+<h2>Thuộc tính</h2>
+<p>Right-click trên input <strong>C</strong> có <strong>Reparameterize</strong> — đổi domain tham số của đường cong về khoảng 0→1, dễ nhập số hơn domain gốc (thường không phải 0→1). Ngoài ra chỉ có các mục chuẩn của mọi component: Preview, Bake, Flatten/Graft/Simplify.</p>
+<h2>Cách dùng</h2>
+<ol>
+<li>Kéo thả component <strong>Shatter</strong> (panel Curve &gt; Util) ra canvas.</li>
+<li>Nối đường cong cần cắt vào input <strong>C</strong>.</li>
+<li>Xác định vị trí cắt: nếu đã có sẵn 1 điểm/toạ độ, dùng <strong>Curve Closest Point</strong> để đổi Point → parameter t rồi nối vào <strong>t</strong>; nếu biết trước theo tỉ lệ 0–1, chuột phải input C chọn <strong>Reparameterize</strong> rồi nhập số 0–1 vào t.</li>
+<li>Output <strong>S</strong> trả về danh sách các đoạn cong đã cắt.</li>
+</ol>
+<div class="cf-img-block" data-cfimgid="shatter" data-cfimgtype="image" data-align="center" data-name="shatter.svg"><div class="cf-img-wrap"><div class="cf-img-inner" style="width:100%;max-width:640px"><img style="width:100%;height:auto;display:block" alt="Shatter nhận Curve vào C và tham số t=0.5, cắt đường cong thành 2 đoạn riêng biệt S{0} và S{1}, hiển thị trong viewport với 2 màu khác nhau"><div class="cf-img-resize-h left"></div><div class="cf-img-resize-h right"></div></div></div><div class="cf-img-caption"></div></div>
+<h2>Ứng dụng</h2>
+<p>Parametric Design / Pattern Generation — cắt rời đường biên của 1 module lặp tại các mốc xác định để áp xử lý khác nhau lên từng đoạn (độ dày, offset, vật liệu...), tạo hiệu ứng biến thiên có kiểm soát dọc theo 1 pattern thay vì xử lý đồng nhất toàn bộ đường viền.</p>
+<h2>Kết nối</h2>
+<p><strong>Nhận dữ liệu từ:</strong></p>
+<table style="width:100%;border-collapse:collapse;font-size:14px">
+<thead><tr><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Component</th><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Data Type</th><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Có thể nối</th></tr></thead>
+<tbody>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Curve, Polyline, bất kỳ nguồn Curve nào</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Curve</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Có — vào input C</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Curve Closest Point, Curve | Curve (giao điểm)</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Number (Parameter)</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Có — vào input t</td></tr>
+</tbody></table>
+<p><strong>Xuất dữ liệu đến:</strong></p>
+<table style="width:100%;border-collapse:collapse;font-size:14px">
+<thead><tr><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Component</th><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Data Type</th><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Có thể nối</th></tr></thead>
+<tbody>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Offset, Pipe, Extrude, List Item, bất kỳ component nhận Curve</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Curve</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Có — nhận thẳng output S</td></tr>
+</tbody></table>
+<p><strong>Không thể kết nối:</strong></p>
+<table style="width:100%;border-collapse:collapse;font-size:14px">
+<thead><tr><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Component</th><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Lý do</th></tr></thead>
+<tbody>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Nối thẳng 1 Point vào input t</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">t cần kiểu Number (parameter dọc theo đường cong), không phải toạ độ Point — phải qua Curve Closest Point để đổi Point → parameter trước.</td></tr>
+</tbody></table>
+<h2>Workflow phổ biến</h2>
+<p>Curve, Point → Curve Closest Point (t) → Shatter (C, t) → 2 đoạn Curve</p>
+<p>Curve, Curve → Curve | Curve (giao điểm, Parameter) → Shatter → nhiều đoạn tại giao điểm</p>
+<div class="cf-img-block" data-cfimgid="shatter-workflow" data-cfimgtype="image" data-align="center" data-name="shatter-workflow.svg"><div class="cf-img-wrap"><div class="cf-img-inner" style="width:100%;max-width:640px"><img style="width:100%;height:auto;display:block" alt="Chuỗi component workflow phổ biến: Point và Curve nối vào Curve Closest Point lấy tham số t, t nối vào Shatter cùng Curve gốc, xuất ra 2 đoạn cong tại đúng vị trí điểm"><div class="cf-img-resize-h left"></div><div class="cf-img-resize-h right"></div></div></div><div class="cf-img-caption"></div></div>
+<h2>Kiểu dữ liệu</h2>
+<p>Input C: Curve (item hoặc list). Input t: Number, list access — nhiều giá trị t cho ra nhiều điểm cắt cùng lúc trên 1 đường. Output S: Curve, luôn trả về list; nếu C là list nhiều đường, S là data tree nhiều nhánh (mỗi nhánh ứng với 1 đường gốc).</p>
+<hr>
+<div class="cf-panel warning" contenteditable="false"><span class="cf-panel-icon">⚠️</span><div class="cf-panel-content" contenteditable="true">t phải đúng domain của C (mặc định theo domain gốc, KHÔNG tự động 0–1) — nối Point trực tiếp vào t báo lỗi kiểu dữ liệu, không cắt được. Nếu t nằm ngoài domain của đường cong, Shatter bỏ qua giá trị đó. Với đường cong kín (closed curve), 1 điểm cắt vẫn cho ra 2 đoạn (không phải 1) vì đường kín có "điểm nối" giữa 2 đầu domain.</div></div>
+<h2>Ví dụ ứng dụng thực tế</h2>
+<p>Cắt biên (boundary) của mỗi module hình tròn quanh 1 vòng pattern (8 module) làm đôi tại 2 điểm đối xứng, rồi áp độ dày nét khác nhau cho mỗi nửa — tạo hiệu ứng dày-mỏng xen kẽ dọc theo pattern lặp, không cần vẽ tay từng module.</p>
+<div class="cf-img-block" data-cfimgid="shatter-example" data-cfimgtype="image" data-align="center" data-name="shatter-example.svg"><div class="cf-img-wrap"><div class="cf-img-inner" style="width:100%;max-width:640px"><img style="width:100%;height:auto;display:block" alt="8 module tròn quanh 1 vòng pattern, mỗi biên bị Shatter cắt đôi thành 2 đoạn với độ dày nét khác nhau — đoạn dày màu đỏ, đoạn mảnh màu xanh ngọc"><div class="cf-img-resize-h left"></div><div class="cf-img-resize-h right"></div></div></div><div class="cf-img-caption"></div></div>`},
+  {id:'seed-cmd-curveclosestpoint',locked:true,title:'Curve Closest Point',section:'default',parentId:'seed-panel-curve-analysis',images:[],textBoxes:[],createdAt:'2026-07-19T00:00:00.000Z',updatedAt:'2026-07-19T00:00:00.000Z',content:`<h1>Curve Closest Point</h1>
+<div class="cf-panel info" contenteditable="false"><span class="cf-panel-icon">ℹ️</span><div class="cf-panel-content" contenteditable="true">🟢 Cơ bản — Tìm vị trí gần nhất trên 1 đường cong so với 1 điểm cho trước, kèm khoảng cách và tham số (t) tại vị trí đó.</div></div>
+<h2>Chức năng</h2>
+<p>Curve Closest Point "chiếu" 1 điểm bất kỳ (không nhất thiết nằm trên đường cong) xuống đúng vị trí <strong>gần nhất</strong> trên đường cong đó — trả về điểm gần nhất, khoảng cách, và tham số (t) tại vị trí đó.</p>
+<h2>Khi nào sử dụng</h2>
+<p>Dùng khi cần đổi 1 điểm bất kỳ thành tham số (parameter) trên đường cong — để dùng tiếp cho <strong>Shatter</strong>, <strong>Evaluate Curve</strong>...; hoặc để đo khoảng cách từ điểm tới đường; hoặc để "snap" điểm vào đúng đường cong. Không cần dùng nếu điểm chắc chắn đã nằm trên curve và chỉ cần lấy vị trí đó — vẫn dùng được nhưng có cách khác nhanh hơn tuỳ trường hợp.</p>
+<h2>Input/Output</h2>
+<div class="tbl-frame"><div class="tbl-outer"><table style="border-collapse:collapse;font-size:14px;table-layout:fixed;width:100%" data-colwidths="36px,20.02%,20.02%,59.959%">
+<thead><tr><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Tên</th><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Kiểu dữ liệu</th><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Mô tả</th></tr></thead>
+<tbody>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>P</strong> — input</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Point</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Điểm cần tìm vị trí gần nhất trên đường cong.</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>C</strong> — input</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Curve</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Đường cong để so khớp.</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>P</strong> — output</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Point</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Điểm gần nhất, thực tế nằm trên đường cong.</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>t</strong> — output</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Number</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Tham số (parameter) tại vị trí điểm gần nhất đó trên đường cong.</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>D</strong> — output</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Number</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Khoảng cách từ điểm input P đến điểm gần nhất tìm được.</td></tr>
+</tbody></table></div></div>
+<h2>Thuộc tính</h2>
+<p>Không có thuộc tính đặc biệt ngoài các mục chuẩn của mọi component: Preview, Bake, Flatten/Graft/Simplify.</p>
+<h2>Cách dùng</h2>
+<ol>
+<li>Kéo thả component <strong>Curve Closest Point</strong> (panel Curve &gt; Analysis) ra canvas.</li>
+<li>Nối điểm cần kiểm tra vào input <strong>P</strong>, đường cong cần so khớp vào input <strong>C</strong>.</li>
+<li>Lấy output <strong>t</strong> nối tiếp vào Shatter (hoặc Evaluate Curve) để dùng cho bước sau.</li>
+<li>(Tuỳ chọn) Dùng output <strong>D</strong> để kiểm tra điểm có thực sự nằm sát đường cong hay không (D≈0 nghĩa là điểm gần như nằm trên curve).</li>
+</ol>
+<div class="cf-img-block" data-cfimgid="curveclosestpoint" data-cfimgtype="image" data-align="center" data-name="curveclosestpoint.svg"><div class="cf-img-wrap"><div class="cf-img-inner" style="width:100%;max-width:640px"><img style="width:100%;height:auto;display:block" alt="Curve Closest Point nhận Point và Curve, trả về điểm gần nhất P, tham số t=0.62 và khoảng cách D=8.4; viewport hiển thị đường nét đứt nối điểm gốc tới điểm gần nhất trên đường cong"><div class="cf-img-resize-h left"></div><div class="cf-img-resize-h right"></div></div></div><div class="cf-img-caption"></div></div>
+<h2>Ứng dụng</h2>
+<p>Parametric Design / Pattern Generation — snap 1 lưới điểm bất kỳ (attractor points) vào đúng biên dạng của 1 đường cong chủ đạo, để các phần tử pattern bám sát theo hình dáng đường cong đó thay vì lệch tự do trong không gian.</p>
+<h2>Kết nối</h2>
+<p><strong>Nhận dữ liệu từ:</strong></p>
+<table style="width:100%;border-collapse:collapse;font-size:14px">
+<thead><tr><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Component</th><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Data Type</th><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Có thể nối</th></tr></thead>
+<tbody>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Point (Pt), Construct Point, bất kỳ nguồn Point nào</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Point</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Có — vào input P</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Curve, Polyline, bất kỳ nguồn Curve nào</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Curve</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Có — vào input C</td></tr>
+</tbody></table>
+<p><strong>Xuất dữ liệu đến:</strong></p>
+<table style="width:100%;border-collapse:collapse;font-size:14px">
+<thead><tr><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Component</th><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Data Type</th><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Có thể nối</th></tr></thead>
+<tbody>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Shatter</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Number (t → parameter cắt)</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Có — nhận thẳng output t</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Move, Line, Evaluate Curve</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Point (P) / Number (t)</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Có — nhận thẳng output P hoặc t tương ứng</td></tr>
+</tbody></table>
+<p><strong>Không thể kết nối:</strong></p>
+<table style="width:100%;border-collapse:collapse;font-size:14px">
+<thead><tr><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Component</th><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Lý do</th></tr></thead>
+<tbody>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Nối thẳng Surface/Brep vào input C</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Input C chỉ nhận Curve — cần tìm điểm gần nhất trên mặt thì dùng <strong>Surface Closest Point</strong> thay thế, không phải component này.</td></tr>
+</tbody></table>
+<h2>Workflow phổ biến</h2>
+<p>Point, Curve → Curve Closest Point (t) → Shatter (C, t) → đoạn cong tại đúng vị trí điểm</p>
+<p>Point, Curve → Curve Closest Point (P) → Move → điểm đã "snap" đúng lên đường cong</p>
+<div class="cf-img-block" data-cfimgid="curveclosestpoint-workflow" data-cfimgtype="image" data-align="center" data-name="curveclosestpoint-workflow.svg"><div class="cf-img-wrap"><div class="cf-img-inner" style="width:100%;max-width:640px"><img style="width:100%;height:auto;display:block" alt="Chuỗi component workflow: Point và Curve nối vào Curve Closest Point, output P đưa vào Move để snap điểm vào đường cong, output t đưa vào Shatter để cắt đường cong tại đúng vị trí đó"><div class="cf-img-resize-h left"></div><div class="cf-img-resize-h right"></div></div></div><div class="cf-img-caption"></div></div>
+<h2>Kiểu dữ liệu</h2>
+<p>Input: Point, Curve. Output: Point (P), Number (t, D). Nếu input P là danh sách nhiều điểm, output cũng trả về danh sách tương ứng theo đúng thứ tự (không tạo thêm nhánh data tree).</p>
+<hr>
+<div class="cf-panel warning" contenteditable="false"><span class="cf-panel-icon">⚠️</span><div class="cf-panel-content" contenteditable="true">Không nhầm với <strong>Curve Proximity</strong> (tìm điểm gần nhau nhất GIỮA 2 đường cong, không phải giữa 1 điểm và 1 đường). Output t trả về theo domain GỐC của đường cong (không tự động 0–1) — nếu cần đồng bộ domain giữa Curve Closest Point và Shatter, phải Reparameterize curve trước khi đưa vào cả 2 component. Nếu đường cong là open curve và điểm P nằm ngoài phạm vi hình học, điểm gần nhất có thể rơi ngay tại 1 trong 2 đầu mút.</div></div>
+<h2>Ví dụ ứng dụng thực tế</h2>
+<p>Snap danh sách điểm attractor rải rác vào đúng biên dạng đường viền mái vòm cong, đảm bảo mọi module pattern (phần tử lặp) bám sát bề mặt cong thay vì trôi tự do trong không gian.</p>
+<div class="cf-img-block" data-cfimgid="curveclosestpoint-example" data-cfimgtype="image" data-align="center" data-name="curveclosestpoint-example.svg"><div class="cf-img-wrap"><div class="cf-img-inner" style="width:100%;max-width:640px"><img style="width:100%;height:auto;display:block" alt="6 điểm attractor rải rác được Curve Closest Point snap vào đúng đường viền mái vòm cong, mỗi điểm đã snap đặt 1 module pattern hình thoi bám theo đường cong"><div class="cf-img-resize-h left"></div><div class="cf-img-resize-h right"></div></div></div><div class="cf-img-caption"></div></div>`},
   {id:'seed-tab-params',title:'Params',section:'default',parentId:'seed-grasshopper',images:[],textBoxes:[],createdAt:'2026-07-18T00:00:00.000Z',updatedAt:'2026-07-18T00:00:00.000Z',content:`<h1>Params</h1>
 <div class="cf-panel info" contenteditable="false"><span class="cf-panel-icon">ℹ️</span><div class="cf-panel-content" contenteditable="true">🟢 Cơ bản — Nơi khai báo và giữ dữ liệu (Points, Curves, Breps, Lists, Trees...) để dùng xuyên suốt file Grasshopper.</div></div>
 <h2>Chức năng</h2>
@@ -3413,9 +3530,7 @@ const SEED_DOCS=[
   {id:'seed-panel-vector-vector',title:'Vector',section:'default',parentId:'seed-tab-vector',images:[],textBoxes:[],createdAt:'2026-07-19T00:00:00.000Z',updatedAt:'2026-07-19T00:00:00.000Z',content:`<h1>Vector</h1>
 <div class="cf-panel info" contenteditable="false"><span class="cf-panel-icon">ℹ️</span><div class="cf-panel-content" contenteditable="true">Panel trong tab Vector, chứa các phép toán trên vector (độ dài, tích có hướng, đơn vị hoá...).</div></div>
 <p><em>Đây là 1 panel (nhóm lệnh con) trong tab Vector của Grasshopper. Các lệnh cụ thể thuộc panel này sẽ được thêm dần vào đây dưới dạng trang con khi được nghiên cứu.</em></p>`},
-  {id:'seed-panel-curve-analysis',title:'Analysis',section:'default',parentId:'seed-tab-curve',images:[],textBoxes:[],createdAt:'2026-07-19T00:00:00.000Z',updatedAt:'2026-07-19T00:00:00.000Z',content:`<h1>Analysis</h1>
-<div class="cf-panel info" contenteditable="false"><span class="cf-panel-icon">ℹ️</span><div class="cf-panel-content" contenteditable="true">Panel trong tab Curve, chứa component đo/phân tích đường cong — độ dài, độ cong, điểm gần nhất...</div></div>
-<p><em>Đây là 1 panel (nhóm lệnh con) trong tab Curve của Grasshopper. Các lệnh cụ thể thuộc panel này sẽ được thêm dần vào đây dưới dạng trang con khi được nghiên cứu.</em></p>`},
+  {id:'seed-panel-curve-analysis',title:'Analysis',section:'default',parentId:'seed-tab-curve',images:[],textBoxes:[],createdAt:'2026-07-19T00:00:00.000Z',updatedAt:'2026-07-19T00:00:00.000Z',content:`<h1>Analysis</h1><div class="cf-panel info" contenteditable="false"><span class="cf-panel-icon">ℹ️</span><div class="cf-panel-content" contenteditable="true">Panel trong tab Curve, chứa component đo/phân tích đường cong — độ dài, độ cong, điểm gần nhất...</div></div><h2>Danh sách component</h2><div class="tbl-frame"><div class="tbl-outer"><table style="border-collapse: collapse; font-size: 14px; table-layout: fixed; width: 100%;" data-colwidths="36px,8.1%,14.9%,77%"><thead><tr><th style="text-align: center; padding: 8px 6px; border-bottom: 2px solid var(--border); position: relative; min-width: 40px;" contenteditable="true">Icon</th><th style="text-align: left; padding: 8px 10px; border-bottom: 2px solid var(--border); position: relative; min-width: 40px;" contenteditable="true">Tên</th><th style="text-align: left; padding: 8px 10px; border-bottom: 2px solid var(--border); position: relative; min-width: 40px;" contenteditable="true">Chức năng</th></tr></thead><tbody><tr><td style="text-align: center; padding: 6px; border-bottom: 1px solid var(--border); position: relative; min-width: 40px;" contenteditable="true"><span style="display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;background:#242424;border-radius:7px"><i class="ti ti-focus-2" style="color:#e8e8e8;font-size:17px"></i></span></td><td style="padding: 6px 10px; border-bottom: 1px solid var(--border); position: relative; min-width: 40px; vertical-align: middle;" contenteditable="true"><strong>Curve Closest Point</strong></td><td style="padding: 6px 10px; border-bottom: 1px solid var(--border); position: relative; min-width: 40px; vertical-align: middle;" contenteditable="true">Tìm điểm gần nhất trên 1 đường cong so với 1 điểm cho trước, kèm tham số (t) và khoảng cách (D).</td></tr></tbody></table></div></div>`},
   {id:'seed-panel-curve-division',title:'Division',section:'default',parentId:'seed-tab-curve',images:[],textBoxes:[],createdAt:'2026-07-19T00:00:00.000Z',updatedAt:'2026-07-19T00:00:00.000Z',content:`<h1>Division</h1>
 <div class="cf-panel info" contenteditable="false"><span class="cf-panel-icon">ℹ️</span><div class="cf-panel-content" contenteditable="true">Panel trong tab Curve, chứa component chia đường cong thành điểm/đoạn cách đều hoặc theo khoảng chỉ định.</div></div>
 <p><em>Đây là 1 panel (nhóm lệnh con) trong tab Curve của Grasshopper. Các lệnh cụ thể thuộc panel này sẽ được thêm dần vào đây dưới dạng trang con khi được nghiên cứu.</em></p>`},
@@ -3425,9 +3540,7 @@ const SEED_DOCS=[
   {id:'seed-panel-curve-spline',title:'Spline',section:'default',parentId:'seed-tab-curve',images:[],textBoxes:[],createdAt:'2026-07-19T00:00:00.000Z',updatedAt:'2026-07-19T00:00:00.000Z',content:`<h1>Spline</h1>
 <div class="cf-panel info" contenteditable="false"><span class="cf-panel-icon">ℹ️</span><div class="cf-panel-content" contenteditable="true">Panel trong tab Curve, chứa component dựng đường cong mượt phức tạp hơn (Interpolate, NURBS Curve, Spline qua nhiều điểm...).</div></div>
 <p><em>Đây là 1 panel (nhóm lệnh con) trong tab Curve của Grasshopper. Các lệnh cụ thể thuộc panel này sẽ được thêm dần vào đây dưới dạng trang con khi được nghiên cứu.</em></p>`},
-  {id:'seed-panel-curve-util',title:'Util',section:'default',parentId:'seed-tab-curve',images:[],textBoxes:[],createdAt:'2026-07-19T00:00:00.000Z',updatedAt:'2026-07-19T00:00:00.000Z',content:`<h1>Util</h1>
-<div class="cf-panel info" contenteditable="false"><span class="cf-panel-icon">ℹ️</span><div class="cf-panel-content" contenteditable="true">Panel trong tab Curve, nhóm các công cụ tiện ích khác cho đường cong (Join, Explode, Offset...).</div></div>
-<p><em>Đây là 1 panel (nhóm lệnh con) trong tab Curve của Grasshopper. Các lệnh cụ thể thuộc panel này sẽ được thêm dần vào đây dưới dạng trang con khi được nghiên cứu.</em></p>`},
+  {id:'seed-panel-curve-util',title:'Util',section:'default',parentId:'seed-tab-curve',images:[],textBoxes:[],createdAt:'2026-07-19T00:00:00.000Z',updatedAt:'2026-07-19T00:00:00.000Z',content:`<h1>Util</h1><div class="cf-panel info" contenteditable="false"><span class="cf-panel-icon">ℹ️</span><div class="cf-panel-content" contenteditable="true">Panel trong tab Curve, nhóm các công cụ tiện ích khác cho đường cong (Join, Explode, Offset...).</div></div><h2>Danh sách component</h2><div class="tbl-frame"><div class="tbl-outer"><table style="border-collapse: collapse; font-size: 14px; table-layout: fixed; width: 100%;" data-colwidths="36px,8.1%,14.9%,77%"><thead><tr><th style="text-align: center; padding: 8px 6px; border-bottom: 2px solid var(--border); position: relative; min-width: 40px;" contenteditable="true">Icon</th><th style="text-align: left; padding: 8px 10px; border-bottom: 2px solid var(--border); position: relative; min-width: 40px;" contenteditable="true">Tên</th><th style="text-align: left; padding: 8px 10px; border-bottom: 2px solid var(--border); position: relative; min-width: 40px;" contenteditable="true">Chức năng</th></tr></thead><tbody><tr><td style="text-align: center; padding: 6px; border-bottom: 1px solid var(--border); position: relative; min-width: 40px;" contenteditable="true"><span style="display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;background:#242424;border-radius:7px"><i class="ti ti-cut" style="color:#e8e8e8;font-size:17px"></i></span></td><td style="padding: 6px 10px; border-bottom: 1px solid var(--border); position: relative; min-width: 40px; vertical-align: middle;" contenteditable="true"><strong>Shatter</strong></td><td style="padding: 6px 10px; border-bottom: 1px solid var(--border); position: relative; min-width: 40px; vertical-align: middle;" contenteditable="true">Cắt 1 đường cong thành nhiều đoạn tại các vị trí tham số (parameter) chỉ định.</td></tr></tbody></table></div></div>`},
   {id:'seed-tab-surface',title:'Surface',section:'default',parentId:'seed-grasshopper',images:[],textBoxes:[],createdAt:'2026-07-18T00:00:00.000Z',updatedAt:'2026-07-18T00:00:00.000Z',content:`<h1>Surface</h1>
 <div class="cf-panel info" contenteditable="false"><span class="cf-panel-icon">ℹ️</span><div class="cf-panel-content" contenteditable="true">🟡 Trung bình — Tạo và chỉnh sửa mặt (Surface): Loft, Extrude, Trim, phân tích mặt.</div></div>
 <h2>Chức năng</h2>

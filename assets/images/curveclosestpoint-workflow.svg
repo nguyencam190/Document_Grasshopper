@@ -1,0 +1,89 @@
+<svg width="1050" height="380" viewBox="0 0 1050 380" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, Arial, sans-serif">
+<defs>
+  <linearGradient id="ghBody" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0%" stop-color="#F0F0F0"/>
+    <stop offset="100%" stop-color="#D8D8D8"/>
+  </linearGradient>
+  <linearGradient id="paramGrad" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0%" stop-color="#E8F200"/>
+    <stop offset="100%" stop-color="#A8C400"/>
+  </linearGradient>
+  <pattern id="dg" width="18" height="18" patternUnits="userSpaceOnUse">
+    <circle cx="1" cy="1" r="1" fill="#E0E0DA"/>
+  </pattern>
+</defs>
+<rect x="0" y="0" width="1050" height="380" fill="#FAFAF7"/>
+<rect x="0" y="0" width="1050" height="380" fill="url(#dg)"/>
+
+<!-- Point param -->
+<rect x="20" y="60" width="110" height="34" rx="5" fill="url(#paramGrad)" stroke="#8C9400" stroke-width="1"/>
+<text x="75" y="81" text-anchor="middle" font-size="12" font-weight="600" fill="#3a3d00">Point</text>
+<rect x="128" y="70" width="10" height="14" rx="3" fill="#E8E8E8" stroke="#8C9400"/><circle cx="133" cy="77" r="2.3" fill="#3a3d00"/>
+
+<!-- Curve param -->
+<rect x="20" y="130" width="110" height="34" rx="5" fill="url(#paramGrad)" stroke="#8C9400" stroke-width="1"/>
+<text x="75" y="151" text-anchor="middle" font-size="12" font-weight="600" fill="#3a3d00">Curve</text>
+<rect x="128" y="140" width="10" height="14" rx="3" fill="#E8E8E8" stroke="#8C9400"/><circle cx="133" cy="147" r="2.3" fill="#3a3d00"/>
+
+<path d="M 133,77 C 160,77 160,95 187,95" stroke="#4A4A4A" stroke-width="1.3" fill="none"/>
+<path d="M 133,147 C 160,147 160,119 187,119" stroke="#4A4A4A" stroke-width="1.3" fill="none"/>
+
+<!-- Curve Closest Point box x=195 y=55 w=160 h=95 (range 55-150) -->
+<g>
+  <rect x="195" y="55" width="160" height="95" rx="6" fill="url(#ghBody)" stroke="#8C8C8C" stroke-width="1.2"/>
+  <text x="275" y="75" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#222">Curve Closest</text>
+  <text x="275" y="89" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#222">Point</text>
+  <rect x="187" y="88" width="10" height="14" rx="3" fill="#E8E8E8" stroke="#8C8C8C"/><circle cx="192" cy="95" r="2.3" fill="#4A4A4A"/>
+  <text x="204" y="99" font-size="10.5" fill="#333">P</text>
+  <rect x="187" y="112" width="10" height="14" rx="3" fill="#E8E8E8" stroke="#8C8C8C"/><circle cx="192" cy="119" r="2.3" fill="#4A4A4A"/>
+  <text x="204" y="123" font-size="10.5" fill="#333">C</text>
+  <rect x="348" y="80" width="10" height="14" rx="3" fill="#E8E8E8" stroke="#8C8C8C"/><circle cx="353" cy="87" r="2.3" fill="#4A4A4A"/>
+  <text x="338" y="91" text-anchor="end" font-size="10.5" fill="#333">P</text>
+  <rect x="348" y="103" width="10" height="14" rx="3" fill="#E8E8E8" stroke="#8C8C8C"/><circle cx="353" cy="110" r="2.3" fill="#4A4A4A"/>
+  <text x="338" y="114" text-anchor="end" font-size="10.5" fill="#333">t</text>
+</g>
+
+<!-- P output -> Move; t output -> Shatter -->
+<path d="M 353,87 C 400,87 400,60 447,60" stroke="#4A4A4A" stroke-width="1.3" fill="none"/>
+<path d="M 353,110 C 420,110 420,220 447,220" stroke="#4A4A4A" stroke-width="1.3" fill="none"/>
+<path d="M 133,147 C 400,147 400,244 447,244" stroke="#4A4A4A" stroke-width="1" fill="none" stroke-dasharray="2,2" opacity="0.6"/>
+
+<!-- Move box x=455 y=30 w=120 h=70 (range 30-100) -->
+<g>
+  <rect x="455" y="30" width="120" height="70" rx="6" fill="url(#ghBody)" stroke="#8C8C8C" stroke-width="1.2"/>
+  <text x="515" y="58" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#222">Move</text>
+  <rect x="447" y="53" width="10" height="14" rx="3" fill="#E8E8E8" stroke="#8C8C8C"/><circle cx="452" cy="60" r="2.3" fill="#4A4A4A"/>
+  <text x="464" y="64" font-size="10.5" fill="#333">G</text>
+  <rect x="447" y="76" width="10" height="14" rx="3" fill="#E8E8E8" stroke="#8C8C8C"/><circle cx="452" cy="83" r="2.3" fill="#4A4A4A"/>
+  <text x="464" y="87" font-size="10.5" fill="#333">T</text>
+  <rect x="603" y="65" width="10" height="14" rx="3" fill="#E8E8E8" stroke="#8C8C8C"/><circle cx="608" cy="72" r="2.3" fill="#4A4A4A"/>
+</g>
+<path d="M 133,77 C 300,77 300,83 447,83" stroke="#4A4A4A" stroke-width="1" fill="none" stroke-dasharray="2,2" opacity="0.6"/>
+
+<!-- Shatter box x=455 y=190 w=120 h=90 (range 190-280) -->
+<g>
+  <rect x="455" y="190" width="120" height="90" rx="6" fill="url(#ghBody)" stroke="#8C8C8C" stroke-width="1.2"/>
+  <text x="515" y="216" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#222">Shatter</text>
+  <rect x="447" y="213" width="10" height="14" rx="3" fill="#E8E8E8" stroke="#8C8C8C"/><circle cx="452" cy="220" r="2.3" fill="#4A4A4A"/>
+  <text x="464" y="224" font-size="10.5" fill="#333">C</text>
+  <rect x="447" y="237" width="10" height="14" rx="3" fill="#E8E8E8" stroke="#8C8C8C"/><circle cx="452" cy="244" r="2.3" fill="#4A4A4A"/>
+  <text x="464" y="248" font-size="10.5" fill="#333">t</text>
+  <rect x="603" y="225" width="10" height="14" rx="3" fill="#E8E8E8" stroke="#8C8C8C"/><circle cx="608" cy="232" r="2.3" fill="#4A4A4A"/>
+</g>
+
+<path d="M 608,72 C 630,72 630,72 655,72" stroke="#4A4A4A" stroke-width="1.3" fill="none"/>
+<path d="M 608,232 C 630,232 630,232 655,232" stroke="#4A4A4A" stroke-width="1.3" fill="none"/>
+
+<!-- Right viewport -->
+<rect x="660" y="30" width="370" height="300" fill="#FFFFFF" stroke="#B0B0B0"/>
+<text x="670" y="52" font-family="Consolas, monospace" font-size="12" fill="#555">Perspective</text>
+<path d="M 700,290 Q 800,180 1000,150" stroke="#222222" stroke-width="2" fill="none"/>
+<circle cx="878" cy="176" r="4" fill="#c0392b"/>
+<line x1="878" y1="176" x2="900" y2="230" stroke="#c0392b" stroke-width="1" stroke-dasharray="3,2"/>
+<circle cx="900" cy="230" r="3" fill="#c0392b" opacity="0.5"/>
+<text x="700" y="90" font-size="10.5" fill="#555">Move: điểm gốc "snap" đúng vào Curve (P)</text>
+<text x="700" y="270" font-size="10.5" fill="#555">Shatter: cắt Curve tại đúng vị trí đó (t)</text>
+
+<text x="20" y="230" font-size="12" fill="#333">Point, Curve → Curve Closest Point (P) → Move</text>
+<text x="20" y="250" font-size="12" fill="#333">Point, Curve → Curve Closest Point (t) → Shatter</text>
+</svg>
