@@ -97,8 +97,29 @@ nhưng không dùng nó để sửa nữa). Quy trình lấy/ghi file qua API (r
 
 1. Nghiên cứu chức năng lệnh đó (input/output, cách dùng, lưu ý).
 2. Thêm 1 trang con mới vào biến `SEED_DOCS` (dùng nội dung `Grasshopper.html` đã lấy ở bước 0),
-   đặt tên đúng theo lệnh, `parentId` trỏ vào trang cha "Grasshopper" (xem cấu
-   trúc doc ở [[gh-docs-app-workflow]]).
+   đặt tên đúng theo lệnh. **`parentId` PHẢI trỏ vào đúng trang danh mục (tab) mà lệnh đó thuộc về
+   trong Grasshopper thật — KHÔNG trỏ thẳng vào trang gốc `seed-grasshopper`.** App đã có sẵn 13
+   trang danh mục con của `seed-grasshopper`, khớp đúng các tab ribbon thật của Grasshopper:
+
+   | Tab (title)        | id trang danh mục      |
+   |---------------------|--------------------------|
+   | Params               | `seed-tab-params`       |
+   | Maths                 | `seed-tab-maths`        |
+   | Sets                   | `seed-tab-sets`         |
+   | Vector                | `seed-tab-vector`       |
+   | Curve                 | `seed-tab-curve`        |
+   | Surface               | `seed-tab-surface`      |
+   | Mesh                  | `seed-tab-mesh`         |
+   | Intersect              | `seed-tab-intersect`    |
+   | Transform              | `seed-tab-transform`    |
+   | Display                | `seed-tab-display`      |
+   | Rhino                  | `seed-tab-rhino`        |
+   | Wb (Weaverbird)         | `seed-tab-wb`           |
+   | Kangaroo2               | `seed-tab-kangaroo2`    |
+
+   Ví dụ: lệnh **Loft** thuộc tab Surface trong Grasshopper thật → `parentId:'seed-tab-surface'`.
+   Nếu không chắc lệnh thuộc tab nào, tra đúng vị trí tab của nó trong ribbon Grasshopper thật (không
+   suy đoán) trước khi gán `parentId`. Xem cấu trúc doc ở [[gh-docs-app-workflow]].
 3. Viết nội dung vào canvas theo cấu trúc: H1 tên lệnh → Info panel tóm tắt → H2 "Chức năng" →
    H2 "Input/Output" (bảng) → H2 "Cách dùng" (danh sách số) → H2 "Minh họa" (ảnh SVG tự vẽ, vì
    không có ảnh chụp component thật — **phải mô phỏng đúng diện mạo thật của Grasshopper canvas/Rhino
