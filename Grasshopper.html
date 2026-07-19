@@ -2986,7 +2986,7 @@ const STORE_KEY='projectdocs_v3';
 // Bump SEED_VERSION any time SEED_DOCS content changes (e.g. a new Grasshopper
 // command page is added) to re-sync all visitors automatically, even ones
 // with old data already saved locally.
-const SEED_VERSION=24;
+const SEED_VERSION=25;
 // Real image assets referenced by SEED_DOCS via data-cfimgid — every visitor's
 // browser needs these in its OWN IndexedDB (see init() below) so images both
 // (a) display correctly, and (b) get recognized by the app's own Optimized
@@ -3263,16 +3263,20 @@ const SEED_DOCS=[
 <div class="cf-panel info" contenteditable="false"><span class="cf-panel-icon">ℹ️</span><div class="cf-panel-content" contenteditable="true">🟡 Trung bình — Dựng mặt đi mượt qua đường cong, không khớp tuyệt đối như Loft thường.</div></div>
 <h2>Chức năng</h2>
 <p>Fit Loft dựng 1 mặt (Surface) đi gần đúng qua tập đường cong section — không bắt buộc khớp chính xác từng điểm như <strong>Loft</strong> thường. Số điểm điều khiển và bậc (degree) quyết định mặt mượt tới đâu.</p>
+<h2>Khi nào sử dụng</h2>
+<p>Dùng khi đường cong section không đều/nhiễu (đo thực tế, quét 3D) và cần mặt mượt. Không dùng khi cần mặt đi chính xác qua từng đường — lúc đó dùng Loft thường.</p>
 <h2>Input/Output</h2>
-<div class="tbl-frame"><div class="tbl-outer"><table style="border-collapse: collapse; font-size: 14px; table-layout: fixed; width: 100%;" data-colwidths="36px,16.073%,12.92%,71.007%">
-<thead><tr><th style="text-align: left; padding: 8px 10px; border-bottom: 2px solid var(--border); position: relative; min-width: 40px;" contenteditable="true">Tên</th><th style="text-align: left; padding: 8px 10px; border-bottom: 2px solid var(--border); position: relative; min-width: 40px;" contenteditable="true">Kiểu dữ liệu</th><th style="text-align: left; padding: 8px 10px; border-bottom: 2px solid var(--border); position: relative; min-width: 40px;" contenteditable="true">Mô tả</th></tr></thead>
+<table style="width:100%;border-collapse:collapse;font-size:14px">
+<thead><tr><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Tên</th><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Kiểu dữ liệu</th><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Mô tả</th></tr></thead>
 <tbody>
-<tr><td style="padding: 6px 10px; border-bottom: 1px solid var(--border); position: relative; min-width: 40px;" contenteditable="true"><strong>Curves (C)</strong></td><td style="padding: 6px 10px; border-bottom: 1px solid var(--border); position: relative; min-width: 40px;" contenteditable="true">Curve</td><td style="padding: 6px 10px; border-bottom: 1px solid var(--border); position: relative; min-width: 40px;" contenteditable="true">Đường cong section để loft qua (tối thiểu 2 đường).</td></tr>
-<tr><td style="padding: 6px 10px; border-bottom: 1px solid var(--border); position: relative; min-width: 40px;" contenteditable="true"><strong>Count U (Nu)</strong></td><td style="padding: 6px 10px; border-bottom: 1px solid var(--border); position: relative; min-width: 40px;" contenteditable="true">Integer</td><td style="padding: 6px 10px; border-bottom: 1px solid var(--border); position: relative; min-width: 40px;" contenteditable="true">Số điểm điều khiển theo hướng U (dọc mỗi đường cong).</td></tr>
-<tr><td style="padding: 6px 10px; border-bottom: 1px solid var(--border); position: relative; min-width: 40px;" contenteditable="true"><strong>Degree U (Du)</strong></td><td style="padding: 6px 10px; border-bottom: 1px solid var(--border); position: relative; min-width: 40px;" contenteditable="true">Integer</td><td style="padding: 6px 10px; border-bottom: 1px solid var(--border); position: relative; min-width: 40px;" contenteditable="true">Bậc mặt theo hướng U.</td></tr>
-<tr><td style="padding: 6px 10px; border-bottom: 1px solid var(--border); position: relative; min-width: 40px;" contenteditable="true"><strong>Degree V (Dv)</strong></td><td style="padding: 6px 10px; border-bottom: 1px solid var(--border); position: relative; min-width: 40px;" contenteditable="true">Integer</td><td style="padding: 6px 10px; border-bottom: 1px solid var(--border); position: relative; min-width: 40px;" contenteditable="true">Bậc mặt theo hướng V (hướng loft qua các đường).</td></tr>
-<tr><td style="padding: 6px 10px; border-bottom: 1px solid var(--border); position: relative; min-width: 40px;" contenteditable="true"><strong>Surface (S)</strong> — output</td><td style="padding: 6px 10px; border-bottom: 1px solid var(--border); position: relative; min-width: 40px;" contenteditable="true">Surface</td><td style="padding: 6px 10px; border-bottom: 1px solid var(--border); position: relative; min-width: 40px;" contenteditable="true">Mặt kết quả.</td></tr>
-</tbody></table></div></div>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>Curves (C)</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Curve</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Đường cong section để loft qua (tối thiểu 2 đường).</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>Count U (Nu)</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Integer</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Số điểm điều khiển theo hướng U (dọc mỗi đường cong).</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>Degree U (Du)</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Integer</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Bậc mặt theo hướng U.</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>Degree V (Dv)</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Integer</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Bậc mặt theo hướng V (hướng loft qua các đường).</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>Surface (S)</strong> — output</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Surface</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Mặt kết quả.</td></tr>
+</tbody></table>
+<h2>Thuộc tính</h2>
+<p>Không có Options/Modes riêng qua right-click (khác Loft thường có input Loft Options tách biệt) — độ mượt chỉnh trực tiếp qua input Nu/Du/Dv.</p>
 <h2>Cách dùng</h2>
 <ol>
 <li>Chuẩn bị tối thiểu 2 đường cong section (Curve param hoặc tham chiếu từ Rhino).</li>
@@ -3280,17 +3284,46 @@ const SEED_DOCS=[
 <li>(Tuỳ chọn) Nối Number Slider số nguyên vào <strong>Count U / Degree U / Degree V</strong> để chỉnh độ mượt.</li>
 <li>Bật Preview để xem <strong>Surface (S)</strong> trong viewport.</li>
 </ol>
+<h2>Ứng dụng</h2>
+<p>Surface Modeling, Architecture — dựng mặt cong lớn từ dữ liệu đo đạc/quét 3D không đều (mặt cắt công trình, địa hình...).</p>
+<h2>Kết nối</h2>
+<p><strong>Nhận dữ liệu từ:</strong></p>
+<table style="width:100%;border-collapse:collapse;font-size:14px">
+<thead><tr><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Component</th><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Data Type</th><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Có thể nối</th></tr></thead>
+<tbody>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Interpolate / NURBS Curve</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Curve</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Có — vào Curves (C)</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Number Slider (Integer)</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Integer</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Có — vào Nu/Du/Dv</td></tr>
+</tbody></table>
+<p><strong>Xuất dữ liệu đến:</strong></p>
+<table style="width:100%;border-collapse:collapse;font-size:14px">
+<thead><tr><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Component</th><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Data Type</th><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Có thể nối</th></tr></thead>
+<tbody>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Extrude, Offset Surface, Deconstruct Brep</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Surface</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Có — nhận thẳng output Surface (S)</td></tr>
+</tbody></table>
+<p><strong>Không thể kết nối:</strong></p>
+<table style="width:100%;border-collapse:collapse;font-size:14px">
+<thead><tr><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Component</th><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Lý do</th></tr></thead>
+<tbody>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Component chỉ nhận Mesh (vd Mesh Edges)</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Output là Surface (NURBS), không phải Mesh — cần qua Mesh Surface để chuyển đổi trước.</td></tr>
+</tbody></table>
+<h2>Workflow phổ biến</h2>
+<p>Curve × N → Fit Loft → Surface</p>
+<p>Point Cloud → Interpolate (nhiều đường) → Fit Loft → Surface → Bake</p>
+<h2>Kiểu dữ liệu</h2>
+<p>Input: Curve (list), Integer. Output: Surface.</p>
 <h2>Minh họa</h2>
-<div class="cf-img-block" data-cfimgid="fitloft" data-cfimgtype="image" data-align="center" data-name="fitloft.svg"><div class="cf-img-wrap"><div class="cf-img-inner" style="width:100%;max-width:640px"><img style="width:100%;height:auto;display:block" alt="Fit Loft: Curves + Count U/Degree U/Degree V nối vào Fit Loft, xuất ra Surface; bên phải là mặt fit loft mượt qua các đường cong gốc trong viewport Rhino"></div></div><div class="cf-img-caption"></div></div>
+<div class="cf-img-block" data-cfimgid="fitloft" data-cfimgtype="image" data-align="center" data-name="fitloft.svg"><div class="cf-img-wrap"><div class="cf-img-inner" style="width:100%;max-width:640px"><img style="width:100%;height:auto;display:block" alt="Fit Loft: Curves + Count U/Degree U/Degree V nối vào Fit Loft, xuất ra Surface; bên phải là mặt fit loft mượt qua các đường cong gốc trong viewport Rhino"><div class="cf-img-resize-h left"></div><div class="cf-img-resize-h right"></div></div></div><div class="cf-img-caption"></div></div>
 <hr>
 <div class="cf-panel warning" contenteditable="false"><span class="cf-panel-icon">⚠️</span><div class="cf-panel-content" contenteditable="true"><strong>Khác với Loft thường</strong>: Loft đi chính xác qua từng đường; Fit Loft chỉ đi gần đúng. Dùng Fit Loft khi đường cong gốc không đều và muốn mặt mượt hơn.</div></div>
 <h2>Ví dụ ứng dụng thực tế</h2>
 <p>Case study Voronoi hiện tại dùng <strong>Boundary Surfaces</strong>, không cần Fit Loft. Component này hợp hơn cho dự án dựng vỏ kiến trúc cong mượt từ nhiều mặt cắt đo thực tế không đều nhau.</p>
-<div class="cf-img-block" data-cfimgid="fitloft-example" data-cfimgtype="image" data-align="center" data-name="fitloft-example.svg"><div class="cf-img-wrap"><div class="cf-img-inner" style="width:100%;max-width:640px"><img style="width:100%;height:auto;display:block" alt="Vỏ kiến trúc cong mượt được Fit Loft qua 5 mặt cắt đo ngoài thực tế, các điểm đo không hoàn toàn đều nhau"></div></div><div class="cf-img-caption"></div></div>`},
+<div class="cf-img-block" data-cfimgid="fitloft-example" data-cfimgtype="image" data-align="center" data-name="fitloft-example.svg"><div class="cf-img-wrap"><div class="cf-img-inner" style="width:100%;max-width:640px"><img style="width:100%;height:auto;display:block" alt="Vỏ kiến trúc cong mượt được Fit Loft qua 5 mặt cắt đo ngoài thực tế, các điểm đo không hoàn toàn đều nhau"><div class="cf-img-resize-h left"></div><div class="cf-img-resize-h right"></div></div></div><div class="cf-img-caption"></div></div>`},
   {id:'seed-cmd-extrude',title:'Extrude',section:'default',parentId:'seed-panel-surface-freeform',images:[],textBoxes:[],createdAt:'2026-07-19T00:00:00.000Z',updatedAt:'2026-07-19T00:00:00.000Z',content:`<h1>Extrude</h1>
 <div class="cf-panel info" contenteditable="false"><span class="cf-panel-icon">ℹ️</span><div class="cf-panel-content" contenteditable="true">🟢 Cơ bản — Đùn geometry theo 1 vector hướng, tạo khối/mặt mới.</div></div>
 <h2>Chức năng</h2>
 <p>Extrude "kéo" 1 geometry gốc (điểm, đường, mặt) theo hướng vector, tạo ra hình mới. Độ dài vector quyết định khoảng cách đùn.</p>
+<h2>Khi nào sử dụng</h2>
+<p>Dùng khi cần đùn theo 1 đường thẳng duy nhất (vd tạo chiều cao tầng từ mặt bằng). Nếu cần đùn theo 1 đường cong dẫn hướng (không phải đường thẳng) thì dùng <strong>Extrude Along</strong> thay vì Extrude.</p>
 <h2>Input/Output</h2>
 <table style="width:100%;border-collapse:collapse;font-size:14px">
 <thead><tr><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Tên</th><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Kiểu dữ liệu</th><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Mô tả</th></tr></thead>
@@ -3299,16 +3332,45 @@ const SEED_DOCS=[
 <tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>Direction (D)</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Vector</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Hướng và khoảng cách đùn.</td></tr>
 <tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>Extrusion (E)</strong> — output</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Geometry</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Kết quả sau khi đùn.</td></tr>
 </tbody></table>
+<h2>Thuộc tính</h2>
+<p>Không có Options/Modes riêng qua right-click. Chiều dài + hướng đùn hoàn toàn do độ dài + hướng của vector nối vào Direction (D) quyết định — vd đổi dấu vector (nhân Unit Z với -1) sẽ đùn ngược hướng.</p>
 <h2>Cách dùng</h2>
 <ol>
 <li>Chuẩn bị geometry gốc (điểm, đường, hoặc mặt) nối vào <strong>Base (B)</strong>.</li>
 <li>Nối 1 Vector vào <strong>Direction (D)</strong> — vd dùng Unit Z × Number Slider để chỉnh chiều cao.</li>
 <li>Bật Preview để xem <strong>Extrusion (E)</strong>.</li>
 </ol>
+<h2>Ứng dụng</h2>
+<p>Architecture, Massing — dựng nhanh khối công trình sơ bộ từ mặt bằng (đùn mặt bằng tầng theo phương đứng ra chiều cao tầng).</p>
+<h2>Kết nối</h2>
+<p><strong>Nhận dữ liệu từ:</strong></p>
+<table style="width:100%;border-collapse:collapse;font-size:14px">
+<thead><tr><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Component</th><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Data Type</th><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Có thể nối</th></tr></thead>
+<tbody>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Rectangle, Polygon, Boundary Surfaces</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Curve / Surface</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Có — vào Base (B)</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Unit Z, Vector 2Pt</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Vector</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Có — vào Direction (D)</td></tr>
+</tbody></table>
+<p><strong>Xuất dữ liệu đến:</strong></p>
+<table style="width:100%;border-collapse:collapse;font-size:14px">
+<thead><tr><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Component</th><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Data Type</th><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Có thể nối</th></tr></thead>
+<tbody>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Deconstruct Brep, Boolean Union, Cap Holes</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Brep</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Có — nhận thẳng output Extrusion (E)</td></tr>
+</tbody></table>
+<p><strong>Không thể kết nối:</strong></p>
+<table style="width:100%;border-collapse:collapse;font-size:14px">
+<thead><tr><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Component</th><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Lý do</th></tr></thead>
+<tbody>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Component chỉ nhận Mesh thuần (vd Mesh Edges)</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Output Extrusion là Brep, không phải Mesh — cần qua Mesh Brep để chuyển đổi trước.</td></tr>
+</tbody></table>
+<h2>Workflow phổ biến</h2>
+<p>Rectangle → Extrude → Brep → Bake</p>
+<p>Boundary Surfaces (mặt bằng tầng) → Extrude (chiều cao tầng) → Array (nhiều tầng) → Massing công trình</p>
+<h2>Kiểu dữ liệu</h2>
+<p>Input: Geometry (Curve/Surface), Vector. Output: Geometry (Brep).</p>
 <h2>Minh họa</h2>
 <div class="cf-img-block" data-cfimgid="extrude" data-cfimgtype="image" data-align="center" data-name="extrude.svg"><div class="cf-img-wrap"><div class="cf-img-inner" style="width:100%;max-width:640px"><img style="width:100%;height:auto;display:block" alt="Base và Direction nối vào Extrude, xuất ra Extrusion; bên phải là mặt ngũ giác được đùn thành khối lăng trụ trong viewport"><div class="cf-img-resize-h left"></div><div class="cf-img-resize-h right"></div></div></div><div class="cf-img-caption"></div></div>
 <hr>
-<div class="cf-panel warning" contenteditable="false"><span class="cf-panel-icon">⚠️</span><div class="cf-panel-content" contenteditable="true">Extrude đùn theo đường THẲNG duy nhất. Cần đùn theo 1 đường cong dẫn hướng (path) thì dùng <strong>Extrude Along Curve</strong> thay vì Extrude.</div></div>
+<div class="cf-panel warning" contenteditable="false"><span class="cf-panel-icon">⚠️</span><div class="cf-panel-content" contenteditable="true">Extrude đùn theo đường THẲNG duy nhất. Cần đùn theo 1 đường cong dẫn hướng (path) thì dùng <strong>Extrude Along</strong> thay vì Extrude.</div></div>
 <h2>Ví dụ ứng dụng thực tế</h2>
 <p>Dùng để dựng nhanh khối công trình từ mặt bằng: đùn mặt bằng tầng theo phương đứng ra chiều cao tầng, lặp lại cho nhiều tầng để dựng khối kiến trúc sơ bộ (massing).</p>
 <div class="cf-img-block" data-cfimgid="extrude-example" data-cfimgtype="image" data-align="center" data-name="extrude-example.svg"><div class="cf-img-wrap"><div class="cf-img-inner" style="width:100%;max-width:640px"><img style="width:100%;height:auto;display:block" alt="Mặt bằng tầng hình chữ L được đùn theo phương đứng thành khối công trình đơn giản"><div class="cf-img-resize-h left"></div><div class="cf-img-resize-h right"></div></div></div><div class="cf-img-caption"></div></div>`},
