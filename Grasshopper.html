@@ -2986,12 +2986,15 @@ const STORE_KEY='projectdocs_v3';
 // Bump SEED_VERSION any time SEED_DOCS content changes (e.g. a new Grasshopper
 // command page is added) to re-sync all visitors automatically, even ones
 // with old data already saved locally.
-const SEED_VERSION=12;
+const SEED_VERSION=13;
 // Real image assets referenced by SEED_DOCS via data-cfimgid — every visitor's
 // browser needs these in its OWN IndexedDB (see init() below) so images both
 // (a) display correctly, and (b) get recognized by the app's own Optimized
 // Website export if the user runs Publish themselves later.
 const SEED_ASSETS={'tab-params':'svg','tab-maths':'svg','tab-sets':'svg','tab-vector':'svg','tab-curve':'svg','tab-surface':'svg','tab-mesh':'svg','tab-intersect':'svg','tab-transform':'svg','tab-display':'svg','tab-rhino':'svg','tab-kangaroo2':'svg','tab-wb':'svg'};
+// Default project logo baked into the seed (path in the repo, not an IDB-blob id like
+// SEED_ASSETS — headerLogo/projectLogo store a data: URL directly in state, see init()).
+const SEED_HEADER_LOGO='assets/images/logo-grasshopper.png';
 const SEED_DOCS=[
   {id:'seed-grasshopper',title:'Grasshopper',section:'default',parentId:null,content:'',images:[],textBoxes:[],createdAt:'2026-07-18T00:00:00.000Z',updatedAt:'2026-07-18T00:00:00.000Z'},
   {id:'seed-step-by-step',title:'Example Step-by-Step',section:'default',parentId:null,content:'',images:[],textBoxes:[],createdAt:'2026-07-19T00:00:00.000Z',updatedAt:'2026-07-19T00:00:00.000Z'},
@@ -3538,9 +3541,11 @@ function init(){
   // localStorage a visitor's browser may already have (e.g. from an earlier
   // visit before this content existed). Bumping SEED_VERSION in the source
   // re-syncs every visitor automatically — no manual "clear site data" needed.
+  let _seedJustSynced=false;
   if(typeof SEED_DOCS!=='undefined'&&SEED_DOCS.length&&localStorage.getItem('seed_version')!==String(SEED_VERSION)){
     state.docs=JSON.parse(JSON.stringify(SEED_DOCS));
     state.projectName='Grasshopper Docs';
+    _seedJustSynced=true;
     localStorage.setItem('seed_version',String(SEED_VERSION));
     try{localStorage.setItem(STORE_KEY,JSON.stringify(state));}catch(e){}
   }
@@ -3582,6 +3587,24 @@ function init(){
           await _idbPut(assetId,blob);
         }catch(e){}
       }));
+    }
+    // Bake the seed header logo into a fresh force-synced state, so every
+    // visitor sees it without needing to upload it themselves. Only runs on
+    // the same force-sync that just reset docs/projectName above — re-bumping
+    // SEED_VERSION re-applies it even if a visitor's browser already has an
+    // older state (same rationale as SEED_DOCS force-sync).
+    if(_seedJustSynced&&typeof SEED_HEADER_LOGO!=='undefined'){
+      try{
+        const resp=await fetch(SEED_HEADER_LOGO);
+        if(resp.ok){
+          const blob=await resp.blob();
+          const dataUrl=await _blobToB64(blob);
+          state.headerLogo={imgDataUrl:dataUrl};
+          state.projectLogo={imgDataUrl:dataUrl};
+          try{localStorage.setItem(STORE_KEY,JSON.stringify(state));}catch(e){}
+          _pabLogoInit();_hdrLogoInit();
+        }
+      }catch(e){}
     }
     updateUserUI();renderSidebar();
     if(state.currentDocId)openDoc(state.currentDocId);
