@@ -52,25 +52,25 @@
   <rect x="230" y="110" width="150" height="130" rx="6" fill="url(#ghBody)" stroke="#8C8C8C" stroke-width="1.2"/>
   <text x="305" y="132" text-anchor="middle" font-size="14" font-weight="bold" fill="#222">Fit Loft</text>
   <line x1="245" y1="140" x2="365" y2="140" stroke="#B5B5B0" stroke-width="1"/>
-  <!-- input nubs -->
-  <rect x="222" y="86" width="10" height="16" rx="3" fill="#E8E8E8" stroke="#8C8C8C"/><circle cx="227" cy="94" r="2.3" fill="#4A4A4A"/>
-  <text x="238" y="98" font-size="11" fill="#333">C</text>
-  <rect x="222" y="150" width="10" height="16" rx="3" fill="#E8E8E8" stroke="#8C8C8C"/><circle cx="227" cy="158" r="2.3" fill="#4A4A4A"/>
-  <text x="238" y="162" font-size="11" fill="#333">Nu</text>
-  <rect x="222" y="185" width="10" height="16" rx="3" fill="#E8E8E8" stroke="#8C8C8C"/><circle cx="227" cy="193" r="2.3" fill="#4A4A4A"/>
-  <text x="238" y="197" font-size="11" fill="#333">Du</text>
-  <rect x="222" y="220" width="10" height="16" rx="3" fill="#E8E8E8" stroke="#8C8C8C"/><circle cx="227" cy="228" r="2.3" fill="#4A4A4A"/>
-  <text x="238" y="232" font-size="11" fill="#333">Dv</text>
+  <!-- input nubs (all on the box's left edge, y=110..240) -->
+  <rect x="222" y="144" width="10" height="16" rx="3" fill="#E8E8E8" stroke="#8C8C8C"/><circle cx="227" cy="152" r="2.3" fill="#4A4A4A"/>
+  <text x="238" y="156" font-size="11" fill="#333">C</text>
+  <rect x="222" y="168" width="10" height="16" rx="3" fill="#E8E8E8" stroke="#8C8C8C"/><circle cx="227" cy="176" r="2.3" fill="#4A4A4A"/>
+  <text x="238" y="180" font-size="11" fill="#333">Nu</text>
+  <rect x="222" y="192" width="10" height="16" rx="3" fill="#E8E8E8" stroke="#8C8C8C"/><circle cx="227" cy="200" r="2.3" fill="#4A4A4A"/>
+  <text x="238" y="204" font-size="11" fill="#333">Du</text>
+  <rect x="222" y="216" width="10" height="16" rx="3" fill="#E8E8E8" stroke="#8C8C8C"/><circle cx="227" cy="224" r="2.3" fill="#4A4A4A"/>
+  <text x="238" y="228" font-size="11" fill="#333">Dv</text>
   <!-- output nub -->
   <rect x="378" y="167" width="10" height="16" rx="3" fill="#E8E8E8" stroke="#8C8C8C"/><circle cx="383" cy="175" r="2.3" fill="#4A4A4A"/>
   <text x="368" y="171" text-anchor="end" font-size="11" fill="#333">S</text>
 </g>
 
 <!-- wires -->
-<path d="M 131,93 C 180,93 180,94 227,94" stroke="#4A4A4A" stroke-width="1.4" fill="none"/>
-<path d="M 186,157 C 205,157 205,158 227,158" stroke="#4A4A4A" stroke-width="1.4" fill="none"/>
-<path d="M 186,197 C 205,197 205,193 227,193" stroke="#4A4A4A" stroke-width="1.4" fill="none"/>
-<path d="M 186,237 C 205,237 205,228 227,228" stroke="#4A4A4A" stroke-width="1.4" fill="none"/>
+<path d="M 131,93 C 180,93 180,152 227,152" stroke="#4A4A4A" stroke-width="1.4" fill="none"/>
+<path d="M 186,157 C 205,157 205,176 227,176" stroke="#4A4A4A" stroke-width="1.4" fill="none"/>
+<path d="M 186,197 C 205,197 205,200 227,200" stroke="#4A4A4A" stroke-width="1.4" fill="none"/>
+<path d="M 186,237 C 205,237 205,224 227,224" stroke="#4A4A4A" stroke-width="1.4" fill="none"/>
 <path d="M 388,175 C 430,175 430,175 470,175" stroke="#4A4A4A" stroke-width="1.4" fill="none"/>
 
 <!-- Right side: Rhino-style viewport showing fitted surface vs input curves -->
