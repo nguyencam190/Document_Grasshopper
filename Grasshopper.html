@@ -2986,7 +2986,7 @@ const STORE_KEY='projectdocs_v3';
 // Bump SEED_VERSION any time SEED_DOCS content changes (e.g. a new Grasshopper
 // command page is added) to re-sync all visitors automatically, even ones
 // with old data already saved locally.
-const SEED_VERSION=14;
+const SEED_VERSION=15;
 // Real image assets referenced by SEED_DOCS via data-cfimgid — every visitor's
 // browser needs these in its OWN IndexedDB (see init() below) so images both
 // (a) display correctly, and (b) get recognized by the app's own Optimized
@@ -3083,6 +3083,90 @@ const SEED_DOCS=[
 <hr>
 <h2>Ví dụ trong dự án Voronoi</h2>
 <p>Đây là tab nền tảng của cả pattern: <strong>Line SDL</strong> tạo tia gốc, <strong>Divide Curve</strong> chia điểm trên từng tia sau khi nhân bản, và mấu chốt nhất — <strong>Maelstrom</strong> bẻ cong các tia toả tròn thành hình xoắn ốc trước khi lấy điểm.</p>`},
+  {id:'seed-panel-params-geometry',title:'Geometry',section:'default',parentId:'seed-tab-params',images:[],textBoxes:[],createdAt:'2026-07-19T00:00:00.000Z',updatedAt:'2026-07-19T00:00:00.000Z',content:`<h1>Geometry</h1>
+<div class="cf-panel info" contenteditable="false"><span class="cf-panel-icon">ℹ️</span><div class="cf-panel-content" contenteditable="true">Panel trong tab Params, chứa các component dùng để tham chiếu geometry có sẵn trong Rhino (Point, Curve, Brep, Mesh...) vào Grasshopper.</div></div>
+<p><em>Đây là 1 panel (nhóm lệnh con) trong tab Params của Grasshopper. Các lệnh cụ thể thuộc panel này sẽ được thêm dần vào đây dưới dạng trang con khi được nghiên cứu.</em></p>`},
+  {id:'seed-panel-params-primitive',title:'Primitive',section:'default',parentId:'seed-tab-params',images:[],textBoxes:[],createdAt:'2026-07-19T00:00:00.000Z',updatedAt:'2026-07-19T00:00:00.000Z',content:`<h1>Primitive</h1>
+<div class="cf-panel info" contenteditable="false"><span class="cf-panel-icon">ℹ️</span><div class="cf-panel-content" contenteditable="true">Panel trong tab Params, chứa các component giữ giá trị cơ bản (Number, Boolean, Text, Colour, Time...).</div></div>
+<p><em>Đây là 1 panel (nhóm lệnh con) trong tab Params của Grasshopper. Các lệnh cụ thể thuộc panel này sẽ được thêm dần vào đây dưới dạng trang con khi được nghiên cứu.</em></p>`},
+  {id:'seed-panel-params-input',title:'Input',section:'default',parentId:'seed-tab-params',images:[],textBoxes:[],createdAt:'2026-07-19T00:00:00.000Z',updatedAt:'2026-07-19T00:00:00.000Z',content:`<h1>Input</h1>
+<div class="cf-panel info" contenteditable="false"><span class="cf-panel-icon">ℹ️</span><div class="cf-panel-content" contenteditable="true">Panel trong tab Params, chứa các component để user tự nhập/điều khiển dữ liệu trực tiếp trên canvas (Number Slider, Panel, MD Slider, Value List...).</div></div>
+<p><em>Đây là 1 panel (nhóm lệnh con) trong tab Params của Grasshopper. Các lệnh cụ thể thuộc panel này sẽ được thêm dần vào đây dưới dạng trang con khi được nghiên cứu.</em></p>`},
+  {id:'seed-panel-params-rhino',title:'Rhino',section:'default',parentId:'seed-tab-params',images:[],textBoxes:[],createdAt:'2026-07-19T00:00:00.000Z',updatedAt:'2026-07-19T00:00:00.000Z',content:`<h1>Rhino</h1>
+<div class="cf-panel info" contenteditable="false"><span class="cf-panel-icon">ℹ️</span><div class="cf-panel-content" contenteditable="true">Panel trong tab Params, chứa các component tham chiếu tới dữ liệu tổ chức trong file Rhino (Layer, Group, Selection Set, Section Plane...).</div></div>
+<p><em>Đây là 1 panel (nhóm lệnh con) trong tab Params của Grasshopper. Các lệnh cụ thể thuộc panel này sẽ được thêm dần vào đây dưới dạng trang con khi được nghiên cứu.</em></p>`},
+  {id:'seed-panel-params-util',title:'Util',section:'default',parentId:'seed-tab-params',images:[],textBoxes:[],createdAt:'2026-07-19T00:00:00.000Z',updatedAt:'2026-07-19T00:00:00.000Z',content:`<h1>Util</h1>
+<div class="cf-panel info" contenteditable="false"><span class="cf-panel-icon">ℹ️</span><div class="cf-panel-content" contenteditable="true">Panel trong tab Params, nhóm các component tiện ích hỗ trợ quản lý dữ liệu (Data Dam, Geometry Pipeline, Relay...).</div></div>
+<p><em>Đây là 1 panel (nhóm lệnh con) trong tab Params của Grasshopper. Các lệnh cụ thể thuộc panel này sẽ được thêm dần vào đây dưới dạng trang con khi được nghiên cứu.</em></p>`},
+  {id:'seed-panel-maths-domain',title:'Domain',section:'default',parentId:'seed-tab-maths',images:[],textBoxes:[],createdAt:'2026-07-19T00:00:00.000Z',updatedAt:'2026-07-19T00:00:00.000Z',content:`<h1>Domain</h1>
+<div class="cf-panel info" contenteditable="false"><span class="cf-panel-icon">ℹ️</span><div class="cf-panel-content" contenteditable="true">Panel trong tab Maths, chứa component tạo/tách "domain" — 1 khoảng giá trị (interval) giữa 2 số, ví dụ khoảng từ 0 đến 10.</div></div>
+<p><em>Đây là 1 panel (nhóm lệnh con) trong tab Maths của Grasshopper. Các lệnh cụ thể thuộc panel này sẽ được thêm dần vào đây dưới dạng trang con khi được nghiên cứu.</em></p>`},
+  {id:'seed-panel-maths-matrix',title:'Matrix',section:'default',parentId:'seed-tab-maths',images:[],textBoxes:[],createdAt:'2026-07-19T00:00:00.000Z',updatedAt:'2026-07-19T00:00:00.000Z',content:`<h1>Matrix</h1>
+<div class="cf-panel info" contenteditable="false"><span class="cf-panel-icon">ℹ️</span><div class="cf-panel-content" contenteditable="true">Panel trong tab Maths, chứa công cụ dựng và chỉnh sửa ma trận (bảng số xếp theo hàng/cột).</div></div>
+<p><em>Đây là 1 panel (nhóm lệnh con) trong tab Maths của Grasshopper. Các lệnh cụ thể thuộc panel này sẽ được thêm dần vào đây dưới dạng trang con khi được nghiên cứu.</em></p>`},
+  {id:'seed-panel-maths-operators',title:'Operators',section:'default',parentId:'seed-tab-maths',images:[],textBoxes:[],createdAt:'2026-07-19T00:00:00.000Z',updatedAt:'2026-07-19T00:00:00.000Z',content:`<h1>Operators</h1>
+<div class="cf-panel info" contenteditable="false"><span class="cf-panel-icon">ℹ️</span><div class="cf-panel-content" contenteditable="true">Panel trong tab Maths, chứa các phép toán cơ bản (cộng, trừ, nhân, chia) và phép so sánh logic (lớn hơn, nhỏ hơn, bằng nhau...).</div></div>
+<p><em>Đây là 1 panel (nhóm lệnh con) trong tab Maths của Grasshopper. Các lệnh cụ thể thuộc panel này sẽ được thêm dần vào đây dưới dạng trang con khi được nghiên cứu.</em></p>`},
+  {id:'seed-panel-maths-polynomials',title:'Polynomials',section:'default',parentId:'seed-tab-maths',images:[],textBoxes:[],createdAt:'2026-07-19T00:00:00.000Z',updatedAt:'2026-07-19T00:00:00.000Z',content:`<h1>Polynomials</h1>
+<div class="cf-panel info" contenteditable="false"><span class="cf-panel-icon">ℹ️</span><div class="cf-panel-content" contenteditable="true">Panel trong tab Maths, chứa các phép tính đa thức (giai thừa, logarit, luỹ thừa...).</div></div>
+<p><em>Đây là 1 panel (nhóm lệnh con) trong tab Maths của Grasshopper. Các lệnh cụ thể thuộc panel này sẽ được thêm dần vào đây dưới dạng trang con khi được nghiên cứu.</em></p>`},
+  {id:'seed-panel-maths-script',title:'Script',section:'default',parentId:'seed-tab-maths',images:[],textBoxes:[],createdAt:'2026-07-19T00:00:00.000Z',updatedAt:'2026-07-19T00:00:00.000Z',content:`<h1>Script</h1>
+<div class="cf-panel info" contenteditable="false"><span class="cf-panel-icon">ℹ️</span><div class="cf-panel-content" contenteditable="true">Panel trong tab Maths, chứa Expression (viết công thức tùy ý) và các component lập trình script (VB.NET, C#, Python).</div></div>
+<p><em>Đây là 1 panel (nhóm lệnh con) trong tab Maths của Grasshopper. Các lệnh cụ thể thuộc panel này sẽ được thêm dần vào đây dưới dạng trang con khi được nghiên cứu.</em></p>`},
+  {id:'seed-panel-maths-time',title:'Time',section:'default',parentId:'seed-tab-maths',images:[],textBoxes:[],createdAt:'2026-07-19T00:00:00.000Z',updatedAt:'2026-07-19T00:00:00.000Z',content:`<h1>Time</h1>
+<div class="cf-panel info" contenteditable="false"><span class="cf-panel-icon">ℹ️</span><div class="cf-panel-content" contenteditable="true">Panel trong tab Maths, chứa các component dựng và xử lý ngày/giờ.</div></div>
+<p><em>Đây là 1 panel (nhóm lệnh con) trong tab Maths của Grasshopper. Các lệnh cụ thể thuộc panel này sẽ được thêm dần vào đây dưới dạng trang con khi được nghiên cứu.</em></p>`},
+  {id:'seed-panel-maths-trig',title:'Trig',section:'default',parentId:'seed-tab-maths',images:[],textBoxes:[],createdAt:'2026-07-19T00:00:00.000Z',updatedAt:'2026-07-19T00:00:00.000Z',content:`<h1>Trig</h1>
+<div class="cf-panel info" contenteditable="false"><span class="cf-panel-icon">ℹ️</span><div class="cf-panel-content" contenteditable="true">Panel trong tab Maths, chứa các hàm lượng giác (Sin, Cos, Tan...).</div></div>
+<p><em>Đây là 1 panel (nhóm lệnh con) trong tab Maths của Grasshopper. Các lệnh cụ thể thuộc panel này sẽ được thêm dần vào đây dưới dạng trang con khi được nghiên cứu.</em></p>`},
+  {id:'seed-panel-maths-util',title:'Util',section:'default',parentId:'seed-tab-maths',images:[],textBoxes:[],createdAt:'2026-07-19T00:00:00.000Z',updatedAt:'2026-07-19T00:00:00.000Z',content:`<h1>Util</h1>
+<div class="cf-panel info" contenteditable="false"><span class="cf-panel-icon">ℹ️</span><div class="cf-panel-content" contenteditable="true">Panel trong tab Maths, nhóm các công cụ tiện ích khác không thuộc riêng nhóm nào (giống "hộp đồ nghề chung").</div></div>
+<p><em>Đây là 1 panel (nhóm lệnh con) trong tab Maths của Grasshopper. Các lệnh cụ thể thuộc panel này sẽ được thêm dần vào đây dưới dạng trang con khi được nghiên cứu.</em></p>`},
+  {id:'seed-panel-sets-list',title:'List',section:'default',parentId:'seed-tab-sets',images:[],textBoxes:[],createdAt:'2026-07-19T00:00:00.000Z',updatedAt:'2026-07-19T00:00:00.000Z',content:`<h1>List</h1>
+<div class="cf-panel info" contenteditable="false"><span class="cf-panel-icon">ℹ️</span><div class="cf-panel-content" contenteditable="true">Panel trong tab Sets, chứa component thao tác trên danh sách phẳng (List) — sắp xếp, đảo ngược, lấy phần tử theo chỉ số...</div></div>
+<p><em>Đây là 1 panel (nhóm lệnh con) trong tab Sets của Grasshopper. Các lệnh cụ thể thuộc panel này sẽ được thêm dần vào đây dưới dạng trang con khi được nghiên cứu.</em></p>`},
+  {id:'seed-panel-sets-sequence',title:'Sequence',section:'default',parentId:'seed-tab-sets',images:[],textBoxes:[],createdAt:'2026-07-19T00:00:00.000Z',updatedAt:'2026-07-19T00:00:00.000Z',content:`<h1>Sequence</h1>
+<div class="cf-panel info" contenteditable="false"><span class="cf-panel-icon">ℹ️</span><div class="cf-panel-content" contenteditable="true">Panel trong tab Sets, chứa component tạo dãy số theo quy luật (Series, Range, Random...).</div></div>
+<p><em>Đây là 1 panel (nhóm lệnh con) trong tab Sets của Grasshopper. Các lệnh cụ thể thuộc panel này sẽ được thêm dần vào đây dưới dạng trang con khi được nghiên cứu.</em></p>`},
+  {id:'seed-panel-sets-sets',title:'Sets',section:'default',parentId:'seed-tab-sets',images:[],textBoxes:[],createdAt:'2026-07-19T00:00:00.000Z',updatedAt:'2026-07-19T00:00:00.000Z',content:`<h1>Sets</h1>
+<div class="cf-panel info" contenteditable="false"><span class="cf-panel-icon">ℹ️</span><div class="cf-panel-content" contenteditable="true">Panel trong tab Sets, chứa các phép toán tập hợp (hợp, giao, hiệu...) áp dụng cho danh sách.</div></div>
+<p><em>Đây là 1 panel (nhóm lệnh con) trong tab Sets của Grasshopper. Các lệnh cụ thể thuộc panel này sẽ được thêm dần vào đây dưới dạng trang con khi được nghiên cứu.</em></p>`},
+  {id:'seed-panel-sets-text',title:'Text',section:'default',parentId:'seed-tab-sets',images:[],textBoxes:[],createdAt:'2026-07-19T00:00:00.000Z',updatedAt:'2026-07-19T00:00:00.000Z',content:`<h1>Text</h1>
+<div class="cf-panel info" contenteditable="false"><span class="cf-panel-icon">ℹ️</span><div class="cf-panel-content" contenteditable="true">Panel trong tab Sets, chứa component xử lý chuỗi văn bản (nối chuỗi, tách chuỗi, thay thế...).</div></div>
+<p><em>Đây là 1 panel (nhóm lệnh con) trong tab Sets của Grasshopper. Các lệnh cụ thể thuộc panel này sẽ được thêm dần vào đây dưới dạng trang con khi được nghiên cứu.</em></p>`},
+  {id:'seed-panel-sets-tree',title:'Tree',section:'default',parentId:'seed-tab-sets',images:[],textBoxes:[],createdAt:'2026-07-19T00:00:00.000Z',updatedAt:'2026-07-19T00:00:00.000Z',content:`<h1>Tree</h1>
+<div class="cf-panel info" contenteditable="false"><span class="cf-panel-icon">ℹ️</span><div class="cf-panel-content" contenteditable="true">Panel trong tab Sets, chứa component thao tác trên Data Tree (cấu trúc danh sách lồng nhau theo "nhánh") — Graft, Flatten, Path Mapper...</div></div>
+<p><em>Đây là 1 panel (nhóm lệnh con) trong tab Sets của Grasshopper. Các lệnh cụ thể thuộc panel này sẽ được thêm dần vào đây dưới dạng trang con khi được nghiên cứu.</em></p>`},
+  {id:'seed-panel-vector-field',title:'Field',section:'default',parentId:'seed-tab-vector',images:[],textBoxes:[],createdAt:'2026-07-19T00:00:00.000Z',updatedAt:'2026-07-19T00:00:00.000Z',content:`<h1>Field</h1>
+<div class="cf-panel info" contenteditable="false"><span class="cf-panel-icon">ℹ️</span><div class="cf-panel-content" contenteditable="true">Panel trong tab Vector, chứa component dựng trường vector (vector field) — vd lực hút/đẩy tại mỗi điểm trong không gian.</div></div>
+<p><em>Đây là 1 panel (nhóm lệnh con) trong tab Vector của Grasshopper. Các lệnh cụ thể thuộc panel này sẽ được thêm dần vào đây dưới dạng trang con khi được nghiên cứu.</em></p>`},
+  {id:'seed-panel-vector-grid',title:'Grid',section:'default',parentId:'seed-tab-vector',images:[],textBoxes:[],createdAt:'2026-07-19T00:00:00.000Z',updatedAt:'2026-07-19T00:00:00.000Z',content:`<h1>Grid</h1>
+<div class="cf-panel info" contenteditable="false"><span class="cf-panel-icon">ℹ️</span><div class="cf-panel-content" contenteditable="true">Panel trong tab Vector, chứa component tạo lưới điểm (hình chữ nhật, lục giác, tam giác...).</div></div>
+<p><em>Đây là 1 panel (nhóm lệnh con) trong tab Vector của Grasshopper. Các lệnh cụ thể thuộc panel này sẽ được thêm dần vào đây dưới dạng trang con khi được nghiên cứu.</em></p>`},
+  {id:'seed-panel-vector-plane',title:'Plane',section:'default',parentId:'seed-tab-vector',images:[],textBoxes:[],createdAt:'2026-07-19T00:00:00.000Z',updatedAt:'2026-07-19T00:00:00.000Z',content:`<h1>Plane</h1>
+<div class="cf-panel info" contenteditable="false"><span class="cf-panel-icon">ℹ️</span><div class="cf-panel-content" contenteditable="true">Panel trong tab Vector, chứa component dựng và phân tích mặt phẳng (Plane) — hệ toạ độ cục bộ dùng làm chuẩn cho các lệnh khác.</div></div>
+<p><em>Đây là 1 panel (nhóm lệnh con) trong tab Vector của Grasshopper. Các lệnh cụ thể thuộc panel này sẽ được thêm dần vào đây dưới dạng trang con khi được nghiên cứu.</em></p>`},
+  {id:'seed-panel-vector-point',title:'Point',section:'default',parentId:'seed-tab-vector',images:[],textBoxes:[],createdAt:'2026-07-19T00:00:00.000Z',updatedAt:'2026-07-19T00:00:00.000Z',content:`<h1>Point</h1>
+<div class="cf-panel info" contenteditable="false"><span class="cf-panel-icon">ℹ️</span><div class="cf-panel-content" contenteditable="true">Panel trong tab Vector, chứa component dựng và phân tích điểm (Point) — toạ độ, khoảng cách, điểm gần nhất...</div></div>
+<p><em>Đây là 1 panel (nhóm lệnh con) trong tab Vector của Grasshopper. Các lệnh cụ thể thuộc panel này sẽ được thêm dần vào đây dưới dạng trang con khi được nghiên cứu.</em></p>`},
+  {id:'seed-panel-vector-vector',title:'Vector',section:'default',parentId:'seed-tab-vector',images:[],textBoxes:[],createdAt:'2026-07-19T00:00:00.000Z',updatedAt:'2026-07-19T00:00:00.000Z',content:`<h1>Vector</h1>
+<div class="cf-panel info" contenteditable="false"><span class="cf-panel-icon">ℹ️</span><div class="cf-panel-content" contenteditable="true">Panel trong tab Vector, chứa các phép toán trên vector (độ dài, tích có hướng, đơn vị hoá...).</div></div>
+<p><em>Đây là 1 panel (nhóm lệnh con) trong tab Vector của Grasshopper. Các lệnh cụ thể thuộc panel này sẽ được thêm dần vào đây dưới dạng trang con khi được nghiên cứu.</em></p>`},
+  {id:'seed-panel-curve-analysis',title:'Analysis',section:'default',parentId:'seed-tab-curve',images:[],textBoxes:[],createdAt:'2026-07-19T00:00:00.000Z',updatedAt:'2026-07-19T00:00:00.000Z',content:`<h1>Analysis</h1>
+<div class="cf-panel info" contenteditable="false"><span class="cf-panel-icon">ℹ️</span><div class="cf-panel-content" contenteditable="true">Panel trong tab Curve, chứa component đo/phân tích đường cong — độ dài, độ cong, điểm gần nhất...</div></div>
+<p><em>Đây là 1 panel (nhóm lệnh con) trong tab Curve của Grasshopper. Các lệnh cụ thể thuộc panel này sẽ được thêm dần vào đây dưới dạng trang con khi được nghiên cứu.</em></p>`},
+  {id:'seed-panel-curve-division',title:'Division',section:'default',parentId:'seed-tab-curve',images:[],textBoxes:[],createdAt:'2026-07-19T00:00:00.000Z',updatedAt:'2026-07-19T00:00:00.000Z',content:`<h1>Division</h1>
+<div class="cf-panel info" contenteditable="false"><span class="cf-panel-icon">ℹ️</span><div class="cf-panel-content" contenteditable="true">Panel trong tab Curve, chứa component chia đường cong thành điểm/đoạn cách đều hoặc theo khoảng chỉ định.</div></div>
+<p><em>Đây là 1 panel (nhóm lệnh con) trong tab Curve của Grasshopper. Các lệnh cụ thể thuộc panel này sẽ được thêm dần vào đây dưới dạng trang con khi được nghiên cứu.</em></p>`},
+  {id:'seed-panel-curve-primitive',title:'Primitive',section:'default',parentId:'seed-tab-curve',images:[],textBoxes:[],createdAt:'2026-07-19T00:00:00.000Z',updatedAt:'2026-07-19T00:00:00.000Z',content:`<h1>Primitive</h1>
+<div class="cf-panel info" contenteditable="false"><span class="cf-panel-icon">ℹ️</span><div class="cf-panel-content" contenteditable="true">Panel trong tab Curve, chứa component dựng đường cong hình dạng cơ bản (Line, Circle, Arc, Rectangle, Polygon...).</div></div>
+<p><em>Đây là 1 panel (nhóm lệnh con) trong tab Curve của Grasshopper. Các lệnh cụ thể thuộc panel này sẽ được thêm dần vào đây dưới dạng trang con khi được nghiên cứu.</em></p>`},
+  {id:'seed-panel-curve-spline',title:'Spline',section:'default',parentId:'seed-tab-curve',images:[],textBoxes:[],createdAt:'2026-07-19T00:00:00.000Z',updatedAt:'2026-07-19T00:00:00.000Z',content:`<h1>Spline</h1>
+<div class="cf-panel info" contenteditable="false"><span class="cf-panel-icon">ℹ️</span><div class="cf-panel-content" contenteditable="true">Panel trong tab Curve, chứa component dựng đường cong mượt phức tạp hơn (Interpolate, NURBS Curve, Spline qua nhiều điểm...).</div></div>
+<p><em>Đây là 1 panel (nhóm lệnh con) trong tab Curve của Grasshopper. Các lệnh cụ thể thuộc panel này sẽ được thêm dần vào đây dưới dạng trang con khi được nghiên cứu.</em></p>`},
+  {id:'seed-panel-curve-util',title:'Util',section:'default',parentId:'seed-tab-curve',images:[],textBoxes:[],createdAt:'2026-07-19T00:00:00.000Z',updatedAt:'2026-07-19T00:00:00.000Z',content:`<h1>Util</h1>
+<div class="cf-panel info" contenteditable="false"><span class="cf-panel-icon">ℹ️</span><div class="cf-panel-content" contenteditable="true">Panel trong tab Curve, nhóm các công cụ tiện ích khác cho đường cong (Join, Explode, Offset...).</div></div>
+<p><em>Đây là 1 panel (nhóm lệnh con) trong tab Curve của Grasshopper. Các lệnh cụ thể thuộc panel này sẽ được thêm dần vào đây dưới dạng trang con khi được nghiên cứu.</em></p>`},
   {id:'seed-tab-surface',title:'Surface',section:'default',parentId:'seed-grasshopper',images:[],textBoxes:[],createdAt:'2026-07-18T00:00:00.000Z',updatedAt:'2026-07-18T00:00:00.000Z',content:`<h1>Surface</h1>
 <div class="cf-panel info" contenteditable="false"><span class="cf-panel-icon">ℹ️</span><div class="cf-panel-content" contenteditable="true">🟡 Trung bình — Tạo và chỉnh sửa mặt (Surface): Loft, Extrude, Trim, phân tích mặt.</div></div>
 <h2>Chức năng</h2>

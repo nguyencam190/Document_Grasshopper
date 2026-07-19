@@ -99,7 +99,33 @@ nhưng không dùng nó để sửa nữa). Quy trình lấy/ghi file qua API (r
    | Wb (Weaverbird)         | `seed-tab-wb`           |
    | Kangaroo2               | `seed-tab-kangaroo2`    |
 
-   Ví dụ: lệnh **Loft** thuộc tab Surface trong Grasshopper thật → `parentId:'seed-tab-surface'`.
+   **Mỗi tab lại chia nhỏ thành nhiều "panel" (nhóm con) — khớp đúng cách Grasshopper thật nhóm icon
+   trên ribbon (vd tab Params có 5 panel: Geometry, Primitive, Input, Rhino, Util — xem ribbon thật
+   trong Grasshopper, KHÔNG suy đoán, vì thứ tự/tên panel dễ sai giữa các phiên bản Rhino).** Từ nay,
+   trang 1 lệnh cụ thể (vd "Loft") phải nằm trong đúng **trang panel** (`seed-panel-{tab}-{panel}`),
+   KHÔNG trỏ thẳng vào trang tab nữa. Panel đã xác nhận xong (từ ảnh chụp ribbon thật của user):
+
+   | Tab | Panel (đúng thứ tự trái→phải) |
+   |---|---|
+   | Params | Geometry, Primitive, Input, Rhino, Util |
+   | Maths | Domain, Matrix, Operators, Polynomials, Script, Time, Trig, Util |
+   | Sets | List, Sequence, Sets, Text, Tree |
+   | Vector | Field, Grid, Plane, Point, Vector |
+   | Curve | Analysis, Division, Primitive, Spline, Util |
+
+   Id mỗi trang panel theo mẫu `seed-panel-{tab-slug}-{panel-slug}` (vd `seed-panel-maths-domain`),
+   `parentId` trỏ vào đúng trang tab cha (vd `seed-tab-maths`). **8 tab còn lại (Surface, Mesh,
+   Intersect, Transform, Display, Rhino, Kangaroo2, Wb) CHƯA có panel — vẫn đang chờ user chụp ảnh
+   ribbon thật để xác nhận trước khi tạo**, vì nghiên cứu online (agent) chỉ xác định được TÊN panel
+   khá chắc nhưng KHÔNG xác định được thứ tự trái→phải thật (nguồn chỉ liệt kê theo alphabet), và
+   riêng tab Rhino có khả năng thiếu panel mới của Rhino 8 (dữ liệu tra được là bản Rhino 7/2022) —
+   xem lịch sử hội thoại lúc tạo 5 panel đầu tiên để biết danh sách "khá chắc" đã tra được, dùng làm
+   gợi ý đối chiếu khi user gửi ảnh, không tự ý tạo trang khi chưa có ảnh xác nhận.
+
+   Ví dụ: lệnh **Loft** thuộc tab Surface, panel **Freeform** trong Grasshopper thật (đã tra khá chắc
+   nhưng CHƯA xác nhận bằng ảnh) → khi Surface có panel rồi thì `parentId` sẽ trỏ vào
+   `seed-panel-surface-freeform`; trong lúc panel Surface chưa được tạo, tạm thời vẫn dùng
+   `parentId:'seed-tab-surface'` như quy tắc cũ.
 
    **Phân loại phải khớp 100% với Grasshopper thật, không được áng chừng/đoán đại.** Trước khi gán
    `parentId`, xác nhận đúng tab mà lệnh nằm trong ribbon Grasshopper thật (ưu tiên tra theo đúng thứ
