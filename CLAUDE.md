@@ -91,9 +91,12 @@ nhưng không dùng nó để sửa nữa). Quy trình lấy/ghi file qua API (r
 > tại từ GitHub (theo quy trình API trên), tìm trong biến `SEED_DOCS` xem component/lệnh này **đã có
 > trang riêng chưa** (so khớp theo tên lệnh, kể cả tên gần giống/viết tắt/khác hoa-thường). Nếu đã có
 > trang rồi thì **DỪNG LẠI**: không nghiên cứu lại, không viết lại nội dung, không tạo thêm trang mới
-> trùng lặp — chỉ báo cho user biết trang đã tồn tại (nêu rõ tên/vị trí trang) và hỏi user có muốn cập
-> nhật/bổ sung trang cũ đó hay không. Chỉ tiếp tục từ bước 1 trở xuống khi xác nhận component **chưa**
-> có trang nào trong `SEED_DOCS`.
+> trùng lặp — báo ngay cho user theo đúng mẫu:
+> **"Lệnh [tên lệnh] đã có trong document rồi — trang '[title trang]', là trang con của '[title trang
+> cha, tra theo `parentId`]'."** (Nếu trang cha lại có `parentId` khác `seed-grasshopper`, nêu luôn cả
+> đường dẫn đầy đủ, vd "Grasshopper → Surface → Loft", không chỉ nêu tên cha trực tiếp.) Sau đó hỏi
+> user có muốn cập nhật/bổ sung trang cũ đó hay không. Chỉ tiếp tục từ bước 1 trở xuống khi xác nhận
+> component **chưa** có trang nào trong `SEED_DOCS`.
 
 1. Nghiên cứu chức năng lệnh đó (input/output, cách dùng, lưu ý).
 2. Thêm 1 trang con mới vào biến `SEED_DOCS` (dùng nội dung `Grasshopper.html` đã lấy ở bước 0),
