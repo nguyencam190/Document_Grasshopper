@@ -268,6 +268,14 @@ Khác với trang tham khảo 1 component đơn lẻ (nhét vào 1 trong 13 tran
   rìa trái ngoài cùng = rail logo/`#hdrLogoBox`, icon phía trên chữ "Recent" trong sidebar = phần tử
   cũ hiện đã ẩn) — đã từng sửa nhầm hệ thống (1) trong khi user nói về hệ thống (2), mất 1 vòng hỏi
   lại mới phát hiện ra.
+- **Logo mặc định của dự án được bake vào seed qua `SEED_HEADER_LOGO`** (khai báo cạnh `SEED_ASSETS`,
+  hiện trỏ tới `assets/images/logo-grasshopper.png`) — khác cơ chế `SEED_ASSETS`/`data-cfimgid` (lưu
+  blob vào IndexedDB theo id), logo lưu thẳng dạng `data:` URL trong `state.headerLogo.imgDataUrl` VÀ
+  `state.projectLogo.imgDataUrl` (cả 2, vì bản export dùng field khác nhau cho rail-logo so với sidebar
+  logo — xem `.pab-logo`/`ws-logo` dùng `headerLogo`, còn `ws-sb-hdr-img` trong bản export chỉ đọc
+  `projectLogo`). Trong `init()`, đoạn fetch+set logo này chỉ chạy khi vừa force-sync
+  (`_seedJustSynced`) — **nếu đổi ảnh logo** (upload đè file mới lên GitHub tại đúng path đó), vẫn
+  phải bump `SEED_VERSION` như mọi thay đổi seed khác thì mọi trình duyệt mới tự lấy logo mới.
 
 ## Git workflow
 User muốn mọi commit trong repo này **push/merge thẳng vào nhánh `main`**, không giữ lại lâu trên
