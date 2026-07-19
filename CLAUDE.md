@@ -240,8 +240,15 @@ nhưng không dùng nó để sửa nữa). Quy trình lấy/ghi file qua API (r
    mỗi mục chỉ cần đủ ý, không lan man. Nếu 1 mục thực sự không có nội dung phù hợp (vd component quá
    đơn giản không có workflow nào khác ngoài 1 cách dùng), vẫn giữ H2 và ghi ngắn gọn lý do thay vì
    bỏ hẳn mục đó — người đọc cần thấy đủ 11 mục nhất quán giữa các trang.
-5. Bump `SEED_VERSION` lên 1 (để mọi trình duyệt tự đồng bộ lại, không cần user xoá cache/localStorage).
-6. **Luôn publish kèm ảnh minh họa, tạo bằng CHÍNH pipeline thật của app** (yêu cầu rõ ràng của user —
+5. **Ngay khi viết xong nội dung trang con** (đủ 11 mục, trước hoặc cùng lúc bump `SEED_VERSION`),
+   **BẬT khóa trang** bằng cách thêm `locked:true` vào object của trang đó trong `SEED_DOCS` (field
+   `locked` đặt ngay sau `id:'...'`, trước `title:...`) — biến trang thành chỉ đọc, tránh sửa nhầm sau
+   này. Chỉ áp dụng cho trang con 1 component cụ thể (`seed-cmd-*`) — KHÔNG khóa trang tab/panel tổng
+   quan (`seed-tab-*`/`seed-panel-*`), vì các trang đó còn cần cập nhật bảng "Danh sách component"
+   liên tục khi có thêm lệnh mới. Nếu sau này cần sửa lại 1 trang đã khóa, chủ động báo cho user biết
+   trang đang khóa và cần mở khóa (`locked:false` hoặc xoá field) trước khi chỉnh sửa.
+6. Bump `SEED_VERSION` lên 1 (để mọi trình duyệt tự đồng bộ lại, không cần user xoá cache/localStorage).
+7. **Luôn publish kèm ảnh minh họa, tạo bằng CHÍNH pipeline thật của app** (yêu cầu rõ ràng của user —
    "làm đúng" như nút Publish, không tự chế) — quy trình đầy đủ (đã test thành công với "Voronoi"):
    a. Trong 1 tab trình duyệt đã mở `Grasshopper.html` sống (qua `mcp__Claude_Browser`), với ảnh SVG
       mới đã có sẵn ở đâu đó truy cập được (vd fetch từ 1 URL tạm), đăng ký ảnh "đúng chuẩn" của app:
@@ -304,7 +311,7 @@ nhưng không dùng nó để sửa nữa). Quy trình lấy/ghi file qua API (r
       cách nhau 100ms sau khi xoá sạch dữ liệu trình duyệt — ảnh vẫn hiện đúng 100%.
    i. Xoá file ảnh cũ (nếu có, đường dẫn phẳng `assets/{ten}.svg` kiểu cũ) bằng
       `DELETE /repos/.../contents/{path}` kèm `sha` hiện tại, tránh rác thừa trong repo.
-   j. Bump `SEED_VERSION`, `PUT Grasshopper.html` như bước 5 cũ (bước tạo/cập nhật `SEED_VERSION`).
+   j. Bump `SEED_VERSION`, `PUT Grasshopper.html` như bước 6 (bước tạo/cập nhật `SEED_VERSION`).
 
 **Trang cha riêng cho nội dung Step-by-step (quy trình dựng mẫu từ video):**
 Khác với trang tham khảo 1 component đơn lẻ (nhét vào 1 trong 13 trang danh mục ở trên), nội dung
