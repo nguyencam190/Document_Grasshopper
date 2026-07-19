@@ -61,9 +61,11 @@ không có thuộc tính đặc biệt nào), ghi rõ "không có" thay vì bỏ
 Modes, Preview, Flatten/Graft/Simplify/Reverse, Internalize Data, các toggle khác...). Nếu
 component không có thuộc tính đặc biệt, ghi rõ "không có".
 
-**6. Ứng dụng** — component này thường dùng để giải quyết bài toán gì (Parametric Modeling,
-Product Design, Surface Modeling, Architecture, Pattern Generation, Data Processing...); nêu ví
-dụ thực tế nếu phù hợp, không lan man.
+**6. Ứng dụng** — component này thường dùng để giải quyết bài toán gì. **Ưu tiên hướng Parametric
+Design dùng để xây dựng pattern** (hoa văn/hoạ tiết lặp lại có kiểm soát tham số: mặt đứng, lưới
+pattern, mảng module...) làm góc nhìn chính khi diễn giải tự nhiên được theo hướng này; chỉ chuyển
+sang góc nhìn khác (Product Design, Surface Modeling, Architecture, Data Processing...) khi component
+không gắn được với pattern một cách trung thực. Nêu ví dụ thực tế nếu phù hợp, không lan man.
 
 **7. Kết nối (Connections)** — 3 bảng riêng biệt:
    - Có thể **nhận** dữ liệu từ: `Component | Data Type | Có thể nối`
@@ -80,9 +82,10 @@ Circle → Divide Curve → Points → Move → Polyline
 Vector, Plane, Number, Integer, Boolean, Text, List, Data Tree...); nếu hỗ trợ nhiều kiểu, giải
 thích khác biệt hành vi giữa từng kiểu.
 
-**10. Ví dụ** — bắt buộc tối thiểu 2 ví dụ: 1 ví dụ đơn giản + 1 ví dụ thực tế. Mỗi ví dụ phải có
-đủ: Input, Component, Output, kết quả cuối, và workflow của chính ví dụ đó. Ví dụ phải ngắn gọn,
-dễ tái tạo lại trên canvas thật.
+**10. Ví dụ** — bắt buộc tối thiểu 2 ví dụ: 1 ví dụ đơn giản + 1 ví dụ thực tế. Ví dụ thực tế ưu tiên
+đi theo hướng dựng pattern parametric (khớp mục 6 "Ứng dụng"), trừ khi component không gắn được tự
+nhiên với pattern. Mỗi ví dụ phải có đủ: Input, Component, Output, kết quả cuối, và workflow của
+chính ví dụ đó. Ví dụ phải ngắn gọn, dễ tái tạo lại trên canvas thật.
    - **Bắt buộc có hình minh hoạ cho mỗi ví dụ, và hình phải mô phỏng đúng diện mạo thật của
      Grasshopper canvas / Rhino viewport** (khối component bo góc xám có núm input/output, dây nối
      cong, viewport nền trắng có lưới phối cảnh...) — không vẽ sơ đồ hộp-mũi tên chung chung kiểu

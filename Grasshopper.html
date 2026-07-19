@@ -2986,12 +2986,12 @@ const STORE_KEY='projectdocs_v3';
 // Bump SEED_VERSION any time SEED_DOCS content changes (e.g. a new Grasshopper
 // command page is added) to re-sync all visitors automatically, even ones
 // with old data already saved locally.
-const SEED_VERSION=37;
+const SEED_VERSION=38;
 // Real image assets referenced by SEED_DOCS via data-cfimgid — every visitor's
 // browser needs these in its OWN IndexedDB (see init() below) so images both
 // (a) display correctly, and (b) get recognized by the app's own Optimized
 // Website export if the user runs Publish themselves later.
-const SEED_ASSETS={'tab-params':'svg','tab-maths':'svg','tab-sets':'svg','tab-vector':'svg','tab-curve':'svg','tab-surface':'svg','tab-mesh':'svg','tab-intersect':'svg','tab-transform':'svg','tab-display':'svg','tab-rhino':'svg','tab-kangaroo2':'svg','tab-wb':'svg','fitloft2':'svg','fitloft-example':'svg','extrude2':'svg','extrude-example':'svg','fitloft-workflow2':'svg','extrude-workflow2':'svg','series':'svg','series-workflow':'svg','series-example':'svg','point':'svg','point-workflow':'svg','point-example':'svg','coincident':'svg','coincident-workflow':'svg','coincident-example':'svg','maelstrom':'svg','maelstrom-workflow':'svg','maelstrom-example':'svg','domain':'svg','domain-workflow':'svg','domain-example':'svg'};
+const SEED_ASSETS={'tab-params':'svg','tab-maths':'svg','tab-sets':'svg','tab-vector':'svg','tab-curve':'svg','tab-surface':'svg','tab-mesh':'svg','tab-intersect':'svg','tab-transform':'svg','tab-display':'svg','tab-rhino':'svg','tab-kangaroo2':'svg','tab-wb':'svg','fitloft2':'svg','fitloft-example':'svg','extrude2':'svg','extrude-example':'svg','fitloft-workflow2':'svg','extrude-workflow2':'svg','series':'svg','series-workflow':'svg','series-example':'svg','point':'svg','point-workflow':'svg','point-example':'svg','coincident':'svg','coincident-workflow':'svg','coincident-example':'svg','maelstrom':'svg','maelstrom-workflow':'svg','maelstrom-example':'svg','domain':'svg','domain-workflow':'svg','domain-example':'svg','fitloft-example2':'svg','extrude-example2':'svg','series-example2':'svg','point-example2':'svg','coincident-example2':'svg'};
 // Default project logo baked into the seed (path in the repo, not an IDB-blob id like
 // SEED_ASSETS — headerLogo/projectLogo store a data: URL directly in state, see init()).
 const SEED_HEADER_LOGO='assets/images/logo-grasshopper.png';
@@ -3111,7 +3111,7 @@ const SEED_DOCS=[
 </ol>
 <div class="cf-img-block" data-cfimgid="point" data-cfimgtype="image" data-align="center" data-name="point.svg"><div class="cf-img-wrap"><div class="cf-img-inner" style="width:100%;max-width:640px"><img style="width:100%;height:auto;display:block" alt="Point (Pt) tham chiếu 4 điểm có sẵn trong Rhino qua right-click Set Multiple Points, không cần dây nối đầu vào; bên phải là 4 điểm đỏ trong viewport"><div class="cf-img-resize-h left"></div><div class="cf-img-resize-h right"></div></div></div><div class="cf-img-caption"></div></div>
 <h2>Ứng dụng</h2>
-<p>Parametric Modeling, Architecture — lấy mốc toạ độ đã khảo sát/thiết kế sẵn trong Rhino (vị trí cột, ranh đất, điểm đo đạc) làm gốc cho các bước dựng hình tiếp theo trong Grasshopper.</p>
+<p>Parametric Design, Pattern Generation — tham chiếu lưới điểm neo (anchor grid) làm gốc sinh pattern, đặc biệt khi pattern cần neo theo vị trí thực tế/bất quy tắc do người thiết kế đặt tay, không phải lưới đều máy móc.</p>
 <h2>Kết nối</h2>
 <p><strong>Nhận dữ liệu từ:</strong></p>
 <table style="width:100%;border-collapse:collapse;font-size:14px">
@@ -3140,8 +3140,8 @@ const SEED_DOCS=[
 <hr>
 <div class="cf-panel warning" contenteditable="false"><span class="cf-panel-icon">⚠️</span><div class="cf-panel-content" contenteditable="true">Nếu không Set điểm và không nối input, component hiện trạng thái <strong>"Empty Point parameter"</strong> (rỗng) — cắm icon hình lục giác dấu X màu vàng-chanh, kèm bong bóng cảnh báo cam ở góc, không có dữ liệu để dùng tiếp.</div></div>
 <h2>Ví dụ ứng dụng thực tế</h2>
-<p>Tham chiếu 5 điểm vị trí cột đã khảo sát ngoài công trình thực tế (import từ file Rhino đo đạc), dùng làm gốc dựng cột tự động tại từng điểm — tránh phải nhập tay toạ độ từng cột.</p>
-<div class="cf-img-block" data-cfimgid="point-example" data-cfimgtype="image" data-align="center" data-name="point-example.svg"><div class="cf-img-wrap"><div class="cf-img-inner" style="width:100%;max-width:640px"><img style="width:100%;height:auto;display:block" alt="Mặt bằng site khảo sát với 5 điểm đỏ đánh dấu vị trí cột, mỗi điểm có 1 cột nhỏ dựng lên tương ứng"><div class="cf-img-resize-h left"></div><div class="cf-img-resize-h right"></div></div></div><div class="cf-img-caption"></div></div>`},
+<p>Tham chiếu 14 điểm neo đặt tay bất quy tắc trong Rhino làm điểm gieo cho Voronoi — tạo pattern Voronoi hữu cơ theo đúng ý đồ thiết kế, thay vì lưới điểm đều nhàm chán do máy sinh tự động.</p>
+<div class="cf-img-block" data-cfimgid="point-example2" data-cfimgtype="image" data-align="center" data-name="point-example2.svg"><div class="cf-img-wrap"><div class="cf-img-inner" style="width:100%;max-width:640px"><img style="width:100%;height:auto;display:block" alt="Pattern Voronoi hữu cơ tạo từ 14 điểm neo đặt tay bất quy tắc tham chiếu qua Point (Pt)"><div class="cf-img-resize-h left"></div><div class="cf-img-resize-h right"></div></div></div><div class="cf-img-caption"></div></div>`},
   {id:'seed-panel-params-primitive',title:'Primitive',section:'default',parentId:'seed-tab-params',images:[],textBoxes:[],createdAt:'2026-07-19T00:00:00.000Z',updatedAt:'2026-07-19T00:00:00.000Z',content:`<h1>Primitive</h1>
 <div class="cf-panel info" contenteditable="false"><span class="cf-panel-icon">ℹ️</span><div class="cf-panel-content" contenteditable="true">Panel trong tab Params, chứa các component giữ giá trị cơ bản (Number, Boolean, Text, Colour, Time...).</div></div>
 <p><em>Đây là 1 panel (nhóm lệnh con) trong tab Params của Grasshopper. Các lệnh cụ thể thuộc panel này sẽ được thêm dần vào đây dưới dạng trang con khi được nghiên cứu.</em></p>`},
@@ -3182,7 +3182,7 @@ const SEED_DOCS=[
 </ol>
 <div class="cf-img-block" data-cfimgid="domain" data-cfimgtype="image" data-align="center" data-name="domain.svg"><div class="cf-img-wrap"><div class="cf-img-inner" style="width:100%;max-width:640px"><img style="width:100%;height:auto;display:block" alt="A=0 và B=10 nối vào Construct Domain, xuất ra I hiển thị '0 To 10'; bên phải là sơ đồ đường thẳng số minh hoạ khoảng [0,10]"><div class="cf-img-resize-h left"></div><div class="cf-img-resize-h right"></div></div></div><div class="cf-img-caption"></div></div>
 <h2>Ứng dụng</h2>
-<p>Parametric Modeling — cung cấp Domain cho các phép Remap/Divide/Graph Mapper, thường dùng để chuẩn hoá dữ liệu (đưa số về khoảng [0,1]) hoặc định nghĩa khoảng chia đều cho pattern/gradient.</p>
+<p>Parametric Design, Pattern Generation — cung cấp Domain cho Remap Numbers/Graph Mapper để điều khiển pattern gradient: kích thước, độ xoay, độ mờ... của từng module pattern biến thiên có kiểm soát theo 1 khoảng giá trị.</p>
 <h2>Kết nối</h2>
 <p><strong>Nhận dữ liệu từ:</strong></p>
 <table style="width:100%;border-collapse:collapse;font-size:14px">
@@ -3211,7 +3211,7 @@ const SEED_DOCS=[
 <hr>
 <div class="cf-panel warning" contenteditable="false"><span class="cf-panel-icon">⚠️</span><div class="cf-panel-content" contenteditable="true">Construct Domain tạo Domain <strong>1 chiều</strong> (1 khoảng số). Nếu cần Domain 2 chiều (dùng cho UV của Surface, vd Divide Domain²), phải dùng <strong>Construct Domain²</strong> — 2 component khác nhau, không thay thế cho nhau được.</div></div>
 <h2>Ví dụ ứng dụng thực tế</h2>
-<p>Dùng Construct Domain [0,1] làm khoảng remap độ mờ (opacity) cho các tấm ốp mặt đứng công trình — tạo hiệu ứng gradient dần từ nhạt sang đậm theo từng cột tấm ốp.</p>
+<p>Pattern mặt đứng dạng gradient: dùng Construct Domain [0,1] làm khoảng remap độ mờ (opacity) cho các tấm ốp — tạo hoạ tiết pattern nhạt-đậm dần theo từng cột tấm ốp, không phải màu ngẫu nhiên.</p>
 <div class="cf-img-block" data-cfimgid="domain-example" data-cfimgtype="image" data-align="center" data-name="domain-example.svg"><div class="cf-img-wrap"><div class="cf-img-inner" style="width:100%;max-width:640px"><img style="width:100%;height:auto;display:block" alt="Mặt đứng công trình với các tấm ốp có độ mờ tăng dần theo gradient từ trái sang phải, dựa trên Domain [0,1]"><div class="cf-img-resize-h left"></div><div class="cf-img-resize-h right"></div></div></div><div class="cf-img-caption"></div></div>`},
   {id:'seed-panel-maths-matrix',title:'Matrix',section:'default',parentId:'seed-tab-maths',images:[],textBoxes:[],createdAt:'2026-07-19T00:00:00.000Z',updatedAt:'2026-07-19T00:00:00.000Z',content:`<h1>Matrix</h1>
 <div class="cf-panel info" contenteditable="false"><span class="cf-panel-icon">ℹ️</span><div class="cf-panel-content" contenteditable="true">Panel trong tab Maths, chứa công cụ dựng và chỉnh sửa ma trận (bảng số xếp theo hàng/cột).</div></div>
@@ -3267,7 +3267,7 @@ const SEED_DOCS=[
 </ol>
 <div class="cf-img-block" data-cfimgid="series" data-cfimgtype="image" data-align="center" data-name="series.svg"><div class="cf-img-wrap"><div class="cf-img-inner" style="width:100%;max-width:640px"><img style="width:100%;height:auto;display:block" alt="Start/Step/Count nối vào Series, xuất ra dãy số; bên phải là dãy điểm đỏ cách đều trong viewport dùng chính dãy số đó làm toạ độ X"><div class="cf-img-resize-h left"></div><div class="cf-img-resize-h right"></div></div></div><div class="cf-img-caption"></div></div>
 <h2>Ứng dụng</h2>
-<p>Parametric Modeling, Pattern Generation — tạo lưới điểm/mảng đối tượng cách đều, tính cao độ tầng nhà, chia khoảng cách bất kỳ theo bước nhảy tuỳ chỉnh.</p>
+<p>Parametric Design, Pattern Generation — sinh dãy giá trị tăng dần dùng làm bán kính/góc xoay cho mảng pattern toả tròn hoặc bậc thang, kiểm soát nhịp điệu (rhythm) của pattern qua Step.</p>
 <h2>Kết nối</h2>
 <p><strong>Nhận dữ liệu từ:</strong></p>
 <table style="width:100%;border-collapse:collapse;font-size:14px">
@@ -3297,8 +3297,8 @@ const SEED_DOCS=[
 <hr>
 <div class="cf-panel warning" contenteditable="false"><span class="cf-panel-icon">⚠️</span><div class="cf-panel-content" contenteditable="true">Series không giới hạn giá trị cuối — nếu cần chia đều 1 khoảng giá trị CỐ ĐỊNH (vd luôn từ 0 đến 1) thành N đoạn, dùng <strong>Range</strong> thay vì Series.</div></div>
 <h2>Ví dụ ứng dụng thực tế</h2>
-<p>Dùng Series (0,1,2,3,4) nhân với chiều cao 1 tầng, ra cao độ Z của từng tầng — dựng nhanh khối nhà nhiều tầng mà không cần đặt tay từng cao độ.</p>
-<div class="cf-img-block" data-cfimgid="series-example" data-cfimgtype="image" data-align="center" data-name="series-example.svg"><div class="cf-img-wrap"><div class="cf-img-inner" style="width:100%;max-width:640px"><img style="width:100%;height:auto;display:block" alt="Khối nhà 5 tầng với cao độ Z từng tầng tính từ dãy Series (0,1,2,3,4) nhân chiều cao 1 tầng"><div class="cf-img-resize-h left"></div><div class="cf-img-resize-h right"></div></div></div><div class="cf-img-caption"></div></div>`},
+<p>Series (0..11) × 30° tạo 12 góc xoay đều → dùng Rotate lặp lại 1 module "cánh hoa" theo từng góc, tạo pattern hoa văn toả tròn 12 cánh, chỉnh Step để đổi mật độ cánh.</p>
+<div class="cf-img-block" data-cfimgid="series-example2" data-cfimgtype="image" data-align="center" data-name="series-example2.svg"><div class="cf-img-wrap"><div class="cf-img-inner" style="width:100%;max-width:640px"><img style="width:100%;height:auto;display:block" alt="Pattern hoa văn toả tròn 12 cánh tạo từ Series (0..11) nhân 30 độ dùng làm góc xoay Rotate"><div class="cf-img-resize-h left"></div><div class="cf-img-resize-h right"></div></div></div><div class="cf-img-caption"></div></div>`},
   {id:'seed-panel-sets-sets',title:'Sets',section:'default',parentId:'seed-tab-sets',images:[],textBoxes:[],createdAt:'2026-07-19T00:00:00.000Z',updatedAt:'2026-07-19T00:00:00.000Z',content:`<h1>Sets</h1>
 <div class="cf-panel info" contenteditable="false"><span class="cf-panel-icon">ℹ️</span><div class="cf-panel-content" contenteditable="true">Panel trong tab Sets, chứa các phép toán tập hợp (hợp, giao, hiệu...) áp dụng cho danh sách.</div></div>
 <p><em>Đây là 1 panel (nhóm lệnh con) trong tab Sets của Grasshopper. Các lệnh cụ thể thuộc panel này sẽ được thêm dần vào đây dưới dạng trang con khi được nghiên cứu.</em></p>`},
@@ -3456,7 +3456,7 @@ const SEED_DOCS=[
 </ol>
 <div class="cf-img-block" data-cfimgid="fitloft2" data-cfimgtype="image" data-align="center" data-name="fitloft2.svg"><div class="cf-img-wrap"><div class="cf-img-inner" style="width:100%;max-width:640px"><img style="width:100%;height:auto;display:block" alt="Fit Loft: Curves + Count U/Degree U/Degree V nối vào Fit Loft, xuất ra Surface; bên phải là mặt fit loft mượt qua các đường cong gốc trong viewport Rhino"><div class="cf-img-resize-h left"></div><div class="cf-img-resize-h right"></div></div></div><div class="cf-img-caption"></div></div>
 <h2>Ứng dụng</h2>
-<p>Surface Modeling, Architecture — dựng mặt cong lớn từ dữ liệu đo đạc/quét 3D không đều (mặt cắt công trình, địa hình...).</p>
+<p>Parametric Design, Pattern Generation — dựng pattern gợn sóng/vảy liên tục từ nhiều đường cong profile dao động biên độ theo tham số, tạo hoạ tiết bề mặt phức tạp mà vẫn khớp mượt qua từng đường, không gãy khúc như Loft thường.</p>
 <h2>Kết nối</h2>
 <p><strong>Nhận dữ liệu từ:</strong></p>
 <table style="width:100%;border-collapse:collapse;font-size:14px">
@@ -3486,8 +3486,8 @@ const SEED_DOCS=[
 <hr>
 <div class="cf-panel warning" contenteditable="false"><span class="cf-panel-icon">⚠️</span><div class="cf-panel-content" contenteditable="true"><strong>Khác với Loft thường</strong>: Loft đi chính xác qua từng đường; Fit Loft chỉ đi gần đúng. Dùng Fit Loft khi đường cong gốc không đều và muốn mặt mượt hơn.</div></div>
 <h2>Ví dụ ứng dụng thực tế</h2>
-<p>Case study Voronoi hiện tại dùng <strong>Boundary Surfaces</strong>, không cần Fit Loft. Component này hợp hơn cho dự án dựng vỏ kiến trúc cong mượt từ nhiều mặt cắt đo thực tế không đều nhau.</p>
-<div class="cf-img-block" data-cfimgid="fitloft-example" data-cfimgtype="image" data-align="center" data-name="fitloft-example.svg"><div class="cf-img-wrap"><div class="cf-img-inner" style="width:100%;max-width:640px"><img style="width:100%;height:auto;display:block" alt="Vỏ kiến trúc cong mượt được Fit Loft qua 5 mặt cắt đo ngoài thực tế, các điểm đo không hoàn toàn đều nhau"><div class="cf-img-resize-h left"></div><div class="cf-img-resize-h right"></div></div></div><div class="cf-img-caption"></div></div>`},
+<p>Dựng pattern mặt đứng dạng vảy sóng: N đường cong profile hình sin với biên độ tăng dần theo tham số (Attractor) → Fit Loft nối liền các đường thành 1 mặt cong pattern liên tục, tạo hiệu ứng vảy gợn sóng trên mặt đứng công trình.</p>
+<div class="cf-img-block" data-cfimgid="fitloft-example2" data-cfimgtype="image" data-align="center" data-name="fitloft-example2.svg"><div class="cf-img-wrap"><div class="cf-img-inner" style="width:100%;max-width:640px"><img style="width:100%;height:auto;display:block" alt="Pattern mặt đứng dạng vảy sóng dựng từ N đường cong sin biên độ tăng dần được Fit Loft nối liền"><div class="cf-img-resize-h left"></div><div class="cf-img-resize-h right"></div></div></div><div class="cf-img-caption"></div></div>`},
   {id:'seed-cmd-extrude',locked:true,title:'Extrude',section:'default',parentId:'seed-panel-surface-freeform',images:[],textBoxes:[],createdAt:'2026-07-19T00:00:00.000Z',updatedAt:'2026-07-19T00:00:00.000Z',content:`<h1>Extrude</h1>
 <div class="cf-panel info" contenteditable="false"><span class="cf-panel-icon">ℹ️</span><div class="cf-panel-content" contenteditable="true">🟢 Cơ bản — Đùn geometry theo 1 vector hướng, tạo khối/mặt mới.</div></div>
 <h2>Chức năng</h2>
@@ -3512,7 +3512,7 @@ const SEED_DOCS=[
 </ol>
 <div class="cf-img-block" data-cfimgid="extrude2" data-cfimgtype="image" data-align="center" data-name="extrude2.svg"><div class="cf-img-wrap"><div class="cf-img-inner" style="width:100%;max-width:640px"><img style="width:100%;height:auto;display:block" alt="Base và Direction nối vào Extrude, xuất ra Extrusion; bên phải là mặt ngũ giác được đùn thành khối lăng trụ trong viewport"><div class="cf-img-resize-h left"></div><div class="cf-img-resize-h right"></div></div></div><div class="cf-img-caption"></div></div>
 <h2>Ứng dụng</h2>
-<p>Architecture, Massing — dựng nhanh khối công trình sơ bộ từ mặt bằng (đùn mặt bằng tầng theo phương đứng ra chiều cao tầng).</p>
+<p>Parametric Design, Pattern Generation — đùn 1 module 2D (ô lưới, đa giác) lặp lại theo pattern để tạo relief pattern trên mặt đứng, mỗi module có chiều cao đùn khác nhau theo tham số (attractor point/gradient).</p>
 <h2>Kết nối</h2>
 <p><strong>Nhận dữ liệu từ:</strong></p>
 <table style="width:100%;border-collapse:collapse;font-size:14px">
@@ -3542,8 +3542,8 @@ const SEED_DOCS=[
 <hr>
 <div class="cf-panel warning" contenteditable="false"><span class="cf-panel-icon">⚠️</span><div class="cf-panel-content" contenteditable="true">Extrude đùn theo đường THẲNG duy nhất. Cần đùn theo 1 đường cong dẫn hướng (path) thì dùng <strong>Extrude Along</strong> thay vì Extrude.</div></div>
 <h2>Ví dụ ứng dụng thực tế</h2>
-<p>Dùng để dựng nhanh khối công trình từ mặt bằng: đùn mặt bằng tầng theo phương đứng ra chiều cao tầng, lặp lại cho nhiều tầng để dựng khối kiến trúc sơ bộ (massing).</p>
-<div class="cf-img-block" data-cfimgid="extrude-example" data-cfimgtype="image" data-align="center" data-name="extrude-example.svg"><div class="cf-img-wrap"><div class="cf-img-inner" style="width:100%;max-width:640px"><img style="width:100%;height:auto;display:block" alt="Mặt bằng tầng hình chữ L được đùn theo phương đứng thành khối công trình đơn giản"><div class="cf-img-resize-h left"></div><div class="cf-img-resize-h right"></div></div></div><div class="cf-img-caption"></div></div>`},
+<p>Pattern mặt đứng dạng lưới lục giác: mỗi ô lục giác được Extrude với chiều cao khác nhau (theo khoảng cách tới 1 điểm attractor ở giữa) → tạo hiệu ứng relief 3D nổi dần vào tâm.</p>
+<div class="cf-img-block" data-cfimgid="extrude-example2" data-cfimgtype="image" data-align="center" data-name="extrude-example2.svg"><div class="cf-img-wrap"><div class="cf-img-inner" style="width:100%;max-width:640px"><img style="width:100%;height:auto;display:block" alt="Pattern relief lưới lục giác với mỗi ô có chiều cao Extrude khác nhau theo khoảng cách tới điểm attractor trung tâm"><div class="cf-img-resize-h left"></div><div class="cf-img-resize-h right"></div></div></div><div class="cf-img-caption"></div></div>`},
   {id:'seed-panel-surface-primitive',title:'Primitive',section:'default',parentId:'seed-tab-surface',images:[],textBoxes:[],createdAt:'2026-07-19T00:00:00.000Z',updatedAt:'2026-07-19T00:00:00.000Z',content:`<h1>Primitive</h1>
 <div class="cf-panel info" contenteditable="false"><span class="cf-panel-icon">ℹ️</span><div class="cf-panel-content" contenteditable="true">Panel trong tab Surface, chứa component dựng mặt hình dạng cơ bản (Box, Sphere, Cylinder, Plane Surface...).</div></div>
 <p><em>Đây là 1 panel (nhóm lệnh con) trong tab Surface của Grasshopper. Các lệnh cụ thể thuộc panel này sẽ được thêm dần vào đây dưới dạng trang con khi được nghiên cứu.</em></p>`},
@@ -3776,7 +3776,7 @@ const SEED_DOCS=[
 </ol>
 <div class="cf-img-block" data-cfimgid="coincident" data-cfimgtype="image" data-align="center" data-name="coincident.svg"><div class="cf-img-wrap"><div class="cf-img-inner" style="width:100%;max-width:640px"><img style="width:100%;height:auto;display:block" alt="Points và Strength nối vào Coincident, xuất G2 vào Solver; bên phải 2 điểm ban đầu tách rời được kéo về trùng 1 vị trí sau khi chạy Solver"><div class="cf-img-resize-h left"></div><div class="cf-img-resize-h right"></div></div></div><div class="cf-img-caption"></div></div>
 <h2>Ứng dụng</h2>
-<p>Kangaroo2 Physics, Structural Form-Finding — nối các đầu dây cáp/mép mesh rời rạc thành 1 hệ liên tục khi dựng mái căng dây, lưới cáp, hoặc ghép nhiều module hình học lại với nhau trong mô phỏng.</p>
+<p>Parametric Design, Pattern Generation (Kangaroo2) — nối liền các mép module pattern rời rạc thành 1 hệ pattern liên tục khi dùng vật lý relaxation để làm mượt/tối ưu hoa văn (vd pattern lưới tam giác ghép từ nhiều module).</p>
 <h2>Kết nối</h2>
 <p><strong>Nhận dữ liệu từ:</strong></p>
 <table style="width:100%;border-collapse:collapse;font-size:14px">
@@ -3806,8 +3806,8 @@ const SEED_DOCS=[
 <hr>
 <div class="cf-panel warning" contenteditable="false"><span class="cf-panel-icon">⚠️</span><div class="cf-panel-content" contenteditable="true">Coincident chỉ tạo Goal — KHÔNG tự chạy mô phỏng. Nếu quên nối output <strong>G2</strong> vào <strong>Solver</strong>, ràng buộc sẽ không có tác dụng gì cả, canvas vẫn hiện đúng dây nối nhưng không có gì thay đổi.</div></div>
 <h2>Ví dụ ứng dụng thực tế</h2>
-<p>Dựng mái căng dây (cable-net): 4 đầu dây cáp thuộc 2 nhóm dây riêng biệt được Coincident ép về chung 1 điểm hub — tạo thành mái vòm căng dây liên tục sau khi chạy Solver.</p>
-<div class="cf-img-block" data-cfimgid="coincident-example" data-cfimgtype="image" data-align="center" data-name="coincident-example.svg"><div class="cf-img-wrap"><div class="cf-img-inner" style="width:100%;max-width:640px"><img style="width:100%;height:auto;display:block" alt="Mái căng dây với 4 đầu dây cáp từ 2 nhóm riêng biệt được Coincident ép trùng về 1 điểm hub trung tâm"><div class="cf-img-resize-h left"></div><div class="cf-img-resize-h right"></div></div></div><div class="cf-img-caption"></div></div>`},
+<p>Pattern lưới tam giác ghép từ nhiều module riêng biệt: Coincident nối các đỉnh chung giữa các module → Solver relax toàn bộ pattern thành lưới tam giác đều mượt mà, không còn khe hở giữa các module.</p>
+<div class="cf-img-block" data-cfimgid="coincident-example2" data-cfimgtype="image" data-align="center" data-name="coincident-example2.svg"><div class="cf-img-wrap"><div class="cf-img-inner" style="width:100%;max-width:640px"><img style="width:100%;height:auto;display:block" alt="2 module lưới tam giác riêng biệt được Coincident nối các đỉnh chung để ghép thành 1 pattern liên tục"><div class="cf-img-resize-h left"></div><div class="cf-img-resize-h right"></div></div></div><div class="cf-img-caption"></div></div>`},
   {id:'seed-panel-kangaroo2-goalscol',title:'Goals-Col',section:'default',parentId:'seed-tab-kangaroo2',images:[],textBoxes:[],createdAt:'2026-07-19T00:00:00.000Z',updatedAt:'2026-07-19T00:00:00.000Z',content:`<h1>Goals-Col</h1>
 <div class="cf-panel info" contenteditable="false"><span class="cf-panel-icon">ℹ️</span><div class="cf-panel-content" contenteditable="true">Panel trong tab Kangaroo2, chứa các Goal xử lý va chạm (Collision) giữa các đối tượng trong mô phỏng — chưa xác nhận chắc chắn, sẽ bổ sung khi nghiên cứu sâu component bên trong.</div></div>
 <p><em>Đây là 1 panel (nhóm lệnh con) trong tab Kangaroo2 của Grasshopper. Các lệnh cụ thể thuộc panel này sẽ được thêm dần vào đây dưới dạng trang con khi được nghiên cứu.</em></p>`},

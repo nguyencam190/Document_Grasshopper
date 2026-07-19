@@ -219,8 +219,11 @@ nhưng không dùng nó để sửa nữa). Quy trình lấy/ghi file qua API (r
      theo chuẩn ở `.claude/skills/nghien-cuu-grasshopper/references/phong-cach-minh-hoa.md`, không vẽ
      sơ đồ hộp-mũi tên chung chung. Cần tối thiểu 1 ví dụ đơn giản; thêm ví dụ thứ 2 nếu có tình huống
      thực tế đáng nêu riêng.
-   - H2 **"Ứng dụng"** — lĩnh vực áp dụng (Parametric Modeling, Architecture, Pattern Generation...),
-     nêu ví dụ thực tế nếu phù hợp.
+   - H2 **"Ứng dụng"** — lĩnh vực áp dụng, **ưu tiên hướng Parametric Design dùng để xây dựng pattern**
+     (hoa văn/hoạ tiết lặp lại có kiểm soát tham số — mặt đứng, lưới pattern, mảng module...) làm góc
+     nhìn chính khi component cho phép diễn giải theo hướng này; chỉ dùng góc nhìn khác (Architecture,
+     Structural, Analysis...) khi component không có cách nào gắn với pattern một cách tự nhiên/trung
+     thực (không gượng ép). Nêu ví dụ thực tế nếu phù hợp.
    - H2 **"Kết nối"** — 3 bảng riêng: "Có thể nhận dữ liệu từ" (Component | Data Type | Có thể nối),
      "Có thể xuất dữ liệu đến" (tương tự), "Không thể kết nối" (Component | Lý do).
    - H2 **"Workflow phổ biến"** — ít nhất 2 workflow thực tế, dạng chuỗi mũi tên (vd
@@ -232,11 +235,12 @@ nhưng không dùng nó để sửa nữa). Quy trình lấy/ghi file qua API (r
    - H2 **"Kiểu dữ liệu"** — liệt kê kiểu dữ liệu hỗ trợ (Point, Curve, Surface, Brep, Mesh, Vector,
      Plane, Number, Boolean, Text, List, Data Tree...); giải thích khác biệt nếu hỗ trợ nhiều kiểu.
    - Warning/Note panel — mục **"Lưu ý"**: lỗi thường gặp, giới hạn, mẹo dùng hiệu quả.
-   - H2 **"Ví dụ ứng dụng thực tế"** (nếu có ví dụ liên quan tới dự án Voronoi hoặc dự án khác đang
-     làm, nêu ở đây). **Mục này cũng PHẢI có hình minh họa riêng** (cùng chuẩn `.cf-img-block` +
-     publish qua asset thật, không chỉ có text) — minh họa đúng ví dụ ứng dụng cụ thể đang mô tả,
-     KHÔNG dùng lại y nguyên ảnh của mục "Minh họa" phía trên (2 ảnh phục vụ 2 mục đích khác nhau:
-     1 ảnh giải thích cách nối dây/component, 1 ảnh minh họa ngữ cảnh ứng dụng thực tế).
+   - H2 **"Ví dụ ứng dụng thực tế"** — **mặc định chọn 1 ví dụ dựng pattern parametric cụ thể** (khớp
+     hướng đã chọn ở mục "Ứng dụng" phía trên), nếu có ví dụ liên quan tới dự án Voronoi thì ưu tiên
+     nêu ở đây. **Mục này cũng PHẢI có hình minh họa riêng** (cùng chuẩn `.cf-img-block` + publish qua
+     asset thật, không chỉ có text) — minh họa đúng ví dụ ứng dụng cụ thể đang mô tả, KHÔNG dùng lại y
+     nguyên ảnh của mục "Minh họa" phía trên (2 ảnh phục vụ 2 mục đích khác nhau: 1 ảnh giải thích cách
+     nối dây/component, 1 ảnh minh họa ngữ cảnh ứng dụng thực tế/pattern kết quả).
 
    **Ngắn gọn vẫn áp dụng cho từng mục** (xem quy tắc ở mục Bối cảnh) — 11 mục không có nghĩa là dài,
    mỗi mục chỉ cần đủ ý, không lan man. Nếu 1 mục thực sự không có nội dung phù hợp (vd component quá

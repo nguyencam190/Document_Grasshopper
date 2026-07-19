@@ -1,0 +1,32 @@
+<svg width="640" height="380" viewBox="0 0 640 380" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, Arial, sans-serif">
+<rect x="0" y="0" width="640" height="380" fill="#FFFFFF" stroke="#B0B0B0"/>
+<polygon points="280.2,330.5 325.0,145.2 252.2,122.3 228.8,162.0 218.0,286.8 235.8,340.0 274.2,340.0 280.2,330.5" fill="#EDE6D6" stroke="#8a7a5a" stroke-width="1"/>
+<polygon points="640.0,224.0 640.0,40.0 558.9,40.0 457.8,153.6 486.6,260.8 640.0,224.0" fill="#E3DAC4" stroke="#8a7a5a" stroke-width="1"/>
+<polygon points="368.3,148.6 325.0,145.2 280.2,330.5 360.5,232.2 368.3,148.6" fill="#D9CCB0" stroke="#8a7a5a" stroke-width="1"/>
+<polygon points="111.3,217.3 218.0,286.8 228.8,162.0 141.9,158.3 116.8,180.8 111.3,217.3" fill="#F2ECDD" stroke="#8a7a5a" stroke-width="1"/>
+<polygon points="483.6,266.6 360.5,232.2 280.2,330.5 274.2,340.0 466.3,340.0 483.6,266.6" fill="#DCCFB5" stroke="#8a7a5a" stroke-width="1"/>
+<polygon points="116.8,180.8 141.9,158.3 125.0,103.9 0.0,47.3 0.0,84.7 116.8,180.8" fill="#E7DEC9" stroke="#8a7a5a" stroke-width="1"/>
+<polygon points="111.3,217.3 0.0,257.5 0.0,340.0 235.8,340.0 218.0,286.8 111.3,217.3" fill="#EDE6D6" stroke="#8a7a5a" stroke-width="1"/>
+<polygon points="381.1,142.7 457.8,153.6 558.9,40.0 375.8,40.0 381.1,142.7" fill="#E3DAC4" stroke="#8a7a5a" stroke-width="1"/>
+<polygon points="466.3,340.0 640.0,340.0 640.0,224.0 486.6,260.8 483.6,266.6 466.3,340.0" fill="#D9CCB0" stroke="#8a7a5a" stroke-width="1"/>
+<polygon points="483.6,266.6 486.6,260.8 457.8,153.6 381.1,142.7 368.3,148.6 360.5,232.2 483.6,266.6" fill="#F2ECDD" stroke="#8a7a5a" stroke-width="1"/>
+<polygon points="238.5,70.2 240.3,40.0 0.0,40.0 0.0,47.3 125.0,103.9 238.5,70.2" fill="#DCCFB5" stroke="#8a7a5a" stroke-width="1"/>
+<polygon points="381.1,142.7 375.8,40.0 240.3,40.0 238.5,70.2 252.2,122.3 325.0,145.2 368.3,148.6 381.1,142.7" fill="#E7DEC9" stroke="#8a7a5a" stroke-width="1"/>
+<polygon points="228.8,162.0 252.2,122.3 238.5,70.2 125.0,103.9 141.9,158.3 228.8,162.0" fill="#EDE6D6" stroke="#8a7a5a" stroke-width="1"/>
+<polygon points="111.3,217.3 116.8,180.8 0.0,84.7 0.0,257.5 111.3,217.3" fill="#E3DAC4" stroke="#8a7a5a" stroke-width="1"/>
+<circle cx="295.2" cy="205.1" r="3.5" fill="#c0392b"/>
+<circle cx="540.6" cy="181.3" r="3.5" fill="#c0392b"/>
+<circle cx="324.1" cy="212.0" r="3.5" fill="#c0392b"/>
+<circle cx="156.0" cy="193.0" r="3.5" fill="#c0392b"/>
+<circle cx="387.5" cy="263.8" r="3.5" fill="#c0392b"/>
+<circle cx="108.9" cy="140.5" r="3.5" fill="#c0392b"/>
+<circle cx="107.1" cy="268.0" r="3.5" fill="#c0392b"/>
+<circle cx="420.6" cy="74.6" r="3.5" fill="#c0392b"/>
+<circle cx="570.7" cy="307.1" r="3.5" fill="#c0392b"/>
+<circle cx="400.0" cy="219.1" r="3.5" fill="#c0392b"/>
+<circle cx="141.9" cy="67.8" r="3.5" fill="#c0392b"/>
+<circle cx="334.8" cy="79.0" r="3.5" fill="#c0392b"/>
+<circle cx="158.9" cy="125.0" r="3.5" fill="#c0392b"/>
+<circle cx="75.6" cy="180.9" r="3.5" fill="#c0392b"/><text x="12" y="24" font-family="Consolas, monospace" font-size="12" fill="#333">Top — pattern Voronoi hữu cơ từ điểm neo bất quy tắc</text>
+<text x="12" y="358" font-size="12" fill="#333">Point (Pt) tham chiếu 14 điểm neo đặt tay bất quy tắc trong Rhino → pattern Voronoi hữu cơ theo đúng ý đồ thiết kế</text>
+</svg>

@@ -1,0 +1,23 @@
+<svg width="640" height="380" viewBox="0 0 640 380" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, Arial, sans-serif">
+<rect x="0" y="0" width="640" height="380" fill="#FFFFFF" stroke="#B0B0B0"/>
+<text x="12" y="24" font-family="Consolas, monospace" font-size="12" fill="#555">Top — pattern lưới tam giác ghép từ nhiều module</text>
+<polygon points="80.0,140.0 140.0,140.0 110.0,192.0" fill="#9ED94A" opacity="0.7" stroke="#333" stroke-width="0.8"/>
+<polygon points="140.0,140.0 110.0,192.0 170.0,192.0" fill="#9ED94A" opacity="0.7" stroke="#333" stroke-width="0.8"/>
+<polygon points="140.0,140.0 170.0,192.0 200.0,140.0" fill="#9ED94A" opacity="0.7" stroke="#333" stroke-width="0.8"/>
+<polygon points="80.0,192.0 140.0,192.0 110.0,243.9" fill="#9ED94A" opacity="0.7" stroke="#333" stroke-width="0.8"/>
+<polygon points="140.0,192.0 110.0,243.9 170.0,243.9" fill="#9ED94A" opacity="0.7" stroke="#333" stroke-width="0.8"/>
+<polygon points="140.0,192.0 170.0,243.9 200.0,192.0" fill="#9ED94A" opacity="0.7" stroke="#333" stroke-width="0.8"/>
+<polygon points="206.0,140.0 266.0,140.0 236.0,192.0" fill="#6FA82A" opacity="0.7" stroke="#333" stroke-width="0.8"/>
+<polygon points="266.0,140.0 236.0,192.0 296.0,192.0" fill="#6FA82A" opacity="0.7" stroke="#333" stroke-width="0.8"/>
+<polygon points="266.0,140.0 296.0,192.0 326.0,140.0" fill="#6FA82A" opacity="0.7" stroke="#333" stroke-width="0.8"/>
+<polygon points="206.0,192.0 266.0,192.0 236.0,243.9" fill="#6FA82A" opacity="0.7" stroke="#333" stroke-width="0.8"/>
+<polygon points="266.0,192.0 236.0,243.9 296.0,243.9" fill="#6FA82A" opacity="0.7" stroke="#333" stroke-width="0.8"/>
+<polygon points="266.0,192.0 296.0,243.9 326.0,192.0" fill="#6FA82A" opacity="0.7" stroke="#333" stroke-width="0.8"/>
+<circle cx="200.0" cy="140.0" r="4" fill="#c0392b"/>
+<circle cx="206.0" cy="140.0" r="4" fill="#c0392b" opacity="0.5"/>
+<circle cx="200.0" cy="192.0" r="4" fill="#c0392b"/>
+<circle cx="206.0" cy="192.0" r="4" fill="#c0392b" opacity="0.5"/>
+<circle cx="200.0" cy="243.9" r="4" fill="#c0392b"/>
+<circle cx="206.0" cy="243.9" r="4" fill="#c0392b" opacity="0.5"/>
+<text x="12" y="358" font-size="12" fill="#555">Coincident nối các đỉnh chung giữa 2 module lưới tam giác → Solver relax thành pattern liền mạch, hết khe hở</text>
+</svg>
