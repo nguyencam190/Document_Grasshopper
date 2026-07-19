@@ -1,0 +1,90 @@
+<svg width="900" height="460" viewBox="0 0 900 460" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, Arial, sans-serif">
+<defs>
+  <linearGradient id="mstBody" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0%" stop-color="#FFA05A"/>
+    <stop offset="100%" stop-color="#E85D25"/>
+  </linearGradient>
+  <linearGradient id="ghBodyM" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0%" stop-color="#F0F0F0"/>
+    <stop offset="100%" stop-color="#D8D8D8"/>
+  </linearGradient>
+  <pattern id="dotgridM" width="18" height="18" patternUnits="userSpaceOnUse">
+    <circle cx="1" cy="1" r="1" fill="#E0E0DA"/>
+  </pattern>
+</defs>
+
+<rect x="0" y="0" width="520" height="460" fill="url(#dotgridM)"/>
+<rect x="0" y="0" width="520" height="460" fill="#F7F7F2" opacity="0.35"/>
+
+<!-- left side small params feeding into Maelstrom -->
+<g font-size="10" fill="#333">
+  <rect x="10" y="70" width="90" height="26" rx="4" fill="url(#ghBodyM)" stroke="#8C8C8C"/>
+  <text x="55" y="87" text-anchor="middle">Lines (G)</text>
+  <rect x="10" y="102" width="90" height="26" rx="4" fill="url(#ghBodyM)" stroke="#8C8C8C"/>
+  <text x="55" y="119" text-anchor="middle">Plane (P)</text>
+  <rect x="10" y="134" width="90" height="26" rx="4" fill="url(#ghBodyM)" stroke="#8C8C8C"/>
+  <text x="55" y="151" text-anchor="middle">R0=5</text>
+  <rect x="10" y="166" width="90" height="26" rx="4" fill="url(#ghBodyM)" stroke="#8C8C8C"/>
+  <text x="55" y="183" text-anchor="middle">R1=40</text>
+  <rect x="10" y="198" width="90" height="26" rx="4" fill="url(#ghBodyM)" stroke="#8C8C8C"/>
+  <text x="55" y="215" text-anchor="middle">A=90°</text>
+  <rect x="10" y="230" width="90" height="26" rx="4" fill="url(#ghBodyM)" stroke="#8C8C8C"/>
+  <text x="55" y="247" text-anchor="middle">V=False</text>
+  <rect x="10" y="262" width="90" height="26" rx="4" fill="url(#ghBodyM)" stroke="#8C8C8C"/>
+  <text x="55" y="279" text-anchor="middle">Q=False</text>
+</g>
+<g>
+  <rect x="100" y="76" width="9" height="14" rx="2" fill="#E8E8E8" stroke="#8C8C8C"/><circle cx="104" cy="83" r="2" fill="#4A4A4A"/>
+  <rect x="100" y="108" width="9" height="14" rx="2" fill="#E8E8E8" stroke="#8C8C8C"/><circle cx="104" cy="115" r="2" fill="#4A4A4A"/>
+  <rect x="100" y="140" width="9" height="14" rx="2" fill="#E8E8E8" stroke="#8C8C8C"/><circle cx="104" cy="147" r="2" fill="#4A4A4A"/>
+  <rect x="100" y="172" width="9" height="14" rx="2" fill="#E8E8E8" stroke="#8C8C8C"/><circle cx="104" cy="179" r="2" fill="#4A4A4A"/>
+  <rect x="100" y="204" width="9" height="14" rx="2" fill="#E8E8E8" stroke="#8C8C8C"/><circle cx="104" cy="211" r="2" fill="#4A4A4A"/>
+  <rect x="100" y="236" width="9" height="14" rx="2" fill="#E8E8E8" stroke="#8C8C8C"/><circle cx="104" cy="243" r="2" fill="#4A4A4A"/>
+  <rect x="100" y="268" width="9" height="14" rx="2" fill="#E8E8E8" stroke="#8C8C8C"/><circle cx="104" cy="275" r="2" fill="#4A4A4A"/>
+</g>
+
+<!-- Maelstrom box: x=220 y=60 w=150 h=230 (spans 60-290) -->
+<g>
+  <rect x="220" y="60" width="150" height="230" rx="6" fill="url(#mstBody)" stroke="#5c1f0a" stroke-width="1.6"/>
+  <text x="295" y="84" text-anchor="middle" font-size="14" font-weight="bold" fill="#3a1204">Maelstrom</text>
+  <!-- input nubs, matching left param centers exactly -->
+  <rect x="212" y="76" width="10" height="16" rx="3" fill="#E8E8E8" stroke="#5c1f0a"/><circle cx="217" cy="84" r="2.3" fill="#5c1f0a"/><text x="228" y="87" font-size="10" fill="#3a1204">G</text>
+  <rect x="212" y="108" width="10" height="16" rx="3" fill="#E8E8E8" stroke="#5c1f0a"/><circle cx="217" cy="116" r="2.3" fill="#5c1f0a"/><text x="228" y="119" font-size="10" fill="#3a1204">P</text>
+  <rect x="212" y="140" width="10" height="16" rx="3" fill="#E8E8E8" stroke="#5c1f0a"/><circle cx="217" cy="148" r="2.3" fill="#5c1f0a"/><text x="228" y="151" font-size="10" fill="#3a1204">R0</text>
+  <rect x="212" y="172" width="10" height="16" rx="3" fill="#E8E8E8" stroke="#5c1f0a"/><circle cx="217" cy="180" r="2.3" fill="#5c1f0a"/><text x="228" y="183" font-size="10" fill="#3a1204">R1</text>
+  <rect x="212" y="204" width="10" height="16" rx="3" fill="#E8E8E8" stroke="#5c1f0a"/><circle cx="217" cy="212" r="2.3" fill="#5c1f0a"/><text x="228" y="215" font-size="10" fill="#3a1204">A</text>
+  <rect x="212" y="236" width="10" height="16" rx="3" fill="#E8E8E8" stroke="#5c1f0a"/><circle cx="217" cy="244" r="2.3" fill="#5c1f0a"/><text x="228" y="247" font-size="10" fill="#3a1204">V</text>
+  <rect x="212" y="268" width="10" height="16" rx="3" fill="#E8E8E8" stroke="#5c1f0a"/><circle cx="217" cy="276" r="2.3" fill="#5c1f0a"/><text x="228" y="279" font-size="10" fill="#3a1204">Q</text>
+  <!-- output nub: box vertical middle = 60+115=175 -->
+  <rect x="368" y="167" width="10" height="16" rx="3" fill="#E8E8E8" stroke="#5c1f0a"/><circle cx="373" cy="175" r="2.3" fill="#5c1f0a"/>
+  <text x="358" y="171" text-anchor="end" font-size="11" fill="#3a1204">G</text>
+</g>
+
+<!-- wire to viewport -->
+<path d="M 378,175 C 400,175 400,175 430,175" stroke="#4A4A4A" stroke-width="1.4" fill="none" stroke-dasharray="3,3"/>
+
+<!-- Right side: Rhino-style viewport: straight radial lines -> spiral -->
+<rect x="520" y="0" width="380" height="460" fill="#FFFFFF" stroke="#B0B0B0"/>
+<g stroke="#D8D8D8" stroke-width="1">
+  <line x1="520" y1="400" x2="900" y2="400"/>
+  <line x1="520" y1="360" x2="900" y2="360"/>
+</g>
+<text x="530" y="24" font-family="Consolas, monospace" font-size="12" fill="#555">Top — trước / sau Maelstrom</text>
+
+<!-- before: straight radial lines (faded) -->
+<g stroke="#c0392b" stroke-width="1" opacity="0.35">
+  <line x1="620" y1="120" x2="620" y2="60"/>
+  <line x1="620" y1="120" x2="672" y2="86"/>
+  <line x1="620" y1="120" x2="568" y2="86"/>
+</g>
+
+<!-- after: same lines spiraled by Maelstrom -->
+<g stroke="#c0392b" stroke-width="1.6" fill="none">
+  <path d="M 780,230 C 780,190 810,180 830,195"/>
+  <path d="M 780,230 C 815,225 835,245 825,270"/>
+  <path d="M 780,230 C 745,235 730,260 745,285"/>
+</g>
+<circle cx="780" cy="230" r="3" fill="#c0392b"/>
+
+<text x="530" y="430" font-size="11" fill="#555">3 đường thẳng toả tâm bị Maelstrom bẻ cong thành xoắn ốc</text>
+</svg>

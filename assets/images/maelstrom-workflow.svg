@@ -1,0 +1,76 @@
+<svg width="900" height="260" viewBox="0 0 900 260" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, Arial, sans-serif">
+<defs>
+  <linearGradient id="mstBody2" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0%" stop-color="#FFA05A"/>
+    <stop offset="100%" stop-color="#E85D25"/>
+  </linearGradient>
+  <linearGradient id="ghBodyM2" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0%" stop-color="#F0F0F0"/>
+    <stop offset="100%" stop-color="#D8D8D8"/>
+  </linearGradient>
+  <pattern id="dotgridM2" width="18" height="18" patternUnits="userSpaceOnUse">
+    <circle cx="1" cy="1" r="1" fill="#E0E0DA"/>
+  </pattern>
+</defs>
+
+<rect x="0" y="0" width="900" height="260" fill="#FAFAF7"/>
+<rect x="0" y="0" width="900" height="260" fill="url(#dotgridM2)"/>
+
+<!-- Box 1: Polar Array -->
+<g>
+  <rect x="20" y="100" width="120" height="60" rx="6" fill="url(#ghBodyM2)" stroke="#8C8C8C" stroke-width="1.2"/>
+  <text x="80" y="126" text-anchor="middle" font-size="12" font-weight="600" fill="#222">Polar</text>
+  <text x="80" y="142" text-anchor="middle" font-size="12" font-weight="600" fill="#222">Array</text>
+  <rect x="132" y="122" width="10" height="16" rx="3" fill="#E8E8E8" stroke="#8C8C8C"/>
+  <circle cx="137" cy="130" r="2.5" fill="#4A4A4A"/>
+</g>
+<text x="80" y="176" text-anchor="middle" font-size="10" fill="#888">32 tia toả tâm</text>
+
+<!-- wire 1 -->
+<path d="M 142,130 C 170,130 170,130 198,130" stroke="#4A4A4A" stroke-width="1.5" fill="none"/>
+
+<!-- Box 2: Maelstrom, box x=200 y=90 w=140 h=110 (spans 90-200) -->
+<g>
+  <rect x="200" y="90" width="140" height="110" rx="6" fill="url(#mstBody2)" stroke="#5c1f0a" stroke-width="1.3"/>
+  <text x="270" y="112" text-anchor="middle" font-size="13" font-weight="bold" fill="#3a1204">Maelstrom</text>
+  <rect x="192" y="122" width="10" height="16" rx="3" fill="#E8E8E8" stroke="#5c1f0a"/><circle cx="197" cy="130" r="2.5" fill="#5c1f0a"/><text x="182" y="134" text-anchor="end" font-size="9" fill="#3a1204">G</text>
+  <rect x="192" y="146" width="10" height="16" rx="3" fill="#E8E8E8" stroke="#5c1f0a"/><circle cx="197" cy="154" r="2.5" fill="#5c1f0a"/><text x="182" y="158" text-anchor="end" font-size="9" fill="#3a1204">A</text>
+  <rect x="330" y="150" width="10" height="16" rx="3" fill="#E8E8E8" stroke="#5c1f0a"/><circle cx="335" cy="158" r="2.5" fill="#5c1f0a"/>
+</g>
+<text x="270" y="216" text-anchor="middle" font-size="10" fill="#888">A=90°, R0/R1</text>
+
+<!-- wire 2 -->
+<path d="M 340,158 C 365,158 365,158 392,158" stroke="#4A4A4A" stroke-width="1.5" fill="none"/>
+
+<!-- Box 3: Divide Curve -->
+<g>
+  <rect x="394" y="130" width="120" height="56" rx="6" fill="url(#ghBodyM2)" stroke="#8C8C8C" stroke-width="1"/>
+  <text x="454" y="152" text-anchor="middle" font-size="12" fill="#222">Divide</text>
+  <text x="454" y="168" text-anchor="middle" font-size="12" fill="#222">Curve</text>
+  <rect x="510" y="150" width="10" height="16" rx="3" fill="#E8E8E8" stroke="#8C8C8C"/>
+  <circle cx="515" cy="158" r="2.5" fill="#4A4A4A"/>
+</g>
+
+<!-- wire to viewport -->
+<path d="M 520,158 C 550,158 550,158 578,158" stroke="#4A4A4A" stroke-width="1.5" stroke-dasharray="3,3" fill="none"/>
+
+<!-- Mini Rhino viewport result: spiral of points -->
+<g>
+  <rect x="580" y="30" width="282" height="200" fill="#FFFFFF" stroke="#B0B0B0"/>
+  <text x="588" y="46" font-family="Consolas, monospace" font-size="10" fill="#555">Top</text>
+  <g fill="#c0392b">
+    <circle cx="721" cy="130" r="2.5"/>
+    <circle cx="735" cy="118" r="2.5"/>
+    <circle cx="752" cy="122" r="2.5"/>
+    <circle cx="760" cy="140" r="2.5"/>
+    <circle cx="748" cy="156" r="2.5"/>
+    <circle cx="728" cy="152" r="2.5"/>
+    <circle cx="700" cy="108" r="2.5"/>
+    <circle cx="680" cy="130" r="2.5"/>
+    <circle cx="770" cy="105" r="2.5"/>
+    <circle cx="790" cy="140" r="2.5"/>
+  </g>
+</g>
+
+<text x="20" y="245" font-size="12" fill="#555">Workflow phổ biến (case study Voronoi): Polar Array → Maelstrom → Divide Curve → điểm gieo xoắn ốc</text>
+</svg>

@@ -2986,12 +2986,12 @@ const STORE_KEY='projectdocs_v3';
 // Bump SEED_VERSION any time SEED_DOCS content changes (e.g. a new Grasshopper
 // command page is added) to re-sync all visitors automatically, even ones
 // with old data already saved locally.
-const SEED_VERSION=35;
+const SEED_VERSION=36;
 // Real image assets referenced by SEED_DOCS via data-cfimgid — every visitor's
 // browser needs these in its OWN IndexedDB (see init() below) so images both
 // (a) display correctly, and (b) get recognized by the app's own Optimized
 // Website export if the user runs Publish themselves later.
-const SEED_ASSETS={'tab-params':'svg','tab-maths':'svg','tab-sets':'svg','tab-vector':'svg','tab-curve':'svg','tab-surface':'svg','tab-mesh':'svg','tab-intersect':'svg','tab-transform':'svg','tab-display':'svg','tab-rhino':'svg','tab-kangaroo2':'svg','tab-wb':'svg','fitloft2':'svg','fitloft-example':'svg','extrude2':'svg','extrude-example':'svg','fitloft-workflow2':'svg','extrude-workflow2':'svg','series':'svg','series-workflow':'svg','series-example':'svg','point':'svg','point-workflow':'svg','point-example':'svg','coincident':'svg','coincident-workflow':'svg','coincident-example':'svg'};
+const SEED_ASSETS={'tab-params':'svg','tab-maths':'svg','tab-sets':'svg','tab-vector':'svg','tab-curve':'svg','tab-surface':'svg','tab-mesh':'svg','tab-intersect':'svg','tab-transform':'svg','tab-display':'svg','tab-rhino':'svg','tab-kangaroo2':'svg','tab-wb':'svg','fitloft2':'svg','fitloft-example':'svg','extrude2':'svg','extrude-example':'svg','fitloft-workflow2':'svg','extrude-workflow2':'svg','series':'svg','series-workflow':'svg','series-example':'svg','point':'svg','point-workflow':'svg','point-example':'svg','coincident':'svg','coincident-workflow':'svg','coincident-example':'svg','maelstrom':'svg','maelstrom-workflow':'svg','maelstrom-example':'svg'};
 // Default project logo baked into the seed (path in the repo, not an IDB-blob id like
 // SEED_ASSETS — headerLogo/projectLogo store a data: URL directly in state, see init()).
 const SEED_HEADER_LOGO='assets/images/logo-grasshopper.png';
@@ -3532,7 +3532,72 @@ const SEED_DOCS=[
 <p><em>Đây là 1 panel (nhóm lệnh con) trong tab Transform của Grasshopper. Các lệnh cụ thể thuộc panel này sẽ được thêm dần vào đây dưới dạng trang con khi được nghiên cứu.</em></p>`},
   {id:'seed-panel-transform-morph',title:'Morph',section:'default',parentId:'seed-tab-transform',images:[],textBoxes:[],createdAt:'2026-07-19T00:00:00.000Z',updatedAt:'2026-07-19T00:00:00.000Z',content:`<h1>Morph</h1>
 <div class="cf-panel info" contenteditable="false"><span class="cf-panel-icon">ℹ️</span><div class="cf-panel-content" contenteditable="true">Panel trong tab Transform, chứa component biến dạng hình học theo khuôn/hộp tham chiếu (Box Morph, Surface Morph, Blend...).</div></div>
-<p><em>Đây là 1 panel (nhóm lệnh con) trong tab Transform của Grasshopper. Các lệnh cụ thể thuộc panel này sẽ được thêm dần vào đây dưới dạng trang con khi được nghiên cứu.</em></p>`},
+<h2>Danh sách component</h2>
+<div class="tbl-frame"><div class="tbl-outer"><table style="border-collapse: collapse; font-size: 14px; table-layout: fixed; width: 100%;" data-colwidths="36px,8.1%,14.9%,77%"><thead><tr><th style="text-align: center; padding: 8px 6px; border-bottom: 2px solid var(--border); position: relative; min-width: 40px;" contenteditable="true">Icon</th><th style="text-align: left; padding: 8px 10px; border-bottom: 2px solid var(--border); position: relative; min-width: 40px;" contenteditable="true">Tên</th><th style="text-align: left; padding: 8px 10px; border-bottom: 2px solid var(--border); position: relative; min-width: 40px;" contenteditable="true">Chức năng</th></tr></thead><tbody><tr><td style="text-align: center; padding: 6px; border-bottom: 1px solid var(--border); position: relative; min-width: 40px;" contenteditable="true"><span style="display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;background:#242424;border-radius:7px"><i class="ti ti-spiral" style="color:#e8e8e8;font-size:17px"></i></span></td><td style="padding: 6px 10px; border-bottom: 1px solid var(--border); position: relative; min-width: 40px; vertical-align: middle;" contenteditable="true"><strong>Maelstrom</strong></td><td style="padding: 6px 10px; border-bottom: 1px solid var(--border); position: relative; min-width: 40px; vertical-align: middle;" contenteditable="true">Bẻ cong hình học thành xoáy nước (whirlpool) quanh 1 tâm, giữa 2 bán kính.</td></tr></tbody></table></div></div>`},
+  {id:'seed-cmd-maelstrom',locked:true,title:'Maelstrom',section:'default',parentId:'seed-panel-transform-morph',images:[],textBoxes:[],createdAt:'2026-07-19T00:00:00.000Z',updatedAt:'2026-07-19T00:00:00.000Z',content:`<h1>Maelstrom</h1>
+<div class="cf-panel info" contenteditable="false"><span class="cf-panel-icon">ℹ️</span><div class="cf-panel-content" contenteditable="true">🟡 Trung bình — Bẻ cong hình học thành xoáy nước (whirlpool) quanh 1 tâm, giữa 2 bán kính.</div></div>
+<h2>Chức năng</h2>
+<p>Maelstrom biến dạng hình học theo kiểu "xoáy nước": phần nằm trong bán kính First (R0) giữ nguyên, phần nằm ngoài bán kính Second (R1) xoay đủ góc Angle, khoảng giữa 2 bán kính chuyển tiếp mượt — tạo hiệu ứng xoắn ốc.</p>
+<h2>Khi nào sử dụng</h2>
+<p>Dùng khi cần bẻ cong lưới điểm/đường toả tròn thành hình xoắn ốc (spiral), ví dụ dựng pattern hoa hướng dương (phyllotaxis), Voronoi xoắn. Không dùng nếu chỉ cần xoay đều toàn bộ hình học quanh 1 trục — trường hợp đó dùng <strong>Rotate</strong> thay vì Maelstrom (Rotate không có 2 bán kính chuyển tiếp).</p>
+<h2>Input/Output</h2>
+<div class="tbl-frame"><div class="tbl-outer"><table style="border-collapse:collapse;font-size:14px;table-layout:fixed;width:100%" data-colwidths="36px,20.02%,20.02%,59.959%">
+<thead><tr><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Tên</th><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Kiểu dữ liệu</th><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Mô tả</th></tr></thead>
+<tbody>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>Base geometry (G)</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Geometry</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Hình học gốc cần bẻ cong (Point/Curve/Surface/Brep/Mesh).</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>Plane (P)</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Plane</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Mặt phẳng chứa vòng tròn xoáy — gốc mặt phẳng là tâm xoáy.</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>First (R0)</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Number</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Bán kính trong — vùng bên trong giữ nguyên, không xoay.</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>Second (R1)</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Number</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Bán kính ngoài — vùng ngoài xoay đủ góc Angle. Phải &gt; First.</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>Angle (A)</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Number</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Góc xoắn, mặc định tính bằng RADIAN (chuột phải đổi Degrees).</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>Preserve (V)</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Boolean</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">True: giữ nguyên số điểm điều khiển. False: tự thêm điểm để biến dạng mượt hơn.</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>Quick (Q)</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Boolean</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">True: tính nhanh (kém chính xác hơn). False: tính chính xác hơn (chậm hơn).</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>Geometry (G)</strong> — output</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Geometry</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Hình học đã bị bẻ cong, cùng kiểu với input G.</td></tr>
+</tbody></table></div></div>
+<h2>Thuộc tính</h2>
+<p>Right-click trên input <strong>Angle (A)</strong> có tuỳ chọn đổi đơn vị <strong>Radians ↔ Degrees</strong> (mặc định Radians). Input Preserve (V) và Quick (Q) là Boolean Toggle. Không có Options/Modes nào khác.</p>
+<h2>Cách dùng</h2>
+<ol>
+<li>Chuẩn bị hình học gốc (thường là các đường/điểm toả tâm) nối vào <strong>G</strong>.</li>
+<li>Nối 1 Plane (thường XY tại gốc) vào <strong>P</strong> — xác định tâm xoáy.</li>
+<li>Nối Number Slider vào <strong>R0</strong> (bán kính trong) và <strong>R1</strong> (bán kính ngoài, phải lớn hơn R0).</li>
+<li>Nối Number Slider vào <strong>A</strong> — right-click đổi sang Degrees cho dễ chỉnh (~50–120° là khoảng thường dùng).</li>
+<li>Bật Preview để xem <strong>G</strong> output đã xoắn.</li>
+</ol>
+<div class="cf-img-block" data-cfimgid="maelstrom" data-cfimgtype="image" data-align="center" data-name="maelstrom.svg"><div class="cf-img-wrap"><div class="cf-img-inner" style="width:100%;max-width:640px"><img style="width:100%;height:auto;display:block" alt="G/P/R0/R1/A/V/Q nối vào Maelstrom, xuất ra G; bên phải 3 đường thẳng toả tâm bị bẻ cong thành xoắn ốc trong viewport Top"><div class="cf-img-resize-h left"></div><div class="cf-img-resize-h right"></div></div></div><div class="cf-img-caption"></div></div>
+<h2>Ứng dụng</h2>
+<p>Pattern Generation, Parametric Design — nền tảng dựng pattern hoa hướng dương/phyllotaxis, Voronoi xoắn ốc (xem case study Voronoi Pattern của dự án này: Maelstrom bẻ cong lưới điểm toả tâm trước khi lấy điểm gieo cho Voronoi).</p>
+<h2>Kết nối</h2>
+<p><strong>Nhận dữ liệu từ:</strong></p>
+<table style="width:100%;border-collapse:collapse;font-size:14px">
+<thead><tr><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Component</th><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Data Type</th><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Có thể nối</th></tr></thead>
+<tbody>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Line SDL, Polar Array, Divide Curve</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Curve / Point</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Có — vào G</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)">XY Plane, Construct Plane</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Plane</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Có — vào P</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Number Slider</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Number</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Có — vào R0/R1/A</td></tr>
+</tbody></table>
+<p><strong>Xuất dữ liệu đến:</strong></p>
+<table style="width:100%;border-collapse:collapse;font-size:14px">
+<thead><tr><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Component</th><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Data Type</th><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Có thể nối</th></tr></thead>
+<tbody>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Divide Curve, Voronoi, Pipe</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Geometry</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Có — nhận thẳng output G (cùng kiểu hình học gốc)</td></tr>
+</tbody></table>
+<p><strong>Không thể kết nối:</strong></p>
+<table style="width:100%;border-collapse:collapse;font-size:14px">
+<thead><tr><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Component</th><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Lý do</th></tr></thead>
+<tbody>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Component yêu cầu đúng 1 kiểu hình học cụ thể khác với G đưa vào</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Output G giữ NGUYÊN kiểu dữ liệu của input G — nếu đưa Curve vào thì ra Curve, không tự đổi sang Mesh/Surface.</td></tr>
+</tbody></table>
+<h2>Workflow phổ biến</h2>
+<p>Line SDL → Polar Array → Maelstrom → Divide Curve → Voronoi (case study Voronoi Pattern)</p>
+<p>Curve → Maelstrom (xoắn theo Plane) → Pipe → hình xoắn ốc 3D</p>
+<div class="cf-img-block" data-cfimgid="maelstrom-workflow" data-cfimgtype="image" data-align="center" data-name="maelstrom-workflow.svg"><div class="cf-img-wrap"><div class="cf-img-inner" style="width:100%;max-width:640px"><img style="width:100%;height:auto;display:block" alt="Chuỗi component workflow phổ biến: Polar Array nối vào Maelstrom rồi Divide Curve, xuất ra các điểm gieo xếp theo hình xoắn ốc trong viewport Top"><div class="cf-img-resize-h left"></div><div class="cf-img-resize-h right"></div></div></div><div class="cf-img-caption"></div></div>
+<h2>Kiểu dữ liệu</h2>
+<p>Input: Geometry (bất kỳ kiểu), Plane, Number, Boolean. Output: Geometry — cùng kiểu với input G.</p>
+<hr>
+<div class="cf-panel warning" contenteditable="false"><span class="cf-panel-icon">⚠️</span><div class="cf-panel-content" contenteditable="true">Angle (A) mặc định đơn vị <strong>RADIAN</strong>, không phải Degrees — nhập số độ (vd 90) sẽ ra góc xoắn cực lớn không như ý. Chuột phải input A → chọn <strong>Degrees</strong> trước khi nhập số độ quen thuộc.</div></div>
+<h2>Ví dụ ứng dụng thực tế</h2>
+<p>Case study Voronoi Pattern (hoa hướng dương) của dự án này: Maelstrom bẻ cong 32 tia toả tâm (từ Polar Array) thành lưới xoắn ốc, sau đó Divide Curve lấy điểm làm gốc cho Voronoi — tạo pattern giống cách sắp xếp hạt hoa hướng dương tự nhiên (phyllotaxis).</p>
+<div class="cf-img-block" data-cfimgid="maelstrom-example" data-cfimgtype="image" data-align="center" data-name="maelstrom-example.svg"><div class="cf-img-wrap"><div class="cf-img-inner" style="width:100%;max-width:640px"><img style="width:100%;height:auto;display:block" alt="Pattern điểm xoắn ốc kiểu hoa hướng dương (phyllotaxis) tạo ra nhờ Maelstrom bẻ cong lưới điểm toả tâm"><div class="cf-img-resize-h left"></div><div class="cf-img-resize-h right"></div></div></div><div class="cf-img-caption"></div></div>`},
   {id:'seed-panel-transform-util',title:'Util',section:'default',parentId:'seed-tab-transform',images:[],textBoxes:[],createdAt:'2026-07-19T00:00:00.000Z',updatedAt:'2026-07-19T00:00:00.000Z',content:`<h1>Util</h1>
 <div class="cf-panel info" contenteditable="false"><span class="cf-panel-icon">ℹ️</span><div class="cf-panel-content" contenteditable="true">Panel trong tab Transform, nhóm các công cụ tiện ích khác cho biến đổi hình học.</div></div>
 <p><em>Đây là 1 panel (nhóm lệnh con) trong tab Transform của Grasshopper. Các lệnh cụ thể thuộc panel này sẽ được thêm dần vào đây dưới dạng trang con khi được nghiên cứu.</em></p>`},
