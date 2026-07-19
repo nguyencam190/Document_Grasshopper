@@ -74,6 +74,14 @@ nhưng không dùng nó để sửa nữa). Quy trình lấy/ghi file qua API (r
 
 **Quy trình chuẩn khi user tìm hiểu 1 lệnh Grasshopper mới (vd "Deconstruct Brep"):**
 
+> ⚠️ **Khi user gửi kèm 1 hình ảnh để yêu cầu nghiên cứu — PHẢI xác minh ảnh đó thật sự là canvas/ribbon
+> Grasshopper trước khi bắt đầu bất cứ bước nào khác.** Kiểm tra các dấu hiệu nhận biết thật (icon
+> component dạng hộp bo góc xám/đen có núm input-output, dây nối cong, tên tab ribbon quen thuộc như
+> Params/Maths/Curve..., giao diện Rhino/Grasshopper) — không mặc định ảnh nào cũng là Grasshopper chỉ
+> vì user đang hỏi trong ngữ cảnh dự án này. Nếu ảnh **không phải** Grasshopper (phần mềm khác, ảnh
+> không liên quan, ảnh mờ không nhận diện được...), DỪNG LẠI và báo rõ cho user thay vì suy đoán/nghiên
+> cứu đại một lệnh nào đó. Chỉ tiếp tục nghiên cứu khi đã xác nhận chắc chắn ảnh là Grasshopper thật.
+
 > ⚠️ **BƯỚC 0 — BẮT BUỘC kiểm tra trùng trước khi làm bất cứ gì khác**: lấy `Grasshopper.html` hiện
 > tại từ GitHub (theo quy trình API trên), tìm trong biến `SEED_DOCS` xem component/lệnh này **đã có
 > trang riêng chưa** (so khớp theo tên lệnh, kể cả tên gần giống/viết tắt/khác hoa-thường). Nếu đã có
