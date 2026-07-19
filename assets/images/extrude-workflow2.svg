@@ -21,7 +21,7 @@
 </g>
 
 <!-- wire 1 -->
-<path d="M 156,128 C 190,128 190,128 224,128" stroke="#4A4A4A" stroke-width="1.5" fill="none"/>
+<path d="M 156,128 C 190,128 190,112 223,112" stroke="#4A4A4A" stroke-width="1.5" fill="none"/>
 
 <!-- Box 2: Extrude -->
 <g>
