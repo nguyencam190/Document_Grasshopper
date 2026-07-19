@@ -118,8 +118,14 @@ nhưng không dùng nó để sửa nữa). Quy trình lấy/ghi file qua API (r
    | Kangaroo2               | `seed-tab-kangaroo2`    |
 
    Ví dụ: lệnh **Loft** thuộc tab Surface trong Grasshopper thật → `parentId:'seed-tab-surface'`.
-   Nếu không chắc lệnh thuộc tab nào, tra đúng vị trí tab của nó trong ribbon Grasshopper thật (không
-   suy đoán) trước khi gán `parentId`. Xem cấu trúc doc ở [[gh-docs-app-workflow]].
+
+   **Phân loại phải khớp 100% với Grasshopper thật, không được áng chừng/đoán đại.** Trước khi gán
+   `parentId`, xác nhận đúng tab mà lệnh nằm trong ribbon Grasshopper thật (ưu tiên tra theo đúng thứ
+   tự nguồn tham khảo ở đầu CLAUDE.md/skill `nghien-cuu-grasshopper`: tài liệu chính thức Rhino/GH
+   trước, rồi AAD, rồi tài liệu Plugin nếu lệnh thuộc Plugin như Kangaroo2/Weaverbird). Nếu tra không
+   ra hoặc không chắc chắn lệnh thuộc tab nào, PHẢI dừng lại hỏi user thay vì tự đoán và gán bừa —
+   gán sai tab còn tệ hơn không phân loại, vì sẽ làm sai cấu trúc doc lâu dài. Xem cấu trúc doc ở
+   [[gh-docs-app-workflow]].
 3. Viết nội dung vào canvas theo cấu trúc: H1 tên lệnh → Info panel tóm tắt → H2 "Chức năng" →
    H2 "Input/Output" (bảng) → H2 "Cách dùng" (danh sách số) → H2 "Minh họa" (ảnh SVG tự vẽ, vì
    không có ảnh chụp component thật — **phải mô phỏng đúng diện mạo thật của Grasshopper canvas/Rhino
