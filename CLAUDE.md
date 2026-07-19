@@ -177,17 +177,43 @@ nhưng không dùng nó để sửa nữa). Quy trình lấy/ghi file qua API (r
      `.tbl-col-resize-handle`, đọc lại `doc.content` sau khi kéo) — **KHÔNG tự viết `<colgroup>` tay**,
      vì app tự chèn thêm 1 cột "#" ẩn (class `tbl-row-num`) làm lệch toàn bộ phép tính cột nếu viết
      colgroup thủ công, từng gây vỡ layout thật.
-4. Viết nội dung vào canvas theo cấu trúc: H1 tên lệnh → Info panel tóm tắt → H2 "Chức năng" →
-   H2 "Input/Output" (bảng) → H2 "Cách dùng" (danh sách số) → H2 "Minh họa" (ảnh SVG tự vẽ, vì
-   không có ảnh chụp component thật — **phải mô phỏng đúng diện mạo thật của Grasshopper canvas/Rhino
-   viewport** theo chuẩn ở `.claude/skills/nghien-cuu-grasshopper/references/phong-cach-minh-hoa.md`,
-   không vẽ sơ đồ hộp-mũi tên chung chung) → Warning/Note panel lưu ý → H2 "Ví dụ ứng dụng thực tế"
-   (nếu có ví dụ liên quan tới dự án Voronoi hoặc dự án khác đang làm, nêu ở đây). **Mục "Ví dụ ứng
-   dụng thực tế" cũng PHẢI có hình minh họa riêng** (cùng chuẩn `.cf-img-block` + publish qua asset
-   thật như mục "Minh họa" ở trên, không chỉ có text) — minh họa cho đúng ví dụ ứng dụng cụ thể đang
-   mô tả (vd cảnh dựng vỏ kiến trúc từ mặt cắt), không dùng lại y nguyên ảnh của mục "Minh họa" phía
-   trên (2 ảnh phục vụ 2 mục đích khác nhau: 1 ảnh giải thích cách nối dây/component, 1 ảnh minh họa
-   ngữ cảnh ứng dụng thực tế).
+4. **Viết trang doc theo ĐỦ 11 mục của skill `nghien-cuu-grasshopper`** (không chỉ bản rút gọn như
+   trước) — trang doc và câu trả lời chat giờ dùng CHUNG 1 chuẩn nội dung, chỉ khác định dạng hiển thị
+   (trang doc dùng H1/H2/bảng HTML, chat dùng markdown). Cấu trúc canvas theo đúng thứ tự sau:
+   - H1 tên lệnh
+   - Info panel tóm tắt (icon ℹ️ + mức độ 🟢/🟡/🔴 + 1 câu tóm tắt chức năng)
+   - H2 **"Chức năng"** — 1-2 câu, đúng bản chất, không chỉ mô tả bề mặt.
+   - H2 **"Khi nào sử dụng"** — khi nào nên dùng; khi nào KHÔNG nên dùng (nếu có).
+   - H2 **"Input/Output"** — bảng Input/Output như cũ, giữ cột Tên | Kiểu dữ liệu | Mô tả.
+   - H2 **"Thuộc tính"** — toàn bộ thuộc tính THỰC SỰ có (right-click menu, Options, Modes, Preview,
+     Flatten/Graft/Simplify/Reverse, Internalize Data...). Ghi rõ "không có" nếu component không có
+     thuộc tính đặc biệt — không được bỏ qua mục này.
+   - H2 **"Cách dùng"** — hướng dẫn từng bước (danh sách số), giữ nguyên như trước (không phải mục
+     gốc của skill nhưng hữu ích cho người mới, vẫn giữ lại).
+   - H2 **"Ứng dụng"** — lĩnh vực áp dụng (Parametric Modeling, Architecture, Pattern Generation...),
+     nêu ví dụ thực tế nếu phù hợp.
+   - H2 **"Kết nối"** — 3 bảng riêng: "Có thể nhận dữ liệu từ" (Component | Data Type | Có thể nối),
+     "Có thể xuất dữ liệu đến" (tương tự), "Không thể kết nối" (Component | Lý do).
+   - H2 **"Workflow phổ biến"** — ít nhất 2 workflow thực tế, dạng chuỗi mũi tên (vd
+     `Circle → Divide Curve → Points → Move → Polyline`), workflow phổ biến nhất nêu trước.
+   - H2 **"Kiểu dữ liệu"** — liệt kê kiểu dữ liệu hỗ trợ (Point, Curve, Surface, Brep, Mesh, Vector,
+     Plane, Number, Boolean, Text, List, Data Tree...); giải thích khác biệt nếu hỗ trợ nhiều kiểu.
+   - H2 **"Minh họa"** — ảnh SVG tự vẽ (không có ảnh chụp component thật) — **phải mô phỏng đúng diện
+     mạo thật của Grasshopper canvas/Rhino viewport** theo chuẩn ở
+     `.claude/skills/nghien-cuu-grasshopper/references/phong-cach-minh-hoa.md`, không vẽ sơ đồ
+     hộp-mũi tên chung chung. Cần tối thiểu 1 ví dụ đơn giản; thêm ví dụ thứ 2 nếu có tình huống thực
+     tế đáng nêu riêng.
+   - Warning/Note panel — mục **"Lưu ý"**: lỗi thường gặp, giới hạn, mẹo dùng hiệu quả.
+   - H2 **"Ví dụ ứng dụng thực tế"** (nếu có ví dụ liên quan tới dự án Voronoi hoặc dự án khác đang
+     làm, nêu ở đây). **Mục này cũng PHẢI có hình minh họa riêng** (cùng chuẩn `.cf-img-block` +
+     publish qua asset thật, không chỉ có text) — minh họa đúng ví dụ ứng dụng cụ thể đang mô tả,
+     KHÔNG dùng lại y nguyên ảnh của mục "Minh họa" phía trên (2 ảnh phục vụ 2 mục đích khác nhau:
+     1 ảnh giải thích cách nối dây/component, 1 ảnh minh họa ngữ cảnh ứng dụng thực tế).
+
+   **Ngắn gọn vẫn áp dụng cho từng mục** (xem quy tắc ở mục Bối cảnh) — 11 mục không có nghĩa là dài,
+   mỗi mục chỉ cần đủ ý, không lan man. Nếu 1 mục thực sự không có nội dung phù hợp (vd component quá
+   đơn giản không có workflow nào khác ngoài 1 cách dùng), vẫn giữ H2 và ghi ngắn gọn lý do thay vì
+   bỏ hẳn mục đó — người đọc cần thấy đủ 11 mục nhất quán giữa các trang.
 5. Bump `SEED_VERSION` lên 1 (để mọi trình duyệt tự đồng bộ lại, không cần user xoá cache/localStorage).
 6. **Luôn publish kèm ảnh minh họa, tạo bằng CHÍNH pipeline thật của app** (yêu cầu rõ ràng của user —
    "làm đúng" như nút Publish, không tự chế) — quy trình đầy đủ (đã test thành công với "Voronoi"):
