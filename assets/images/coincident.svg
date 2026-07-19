@@ -1,0 +1,92 @@
+<svg width="900" height="440" viewBox="0 0 900 440" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, Arial, sans-serif">
+<defs>
+  <linearGradient id="k2Body" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0%" stop-color="#9ED94A"/>
+    <stop offset="100%" stop-color="#6FA82A"/>
+  </linearGradient>
+  <linearGradient id="ghBodyP" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0%" stop-color="#F0F0F0"/>
+    <stop offset="100%" stop-color="#D8D8D8"/>
+  </linearGradient>
+  <pattern id="dotgridK" width="18" height="18" patternUnits="userSpaceOnUse">
+    <circle cx="1" cy="1" r="1" fill="#E0E0DA"/>
+  </pattern>
+</defs>
+
+<rect x="0" y="0" width="520" height="440" fill="url(#dotgridK)"/>
+<rect x="0" y="0" width="520" height="440" fill="#F7F7F2" opacity="0.35"/>
+
+<!-- Points param (2 points to merge) -->
+<g>
+  <rect x="20" y="90" width="120" height="46" rx="6" fill="url(#ghBodyP)" stroke="#8C8C8C"/>
+  <text x="80" y="118" text-anchor="middle" font-size="12" fill="#222">Points (2)</text>
+  <rect x="136" y="105" width="10" height="16" rx="3" fill="#E8E8E8" stroke="#8C8C8C"/>
+  <circle cx="141" cy="113" r="2.3" fill="#4A4A4A"/>
+</g>
+
+<!-- Strength slider -->
+<g>
+  <rect x="20" y="160" width="150" height="30" rx="5" fill="#F0F0F0" stroke="#8C8C8C"/>
+  <rect x="28" y="170" width="60" height="10" rx="3" fill="#E4E4E4" stroke="#B0B0B0"/>
+  <circle cx="70" cy="175" r="5" fill="#8C8C8C"/>
+  <text x="126" y="179" text-anchor="start" font-size="10" fill="#333">S=1000</text>
+  <rect x="176" y="170" width="10" height="14" rx="3" fill="#E8E8E8" stroke="#8C8C8C"/>
+  <circle cx="181" cy="177" r="2.3" fill="#4A4A4A"/>
+</g>
+
+<!-- wires into Coincident -->
+<path d="M 141,113 C 180,113 180,140 227,140" stroke="#4A4A4A" stroke-width="1.4" fill="none"/>
+<path d="M 186,177 C 205,177 205,176 227,176" stroke="#4A4A4A" stroke-width="1.4" fill="none"/>
+
+<!-- Coincident goal box: x=230 y=110 w=150 h=100 (spans 110-210) -->
+<g>
+  <rect x="230" y="110" width="150" height="100" rx="6" fill="url(#k2Body)" stroke="#1f3d0a" stroke-width="1.6"/>
+  <text x="305" y="132" text-anchor="middle" font-size="13" font-weight="bold" fill="#0d1f04">Coincident</text>
+  <!-- input nubs -->
+  <rect x="222" y="132" width="10" height="16" rx="3" fill="#E8E8E8" stroke="#1f3d0a"/><circle cx="227" cy="140" r="2.3" fill="#1f3d0a"/>
+  <text x="238" y="144" font-size="10" fill="#0d1f04">Points</text>
+  <rect x="222" y="168" width="10" height="16" rx="3" fill="#E8E8E8" stroke="#1f3d0a"/><circle cx="227" cy="176" r="2.3" fill="#1f3d0a"/>
+  <text x="238" y="180" font-size="10" fill="#0d1f04">Strength</text>
+  <!-- output nub -->
+  <rect x="378" y="152" width="10" height="16" rx="3" fill="#E8E8E8" stroke="#1f3d0a"/><circle cx="383" cy="160" r="2.3" fill="#1f3d0a"/>
+  <text x="368" y="156" text-anchor="end" font-size="11" fill="#0d1f04">G2</text>
+</g>
+
+<!-- dashed wire (abstract Goal data, not geometry) into Solver -->
+<path d="M 388,160 C 410,160 410,160 430,160" stroke="#4A4A4A" stroke-width="1.4" fill="none" stroke-dasharray="3,3"/>
+
+<!-- Solver box -->
+<g>
+  <rect x="432" y="130" width="80" height="60" rx="6" fill="url(#ghBodyP)" stroke="#8C8C8C" stroke-width="1.2"/>
+  <text x="472" y="164" text-anchor="middle" font-size="12" fill="#222">Solver</text>
+</g>
+
+<text x="285" y="240" text-anchor="middle" font-size="11" fill="#555">Coincident chỉ tạo "mục tiêu" — phải nối vào Solver mới thực sự chạy mô phỏng</text>
+
+<!-- Right side: Rhino-style viewport showing 2 points merging into 1 -->
+<rect x="520" y="0" width="380" height="440" fill="#FFFFFF" stroke="#B0B0B0"/>
+<g stroke="#D8D8D8" stroke-width="1">
+  <line x1="520" y1="380" x2="900" y2="380"/>
+  <line x1="520" y1="345" x2="900" y2="345"/>
+  <line x1="520" y1="315" x2="900" y2="315"/>
+</g>
+<text x="530" y="24" font-family="Consolas, monospace" font-size="12" fill="#555">Perspective — trước / sau Solver</text>
+
+<g fill="#c0392b" opacity="0.5">
+  <circle cx="650" cy="150" r="4"/>
+  <circle cx="690" cy="180" r="4"/>
+</g>
+<text x="656" y="145" font-size="10" fill="#c0392b" opacity="0.6">trước</text>
+
+<path d="M 660,165 C 700,150 740,150 780,165" stroke="#888" stroke-width="1" fill="none" stroke-dasharray="2,2" marker-end="url(#arrowK)"/>
+<defs>
+  <marker id="arrowK" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+    <path d="M0,0 L6,3 L0,6 Z" fill="#888"/>
+  </marker>
+</defs>
+
+<circle cx="800" cy="200" r="5" fill="#c0392b"/>
+<text x="770" y="220" font-size="10" fill="#c0392b">sau (2→1)</text>
+
+<text x="530" y="410" font-size="11" fill="#555">2 điểm ban đầu tách rời được Coincident kéo về trùng 1 vị trí sau khi chạy Solver</text>
+</svg>

@@ -2986,12 +2986,12 @@ const STORE_KEY='projectdocs_v3';
 // Bump SEED_VERSION any time SEED_DOCS content changes (e.g. a new Grasshopper
 // command page is added) to re-sync all visitors automatically, even ones
 // with old data already saved locally.
-const SEED_VERSION=34;
+const SEED_VERSION=35;
 // Real image assets referenced by SEED_DOCS via data-cfimgid — every visitor's
 // browser needs these in its OWN IndexedDB (see init() below) so images both
 // (a) display correctly, and (b) get recognized by the app's own Optimized
 // Website export if the user runs Publish themselves later.
-const SEED_ASSETS={'tab-params':'svg','tab-maths':'svg','tab-sets':'svg','tab-vector':'svg','tab-curve':'svg','tab-surface':'svg','tab-mesh':'svg','tab-intersect':'svg','tab-transform':'svg','tab-display':'svg','tab-rhino':'svg','tab-kangaroo2':'svg','tab-wb':'svg','fitloft2':'svg','fitloft-example':'svg','extrude2':'svg','extrude-example':'svg','fitloft-workflow2':'svg','extrude-workflow2':'svg','series':'svg','series-workflow':'svg','series-example':'svg','point':'svg','point-workflow':'svg','point-example':'svg'};
+const SEED_ASSETS={'tab-params':'svg','tab-maths':'svg','tab-sets':'svg','tab-vector':'svg','tab-curve':'svg','tab-surface':'svg','tab-mesh':'svg','tab-intersect':'svg','tab-transform':'svg','tab-display':'svg','tab-rhino':'svg','tab-kangaroo2':'svg','tab-wb':'svg','fitloft2':'svg','fitloft-example':'svg','extrude2':'svg','extrude-example':'svg','fitloft-workflow2':'svg','extrude-workflow2':'svg','series':'svg','series-workflow':'svg','series-example':'svg','point':'svg','point-workflow':'svg','point-example':'svg','coincident':'svg','coincident-workflow':'svg','coincident-example':'svg'};
 // Default project logo baked into the seed (path in the repo, not an IDB-blob id like
 // SEED_ASSETS — headerLogo/projectLogo store a data: URL directly in state, see init()).
 const SEED_HEADER_LOGO='assets/images/logo-grasshopper.png';
@@ -3627,8 +3627,66 @@ const SEED_DOCS=[
 <div class="cf-panel info" contenteditable="false"><span class="cf-panel-icon">ℹ️</span><div class="cf-panel-content" contenteditable="true">Panel trong tab Kangaroo2, chứa các Goal ràng buộc góc giữa các thành phần hình học trong mô phỏng.</div></div>
 <p><em>Đây là 1 panel (nhóm lệnh con) trong tab Kangaroo2 của Grasshopper. Các lệnh cụ thể thuộc panel này sẽ được thêm dần vào đây dưới dạng trang con khi được nghiên cứu.</em></p>`},
   {id:'seed-panel-kangaroo2-goalsco',title:'Goals-Co',section:'default',parentId:'seed-tab-kangaroo2',images:[],textBoxes:[],createdAt:'2026-07-19T00:00:00.000Z',updatedAt:'2026-07-19T00:00:00.000Z',content:`<h1>Goals-Co</h1>
-<div class="cf-panel info" contenteditable="false"><span class="cf-panel-icon">ℹ️</span><div class="cf-panel-content" contenteditable="true">Panel trong tab Kangaroo2, chứa nhóm Goal — chưa xác định chắc chắn ý nghĩa chính xác của viết tắt "Co" trong tên panel, sẽ bổ sung khi nghiên cứu sâu component bên trong.</div></div>
-<p><em>Đây là 1 panel (nhóm lệnh con) trong tab Kangaroo2 của Grasshopper. Các lệnh cụ thể thuộc panel này sẽ được thêm dần vào đây dưới dạng trang con khi được nghiên cứu.</em></p>`},
+<div class="cf-panel info" contenteditable="false"><span class="cf-panel-icon">ℹ️</span><div class="cf-panel-content" contenteditable="true">Panel trong tab Kangaroo2, chứa nhóm Goal. Nghiên cứu component "Coincident" cho thấy dấu hiệu "Co" có thể là viết tắt nhóm goal có tên bắt đầu bằng "Co-" (Coincident, CoSpherical, Concentric, Conicalize...) — vẫn là GIẢ THUYẾT dựa trên tên gọi, chưa xác nhận 100% bằng ảnh chụp ribbon thật, cần kiểm tra thêm khi nghiên cứu các component còn lại trong panel.</div></div>
+<h2>Danh sách component</h2>
+<div class="tbl-frame"><div class="tbl-outer"><table style="border-collapse: collapse; font-size: 14px; table-layout: fixed; width: 100%;" data-colwidths="36px,8.1%,14.9%,77%"><thead><tr><th style="text-align: center; padding: 8px 6px; border-bottom: 2px solid var(--border); position: relative; min-width: 40px;" contenteditable="true">Icon</th><th style="text-align: left; padding: 8px 10px; border-bottom: 2px solid var(--border); position: relative; min-width: 40px;" contenteditable="true">Tên</th><th style="text-align: left; padding: 8px 10px; border-bottom: 2px solid var(--border); position: relative; min-width: 40px;" contenteditable="true">Chức năng</th></tr></thead><tbody><tr><td style="text-align: center; padding: 6px; border-bottom: 1px solid var(--border); position: relative; min-width: 40px;" contenteditable="true"><span style="display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;background:#242424;border-radius:7px"><i class="ti ti-arrows-join" style="color:#e8e8e8;font-size:17px"></i></span></td><td style="padding: 6px 10px; border-bottom: 1px solid var(--border); position: relative; min-width: 40px; vertical-align: middle;" contenteditable="true"><strong>Coincident</strong></td><td style="padding: 6px 10px; border-bottom: 1px solid var(--border); position: relative; min-width: 40px; vertical-align: middle;" contenteditable="true">Ép 1 danh sách điểm về trùng cùng 1 vị trí khi chạy Solver — dùng nối 2 phần mesh/dây rời rạc.</td></tr></tbody></table></div></div>`},
+  {id:'seed-cmd-coincident',locked:true,title:'Coincident',section:'default',parentId:'seed-panel-kangaroo2-goalsco',images:[],textBoxes:[],createdAt:'2026-07-19T00:00:00.000Z',updatedAt:'2026-07-19T00:00:00.000Z',content:`<h1>Coincident</h1>
+<div class="cf-panel info" contenteditable="false"><span class="cf-panel-icon">ℹ️</span><div class="cf-panel-content" contenteditable="true">🟡 Trung bình — Goal Kangaroo2: ép 1 danh sách điểm về trùng cùng 1 vị trí khi chạy mô phỏng.</div></div>
+<h2>Chức năng</h2>
+<p>Coincident tạo 1 "mục tiêu" (Goal) cho Kangaroo2 Solver: kéo các điểm trong danh sách Points về cùng 1 vị trí duy nhất, tương đương 1 ràng buộc "khoảng cách 0" giữa các điểm. Bản thân Coincident KHÔNG tính toán gì — phải nối vào Solver mới thực sự chạy.</p>
+<h2>Khi nào sử dụng</h2>
+<p>Dùng khi có nhiều điểm thuộc các phần hình học tách rời (2 mesh riêng, nhiều đầu dây cáp...) cần "hàn" chúng lại thành 1 điểm chung trong mô phỏng vật lý. Không cần dùng nếu các điểm đã trùng toạ độ sẵn — Kangaroo2 Solver tự nhận diện và gộp điểm trùng nhau mà không cần Goal riêng.</p>
+<h2>Input/Output</h2>
+<div class="tbl-frame"><div class="tbl-outer"><table style="border-collapse:collapse;font-size:14px;table-layout:fixed;width:100%" data-colwidths="36px,20.02%,20.02%,59.959%">
+<thead><tr><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Tên</th><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Kiểu dữ liệu</th><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Mô tả</th></tr></thead>
+<tbody>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>Points</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Point (list)</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Danh sách điểm cần ép về trùng vị trí với nhau.</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>Strength</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Number</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Độ "cứng" của ràng buộc — càng lớn càng ép nhanh/chặt về đúng vị trí.</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>G2</strong> — output</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Goal</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Đối tượng Goal, chỉ dùng được khi nối vào input G của Solver.</td></tr>
+</tbody></table></div></div>
+<h2>Thuộc tính</h2>
+<p>Không có Options/Modes riêng qua right-click. Output G2 là kiểu dữ liệu Goal đặc biệt của Kangaroo2 — không Preview/Bake trực tiếp được như geometry thường, phải qua Solver trước.</p>
+<h2>Cách dùng</h2>
+<ol>
+<li>Chuẩn bị danh sách điểm cần nối (Point param, hoặc lấy từ Deconstruct Brep/Mesh Vertices).</li>
+<li>Nối vào input <strong>Points</strong>.</li>
+<li>Nối Number Slider vào <strong>Strength</strong> (giá trị lớn, vd 1000, để ràng buộc chặt).</li>
+<li>Nối output <strong>G2</strong> vào input G (danh sách Goal) của component <strong>Solver</strong> — Solver mới thực sự chạy mô phỏng và trả kết quả điểm đã di chuyển.</li>
+</ol>
+<div class="cf-img-block" data-cfimgid="coincident" data-cfimgtype="image" data-align="center" data-name="coincident.svg"><div class="cf-img-wrap"><div class="cf-img-inner" style="width:100%;max-width:640px"><img style="width:100%;height:auto;display:block" alt="Points và Strength nối vào Coincident, xuất G2 vào Solver; bên phải 2 điểm ban đầu tách rời được kéo về trùng 1 vị trí sau khi chạy Solver"><div class="cf-img-resize-h left"></div><div class="cf-img-resize-h right"></div></div></div><div class="cf-img-caption"></div></div>
+<h2>Ứng dụng</h2>
+<p>Kangaroo2 Physics, Structural Form-Finding — nối các đầu dây cáp/mép mesh rời rạc thành 1 hệ liên tục khi dựng mái căng dây, lưới cáp, hoặc ghép nhiều module hình học lại với nhau trong mô phỏng.</p>
+<h2>Kết nối</h2>
+<p><strong>Nhận dữ liệu từ:</strong></p>
+<table style="width:100%;border-collapse:collapse;font-size:14px">
+<thead><tr><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Component</th><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Data Type</th><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Có thể nối</th></tr></thead>
+<tbody>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Point (Pt), Deconstruct Brep, Mesh Vertices</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Point</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Có — vào Points</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Number Slider</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Number</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Có — vào Strength</td></tr>
+</tbody></table>
+<p><strong>Xuất dữ liệu đến:</strong></p>
+<table style="width:100%;border-collapse:collapse;font-size:14px">
+<thead><tr><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Component</th><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Data Type</th><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Có thể nối</th></tr></thead>
+<tbody>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Solver (Kangaroo2)</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Goal</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Có — nối thẳng vào input G của Solver</td></tr>
+</tbody></table>
+<p><strong>Không thể kết nối:</strong></p>
+<table style="width:100%;border-collapse:collapse;font-size:14px">
+<thead><tr><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Component</th><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Lý do</th></tr></thead>
+<tbody>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Bake, Extrude, hoặc bất kỳ component xử lý Geometry trực tiếp</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Output G2 là kiểu Goal (dữ liệu mô tả ràng buộc), không phải Geometry — cần qua Solver để lấy lại điểm/hình học đã cập nhật trước.</td></tr>
+</tbody></table>
+<h2>Workflow phổ biến</h2>
+<p>Points → Coincident → Solver → Points (đã hàn) → Bake</p>
+<p>Mesh Vertices (2 mép mesh) → Coincident → Solver → Mesh liền mạch</p>
+<div class="cf-img-block" data-cfimgid="coincident-workflow" data-cfimgtype="image" data-align="center" data-name="coincident-workflow.svg"><div class="cf-img-wrap"><div class="cf-img-inner" style="width:100%;max-width:640px"><img style="width:100%;height:auto;display:block" alt="Chuỗi component workflow phổ biến: Coincident nối vào Solver, xuất ra danh sách điểm đã hàn nối liền 2 mép mesh"><div class="cf-img-resize-h left"></div><div class="cf-img-resize-h right"></div></div></div><div class="cf-img-caption"></div></div>
+<h2>Kiểu dữ liệu</h2>
+<p>Input: Point (list), Number. Output: Goal (G2) — kiểu dữ liệu riêng của Kangaroo2, không phải Geometry/Number thông thường.</p>
+<hr>
+<div class="cf-panel warning" contenteditable="false"><span class="cf-panel-icon">⚠️</span><div class="cf-panel-content" contenteditable="true">Coincident chỉ tạo Goal — KHÔNG tự chạy mô phỏng. Nếu quên nối output <strong>G2</strong> vào <strong>Solver</strong>, ràng buộc sẽ không có tác dụng gì cả, canvas vẫn hiện đúng dây nối nhưng không có gì thay đổi.</div></div>
+<h2>Ví dụ ứng dụng thực tế</h2>
+<p>Dựng mái căng dây (cable-net): 4 đầu dây cáp thuộc 2 nhóm dây riêng biệt được Coincident ép về chung 1 điểm hub — tạo thành mái vòm căng dây liên tục sau khi chạy Solver.</p>
+<div class="cf-img-block" data-cfimgid="coincident-example" data-cfimgtype="image" data-align="center" data-name="coincident-example.svg"><div class="cf-img-wrap"><div class="cf-img-inner" style="width:100%;max-width:640px"><img style="width:100%;height:auto;display:block" alt="Mái căng dây với 4 đầu dây cáp từ 2 nhóm riêng biệt được Coincident ép trùng về 1 điểm hub trung tâm"><div class="cf-img-resize-h left"></div><div class="cf-img-resize-h right"></div></div></div><div class="cf-img-caption"></div></div>`},
   {id:'seed-panel-kangaroo2-goalscol',title:'Goals-Col',section:'default',parentId:'seed-tab-kangaroo2',images:[],textBoxes:[],createdAt:'2026-07-19T00:00:00.000Z',updatedAt:'2026-07-19T00:00:00.000Z',content:`<h1>Goals-Col</h1>
 <div class="cf-panel info" contenteditable="false"><span class="cf-panel-icon">ℹ️</span><div class="cf-panel-content" contenteditable="true">Panel trong tab Kangaroo2, chứa các Goal xử lý va chạm (Collision) giữa các đối tượng trong mô phỏng — chưa xác nhận chắc chắn, sẽ bổ sung khi nghiên cứu sâu component bên trong.</div></div>
 <p><em>Đây là 1 panel (nhóm lệnh con) trong tab Kangaroo2 của Grasshopper. Các lệnh cụ thể thuộc panel này sẽ được thêm dần vào đây dưới dạng trang con khi được nghiên cứu.</em></p>`},

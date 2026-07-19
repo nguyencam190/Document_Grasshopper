@@ -157,9 +157,11 @@ nhưng không dùng nó để sửa nữa). Quy trình lấy/ghi file qua API (r
      "Goals" (không hậu tố), "Morph", "SubD", "Triangulation" KHÔNG tồn tại trong ribbon thật.
    - **Tên panel Wb (Weaverbird) trong ribbon thật KHÔNG có tiền tố "Wb "** (chỉ là "Create", "Define"...
      — không phải "Wb Create", "Wb Define"...) dù nghiên cứu online ghi vậy.
-   - **"Goals-Co" trong Kangaroo2** — chưa xác định chắc chắn ý nghĩa viết tắt "Co" (không nhầm với
-     "Goals-Col"/Collision đứng cạnh nó), trang con hiện ghi rõ "chưa xác định" thay vì đoán, cần
-     nghiên cứu sâu component bên trong panel này mới biết chắc.
+   - **"Goals-Co" trong Kangaroo2** — chưa xác định CHẮC CHẮN 100% ý nghĩa viết tắt "Co" (không nhầm
+     với "Goals-Col"/Collision đứng cạnh nó). Sau khi nghiên cứu component **Coincident** (component
+     đầu tiên trong panel này), có dấu hiệu "Co" là viết tắt nhóm goal có tên bắt đầu bằng "Co-"
+     (Coincident, CoSpherical, Concentric, Conicalize...) — vẫn chỉ là GIẢ THUYẾT dựa trên mẫu tên gọi
+     (không phải xác nhận qua ảnh ribbon thật), cần thêm component nữa trong panel mới kết luận chắc.
 
    Ví dụ: lệnh **Loft** thuộc tab Surface, panel **Freeform** đã xác nhận đúng → `parentId` trỏ vào
    `seed-panel-surface-freeform`.

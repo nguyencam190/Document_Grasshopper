@@ -1,0 +1,71 @@
+<svg width="900" height="260" viewBox="0 0 900 260" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, Arial, sans-serif">
+<defs>
+  <linearGradient id="k2Body2" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0%" stop-color="#9ED94A"/>
+    <stop offset="100%" stop-color="#6FA82A"/>
+  </linearGradient>
+  <linearGradient id="ghBodyP2" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0%" stop-color="#F0F0F0"/>
+    <stop offset="100%" stop-color="#D8D8D8"/>
+  </linearGradient>
+  <pattern id="dotgridK2" width="18" height="18" patternUnits="userSpaceOnUse">
+    <circle cx="1" cy="1" r="1" fill="#E0E0DA"/>
+  </pattern>
+</defs>
+
+<rect x="0" y="0" width="900" height="260" fill="#FAFAF7"/>
+<rect x="0" y="0" width="900" height="260" fill="url(#dotgridK2)"/>
+
+<!-- Box 1: Coincident, box x=30 y=90 w=130 h=100 (spans 90-190) -->
+<g>
+  <rect x="30" y="90" width="130" height="100" rx="6" fill="url(#k2Body2)" stroke="#1f3d0a" stroke-width="1.4"/>
+  <text x="95" y="130" text-anchor="middle" font-size="12" font-weight="bold" fill="#0d1f04">Coincident</text>
+  <rect x="152" y="132" width="10" height="16" rx="3" fill="#E8E8E8" stroke="#1f3d0a"/>
+  <circle cx="157" cy="140" r="2.5" fill="#1f3d0a"/>
+  <text x="145" y="136" text-anchor="end" font-size="10" fill="#0d1f04">G2</text>
+</g>
+<text x="95" y="204" text-anchor="middle" font-size="10" fill="#888">2 mép mesh cần nối</text>
+
+<!-- wire 1 (dashed = goal data) -->
+<path d="M 162,140 C 195,140 195,140 228,140" stroke="#4A4A4A" stroke-width="1.5" fill="none" stroke-dasharray="3,3"/>
+
+<!-- Box 2: Kangaroo2 Solver (box x=230 y=100 w=140 h=80, spans 100-180) -->
+<g>
+  <rect x="230" y="100" width="140" height="80" rx="6" fill="url(#ghBodyP2)" stroke="#8C8C8C" stroke-width="1.3"/>
+  <text x="300" y="144" text-anchor="middle" font-size="13" font-weight="600" fill="#222">Solver</text>
+  <rect x="222" y="132" width="10" height="16" rx="3" fill="#E8E8E8" stroke="#8C8C8C"/>
+  <circle cx="227" cy="140" r="2.5" fill="#4A4A4A"/>
+  <text x="214" y="144" text-anchor="end" font-size="10" fill="#888">G</text>
+  <rect x="368" y="132" width="10" height="16" rx="3" fill="#E8E8E8" stroke="#8C8C8C"/>
+  <circle cx="373" cy="140" r="2.5" fill="#4A4A4A"/>
+</g>
+
+<!-- wire 2 -->
+<path d="M 378,140 C 405,140 405,140 432,140" stroke="#4A4A4A" stroke-width="1.5" fill="none"/>
+
+<!-- Box 3: Points output param -->
+<g>
+  <rect x="434" y="116" width="100" height="48" rx="6" fill="url(#ghBodyP2)" stroke="#8C8C8C" stroke-width="1"/>
+  <text x="484" y="144" text-anchor="middle" font-size="12" fill="#222">Points</text>
+  <rect x="530" y="132" width="10" height="16" rx="3" fill="#E8E8E8" stroke="#8C8C8C"/>
+  <circle cx="535" cy="140" r="2.5" fill="#4A4A4A"/>
+</g>
+
+<!-- wire to viewport -->
+<path d="M 540,140 C 570,140 570,140 596,140" stroke="#4A4A4A" stroke-width="1.5" stroke-dasharray="3,3" fill="none"/>
+
+<!-- Mini Rhino viewport result -->
+<g>
+  <rect x="598" y="40" width="264" height="180" fill="#FFFFFF" stroke="#B0B0B0"/>
+  <g stroke="#D8D8D8" stroke-width="1">
+    <line x1="598" y1="190" x2="862" y2="190"/>
+    <line x1="598" y1="170" x2="862" y2="170"/>
+  </g>
+  <text x="606" y="56" font-family="Consolas, monospace" font-size="10" fill="#555">Perspective</text>
+  <polygon points="630,170 720,160 720,110 630,120" fill="none" stroke="#111" stroke-width="1"/>
+  <polygon points="720,160 810,170 810,120 720,110" fill="none" stroke="#111" stroke-width="1"/>
+  <circle cx="720" cy="135" r="4" fill="#c0392b"/>
+</g>
+
+<text x="20" y="245" font-size="12" fill="#555">Workflow phổ biến: Coincident → Solver → 2 mép mesh riêng biệt được nối liền tại 1 điểm chung</text>
+</svg>
