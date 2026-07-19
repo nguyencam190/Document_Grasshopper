@@ -208,11 +208,19 @@ Khác với trang tham khảo 1 component đơn lẻ (nhét vào 1 trong 13 tran
 **1 trang cha riêng, ngang hàng với trang gốc "Grasshopper"**:
 
 - id: `seed-step-by-step`, title: **"Example Step-by-Step"**, `parentId: null`.
-- Mọi trang step-by-step mới (mỗi video/mẫu 1 trang con) đặt `parentId:'seed-step-by-step'`, đặt tên
-  theo mẫu `[Tên mẫu] — Quy trình dựng từng bước`.
-- Không áp dụng quy tắc phân loại theo 13 tab GH cho loại trang này (vì đây là quy trình phối hợp
-  nhiều component, không phải tài liệu 1 component).
-- Vẫn áp dụng Bước 0 (kiểm tra trùng) trước khi tạo trang mới trong nhóm này.
+- Khi user yêu cầu **"phân tích step-by-step"** cho 1 mẫu/video mới, luôn tạo **1 trang con mới bên
+  trong `seed-step-by-step`** (`parentId:'seed-step-by-step'`), đặt tên theo mẫu
+  `[Tên mẫu] — Quy trình dựng từng bước`. Không áp dụng quy tắc phân loại theo 13 tab GH cho loại
+  trang này (vì đây là quy trình phối hợp nhiều component, không phải tài liệu 1 component).
+- **Bắt buộc kiểm tra trùng nội dung trước khi phân tích, không chỉ kiểm tra trùng tên**: khi user
+  đưa 1 mẫu mới để phân tích, trước tiên phải **trích xuất nội dung của toàn bộ trang con hiện có
+  trong `seed-step-by-step`** (lấy từ `Grasshopper.html`/`SEED_DOCS`), so sánh xem quy trình/pattern
+  đó có giống (hoặc rất tương tự) 1 trang đã phân tích trước đó không — không chỉ so tên mẫu, mà so
+  cả cách dựng (chuỗi component, thuật toán) mô tả bên trong. Nếu phát hiện giống, **DỪNG LẠI, không
+  phân tích lại từ đầu** — báo ngay cho user theo mẫu: **"Mẫu này giống với phân tích đã có — trang
+  '[title trang con]' trong Example Step-by-Step, xem ở đây."** rồi hỏi user có muốn cập nhật/bổ sung
+  trang cũ hay tạo trang mới riêng vì thực ra khác biệt. Chỉ tiến hành phân tích + tạo trang mới khi
+  xác nhận chưa có nội dung nào tương tự.
 
 **Chi tiết kỹ thuật quan trọng (để không lặp lại lỗi):**
 - **Đã sửa lỗi app tự làm mất chất lượng SVG khi export**: hàm `_compressForExportBlob()` trong
