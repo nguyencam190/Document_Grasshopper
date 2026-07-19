@@ -195,7 +195,14 @@ nhưng không dùng nó để sửa nữa). Quy trình lấy/ghi file qua API (r
    - Info panel tóm tắt (icon ℹ️ + mức độ 🟢/🟡/🔴 + 1 câu tóm tắt chức năng)
    - H2 **"Chức năng"** — 1-2 câu, đúng bản chất, không chỉ mô tả bề mặt.
    - H2 **"Khi nào sử dụng"** — khi nào nên dùng; khi nào KHÔNG nên dùng (nếu có).
-   - H2 **"Input/Output"** — bảng Input/Output như cũ, giữ cột Tên | Kiểu dữ liệu | Mô tả.
+   - H2 **"Input/Output"** — bảng Input/Output như cũ, giữ cột Tên | Kiểu dữ liệu | Mô tả. **Cột "Tên"
+     và "Kiểu dữ liệu" PHẢI rộng bằng nhau, cột "Mô tả" rộng hơn** (đã xác nhận qua thao tác kéo cột
+     thật bằng Playwright — không đoán tay): bọc `<table>` trong
+     `<div class="tbl-frame"><div class="tbl-outer">...</div></div>`, gắn thẳng
+     `data-colwidths="36px,20.02%,20.02%,59.959%"` (tỉ lệ Tên=Kiểu dữ liệu=20%, Mô tả=60%, đã kiểm
+     chứng qua render thật, không bị tràn ngang) và `table-layout:fixed;width:100%` trong style của
+     `<table>` — dùng lại đúng chuỗi `data-colwidths` này cho MỌI bảng Input/Output mới, không cần kéo
+     lại từ đầu mỗi lần vì tỉ lệ cột đã cố định thành chuẩn chung.
    - H2 **"Thuộc tính"** — toàn bộ thuộc tính THỰC SỰ có (right-click menu, Options, Modes, Preview,
      Flatten/Graft/Simplify/Reverse, Internalize Data...). Ghi rõ "không có" nếu component không có
      thuộc tính đặc biệt — không được bỏ qua mục này.

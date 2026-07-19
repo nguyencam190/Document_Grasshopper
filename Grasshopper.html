@@ -2986,7 +2986,7 @@ const STORE_KEY='projectdocs_v3';
 // Bump SEED_VERSION any time SEED_DOCS content changes (e.g. a new Grasshopper
 // command page is added) to re-sync all visitors automatically, even ones
 // with old data already saved locally.
-const SEED_VERSION=25;
+const SEED_VERSION=26;
 // Real image assets referenced by SEED_DOCS via data-cfimgid — every visitor's
 // browser needs these in its OWN IndexedDB (see init() below) so images both
 // (a) display correctly, and (b) get recognized by the app's own Optimized
@@ -3266,7 +3266,7 @@ const SEED_DOCS=[
 <h2>Khi nào sử dụng</h2>
 <p>Dùng khi đường cong section không đều/nhiễu (đo thực tế, quét 3D) và cần mặt mượt. Không dùng khi cần mặt đi chính xác qua từng đường — lúc đó dùng Loft thường.</p>
 <h2>Input/Output</h2>
-<table style="width:100%;border-collapse:collapse;font-size:14px">
+<div class="tbl-frame"><div class="tbl-outer"><table style="border-collapse:collapse;font-size:14px;table-layout:fixed;width:100%" data-colwidths="36px,20.02%,20.02%,59.959%">
 <thead><tr><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Tên</th><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Kiểu dữ liệu</th><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Mô tả</th></tr></thead>
 <tbody>
 <tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>Curves (C)</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Curve</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Đường cong section để loft qua (tối thiểu 2 đường).</td></tr>
@@ -3274,7 +3274,7 @@ const SEED_DOCS=[
 <tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>Degree U (Du)</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Integer</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Bậc mặt theo hướng U.</td></tr>
 <tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>Degree V (Dv)</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Integer</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Bậc mặt theo hướng V (hướng loft qua các đường).</td></tr>
 <tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>Surface (S)</strong> — output</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Surface</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Mặt kết quả.</td></tr>
-</tbody></table>
+</tbody></table></div></div>
 <h2>Thuộc tính</h2>
 <p>Không có Options/Modes riêng qua right-click (khác Loft thường có input Loft Options tách biệt) — độ mượt chỉnh trực tiếp qua input Nu/Du/Dv.</p>
 <h2>Cách dùng</h2>
@@ -3325,13 +3325,13 @@ const SEED_DOCS=[
 <h2>Khi nào sử dụng</h2>
 <p>Dùng khi cần đùn theo 1 đường thẳng duy nhất (vd tạo chiều cao tầng từ mặt bằng). Nếu cần đùn theo 1 đường cong dẫn hướng (không phải đường thẳng) thì dùng <strong>Extrude Along</strong> thay vì Extrude.</p>
 <h2>Input/Output</h2>
-<table style="width:100%;border-collapse:collapse;font-size:14px">
+<div class="tbl-frame"><div class="tbl-outer"><table style="border-collapse:collapse;font-size:14px;table-layout:fixed;width:100%" data-colwidths="36px,20.02%,20.02%,59.959%">
 <thead><tr><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Tên</th><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Kiểu dữ liệu</th><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Mô tả</th></tr></thead>
 <tbody>
 <tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>Base (B)</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Geometry</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Tiết diện gốc để đùn.</td></tr>
 <tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>Direction (D)</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Vector</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Hướng và khoảng cách đùn.</td></tr>
 <tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>Extrusion (E)</strong> — output</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Geometry</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Kết quả sau khi đùn.</td></tr>
-</tbody></table>
+</tbody></table></div></div>
 <h2>Thuộc tính</h2>
 <p>Không có Options/Modes riêng qua right-click. Chiều dài + hướng đùn hoàn toàn do độ dài + hướng của vector nối vào Direction (D) quyết định — vd đổi dấu vector (nhân Unit Z với -1) sẽ đùn ngược hướng.</p>
 <h2>Cách dùng</h2>
