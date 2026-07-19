@@ -93,6 +93,17 @@ nhưng không dùng nó để sửa nữa). Quy trình lấy/ghi file qua API (r
 > user có muốn cập nhật/bổ sung trang cũ đó hay không. Chỉ tiếp tục từ bước 1 trở xuống khi xác nhận
 > component **chưa** có trang nào trong `SEED_DOCS`.
 
+> ⚠️ **TUYỆT ĐỐI không nhầm lẫn giữa các component có tên gần giống nhau** — Grasshopper có rất nhiều
+> cặp/nhóm tên chỉ khác nhau 1-2 từ nhưng là component KHÁC NHAU hoàn toàn về input/output/chức năng
+> (vd `Extrude` ≠ `Extrude Along` ≠ `Extrude Point` ≠ `Extrude Linear`; `Loft` ≠ `Fit Loft`; `Cull
+> Pattern` ≠ `Cull Index` ≠ `Cull Nth`; `Curve` ≠ `Curve Closest Point`...). Trước khi viết bất kỳ nội
+> dung nào (trang doc, bảng tổng hợp, câu trả lời chat), PHẢI xác nhận tên chính xác 100% qua nguồn
+> tham khảo thật (ưu tiên tài liệu chính thức/AAD như quy định ở skill `nghien-cuu-grasshopper`), tự
+> hỏi lại "tên này có đang bị viết tắt/gộp nhầm với 1 component khác không" — đặc biệt khi ghi chú nói
+> tới 1 component liên quan/thay thế trong phần "Lưu ý"/warning (đã từng ghi nhầm "Extrude Along
+> Curve" trong khi tên thật là "Extrude Along", phải sửa lại sau). Nếu không chắc chắn tên chính xác,
+> DỪNG LẠI tra cứu thêm hoặc hỏi user, không đoán đại theo trực giác/thói quen đặt tên.
+
 1. Nghiên cứu chức năng lệnh đó (input/output, cách dùng, lưu ý).
 2. Thêm 1 trang con mới vào biến `SEED_DOCS` (dùng nội dung `Grasshopper.html` đã lấy ở bước 0),
    đặt tên đúng theo lệnh. **`parentId` PHẢI trỏ vào đúng trang danh mục (tab) mà lệnh đó thuộc về
