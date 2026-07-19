@@ -1,0 +1,41 @@
+<svg width="900" height="300" viewBox="0 0 900 300" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, Arial, sans-serif">
+<defs>
+  <linearGradient id="ghBodyS" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0%" stop-color="#F0F0F0"/>
+    <stop offset="100%" stop-color="#D8D8D8"/>
+  </linearGradient>
+  <pattern id="dotgridS" width="18" height="18" patternUnits="userSpaceOnUse">
+    <circle cx="1" cy="1" r="1" fill="#E0E0DA"/>
+  </pattern>
+</defs>
+<rect x="0" y="0" width="900" height="300" fill="url(#dotgridS)"/>
+<rect x="0" y="0" width="900" height="300" fill="#F7F7F2" opacity="0.35"/>
+
+<!-- Number param, no input wire (standalone, value set directly) -->
+<g>
+  <rect x="120" y="110" width="140" height="60" rx="6" fill="url(#ghBodyS)" stroke="#8C8C8C" stroke-width="1.3"/>
+  <text x="190" y="135" text-anchor="middle" font-size="12" font-weight="bold" fill="#222">Number</text>
+  <text x="190" y="158" text-anchor="middle" font-family="Consolas, monospace" font-size="13" fill="#222">12.5</text>
+  <rect x="256" y="132" width="10" height="16" rx="3" fill="#E8E8E8" stroke="#8C8C8C"/><circle cx="261" cy="140" r="2.3" fill="#4A4A4A"/>
+</g>
+
+<!-- right-click menu callout -->
+<rect x="60" y="40" width="150" height="56" rx="4" fill="#FFFFFF" stroke="#8C8C8C" stroke-width="1"/>
+<text x="70" y="58" font-size="10" fill="#333">Right-click →</text>
+<text x="70" y="74" font-size="10" fill="#333">Set Number</text>
+<text x="70" y="90" font-size="10" fill="#c99a2e">→ nhập "12.5" ↵</text>
+<path d="M 135,96 C 150,100 170,105 190,110" stroke="#888" stroke-width="1" stroke-dasharray="2,2" fill="none"/>
+
+<path d="M 266,140 C 300,140 300,140 330,140" stroke="#4A4A4A" stroke-width="1.4" fill="none"/>
+
+<!-- Multiple numbers example -->
+<g>
+  <rect x="332" y="110" width="170" height="60" rx="6" fill="url(#ghBodyS)" stroke="#8C8C8C" stroke-width="1.3"/>
+  <text x="417" y="130" text-anchor="middle" font-size="11" font-weight="bold" fill="#222">Number (list)</text>
+  <text x="417" y="150" text-anchor="middle" font-family="Consolas, monospace" font-size="10" fill="#222">2, 5, 8, 13</text>
+  <text x="417" y="163" text-anchor="middle" font-size="9" fill="#888">4 items</text>
+</g>
+<text x="417" y="196" text-anchor="middle" font-size="10" fill="#888">Set Multiple Numbers → nhập "2,5,8,13"</text>
+
+<text x="30" y="250" font-size="12" fill="#555">Set Number/Set Multiple Numbers gán giá trị trực tiếp, không cần kéo Number Slider riêng — tiện cho giá trị cố định ít thay đổi</text>
+</svg>
