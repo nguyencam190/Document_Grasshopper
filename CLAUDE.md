@@ -227,6 +227,16 @@ Khác với trang tham khảo 1 component đơn lẻ (nhét vào 1 trong 13 tran
   thể vẫn thấy bản cũ vài phút dù server đã có bản mới. Nếu cần xem ngay: thêm `?v=x` vào cuối URL.
 - Push cần set `git config user.email` dạng `<username>@users.noreply.github.com` — email thật bị
   GitHub chặn (GH007, "would publish a private email address") nếu tài khoản đang bật ẩn email.
+- **Bug đã sửa — ảnh biến mất khi Export/Publish (ZIP hoặc Push to Project Folder), dù trang live vẫn
+  hiện đúng**: `doExportWebsite()` và `doExportOptimized()` có đoạn `media.style.cssText='display:
+  block;max-width:100%;height:auto;...'` ghi đè TOÀN BỘ style ảnh khi export, xoá mất `width:100%`
+  mà `<img>` gốc trong `SEED_DOCS`/lúc chèn ảnh đã có — đây là biến thể của bug "ảnh SVG collapse
+  ~3×3px" đã gặp trước đó (thiếu `width` khiến ảnh không có kích thước nội tại rõ ràng để hiển thị),
+  nhưng lần này chỉ lộ ra ở bước export, không phải ở nội dung `SEED_DOCS` (vì trang live không chạy
+  qua đoạn code này). Đã sửa: giữ lại `width` gốc của `<img>` (`const _origW=media.style.width||
+  '100%'`) rồi nối vào cssText mới thay vì ghi đè mất, ở cả 2 hàm export. Khi debug lỗi ảnh không
+  hiện ra ở bản export/publish (khác với bản xem trực tiếp trên GitHub Pages), luôn nghi ngờ style bị
+  ghi đè kiểu này trước.
 
 ## Git workflow
 User muốn mọi commit trong repo này **push/merge thẳng vào nhánh `main`**, không giữ lại lâu trên

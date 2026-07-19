@@ -16652,7 +16652,8 @@ async function doExportWebsite(){
           media.setAttribute('controls','');media.setAttribute('muted','');media.setAttribute('loop','');media.setAttribute('playsinline','');
         } else {
           media.src=b64;
-          media.style.cssText='display:block;max-width:100%;height:auto;border-radius:4px;cursor:zoom-in';
+          const _origW=media.style.width||'100%';
+          media.style.cssText='display:block;max-width:100%;height:auto;border-radius:4px;cursor:zoom-in;width:'+_origW+';';
         }
         block.removeAttribute('data-cfimgid');
       } else {
@@ -17672,7 +17673,7 @@ async function doExportOptimized(opts){
       if(path&&media){
         media.setAttribute('src',path);
         if(media.tagName==='VIDEO'){media.style.cssText='display:block;max-width:100%;height:auto;border-radius:4px;pointer-events:auto;cursor:default';media.setAttribute('controls','');media.setAttribute('muted','');media.setAttribute('loop','');media.setAttribute('playsinline','');media.setAttribute('preload','auto');}
-        else{media.style.cssText='display:block;max-width:100%;height:auto;border-radius:4px;cursor:zoom-in';media.setAttribute('loading','lazy');}
+        else{const _origW=media.style.width||'100%';media.style.cssText='display:block;max-width:100%;height:auto;border-radius:4px;cursor:zoom-in;width:'+_origW+';';media.setAttribute('loading','lazy');}
         block.removeAttribute('data-cfimgid');
       }else{block.remove();}
       _showExportProgress(++_cnt,_tot,'Xuất ảnh nội tuyến...');if(_cnt%3===0)await new Promise(r=>setTimeout(r,0));
