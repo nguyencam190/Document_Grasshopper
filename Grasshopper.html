@@ -2986,12 +2986,12 @@ const STORE_KEY='projectdocs_v3';
 // Bump SEED_VERSION any time SEED_DOCS content changes (e.g. a new Grasshopper
 // command page is added) to re-sync all visitors automatically, even ones
 // with old data already saved locally.
-const SEED_VERSION=19;
+const SEED_VERSION=20;
 // Real image assets referenced by SEED_DOCS via data-cfimgid — every visitor's
 // browser needs these in its OWN IndexedDB (see init() below) so images both
 // (a) display correctly, and (b) get recognized by the app's own Optimized
 // Website export if the user runs Publish themselves later.
-const SEED_ASSETS={'tab-params':'svg','tab-maths':'svg','tab-sets':'svg','tab-vector':'svg','tab-curve':'svg','tab-surface':'svg','tab-mesh':'svg','tab-intersect':'svg','tab-transform':'svg','tab-display':'svg','tab-rhino':'svg','tab-kangaroo2':'svg','tab-wb':'svg'};
+const SEED_ASSETS={'tab-params':'svg','tab-maths':'svg','tab-sets':'svg','tab-vector':'svg','tab-curve':'svg','tab-surface':'svg','tab-mesh':'svg','tab-intersect':'svg','tab-transform':'svg','tab-display':'svg','tab-rhino':'svg','tab-kangaroo2':'svg','tab-wb':'svg','fitloft':'svg'};
 // Default project logo baked into the seed (path in the repo, not an IDB-blob id like
 // SEED_ASSETS — headerLogo/projectLogo store a data: URL directly in state, see init()).
 const SEED_HEADER_LOGO='assets/images/logo-grasshopper.png';
@@ -3257,7 +3257,35 @@ const SEED_DOCS=[
 <p><em>Đây là 1 panel (nhóm lệnh con) trong tab Surface của Grasshopper. Các lệnh cụ thể thuộc panel này sẽ được thêm dần vào đây dưới dạng trang con khi được nghiên cứu.</em></p>`},
   {id:'seed-panel-surface-freeform',title:'Freeform',section:'default',parentId:'seed-tab-surface',images:[],textBoxes:[],createdAt:'2026-07-19T00:00:00.000Z',updatedAt:'2026-07-19T00:00:00.000Z',content:`<h1>Freeform</h1>
 <div class="cf-panel info" contenteditable="false"><span class="cf-panel-icon">ℹ️</span><div class="cf-panel-content" contenteditable="true">Panel trong tab Surface, chứa component dựng mặt tự do phức tạp (Loft, Sweep, Network Surface, Patch...).</div></div>
-<p><em>Đây là 1 panel (nhóm lệnh con) trong tab Surface của Grasshopper. Các lệnh cụ thể thuộc panel này sẽ được thêm dần vào đây dưới dạng trang con khi được nghiên cứu.</em></p>`},
+<h2>Danh sách component</h2>
+<div class="tbl-frame"><div class="tbl-outer"><table style="border-collapse: collapse; font-size: 14px; table-layout: fixed; width: 100%;" data-colwidths="36px,8.037%,14.954%,77.009%"><thead><tr><th style="text-align: center; padding: 8px 6px; border-bottom: 2px solid var(--border); position: relative; min-width: 40px;" contenteditable="true">Icon</th><th style="text-align: left; padding: 8px 10px; border-bottom: 2px solid var(--border); position: relative; min-width: 40px;" contenteditable="true">Tên</th><th style="text-align: left; padding: 8px 10px; border-bottom: 2px solid var(--border); position: relative; min-width: 40px;" contenteditable="true">Chức năng</th></tr></thead><tbody><tr><td style="text-align: center; padding: 6px; border-bottom: 1px solid var(--border); position: relative; min-width: 40px;" contenteditable="true"><span style="display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;background:#242424;border-radius:7px"><i class="ti ti-vector-spline" style="color:#e8e8e8;font-size:17px"></i></span></td><td style="padding: 6px 10px; border-bottom: 1px solid var(--border); position: relative; min-width: 40px;" contenteditable="true"><strong>Fit Loft</strong></td><td style="padding: 6px 10px; border-bottom: 1px solid var(--border); position: relative; min-width: 40px;" contenteditable="true">Dựng mặt loft được "làm khớp" (fit) qua 1 tập đường cong — mặt đi mượt gần đúng qua các đường, không bắt buộc khớp tuyệt đối như Loft thường, có thể chỉnh số điểm/bậc để làm mượt hơn.</td></tr></tbody></table></div></div>`},
+  {id:'seed-cmd-fitloft',title:'Fit Loft',section:'default',parentId:'seed-panel-surface-freeform',images:[],textBoxes:[],createdAt:'2026-07-19T00:00:00.000Z',updatedAt:'2026-07-19T00:00:00.000Z',content:`<h1>Fit Loft</h1>
+<div class="cf-panel info" contenteditable="false"><span class="cf-panel-icon">ℹ️</span><div class="cf-panel-content" contenteditable="true">🟡 Trung bình — Dựng mặt cong đi "mượt" qua 1 tập đường cong (không bắt buộc khớp tuyệt đối từng đường), khác với lệnh Loft thường.</div></div>
+<h2>Chức năng</h2>
+<p>Fit Loft tạo ra 1 mặt cong (Surface) đi gần đúng qua tập đường cong section đưa vào, theo kiểu "làm khớp" (fit) — nghĩa là mặt không bắt buộc đi chính xác qua từng điểm của đường cong gốc như lệnh <strong>Loft</strong> thông thường, mà được làm mượt lại bằng cách kiểm soát số điểm điều khiển và bậc (degree) của mặt kết quả. Cách này giúp mặt trông trơn tru, ít gợn sóng hơn khi các đường cong đầu vào không thật đều hoặc không thật mượt.</p>
+<h2>Input/Output</h2>
+<table style="width:100%;border-collapse:collapse;font-size:14px">
+<thead><tr><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Tên</th><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Kiểu dữ liệu</th><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Mô tả</th></tr></thead>
+<tbody>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>Curves (C)</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Curve</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Danh sách đường cong section (đường tiết diện) dùng để loft qua. Cần ít nhất 2 đường.</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>Count U (Nu)</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Integer</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Số điểm điều khiển dọc theo hướng U (hướng dọc theo mỗi đường cong).</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>Degree U (Du)</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Integer</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Bậc (degree) của mặt kết quả theo hướng U.</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>Degree V (Dv)</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Integer</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Bậc (degree) của mặt kết quả theo hướng V (hướng vuông góc với đường cong, tức hướng "loft" qua các đường).</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>Surface (S)</strong> — output</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Surface</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Mặt cong kết quả sau khi fit loft qua tập đường cong.</td></tr>
+</tbody></table>
+<h2>Cách dùng</h2>
+<ol>
+<li>Chuẩn bị 1 tập đường cong section (ít nhất 2 đường) — lấy từ Curve param hoặc vẽ trực tiếp trong Rhino rồi tham chiếu vào Grasshopper.</li>
+<li>Nối các đường cong đó vào input <strong>Curves (C)</strong> — chú ý Flatten/Graft tuỳ cấu trúc dữ liệu, để mỗi đường cong là 1 item riêng trong danh sách.</li>
+<li>(Tuỳ chọn) Nối Number Slider dạng số nguyên vào <strong>Count U</strong>, <strong>Degree U</strong>, <strong>Degree V</strong> nếu muốn tự tay chỉnh độ mượt của mặt — Count U càng lớn, mặt càng bám sát đường cong gốc hơn nhưng cũng dễ gợn sóng hơn nếu đường cong gốc không đều.</li>
+<li>Xem kết quả tại output <strong>Surface (S)</strong> — bật Preview để thấy mặt hiện trong Rhino viewport.</li>
+</ol>
+<h2>Minh họa</h2>
+<div class="cf-img-block" data-cfimgid="fitloft" data-cfimgtype="image" data-align="center" data-name="fitloft.svg"><div class="cf-img-wrap"><div class="cf-img-inner" style="width:100%;max-width:640px"><img style="width:100%;height:auto;display:block" alt="Fit Loft: Curves + Count U/Degree U/Degree V nối vào Fit Loft, xuất ra Surface; bên phải là mặt fit loft mượt qua các đường cong gốc trong viewport Rhino"><div class="cf-img-resize-h left"></div><div class="cf-img-resize-h right"></div></div></div><div class="cf-img-caption"></div></div>
+<hr>
+<div class="cf-panel warning" contenteditable="false"><span class="cf-panel-icon">⚠️</span><div class="cf-panel-content" contenteditable="true"><strong>Fit Loft khác với Loft thông thường</strong>: Loft (không có "Fit") đi CHÍNH XÁC qua từng đường cong section, còn Fit Loft chỉ đi "gần đúng" (fitted). Dùng Fit Loft khi đường cong gốc không đều/nhiễu và muốn có mặt mượt hơn; không dùng khi cần độ chính xác tuyệt đối theo đường cong gốc — lúc đó nên dùng Loft thường.</div></div>
+<h2>Ví dụ ứng dụng thực tế</h2>
+<p>Component này chưa được dùng trực tiếp trong case study Voronoi hiện có (case study đó dùng <strong>Boundary Surfaces</strong> để tạo mặt phẳng đặc từ đường cong Voronoi, không cần loft qua nhiều đường). Fit Loft thường hữu ích hơn trong các dự án dựng mặt cong lớn từ nhiều tiết diện (section) — ví dụ dựng vỏ ngoài (shell) cong mượt của 1 khối kiến trúc từ các mặt cắt ngang đo được ngoài thực tế, vốn thường không hoàn toàn đều nhau.</p>`},
   {id:'seed-panel-surface-primitive',title:'Primitive',section:'default',parentId:'seed-tab-surface',images:[],textBoxes:[],createdAt:'2026-07-19T00:00:00.000Z',updatedAt:'2026-07-19T00:00:00.000Z',content:`<h1>Primitive</h1>
 <div class="cf-panel info" contenteditable="false"><span class="cf-panel-icon">ℹ️</span><div class="cf-panel-content" contenteditable="true">Panel trong tab Surface, chứa component dựng mặt hình dạng cơ bản (Box, Sphere, Cylinder, Plane Surface...).</div></div>
 <p><em>Đây là 1 panel (nhóm lệnh con) trong tab Surface của Grasshopper. Các lệnh cụ thể thuộc panel này sẽ được thêm dần vào đây dưới dạng trang con khi được nghiên cứu.</em></p>`},

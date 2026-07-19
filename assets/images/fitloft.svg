@@ -1,0 +1,107 @@
+<svg width="900" height="480" viewBox="0 0 900 480" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, Arial, sans-serif">
+<defs>
+  <linearGradient id="ghBody" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0%" stop-color="#F0F0F0"/>
+    <stop offset="100%" stop-color="#D8D8D8"/>
+  </linearGradient>
+  <pattern id="dotgrid" width="18" height="18" patternUnits="userSpaceOnUse">
+    <circle cx="1" cy="1" r="1" fill="#E0E0DA"/>
+  </pattern>
+</defs>
+
+<!-- Canvas background -->
+<rect x="0" y="0" width="520" height="480" fill="url(#dotgrid)"/>
+<rect x="0" y="0" width="520" height="480" fill="#F7F7F2" opacity="0.35"/>
+
+<!-- Curves param -->
+<g>
+  <rect x="18" y="70" width="110" height="46" rx="6" fill="url(#ghBody)" stroke="#8C8C8C"/>
+  <text x="73" y="98" text-anchor="middle" font-size="13" fill="#222">Curves</text>
+  <rect x="126" y="86" width="10" height="14" rx="3" fill="#E8E8E8" stroke="#8C8C8C"/>
+  <circle cx="131" cy="93" r="2.3" fill="#4A4A4A"/>
+</g>
+
+<!-- Number sliders -->
+<g>
+  <rect x="18" y="140" width="150" height="30" rx="5" fill="#F0F0F0" stroke="#8C8C8C"/>
+  <rect x="26" y="150" width="90" height="10" rx="3" fill="#E4E4E4" stroke="#B0B0B0"/>
+  <circle cx="70" cy="155" r="5" fill="#8C8C8C"/>
+  <text x="126" y="159" text-anchor="start" font-size="10" fill="#333">Nu = 10</text>
+  <rect x="176" y="150" width="10" height="14" rx="3" fill="#E8E8E8" stroke="#8C8C8C"/>
+  <circle cx="181" cy="157" r="2.3" fill="#4A4A4A"/>
+</g>
+<g>
+  <rect x="18" y="180" width="150" height="30" rx="5" fill="#F0F0F0" stroke="#8C8C8C"/>
+  <rect x="26" y="190" width="60" height="10" rx="3" fill="#E4E4E4" stroke="#B0B0B0"/>
+  <circle cx="42" cy="195" r="5" fill="#8C8C8C"/>
+  <text x="126" y="199" text-anchor="start" font-size="10" fill="#333">Du = 3</text>
+  <rect x="176" y="190" width="10" height="14" rx="3" fill="#E8E8E8" stroke="#8C8C8C"/>
+  <circle cx="181" cy="197" r="2.3" fill="#4A4A4A"/>
+</g>
+<g>
+  <rect x="18" y="220" width="150" height="30" rx="5" fill="#F0F0F0" stroke="#8C8C8C"/>
+  <rect x="26" y="230" width="60" height="10" rx="3" fill="#E4E4E4" stroke="#B0B0B0"/>
+  <circle cx="42" cy="235" r="5" fill="#8C8C8C"/>
+  <text x="126" y="239" text-anchor="start" font-size="10" fill="#333">Dv = 3</text>
+  <rect x="176" y="230" width="10" height="14" rx="3" fill="#E8E8E8" stroke="#8C8C8C"/>
+  <circle cx="181" cy="237" r="2.3" fill="#4A4A4A"/>
+</g>
+
+<!-- Fit Loft component -->
+<g>
+  <rect x="230" y="110" width="150" height="130" rx="6" fill="url(#ghBody)" stroke="#8C8C8C" stroke-width="1.2"/>
+  <text x="305" y="132" text-anchor="middle" font-size="14" font-weight="bold" fill="#222">Fit Loft</text>
+  <line x1="245" y1="140" x2="365" y2="140" stroke="#B5B5B0" stroke-width="1"/>
+  <!-- input nubs -->
+  <rect x="222" y="86" width="10" height="16" rx="3" fill="#E8E8E8" stroke="#8C8C8C"/><circle cx="227" cy="94" r="2.3" fill="#4A4A4A"/>
+  <text x="238" y="98" font-size="11" fill="#333">C</text>
+  <rect x="222" y="150" width="10" height="16" rx="3" fill="#E8E8E8" stroke="#8C8C8C"/><circle cx="227" cy="158" r="2.3" fill="#4A4A4A"/>
+  <text x="238" y="162" font-size="11" fill="#333">Nu</text>
+  <rect x="222" y="185" width="10" height="16" rx="3" fill="#E8E8E8" stroke="#8C8C8C"/><circle cx="227" cy="193" r="2.3" fill="#4A4A4A"/>
+  <text x="238" y="197" font-size="11" fill="#333">Du</text>
+  <rect x="222" y="220" width="10" height="16" rx="3" fill="#E8E8E8" stroke="#8C8C8C"/><circle cx="227" cy="228" r="2.3" fill="#4A4A4A"/>
+  <text x="238" y="232" font-size="11" fill="#333">Dv</text>
+  <!-- output nub -->
+  <rect x="378" y="167" width="10" height="16" rx="3" fill="#E8E8E8" stroke="#8C8C8C"/><circle cx="383" cy="175" r="2.3" fill="#4A4A4A"/>
+  <text x="368" y="171" text-anchor="end" font-size="11" fill="#333">S</text>
+</g>
+
+<!-- wires -->
+<path d="M 131,93 C 180,93 180,94 227,94" stroke="#4A4A4A" stroke-width="1.4" fill="none"/>
+<path d="M 186,157 C 205,157 205,158 227,158" stroke="#4A4A4A" stroke-width="1.4" fill="none"/>
+<path d="M 186,197 C 205,197 205,193 227,193" stroke="#4A4A4A" stroke-width="1.4" fill="none"/>
+<path d="M 186,237 C 205,237 205,228 227,228" stroke="#4A4A4A" stroke-width="1.4" fill="none"/>
+<path d="M 388,175 C 430,175 430,175 470,175" stroke="#4A4A4A" stroke-width="1.4" fill="none"/>
+
+<!-- Right side: Rhino-style viewport showing fitted surface vs input curves -->
+<rect x="520" y="0" width="380" height="480" fill="#FFFFFF" stroke="#B0B0B0"/>
+<g stroke="#D8D8D8" stroke-width="1">
+  <line x1="520" y1="420" x2="900" y2="420"/>
+  <line x1="520" y1="380" x2="900" y2="380"/>
+  <line x1="520" y1="345" x2="900" y2="345"/>
+  <line x1="520" y1="315" x2="900" y2="315"/>
+</g>
+<text x="530" y="24" font-family="Consolas, monospace" font-size="12" fill="#555">Perspective</text>
+
+<!-- input section curves (thin black, slightly irregular) -->
+<path d="M 570,340 C 590,300 610,250 605,190" stroke="#111" stroke-width="1.3" fill="none"/>
+<path d="M 670,355 C 685,300 700,240 690,175" stroke="#111" stroke-width="1.3" fill="none"/>
+<path d="M 770,345 C 790,295 795,235 780,180" stroke="#111" stroke-width="1.3" fill="none"/>
+<path d="M 860,330 C 875,285 870,230 855,190" stroke="#111" stroke-width="1.3" fill="none"/>
+<circle cx="570" cy="340" r="2.5" fill="#c0392b"/>
+<circle cx="670" cy="355" r="2.5" fill="#c0392b"/>
+<circle cx="770" cy="345" r="2.5" fill="#c0392b"/>
+<circle cx="860" cy="330" r="2.5" fill="#c0392b"/>
+
+<!-- fitted surface: smoother than raw curves, U/V isocurves -->
+<path d="M 565,335 C 620,300 830,300 862,325
+         L 855,240
+         C 700,225 620,225 570,235 Z" fill="#C7C7BE" opacity="0.85" stroke="#111" stroke-width="1"/>
+<path d="M 565,335 C 620,300 830,300 862,325" stroke="#111" stroke-width="1" fill="none"/>
+<path d="M 570,235 C 640,222 780,222 855,240" stroke="#111" stroke-width="1" fill="none"/>
+<path d="M 615,330 C 640,295 640,255 632,232" stroke="#666" stroke-width="0.8" fill="none"/>
+<path d="M 700,325 C 705,290 705,255 700,228" stroke="#666" stroke-width="0.8" fill="none"/>
+<path d="M 790,320 C 785,285 785,250 785,230" stroke="#666" stroke-width="0.8" fill="none"/>
+
+<text x="530" y="460" font-size="11" fill="#555">Đường cong gốc (đỏ = điểm) — mặt Fit Loft đi "mượt" qua, không bắt buộc khớp tuyệt đối từng điểm</text>
+</svg>
