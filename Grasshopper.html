@@ -2986,7 +2986,7 @@ const STORE_KEY='projectdocs_v3';
 // Bump SEED_VERSION any time SEED_DOCS content changes (e.g. a new Grasshopper
 // command page is added) to re-sync all visitors automatically, even ones
 // with old data already saved locally.
-const SEED_VERSION=10;
+const SEED_VERSION=11;
 // Real image assets referenced by SEED_DOCS via data-cfimgid — every visitor's
 // browser needs these in its OWN IndexedDB (see init() below) so images both
 // (a) display correctly, and (b) get recognized by the app's own Optimized
@@ -2994,7 +2994,7 @@ const SEED_VERSION=10;
 const SEED_ASSETS={'tab-params':'svg','tab-maths':'svg','tab-sets':'svg','tab-vector':'svg','tab-curve':'svg','tab-surface':'svg','tab-mesh':'svg','tab-intersect':'svg','tab-transform':'svg','tab-display':'svg','tab-rhino':'svg','tab-kangaroo2':'svg','tab-wb':'svg'};
 const SEED_DOCS=[
   {id:'seed-grasshopper',title:'Grasshopper',section:'default',parentId:null,content:'',images:[],textBoxes:[],createdAt:'2026-07-18T00:00:00.000Z',updatedAt:'2026-07-18T00:00:00.000Z'},
-  {id:'seed-step-by-step',title:'Hướng dẫn dựng mẫu (Step-by-step)',section:'default',parentId:null,content:'',images:[],textBoxes:[],createdAt:'2026-07-19T00:00:00.000Z',updatedAt:'2026-07-19T00:00:00.000Z'},
+  {id:'seed-step-by-step',title:'Example Step-by-Step',section:'default',parentId:null,content:'',images:[],textBoxes:[],createdAt:'2026-07-19T00:00:00.000Z',updatedAt:'2026-07-19T00:00:00.000Z'},
   {id:'seed-tab-params',title:'Params',section:'default',parentId:'seed-grasshopper',images:[],textBoxes:[],createdAt:'2026-07-18T00:00:00.000Z',updatedAt:'2026-07-18T00:00:00.000Z',content:`<h1>Params</h1>
 <div class="cf-panel info" contenteditable="false"><span class="cf-panel-icon">ℹ️</span><div class="cf-panel-content" contenteditable="true">🟢 Cơ bản — Nơi khai báo và giữ dữ liệu (Points, Curves, Breps, Lists, Trees...) để dùng xuyên suốt file Grasshopper.</div></div>
 <h2>Chức năng</h2>

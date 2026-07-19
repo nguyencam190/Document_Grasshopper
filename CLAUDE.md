@@ -207,7 +207,7 @@ Khác với trang tham khảo 1 component đơn lẻ (nhét vào 1 trong 13 tran
 **step-by-step dựng nguyên 1 mẫu/pattern** (đúc kết từ video user quay + tải lên `Video/`) đi vào
 **1 trang cha riêng, ngang hàng với trang gốc "Grasshopper"**:
 
-- id: `seed-step-by-step`, title: **"Hướng dẫn dựng mẫu (Step-by-step)"**, `parentId: null`.
+- id: `seed-step-by-step`, title: **"Example Step-by-Step"**, `parentId: null`.
 - Mọi trang step-by-step mới (mỗi video/mẫu 1 trang con) đặt `parentId:'seed-step-by-step'`, đặt tên
   theo mẫu `[Tên mẫu] — Quy trình dựng từng bước`.
 - Không áp dụng quy tắc phân loại theo 13 tab GH cho loại trang này (vì đây là quy trình phối hợp
