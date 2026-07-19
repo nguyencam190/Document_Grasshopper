@@ -90,7 +90,30 @@ Khung viewport Rhino mẫu (nền trắng + lưới phối cảnh + nhãn góc):
 </g>
 ```
 
-## 4. Khi nào không cần theo style này
+## 4. Lỗi thường gặp — PHẢI tự kiểm tra trước khi publish
+
+Đã tự mắc lỗi này nhiều lần khi vẽ tay toạ độ SVG cho component có nhiều input (Fit Loft, Extrude):
+**núm input (nub) bị đặt ở toạ độ y NẰM NGOÀI phạm vi y của khung component**, khiến núm "nổi" lơ lửng
+phía trên/dưới khung thay vì gắn đúng cạnh trái/phải khung, và dây nối (wire) trông như không chạm
+vào graph. Lỗi cụ thể đã gặp: khung Fit Loft có `y="110" height="130"` (phạm vi y: 110–240) nhưng núm
+"C" lại vẽ ở `y="86"` — nằm hẳn phía TRÊN khung, cách xa 8–24px, dây nối tới đó nhìn tách rời hoàn toàn
+khỏi component.
+
+**Quy tắc bắt buộc khi vẽ 1 component có N input nubs**:
+1. Xác định trước `y` và `height` của khung `<rect>` component. Mọi núm input/output PHẢI có toạ độ y
+   (tâm núm) nằm trong khoảng `[box.y + margin, box.y + box.height − margin]` (margin ~10–15px), không
+   được vượt ra ngoài khung ở cả 2 phía.
+2. Nếu component có nhiều input (như Fit Loft có C/Nu/Du/Dv), chia đều khoảng trống bên dưới phần tiêu
+   đề (thường chừa ~30–40px đầu khung cho tên component) cho từng núm — không nhồi núm đầu tiên lên
+   sát mép trên khung hoặc để tràn lên phía ngoài.
+3. Toạ độ điểm cuối của dây nối (`path d="M ... C ... targetX,targetY"`) PHẢI trùng khớp CHÍNH XÁC với
+   toạ độ tâm `<circle>` của núm đích (không áng chừng bằng mắt) — copy đúng số `cx,cy` của núm vào
+   điểm cuối path, không tự bịa số gần đúng.
+4. Sau khi vẽ xong, **luôn render thử bằng trình duyệt (Playwright hoặc mở file trực tiếp) và phóng to
+   kiểm tra bằng mắt từng điểm nối** trước khi publish — đặc biệt các component có ≥3 input, vì càng
+   nhiều núm càng dễ tính sai toạ độ. Đừng chỉ tin vào việc "số liệu nhìn hợp lý" khi đọc code SVG.
+
+## 5. Khi nào không cần theo style này
 
 Nếu minh hoạ là sơ đồ khái niệm thuần tuý (vd giải thích thuật toán, không phải "đây là canvas GH
 thật" hay "đây là kết quả trong Rhino") thì vẫn có thể dùng sơ đồ đơn giản hơn — nhưng ưu tiên mặc
