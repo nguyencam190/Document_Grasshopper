@@ -49,6 +49,14 @@ Mấu chốt là **Maelstrom** bẻ cong các tia toả tròn thành xoắn ốc
 ## Bối cảnh
 - User: người mới với Rhino/Grasshopper, cần giải thích ở mức người mới, hướng dẫn từng bước.
 - Không xem trực tiếp được video → dùng ffmpeg trích frame ra ảnh để đọc canvas Grasshopper.
+- **Toàn bộ tài liệu trong `Grasshopper.html` (app "Project Docs") dành cho người mới bắt đầu tìm
+  hiểu Grasshopper, không phải cho người đã biết sẵn.** Khi viết bất kỳ trang nội dung nào (không chỉ
+  khi trả lời trong chat), phải giải thích theo cách dễ hiểu nhất có thể: câu ngắn, ví dụ cụ thể thay
+  vì mô tả trừu tượng, giải thích rõ mọi thuật ngữ chuyên ngành lần đầu xuất hiện (đừng giả định user
+  đã biết "Data Tree", "Cull", "Graft" là gì...), tránh nói lý thuyết/toán học sâu nếu không cần thiết
+  cho việc hiểu chức năng. Dễ hiểu không có nghĩa là kém chính xác — vẫn phải tuân thủ đầy đủ quy tắc
+  "không bịa đặt" ở skill `nghien-cuu-grasshopper`, chỉ là trình bày phần đúng đó theo cách dễ tiếp
+  thu nhất với người mới.
 
 ## Quy trình ghi chú lệnh Grasshopper (app "Project Docs")
 Project có 1 app ghi chú riêng: **`Document/Grasshopper.html`** là file DUY NHẤT cần sửa (app sống

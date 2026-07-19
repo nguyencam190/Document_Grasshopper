@@ -11,8 +11,12 @@ description: Phân tích chuyên sâu 1 Component/Graph cụ thể của Grassho
 Component (Graph) cụ thể — không phải liệt kê thật nhiều thông tin. Chỉ trả lời về component
 đang được hỏi; không tự ý mở rộng sang component khác hay chủ đề khác trừ khi được yêu cầu.
 
-Người dùng là người mới với Rhino/Grasshopper — giải thích ở mức dễ hiểu, nhưng không vì thế mà
-làm loãng hay thêm thông tin không có thật. Ưu tiên tính thực tiễn (áp dụng được ngay) hơn lý thuyết.
+Người dùng là người mới bắt đầu tìm hiểu Rhino/Grasshopper — **luôn giải thích theo cách dễ hiểu
+nhất có thể**, như đang hướng dẫn người chưa từng mở Grasshopper: câu ngắn, ưu tiên ví dụ cụ thể hơn
+mô tả trừu tượng, và giải thích ngay mọi thuật ngữ chuyên ngành khi nó xuất hiện lần đầu (đừng giả
+định user đã biết "Data Tree", "Cull", "Graft", "Flatten" nghĩa là gì). Dễ hiểu không có nghĩa là
+kém chính xác hay làm loãng nội dung — không vì thế mà thêm thông tin không có thật. Ưu tiên tính
+thực tiễn (áp dụng được ngay) hơn lý thuyết.
 
 ## Tài liệu tham khảo — thứ tự ưu tiên
 
