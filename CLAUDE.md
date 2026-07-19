@@ -117,20 +117,22 @@ nhưng không dùng nó để sửa nữa). Quy trình lấy/ghi file qua API (r
    | Intersect | Mathematical, Physical, Region, Shape |
    | Transform | Affine, Array, Euclidean, Morph, Util |
    | Display | Colour, Dimensions, Graphs, Preview, Vector |
+   | Rhino | Content, Objects, Model, Drafting, Annotations, Render, Viewports |
+   | Kangaroo2 | Goals-6dof, Goals-Angle, Goals-Co, Goals-Col, Goals-Lin, Goals-Mesh, Goals-On, Goals-Pt, Main, Mesh, Utility |
+   | Wb (Weaverbird) | Create, Define, Extract, Smoothen, SubD, Transform |
 
    Id mỗi trang panel theo mẫu `seed-panel-{tab-slug}-{panel-slug}` (vd `seed-panel-maths-domain`),
-   `parentId` trỏ vào đúng trang tab cha (vd `seed-tab-maths`). **3 tab còn lại (Rhino, Kangaroo2, Wb)
-   CHƯA có panel — vẫn đang chờ user chụp ảnh ribbon thật để xác nhận trước khi tạo**, đặc biệt tab
-   Rhino cần xác nhận riêng vì user dùng Rhino 8 và dữ liệu tra online là bản Rhino 7/2022 (có thể
-   thiếu panel mới). Danh sách "khá chắc" đã tra được từ nghiên cứu online (agent, ưu tiên đối chiếu
-   khi user gửi ảnh, KHÔNG tự ý tạo trang khi chưa có ảnh xác nhận):
-   - Rhino: Annotations, Content, Drafting, Model, Objects, Render, Viewports (bản Rhino 7/2022, thứ
-     tự alphabet — chưa xác nhận, cần ảnh Rhino 8 thật)
-   - Kangaroo2: Goals, Goals-6dof, Goals-Angle, Goals-Co, Goals-Col, Goals-Lin, Goals-Mesh, Goals-On,
-     Goals-Pt, Main, Mesh, Morph, SubD, Triangulation, Utility (15 panel, thứ tự alphabet — chưa xác
-     nhận, chỉ 1 nguồn)
-   - Wb (Weaverbird): Wb Create, Wb Define, Wb Extract, Wb Smoothen, Wb SubD, Wb Transform (thứ tự
-     alphabet — chưa xác nhận, chỉ 1 nguồn)
+   `parentId` trỏ vào đúng trang tab cha (vd `seed-tab-maths`). **Cả 13/13 tab đã có đủ panel, xác
+   nhận bằng ảnh chụp ribbon thật của user (không phải suy đoán/nghiên cứu online).** Vài lưu ý quan
+   trọng phát hiện được khi đối chiếu ảnh thật với nghiên cứu online trước đó (bài học: luôn ưu tiên
+   ảnh chụp thật hơn tài liệu online khi có mâu thuẫn):
+   - **Kangaroo2 thực tế chỉ có 11 panel**, KHÔNG phải 15 như nghiên cứu online suy đoán — panel
+     "Goals" (không hậu tố), "Morph", "SubD", "Triangulation" KHÔNG tồn tại trong ribbon thật.
+   - **Tên panel Wb (Weaverbird) trong ribbon thật KHÔNG có tiền tố "Wb "** (chỉ là "Create", "Define"...
+     — không phải "Wb Create", "Wb Define"...) dù nghiên cứu online ghi vậy.
+   - **"Goals-Co" trong Kangaroo2** — chưa xác định chắc chắn ý nghĩa viết tắt "Co" (không nhầm với
+     "Goals-Col"/Collision đứng cạnh nó), trang con hiện ghi rõ "chưa xác định" thay vì đoán, cần
+     nghiên cứu sâu component bên trong panel này mới biết chắc.
 
    Ví dụ: lệnh **Loft** thuộc tab Surface, panel **Freeform** đã xác nhận đúng → `parentId` trỏ vào
    `seed-panel-surface-freeform`.

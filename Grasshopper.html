@@ -2986,7 +2986,7 @@ const STORE_KEY='projectdocs_v3';
 // Bump SEED_VERSION any time SEED_DOCS content changes (e.g. a new Grasshopper
 // command page is added) to re-sync all visitors automatically, even ones
 // with old data already saved locally.
-const SEED_VERSION=16;
+const SEED_VERSION=17;
 // Real image assets referenced by SEED_DOCS via data-cfimgid — every visitor's
 // browser needs these in its OWN IndexedDB (see init() below) so images both
 // (a) display correctly, and (b) get recognized by the app's own Optimized
@@ -3367,7 +3367,79 @@ const SEED_DOCS=[
 <div class="cf-img-block" data-cfimgid="tab-wb" data-cfimgtype="image" data-align="center" data-name="tab-wb.svg"><div class="cf-img-wrap"><div class="cf-img-inner" style="width:100%;max-width:640px"><img style="width:100%;height:auto;display:block" alt="Weaverbird: làm mịn mesh"><div class="cf-img-resize-h left"></div><div class="cf-img-resize-h right"></div></div></div><div class="cf-img-caption"></div></div>
 <hr>
 <h2>Ví dụ trong dự án Voronoi</h2>
-<p>Có thể dùng <strong>Catmull-Clark Subdivision</strong> để làm mịn bề mặt khối 3D "vành xe Voronoi" sau khi bake, tạo cảm giác mượt mà hơn thay vì để nguyên các mặt phẳng góc cạnh từ Boundary Surfaces.</p>`}];
+<p>Có thể dùng <strong>Catmull-Clark Subdivision</strong> để làm mịn bề mặt khối 3D "vành xe Voronoi" sau khi bake, tạo cảm giác mượt mà hơn thay vì để nguyên các mặt phẳng góc cạnh từ Boundary Surfaces.</p>`},
+  {id:'seed-panel-rhino-content',title:'Content',section:'default',parentId:'seed-tab-rhino',images:[],textBoxes:[],createdAt:'2026-07-19T00:00:00.000Z',updatedAt:'2026-07-19T00:00:00.000Z',content:`<h1>Content</h1>
+<div class="cf-panel info" contenteditable="false"><span class="cf-panel-icon">ℹ️</span><div class="cf-panel-content" contenteditable="true">Panel trong tab Rhino, chứa component tham chiếu nội dung tổ chức trong file Rhino (Layer, Group, Block, Material...).</div></div>
+<p><em>Đây là 1 panel (nhóm lệnh con) trong tab Rhino của Grasshopper. Các lệnh cụ thể thuộc panel này sẽ được thêm dần vào đây dưới dạng trang con khi được nghiên cứu.</em></p>`},
+  {id:'seed-panel-rhino-objects',title:'Objects',section:'default',parentId:'seed-tab-rhino',images:[],textBoxes:[],createdAt:'2026-07-19T00:00:00.000Z',updatedAt:'2026-07-19T00:00:00.000Z',content:`<h1>Objects</h1>
+<div class="cf-panel info" contenteditable="false"><span class="cf-panel-icon">ℹ️</span><div class="cf-panel-content" contenteditable="true">Panel trong tab Rhino, chứa component tham chiếu trực tiếp tới đối tượng hình học có sẵn trong Rhino.</div></div>
+<p><em>Đây là 1 panel (nhóm lệnh con) trong tab Rhino của Grasshopper. Các lệnh cụ thể thuộc panel này sẽ được thêm dần vào đây dưới dạng trang con khi được nghiên cứu.</em></p>`},
+  {id:'seed-panel-rhino-model',title:'Model',section:'default',parentId:'seed-tab-rhino',images:[],textBoxes:[],createdAt:'2026-07-19T00:00:00.000Z',updatedAt:'2026-07-19T00:00:00.000Z',content:`<h1>Model</h1>
+<div class="cf-panel info" contenteditable="false"><span class="cf-panel-icon">ℹ️</span><div class="cf-panel-content" contenteditable="true">Panel trong tab Rhino, chứa component đồng bộ và cập nhật dữ liệu giữa mô hình Rhino và Grasshopper.</div></div>
+<p><em>Đây là 1 panel (nhóm lệnh con) trong tab Rhino của Grasshopper. Các lệnh cụ thể thuộc panel này sẽ được thêm dần vào đây dưới dạng trang con khi được nghiên cứu.</em></p>`},
+  {id:'seed-panel-rhino-drafting',title:'Drafting',section:'default',parentId:'seed-tab-rhino',images:[],textBoxes:[],createdAt:'2026-07-19T00:00:00.000Z',updatedAt:'2026-07-19T00:00:00.000Z',content:`<h1>Drafting</h1>
+<div class="cf-panel info" contenteditable="false"><span class="cf-panel-icon">ℹ️</span><div class="cf-panel-content" contenteditable="true">Panel trong tab Rhino, chứa component vẽ kỹ thuật 2D (hatch pattern, mặt cắt...).</div></div>
+<p><em>Đây là 1 panel (nhóm lệnh con) trong tab Rhino của Grasshopper. Các lệnh cụ thể thuộc panel này sẽ được thêm dần vào đây dưới dạng trang con khi được nghiên cứu.</em></p>`},
+  {id:'seed-panel-rhino-annotations',title:'Annotations',section:'default',parentId:'seed-tab-rhino',images:[],textBoxes:[],createdAt:'2026-07-19T00:00:00.000Z',updatedAt:'2026-07-19T00:00:00.000Z',content:`<h1>Annotations</h1>
+<div class="cf-panel info" contenteditable="false"><span class="cf-panel-icon">ℹ️</span><div class="cf-panel-content" contenteditable="true">Panel trong tab Rhino, chứa component tạo chú thích văn bản/kích thước gắn với đối tượng Rhino.</div></div>
+<p><em>Đây là 1 panel (nhóm lệnh con) trong tab Rhino của Grasshopper. Các lệnh cụ thể thuộc panel này sẽ được thêm dần vào đây dưới dạng trang con khi được nghiên cứu.</em></p>`},
+  {id:'seed-panel-rhino-render',title:'Render',section:'default',parentId:'seed-tab-rhino',images:[],textBoxes:[],createdAt:'2026-07-19T00:00:00.000Z',updatedAt:'2026-07-19T00:00:00.000Z',content:`<h1>Render</h1>
+<div class="cf-panel info" contenteditable="false"><span class="cf-panel-icon">ℹ️</span><div class="cf-panel-content" contenteditable="true">Panel trong tab Rhino, chứa component thiết lập vật liệu/render (Material, Render settings...).</div></div>
+<p><em>Đây là 1 panel (nhóm lệnh con) trong tab Rhino của Grasshopper. Các lệnh cụ thể thuộc panel này sẽ được thêm dần vào đây dưới dạng trang con khi được nghiên cứu.</em></p>`},
+  {id:'seed-panel-rhino-viewports',title:'Viewports',section:'default',parentId:'seed-tab-rhino',images:[],textBoxes:[],createdAt:'2026-07-19T00:00:00.000Z',updatedAt:'2026-07-19T00:00:00.000Z',content:`<h1>Viewports</h1>
+<div class="cf-panel info" contenteditable="false"><span class="cf-panel-icon">ℹ️</span><div class="cf-panel-content" contenteditable="true">Panel trong tab Rhino, chứa component tham chiếu/điều khiển viewport của Rhino.</div></div>
+<p><em>Đây là 1 panel (nhóm lệnh con) trong tab Rhino của Grasshopper. Các lệnh cụ thể thuộc panel này sẽ được thêm dần vào đây dưới dạng trang con khi được nghiên cứu.</em></p>`},
+  {id:'seed-panel-kangaroo2-goals6dof',title:'Goals-6dof',section:'default',parentId:'seed-tab-kangaroo2',images:[],textBoxes:[],createdAt:'2026-07-19T00:00:00.000Z',updatedAt:'2026-07-19T00:00:00.000Z',content:`<h1>Goals-6dof</h1>
+<div class="cf-panel info" contenteditable="false"><span class="cf-panel-icon">ℹ️</span><div class="cf-panel-content" contenteditable="true">Panel trong tab Kangaroo2 (plugin mô phỏng vật lý), chứa các "Goal" (mục tiêu ràng buộc) liên quan tới 6 bậc tự do (vị trí + xoay) của đối tượng trong mô phỏng.</div></div>
+<p><em>Đây là 1 panel (nhóm lệnh con) trong tab Kangaroo2 của Grasshopper. Các lệnh cụ thể thuộc panel này sẽ được thêm dần vào đây dưới dạng trang con khi được nghiên cứu.</em></p>`},
+  {id:'seed-panel-kangaroo2-goalsangle',title:'Goals-Angle',section:'default',parentId:'seed-tab-kangaroo2',images:[],textBoxes:[],createdAt:'2026-07-19T00:00:00.000Z',updatedAt:'2026-07-19T00:00:00.000Z',content:`<h1>Goals-Angle</h1>
+<div class="cf-panel info" contenteditable="false"><span class="cf-panel-icon">ℹ️</span><div class="cf-panel-content" contenteditable="true">Panel trong tab Kangaroo2, chứa các Goal ràng buộc góc giữa các thành phần hình học trong mô phỏng.</div></div>
+<p><em>Đây là 1 panel (nhóm lệnh con) trong tab Kangaroo2 của Grasshopper. Các lệnh cụ thể thuộc panel này sẽ được thêm dần vào đây dưới dạng trang con khi được nghiên cứu.</em></p>`},
+  {id:'seed-panel-kangaroo2-goalsco',title:'Goals-Co',section:'default',parentId:'seed-tab-kangaroo2',images:[],textBoxes:[],createdAt:'2026-07-19T00:00:00.000Z',updatedAt:'2026-07-19T00:00:00.000Z',content:`<h1>Goals-Co</h1>
+<div class="cf-panel info" contenteditable="false"><span class="cf-panel-icon">ℹ️</span><div class="cf-panel-content" contenteditable="true">Panel trong tab Kangaroo2, chứa nhóm Goal — chưa xác định chắc chắn ý nghĩa chính xác của viết tắt "Co" trong tên panel, sẽ bổ sung khi nghiên cứu sâu component bên trong.</div></div>
+<p><em>Đây là 1 panel (nhóm lệnh con) trong tab Kangaroo2 của Grasshopper. Các lệnh cụ thể thuộc panel này sẽ được thêm dần vào đây dưới dạng trang con khi được nghiên cứu.</em></p>`},
+  {id:'seed-panel-kangaroo2-goalscol',title:'Goals-Col',section:'default',parentId:'seed-tab-kangaroo2',images:[],textBoxes:[],createdAt:'2026-07-19T00:00:00.000Z',updatedAt:'2026-07-19T00:00:00.000Z',content:`<h1>Goals-Col</h1>
+<div class="cf-panel info" contenteditable="false"><span class="cf-panel-icon">ℹ️</span><div class="cf-panel-content" contenteditable="true">Panel trong tab Kangaroo2, chứa các Goal xử lý va chạm (Collision) giữa các đối tượng trong mô phỏng — chưa xác nhận chắc chắn, sẽ bổ sung khi nghiên cứu sâu component bên trong.</div></div>
+<p><em>Đây là 1 panel (nhóm lệnh con) trong tab Kangaroo2 của Grasshopper. Các lệnh cụ thể thuộc panel này sẽ được thêm dần vào đây dưới dạng trang con khi được nghiên cứu.</em></p>`},
+  {id:'seed-panel-kangaroo2-goalslin',title:'Goals-Lin',section:'default',parentId:'seed-tab-kangaroo2',images:[],textBoxes:[],createdAt:'2026-07-19T00:00:00.000Z',updatedAt:'2026-07-19T00:00:00.000Z',content:`<h1>Goals-Lin</h1>
+<div class="cf-panel info" contenteditable="false"><span class="cf-panel-icon">ℹ️</span><div class="cf-panel-content" contenteditable="true">Panel trong tab Kangaroo2, chứa các Goal ràng buộc tuyến tính (Linear) — vd giữ khoảng cách/độ dài cố định giữa 2 điểm.</div></div>
+<p><em>Đây là 1 panel (nhóm lệnh con) trong tab Kangaroo2 của Grasshopper. Các lệnh cụ thể thuộc panel này sẽ được thêm dần vào đây dưới dạng trang con khi được nghiên cứu.</em></p>`},
+  {id:'seed-panel-kangaroo2-goalsmesh',title:'Goals-Mesh',section:'default',parentId:'seed-tab-kangaroo2',images:[],textBoxes:[],createdAt:'2026-07-19T00:00:00.000Z',updatedAt:'2026-07-19T00:00:00.000Z',content:`<h1>Goals-Mesh</h1>
+<div class="cf-panel info" contenteditable="false"><span class="cf-panel-icon">ℹ️</span><div class="cf-panel-content" contenteditable="true">Panel trong tab Kangaroo2, chứa các Goal áp dụng riêng cho lưới Mesh trong mô phỏng (vd làm phẳng, uốn mesh).</div></div>
+<p><em>Đây là 1 panel (nhóm lệnh con) trong tab Kangaroo2 của Grasshopper. Các lệnh cụ thể thuộc panel này sẽ được thêm dần vào đây dưới dạng trang con khi được nghiên cứu.</em></p>`},
+  {id:'seed-panel-kangaroo2-goalson',title:'Goals-On',section:'default',parentId:'seed-tab-kangaroo2',images:[],textBoxes:[],createdAt:'2026-07-19T00:00:00.000Z',updatedAt:'2026-07-19T00:00:00.000Z',content:`<h1>Goals-On</h1>
+<div class="cf-panel info" contenteditable="false"><span class="cf-panel-icon">ℹ️</span><div class="cf-panel-content" contenteditable="true">Panel trong tab Kangaroo2, chứa các Goal giữ đối tượng nằm "trên" 1 hình khác (curve, mesh, surface) trong mô phỏng.</div></div>
+<p><em>Đây là 1 panel (nhóm lệnh con) trong tab Kangaroo2 của Grasshopper. Các lệnh cụ thể thuộc panel này sẽ được thêm dần vào đây dưới dạng trang con khi được nghiên cứu.</em></p>`},
+  {id:'seed-panel-kangaroo2-goalspt',title:'Goals-Pt',section:'default',parentId:'seed-tab-kangaroo2',images:[],textBoxes:[],createdAt:'2026-07-19T00:00:00.000Z',updatedAt:'2026-07-19T00:00:00.000Z',content:`<h1>Goals-Pt</h1>
+<div class="cf-panel info" contenteditable="false"><span class="cf-panel-icon">ℹ️</span><div class="cf-panel-content" contenteditable="true">Panel trong tab Kangaroo2, chứa các Goal áp dụng riêng cho điểm (Point) trong mô phỏng.</div></div>
+<p><em>Đây là 1 panel (nhóm lệnh con) trong tab Kangaroo2 của Grasshopper. Các lệnh cụ thể thuộc panel này sẽ được thêm dần vào đây dưới dạng trang con khi được nghiên cứu.</em></p>`},
+  {id:'seed-panel-kangaroo2-main',title:'Main',section:'default',parentId:'seed-tab-kangaroo2',images:[],textBoxes:[],createdAt:'2026-07-19T00:00:00.000Z',updatedAt:'2026-07-19T00:00:00.000Z',content:`<h1>Main</h1>
+<div class="cf-panel info" contenteditable="false"><span class="cf-panel-icon">ℹ️</span><div class="cf-panel-content" contenteditable="true">Panel trong tab Kangaroo2, chứa các component chính điều khiển vòng lặp mô phỏng vật lý (Solver).</div></div>
+<p><em>Đây là 1 panel (nhóm lệnh con) trong tab Kangaroo2 của Grasshopper. Các lệnh cụ thể thuộc panel này sẽ được thêm dần vào đây dưới dạng trang con khi được nghiên cứu.</em></p>`},
+  {id:'seed-panel-kangaroo2-mesh',title:'Mesh',section:'default',parentId:'seed-tab-kangaroo2',images:[],textBoxes:[],createdAt:'2026-07-19T00:00:00.000Z',updatedAt:'2026-07-19T00:00:00.000Z',content:`<h1>Mesh</h1>
+<div class="cf-panel info" contenteditable="false"><span class="cf-panel-icon">ℹ️</span><div class="cf-panel-content" contenteditable="true">Panel trong tab Kangaroo2, chứa công cụ xử lý Mesh riêng của Kangaroo2 (không phải panel Mesh của tab Mesh chính).</div></div>
+<p><em>Đây là 1 panel (nhóm lệnh con) trong tab Kangaroo2 của Grasshopper. Các lệnh cụ thể thuộc panel này sẽ được thêm dần vào đây dưới dạng trang con khi được nghiên cứu.</em></p>`},
+  {id:'seed-panel-kangaroo2-utility',title:'Utility',section:'default',parentId:'seed-tab-kangaroo2',images:[],textBoxes:[],createdAt:'2026-07-19T00:00:00.000Z',updatedAt:'2026-07-19T00:00:00.000Z',content:`<h1>Utility</h1>
+<div class="cf-panel info" contenteditable="false"><span class="cf-panel-icon">ℹ️</span><div class="cf-panel-content" contenteditable="true">Panel trong tab Kangaroo2, nhóm các công cụ tiện ích hỗ trợ khác cho mô phỏng.</div></div>
+<p><em>Đây là 1 panel (nhóm lệnh con) trong tab Kangaroo2 của Grasshopper. Các lệnh cụ thể thuộc panel này sẽ được thêm dần vào đây dưới dạng trang con khi được nghiên cứu.</em></p>`},
+  {id:'seed-panel-wb-create',title:'Create',section:'default',parentId:'seed-tab-wb',images:[],textBoxes:[],createdAt:'2026-07-19T00:00:00.000Z',updatedAt:'2026-07-19T00:00:00.000Z',content:`<h1>Create</h1>
+<div class="cf-panel info" contenteditable="false"><span class="cf-panel-icon">ℹ️</span><div class="cf-panel-content" contenteditable="true">Panel trong tab Wb (Weaverbird), chứa component dựng mesh mới từ hình học khác.</div></div>
+<p><em>Đây là 1 panel (nhóm lệnh con) trong tab Wb của Grasshopper. Các lệnh cụ thể thuộc panel này sẽ được thêm dần vào đây dưới dạng trang con khi được nghiên cứu.</em></p>`},
+  {id:'seed-panel-wb-define',title:'Define',section:'default',parentId:'seed-tab-wb',images:[],textBoxes:[],createdAt:'2026-07-19T00:00:00.000Z',updatedAt:'2026-07-19T00:00:00.000Z',content:`<h1>Define</h1>
+<div class="cf-panel info" contenteditable="false"><span class="cf-panel-icon">ℹ️</span><div class="cf-panel-content" contenteditable="true">Panel trong tab Wb (Weaverbird), chứa component định nghĩa/tuỳ biến tham số dùng cho các lệnh Weaverbird khác.</div></div>
+<p><em>Đây là 1 panel (nhóm lệnh con) trong tab Wb của Grasshopper. Các lệnh cụ thể thuộc panel này sẽ được thêm dần vào đây dưới dạng trang con khi được nghiên cứu.</em></p>`},
+  {id:'seed-panel-wb-extract',title:'Extract',section:'default',parentId:'seed-tab-wb',images:[],textBoxes:[],createdAt:'2026-07-19T00:00:00.000Z',updatedAt:'2026-07-19T00:00:00.000Z',content:`<h1>Extract</h1>
+<div class="cf-panel info" contenteditable="false"><span class="cf-panel-icon">ℹ️</span><div class="cf-panel-content" contenteditable="true">Panel trong tab Wb (Weaverbird), chứa component trích xuất thành phần từ mesh (cạnh, đỉnh, mặt...).</div></div>
+<p><em>Đây là 1 panel (nhóm lệnh con) trong tab Wb của Grasshopper. Các lệnh cụ thể thuộc panel này sẽ được thêm dần vào đây dưới dạng trang con khi được nghiên cứu.</em></p>`},
+  {id:'seed-panel-wb-smoothen',title:'Smoothen',section:'default',parentId:'seed-tab-wb',images:[],textBoxes:[],createdAt:'2026-07-19T00:00:00.000Z',updatedAt:'2026-07-19T00:00:00.000Z',content:`<h1>Smoothen</h1>
+<div class="cf-panel info" contenteditable="false"><span class="cf-panel-icon">ℹ️</span><div class="cf-panel-content" contenteditable="true">Panel trong tab Wb (Weaverbird), chứa các thuật toán làm mịn mesh (Catmull-Clark Subdivision, Loop Subdivision, Mesh Smooth...).</div></div>
+<p><em>Đây là 1 panel (nhóm lệnh con) trong tab Wb của Grasshopper. Các lệnh cụ thể thuộc panel này sẽ được thêm dần vào đây dưới dạng trang con khi được nghiên cứu.</em></p>`},
+  {id:'seed-panel-wb-subd',title:'SubD',section:'default',parentId:'seed-tab-wb',images:[],textBoxes:[],createdAt:'2026-07-19T00:00:00.000Z',updatedAt:'2026-07-19T00:00:00.000Z',content:`<h1>SubD</h1>
+<div class="cf-panel info" contenteditable="false"><span class="cf-panel-icon">ℹ️</span><div class="cf-panel-content" contenteditable="true">Panel trong tab Wb (Weaverbird), chứa component chuyển đổi qua lại giữa Mesh và khối SubD.</div></div>
+<p><em>Đây là 1 panel (nhóm lệnh con) trong tab Wb của Grasshopper. Các lệnh cụ thể thuộc panel này sẽ được thêm dần vào đây dưới dạng trang con khi được nghiên cứu.</em></p>`},
+  {id:'seed-panel-wb-transform',title:'Transform',section:'default',parentId:'seed-tab-wb',images:[],textBoxes:[],createdAt:'2026-07-19T00:00:00.000Z',updatedAt:'2026-07-19T00:00:00.000Z',content:`<h1>Transform</h1>
+<div class="cf-panel info" contenteditable="false"><span class="cf-panel-icon">ℹ️</span><div class="cf-panel-content" contenteditable="true">Panel trong tab Wb (Weaverbird), chứa component biến đổi hình học áp dụng cho mesh.</div></div>
+<p><em>Đây là 1 panel (nhóm lệnh con) trong tab Wb của Grasshopper. Các lệnh cụ thể thuộc panel này sẽ được thêm dần vào đây dưới dạng trang con khi được nghiên cứu.</em></p>`}];
 let state={projectName:'My Project',username:'User',sections:['default'],docs:[],currentDocId:null};
 let saveTimer,dirty=false,ctxImgIdx=null,docCtxId=null,_savedRange=null,_bubbleHideTimer=null;
 
