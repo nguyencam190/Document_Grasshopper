@@ -2986,12 +2986,12 @@ const STORE_KEY='projectdocs_v3';
 // Bump SEED_VERSION any time SEED_DOCS content changes (e.g. a new Grasshopper
 // command page is added) to re-sync all visitors automatically, even ones
 // with old data already saved locally.
-const SEED_VERSION=20;
+const SEED_VERSION=21;
 // Real image assets referenced by SEED_DOCS via data-cfimgid — every visitor's
 // browser needs these in its OWN IndexedDB (see init() below) so images both
 // (a) display correctly, and (b) get recognized by the app's own Optimized
 // Website export if the user runs Publish themselves later.
-const SEED_ASSETS={'tab-params':'svg','tab-maths':'svg','tab-sets':'svg','tab-vector':'svg','tab-curve':'svg','tab-surface':'svg','tab-mesh':'svg','tab-intersect':'svg','tab-transform':'svg','tab-display':'svg','tab-rhino':'svg','tab-kangaroo2':'svg','tab-wb':'svg','fitloft':'svg'};
+const SEED_ASSETS={'tab-params':'svg','tab-maths':'svg','tab-sets':'svg','tab-vector':'svg','tab-curve':'svg','tab-surface':'svg','tab-mesh':'svg','tab-intersect':'svg','tab-transform':'svg','tab-display':'svg','tab-rhino':'svg','tab-kangaroo2':'svg','tab-wb':'svg','fitloft':'svg','fitloft-example':'svg'};
 // Default project logo baked into the seed (path in the repo, not an IDB-blob id like
 // SEED_ASSETS — headerLogo/projectLogo store a data: URL directly in state, see init()).
 const SEED_HEADER_LOGO='assets/images/logo-grasshopper.png';
@@ -3285,7 +3285,8 @@ const SEED_DOCS=[
 <hr>
 <div class="cf-panel warning" contenteditable="false"><span class="cf-panel-icon">⚠️</span><div class="cf-panel-content" contenteditable="true"><strong>Fit Loft khác với Loft thông thường</strong>: Loft (không có "Fit") đi CHÍNH XÁC qua từng đường cong section, còn Fit Loft chỉ đi "gần đúng" (fitted). Dùng Fit Loft khi đường cong gốc không đều/nhiễu và muốn có mặt mượt hơn; không dùng khi cần độ chính xác tuyệt đối theo đường cong gốc — lúc đó nên dùng Loft thường.</div></div>
 <h2>Ví dụ ứng dụng thực tế</h2>
-<p>Component này chưa được dùng trực tiếp trong case study Voronoi hiện có (case study đó dùng <strong>Boundary Surfaces</strong> để tạo mặt phẳng đặc từ đường cong Voronoi, không cần loft qua nhiều đường). Fit Loft thường hữu ích hơn trong các dự án dựng mặt cong lớn từ nhiều tiết diện (section) — ví dụ dựng vỏ ngoài (shell) cong mượt của 1 khối kiến trúc từ các mặt cắt ngang đo được ngoài thực tế, vốn thường không hoàn toàn đều nhau.</p>`},
+<p>Component này chưa được dùng trực tiếp trong case study Voronoi hiện có (case study đó dùng <strong>Boundary Surfaces</strong> để tạo mặt phẳng đặc từ đường cong Voronoi, không cần loft qua nhiều đường). Fit Loft thường hữu ích hơn trong các dự án dựng mặt cong lớn từ nhiều tiết diện (section) — ví dụ dựng vỏ ngoài (shell) cong mượt của 1 khối kiến trúc từ các mặt cắt ngang đo được ngoài thực tế, vốn thường không hoàn toàn đều nhau.</p>
+<div class="cf-img-block" data-cfimgid="fitloft-example" data-cfimgtype="image" data-align="center" data-name="fitloft-example.svg"><div class="cf-img-wrap"><div class="cf-img-inner" style="width:100%;max-width:640px"><img style="width:100%;height:auto;display:block" alt="Vỏ kiến trúc cong mượt được Fit Loft qua 5 mặt cắt đo ngoài thực tế, các điểm đo không hoàn toàn đều nhau"><div class="cf-img-resize-h left"></div><div class="cf-img-resize-h right"></div></div></div><div class="cf-img-caption"></div></div>`},
   {id:'seed-panel-surface-primitive',title:'Primitive',section:'default',parentId:'seed-tab-surface',images:[],textBoxes:[],createdAt:'2026-07-19T00:00:00.000Z',updatedAt:'2026-07-19T00:00:00.000Z',content:`<h1>Primitive</h1>
 <div class="cf-panel info" contenteditable="false"><span class="cf-panel-icon">ℹ️</span><div class="cf-panel-content" contenteditable="true">Panel trong tab Surface, chứa component dựng mặt hình dạng cơ bản (Box, Sphere, Cylinder, Plane Surface...).</div></div>
 <p><em>Đây là 1 panel (nhóm lệnh con) trong tab Surface của Grasshopper. Các lệnh cụ thể thuộc panel này sẽ được thêm dần vào đây dưới dạng trang con khi được nghiên cứu.</em></p>`},
