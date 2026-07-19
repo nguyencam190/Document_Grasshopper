@@ -2986,7 +2986,7 @@ const STORE_KEY='projectdocs_v3';
 // Bump SEED_VERSION any time SEED_DOCS content changes (e.g. a new Grasshopper
 // command page is added) to re-sync all visitors automatically, even ones
 // with old data already saved locally.
-const SEED_VERSION=13;
+const SEED_VERSION=14;
 // Real image assets referenced by SEED_DOCS via data-cfimgid — every visitor's
 // browser needs these in its OWN IndexedDB (see init() below) so images both
 // (a) display correctly, and (b) get recognized by the app's own Optimized
@@ -3011,7 +3011,7 @@ const SEED_DOCS=[
 <li><strong>Data Dam</strong> — tạm dừng luồng dữ liệu, hữu ích khi cần debug từng bước</li>
 </ul>
 <h2>Minh họa</h2>
-<div class="cf-img-block" data-cfimgid="tab-params" data-cfimgtype="image" data-align="center" data-name="tab-params.svg"><div class="cf-img-wrap"><div class="cf-img-inner"><img style="width:100%;max-width:640px;height:auto;display:block" alt="Params: hộp chứa dữ liệu"><div class="cf-img-resize-h left"></div><div class="cf-img-resize-h right"></div></div></div><div class="cf-img-caption"></div></div>
+<div class="cf-img-block" data-cfimgid="tab-params" data-cfimgtype="image" data-align="center" data-name="tab-params.svg"><div class="cf-img-wrap"><div class="cf-img-inner" style="width:100%;max-width:640px"><img style="width:100%;height:auto;display:block" alt="Params: hộp chứa dữ liệu"><div class="cf-img-resize-h left"></div><div class="cf-img-resize-h right"></div></div></div><div class="cf-img-caption"></div></div>
 <hr>
 <h2>Ví dụ trong dự án Voronoi</h2>
 <p>Toàn bộ các <strong>Number Slider</strong> điều khiển Polar Count, Maelstrom Angle, Divide Curve Count... đều nằm trong tab Params — đây là những "núm vặn" chính bạn sẽ chỉnh để thay đổi hình dạng pattern.</p>`},
@@ -3028,7 +3028,7 @@ const SEED_DOCS=[
 <li><strong>Graph Mapper</strong> — vẽ đường cong tùy chỉnh để ánh xạ giá trị phi tuyến tính</li>
 </ul>
 <h2>Minh họa</h2>
-<div class="cf-img-block" data-cfimgid="tab-maths" data-cfimgtype="image" data-align="center" data-name="tab-maths.svg"><div class="cf-img-wrap"><div class="cf-img-inner"><img style="width:100%;max-width:640px;height:auto;display:block" alt="Maths: phép toán và công thức"><div class="cf-img-resize-h left"></div><div class="cf-img-resize-h right"></div></div></div><div class="cf-img-caption"></div></div>
+<div class="cf-img-block" data-cfimgid="tab-maths" data-cfimgtype="image" data-align="center" data-name="tab-maths.svg"><div class="cf-img-wrap"><div class="cf-img-inner" style="width:100%;max-width:640px"><img style="width:100%;height:auto;display:block" alt="Maths: phép toán và công thức"><div class="cf-img-resize-h left"></div><div class="cf-img-resize-h right"></div></div></div><div class="cf-img-caption"></div></div>
 <hr>
 <h2>Ví dụ trong dự án Voronoi</h2>
 <p><strong>Expression</strong> với công thức <code>x/2</code> được dùng ở các Series bước Cull (Step=x/2, Count=x/2, Start=x/2−1) — chuyển số N do user nhập thành các thông số chia đôi chính xác cho từng vòng Cull.</p>`},
@@ -3045,7 +3045,7 @@ const SEED_DOCS=[
 <li><strong>Graft / Flatten</strong> — Graft tách mỗi phần tử thành 1 nhánh riêng; Flatten gộp hết về 1 nhánh duy nhất</li>
 </ul>
 <h2>Minh họa</h2>
-<div class="cf-img-block" data-cfimgid="tab-sets" data-cfimgtype="image" data-align="center" data-name="tab-sets.svg"><div class="cf-img-wrap"><div class="cf-img-inner"><img style="width:100%;max-width:640px;height:auto;display:block" alt="Sets: danh sách và cây dữ liệu"><div class="cf-img-resize-h left"></div><div class="cf-img-resize-h right"></div></div></div><div class="cf-img-caption"></div></div>
+<div class="cf-img-block" data-cfimgid="tab-sets" data-cfimgtype="image" data-align="center" data-name="tab-sets.svg"><div class="cf-img-wrap"><div class="cf-img-inner" style="width:100%;max-width:640px"><img style="width:100%;height:auto;display:block" alt="Sets: danh sách và cây dữ liệu"><div class="cf-img-resize-h left"></div><div class="cf-img-resize-h right"></div></div></div><div class="cf-img-caption"></div></div>
 <hr>
 <h2>Ví dụ trong dự án Voronoi</h2>
 <p>Nhóm lệnh quan trọng nhất của cả pattern: <strong>Cull Index</strong> xoá điểm trùng ở tâm trước Voronoi; <strong>Cull Series</strong> xoá vòng ô ở tâm/ngoài; <strong>Dispatch</strong> tạo khe hở giữa các dải; và bắt buộc <strong>Flatten</strong> điểm trước khi đưa vào Voronoi.</p>`},
@@ -3062,7 +3062,7 @@ const SEED_DOCS=[
 <li><strong>Vector 2Pt</strong> — tạo vector nối giữa 2 điểm</li>
 </ul>
 <h2>Minh họa</h2>
-<div class="cf-img-block" data-cfimgid="tab-vector" data-cfimgtype="image" data-align="center" data-name="tab-vector.svg"><div class="cf-img-wrap"><div class="cf-img-inner"><img style="width:100%;max-width:640px;height:auto;display:block" alt="Vector: hướng và độ dài"><div class="cf-img-resize-h left"></div><div class="cf-img-resize-h right"></div></div></div><div class="cf-img-caption"></div></div>
+<div class="cf-img-block" data-cfimgid="tab-vector" data-cfimgtype="image" data-align="center" data-name="tab-vector.svg"><div class="cf-img-wrap"><div class="cf-img-inner" style="width:100%;max-width:640px"><img style="width:100%;height:auto;display:block" alt="Vector: hướng và độ dài"><div class="cf-img-resize-h left"></div><div class="cf-img-resize-h right"></div></div></div><div class="cf-img-caption"></div></div>
 <hr>
 <h2>Ví dụ trong dự án Voronoi</h2>
 <p>Plane gốc (thường là World XY Plane) làm tâm tham chiếu cho <strong>Polar Array</strong> (xoay nhân bản quanh gốc) và <strong>Maelstrom</strong> (xoắn quanh gốc) — nếu đổi Plane, toàn bộ pattern sẽ xoay/dịch theo.</p>`},
@@ -3079,7 +3079,7 @@ const SEED_DOCS=[
 <li><strong>Maelstrom</strong> — xoắn 1 vùng phẳng quanh tâm theo góc chỉ định (nhóm Curve &gt; Util)</li>
 </ul>
 <h2>Minh họa</h2>
-<div class="cf-img-block" data-cfimgid="tab-curve" data-cfimgtype="image" data-align="center" data-name="tab-curve.svg"><div class="cf-img-wrap"><div class="cf-img-inner"><img style="width:100%;max-width:640px;height:auto;display:block" alt="Curve: đường cong"><div class="cf-img-resize-h left"></div><div class="cf-img-resize-h right"></div></div></div><div class="cf-img-caption"></div></div>
+<div class="cf-img-block" data-cfimgid="tab-curve" data-cfimgtype="image" data-align="center" data-name="tab-curve.svg"><div class="cf-img-wrap"><div class="cf-img-inner" style="width:100%;max-width:640px"><img style="width:100%;height:auto;display:block" alt="Curve: đường cong"><div class="cf-img-resize-h left"></div><div class="cf-img-resize-h right"></div></div></div><div class="cf-img-caption"></div></div>
 <hr>
 <h2>Ví dụ trong dự án Voronoi</h2>
 <p>Đây là tab nền tảng của cả pattern: <strong>Line SDL</strong> tạo tia gốc, <strong>Divide Curve</strong> chia điểm trên từng tia sau khi nhân bản, và mấu chốt nhất — <strong>Maelstrom</strong> bẻ cong các tia toả tròn thành hình xoắn ốc trước khi lấy điểm.</p>`},
@@ -3096,7 +3096,7 @@ const SEED_DOCS=[
 <li><strong>Deconstruct Brep</strong> — tháo khối thành Faces/Edges/Vertices (nhóm Analysis)</li>
 </ul>
 <h2>Minh họa</h2>
-<div class="cf-img-block" data-cfimgid="tab-surface" data-cfimgtype="image" data-align="center" data-name="tab-surface.svg"><div class="cf-img-wrap"><div class="cf-img-inner"><img style="width:100%;max-width:640px;height:auto;display:block" alt="Surface: mặt cong"><div class="cf-img-resize-h left"></div><div class="cf-img-resize-h right"></div></div></div><div class="cf-img-caption"></div></div>
+<div class="cf-img-block" data-cfimgid="tab-surface" data-cfimgtype="image" data-align="center" data-name="tab-surface.svg"><div class="cf-img-wrap"><div class="cf-img-inner" style="width:100%;max-width:640px"><img style="width:100%;height:auto;display:block" alt="Surface: mặt cong"><div class="cf-img-resize-h left"></div><div class="cf-img-resize-h right"></div></div></div><div class="cf-img-caption"></div></div>
 <hr>
 <h2>Ví dụ trong dự án Voronoi</h2>
 <p><strong>Boundary Surfaces</strong> dùng để biến mỗi ô Voronoi (vốn chỉ là đường cong kín) thành 1 mặt phẳng đặc — bước cần thiết trước khi render hoặc xuất bản vẽ 2D.</p>`},
@@ -3112,7 +3112,7 @@ const SEED_DOCS=[
 <li><strong>Mesh Boolean</strong> — cộng/trừ/giao giữa các khối Mesh</li>
 </ul>
 <h2>Minh họa</h2>
-<div class="cf-img-block" data-cfimgid="tab-mesh" data-cfimgtype="image" data-align="center" data-name="tab-mesh.svg"><div class="cf-img-wrap"><div class="cf-img-inner"><img style="width:100%;max-width:640px;height:auto;display:block" alt="Mesh: lưới tam giác"><div class="cf-img-resize-h left"></div><div class="cf-img-resize-h right"></div></div></div><div class="cf-img-caption"></div></div>
+<div class="cf-img-block" data-cfimgid="tab-mesh" data-cfimgtype="image" data-align="center" data-name="tab-mesh.svg"><div class="cf-img-wrap"><div class="cf-img-inner" style="width:100%;max-width:640px"><img style="width:100%;height:auto;display:block" alt="Mesh: lưới tam giác"><div class="cf-img-resize-h left"></div><div class="cf-img-resize-h right"></div></div></div><div class="cf-img-caption"></div></div>
 <hr>
 <h2>Ví dụ trong dự án Voronoi</h2>
 <p>Chính lệnh <strong>Voronoi</strong> (đã có trang riêng trước đây) nằm trong tab Mesh &gt; Triangulation — nhận tập điểm xoắn ốc đã Flatten, chia mặt phẳng thành các ô đa giác đặc trưng của pattern.</p>`},
@@ -3128,7 +3128,7 @@ const SEED_DOCS=[
 <li><strong>Curve Plane</strong> — tìm giao điểm giữa đường cong và mặt phẳng</li>
 </ul>
 <h2>Minh họa</h2>
-<div class="cf-img-block" data-cfimgid="tab-intersect" data-cfimgtype="image" data-align="center" data-name="tab-intersect.svg"><div class="cf-img-wrap"><div class="cf-img-inner"><img style="width:100%;max-width:640px;height:auto;display:block" alt="Intersect: giao nhau"><div class="cf-img-resize-h left"></div><div class="cf-img-resize-h right"></div></div></div><div class="cf-img-caption"></div></div>
+<div class="cf-img-block" data-cfimgid="tab-intersect" data-cfimgtype="image" data-align="center" data-name="tab-intersect.svg"><div class="cf-img-wrap"><div class="cf-img-inner" style="width:100%;max-width:640px"><img style="width:100%;height:auto;display:block" alt="Intersect: giao nhau"><div class="cf-img-resize-h left"></div><div class="cf-img-resize-h right"></div></div></div><div class="cf-img-caption"></div></div>
 <hr>
 <h2>Ví dụ trong dự án Voronoi</h2>
 <p>Không dùng trực tiếp trong pattern 2D, nhưng hữu ích khi phân tích khối 3D "vành xe Voronoi" — dùng <strong>Brep|Plane Section</strong> để cắt lát xem cấu trúc bên trong của vành xe.</p>`},
@@ -3146,7 +3146,7 @@ const SEED_DOCS=[
 <li><strong>Maelstrom</strong> — xoắn vùng phẳng (cũng xuất hiện ở đây do bản chất là 1 phép biến đổi)</li>
 </ul>
 <h2>Minh họa</h2>
-<div class="cf-img-block" data-cfimgid="tab-transform" data-cfimgtype="image" data-align="center" data-name="tab-transform.svg"><div class="cf-img-wrap"><div class="cf-img-inner"><img style="width:100%;max-width:640px;height:auto;display:block" alt="Transform: biến đổi hình học"><div class="cf-img-resize-h left"></div><div class="cf-img-resize-h right"></div></div></div><div class="cf-img-caption"></div></div>
+<div class="cf-img-block" data-cfimgid="tab-transform" data-cfimgtype="image" data-align="center" data-name="tab-transform.svg"><div class="cf-img-wrap"><div class="cf-img-inner" style="width:100%;max-width:640px"><img style="width:100%;height:auto;display:block" alt="Transform: biến đổi hình học"><div class="cf-img-resize-h left"></div><div class="cf-img-resize-h right"></div></div></div><div class="cf-img-caption"></div></div>
 <hr>
 <h2>Ví dụ trong dự án Voronoi</h2>
 <p>2 bước then chốt nhất của toàn bộ pattern đều nằm ở đây: <strong>Polar Array</strong> nhân bản 1 tia gốc thành 32 tia toả tròn, sau đó <strong>Maelstrom</strong> bẻ cong 32 tia đó thành hình xoắn ốc đặc trưng.</p>`},
@@ -3163,7 +3163,7 @@ const SEED_DOCS=[
 <li><strong>Dot</strong> — hiện 1 điểm kèm nhãn text, hay dùng để debug index</li>
 </ul>
 <h2>Minh họa</h2>
-<div class="cf-img-block" data-cfimgid="tab-display" data-cfimgtype="image" data-align="center" data-name="tab-display.svg"><div class="cf-img-wrap"><div class="cf-img-inner"><img style="width:100%;max-width:640px;height:auto;display:block" alt="Display: hiển thị màu sắc"><div class="cf-img-resize-h left"></div><div class="cf-img-resize-h right"></div></div></div><div class="cf-img-caption"></div></div>
+<div class="cf-img-block" data-cfimgid="tab-display" data-cfimgtype="image" data-align="center" data-name="tab-display.svg"><div class="cf-img-wrap"><div class="cf-img-inner" style="width:100%;max-width:640px"><img style="width:100%;height:auto;display:block" alt="Display: hiển thị màu sắc"><div class="cf-img-resize-h left"></div><div class="cf-img-resize-h right"></div></div></div><div class="cf-img-caption"></div></div>
 <hr>
 <h2>Ví dụ trong dự án Voronoi</h2>
 <p><strong>Custom Preview</strong> hữu ích để tô màu Gradient cho các ô Voronoi theo khoảng cách tới tâm — giúp nhìn rõ cấu trúc xoắn ốc trước khi quyết định bake ra Rhino.</p>`},
@@ -3179,7 +3179,7 @@ const SEED_DOCS=[
 <li><strong>Bounding Box</strong> từ object Rhino — lấy kích thước bao ngoài</li>
 </ul>
 <h2>Minh họa</h2>
-<div class="cf-img-block" data-cfimgid="tab-rhino" data-cfimgtype="image" data-align="center" data-name="tab-rhino.svg"><div class="cf-img-wrap"><div class="cf-img-inner"><img style="width:100%;max-width:640px;height:auto;display:block" alt="Rhino: cầu nối 2 chiều"><div class="cf-img-resize-h left"></div><div class="cf-img-resize-h right"></div></div></div><div class="cf-img-caption"></div></div>
+<div class="cf-img-block" data-cfimgid="tab-rhino" data-cfimgtype="image" data-align="center" data-name="tab-rhino.svg"><div class="cf-img-wrap"><div class="cf-img-inner" style="width:100%;max-width:640px"><img style="width:100%;height:auto;display:block" alt="Rhino: cầu nối 2 chiều"><div class="cf-img-resize-h left"></div><div class="cf-img-resize-h right"></div></div></div><div class="cf-img-caption"></div></div>
 <hr>
 <h2>Ví dụ trong dự án Voronoi</h2>
 <p>Sau khi hoàn thiện pattern, dùng <strong>Bake</strong> để xuất toàn bộ các ô Voronoi cuối cùng ra 1 layer riêng trong Rhino — phục vụ in 3D hoặc xuất bản vẽ CAD.</p>`},
@@ -3195,7 +3195,7 @@ const SEED_DOCS=[
 <li><strong>Show</strong> — hiển thị kết quả mô phỏng real-time trên canvas</li>
 </ul>
 <h2>Minh họa</h2>
-<div class="cf-img-block" data-cfimgid="tab-kangaroo2" data-cfimgtype="image" data-align="center" data-name="tab-kangaroo2.svg"><div class="cf-img-wrap"><div class="cf-img-inner"><img style="width:100%;max-width:640px;height:auto;display:block" alt="Kangaroo2: mô phỏng vật lý"><div class="cf-img-resize-h left"></div><div class="cf-img-resize-h right"></div></div></div><div class="cf-img-caption"></div></div>
+<div class="cf-img-block" data-cfimgid="tab-kangaroo2" data-cfimgtype="image" data-align="center" data-name="tab-kangaroo2.svg"><div class="cf-img-wrap"><div class="cf-img-inner" style="width:100%;max-width:640px"><img style="width:100%;height:auto;display:block" alt="Kangaroo2: mô phỏng vật lý"><div class="cf-img-resize-h left"></div><div class="cf-img-resize-h right"></div></div></div><div class="cf-img-caption"></div></div>
 <hr>
 <h2>Ví dụ trong dự án Voronoi</h2>
 <p>Không dùng trong bản pattern phẳng hiện tại (dùng công thức Maelstrom thuần toán học), nhưng nếu muốn làm vành xe Voronoi "phồng" tự nhiên theo lực vật lý thay vì áp đặt công thức, đây là công cụ phù hợp — hướng phát triển tiềm năng cho dự án.</p>`},
@@ -3211,7 +3211,7 @@ const SEED_DOCS=[
 <li><strong>Loop Subdivision</strong> — thuật toán làm mịn khác, tối ưu cho mesh tam giác</li>
 </ul>
 <h2>Minh họa</h2>
-<div class="cf-img-block" data-cfimgid="tab-wb" data-cfimgtype="image" data-align="center" data-name="tab-wb.svg"><div class="cf-img-wrap"><div class="cf-img-inner"><img style="width:100%;max-width:640px;height:auto;display:block" alt="Weaverbird: làm mịn mesh"><div class="cf-img-resize-h left"></div><div class="cf-img-resize-h right"></div></div></div><div class="cf-img-caption"></div></div>
+<div class="cf-img-block" data-cfimgid="tab-wb" data-cfimgtype="image" data-align="center" data-name="tab-wb.svg"><div class="cf-img-wrap"><div class="cf-img-inner" style="width:100%;max-width:640px"><img style="width:100%;height:auto;display:block" alt="Weaverbird: làm mịn mesh"><div class="cf-img-resize-h left"></div><div class="cf-img-resize-h right"></div></div></div><div class="cf-img-caption"></div></div>
 <hr>
 <h2>Ví dụ trong dự án Voronoi</h2>
 <p>Có thể dùng <strong>Catmull-Clark Subdivision</strong> để làm mịn bề mặt khối 3D "vành xe Voronoi" sau khi bake, tạo cảm giác mượt mà hơn thay vì để nguyên các mặt phẳng góc cạnh từ Boundary Surfaces.</p>`}];

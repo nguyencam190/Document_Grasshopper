@@ -143,12 +143,18 @@ nhưng không dùng nó để sửa nữa). Quy trình lấy/ghi file qua API (r
       là mất ảnh, đúng lỗi user báo cáo). Cấu trúc khối cần chèn (xem `_cfBuildImgBlock`):
       ```html
       <div class="cf-img-block" data-cfimgid="{id}" data-cfimgtype="image" data-align="center" data-name="{ten-file}">
-        <div class="cf-img-wrap"><div class="cf-img-inner">
-          <img style="width:100%;max-width:640px;height:auto;display:block" alt="{mo-ta}"><div class="cf-img-resize-h left"></div><div class="cf-img-resize-h right"></div>
+        <div class="cf-img-wrap"><div class="cf-img-inner" style="width:100%;max-width:640px">
+          <img style="width:100%;height:auto;display:block" alt="{mo-ta}"><div class="cf-img-resize-h left"></div><div class="cf-img-resize-h right"></div>
         </div></div>
         <div class="cf-img-caption"></div>
       </div>
       ```
+      **`max-width` PHẢI đặt trên `.cf-img-inner` (khung ngoài), KHÔNG đặt trên `<img>`** — đã từng đặt
+      nhầm ở `<img>`, gây lỗi kép: (1) khung chọn/outline trong editor to hơn hẳn ảnh thật vì
+      `.cf-img-inner` giãn hết cỡ 100% trong khi ảnh bị kẹp nhỏ lại bởi max-width riêng của nó; (2) trên
+      trang export/publish, ảnh bị lệch trái thay vì canh giữa, vì `.cf-img-wrap` canh giữa
+      `.cf-img-inner` (đã chiếm hết 100% chỗ) chứ không canh giữa được `<img>` nằm lọt thỏm bên trong.
+      Đặt `max-width` ở `.cf-img-inner` thì khung ngoài co đúng theo kích thước ảnh, tự canh giữa đúng.
       **BẮT BUỘC có `style="width:...;height:auto;display:block"` ngay trên thẻ `<img>`** — nếu thiếu,
       ảnh vẫn tải đúng dữ liệu (naturalWidth đúng, complete=true) nhưng hiển thị co lại còn ~3×3px gần
       như vô hình (đã tự gặp lỗi thật này, mất nhiều vòng debug mới tìm ra — bình thường app tự đo
