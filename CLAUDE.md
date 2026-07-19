@@ -112,20 +112,28 @@ nhưng không dùng nó để sửa nữa). Quy trình lấy/ghi file qua API (r
    | Sets | List, Sequence, Sets, Text, Tree |
    | Vector | Field, Grid, Plane, Point, Vector |
    | Curve | Analysis, Division, Primitive, Spline, Util |
+   | Surface | Analysis, Freeform, Primitive, SubD, Util |
+   | Mesh | Analysis, Primitive, Triangulation, Util |
+   | Intersect | Mathematical, Physical, Region, Shape |
+   | Transform | Affine, Array, Euclidean, Morph, Util |
+   | Display | Colour, Dimensions, Graphs, Preview, Vector |
 
    Id mỗi trang panel theo mẫu `seed-panel-{tab-slug}-{panel-slug}` (vd `seed-panel-maths-domain`),
-   `parentId` trỏ vào đúng trang tab cha (vd `seed-tab-maths`). **8 tab còn lại (Surface, Mesh,
-   Intersect, Transform, Display, Rhino, Kangaroo2, Wb) CHƯA có panel — vẫn đang chờ user chụp ảnh
-   ribbon thật để xác nhận trước khi tạo**, vì nghiên cứu online (agent) chỉ xác định được TÊN panel
-   khá chắc nhưng KHÔNG xác định được thứ tự trái→phải thật (nguồn chỉ liệt kê theo alphabet), và
-   riêng tab Rhino có khả năng thiếu panel mới của Rhino 8 (dữ liệu tra được là bản Rhino 7/2022) —
-   xem lịch sử hội thoại lúc tạo 5 panel đầu tiên để biết danh sách "khá chắc" đã tra được, dùng làm
-   gợi ý đối chiếu khi user gửi ảnh, không tự ý tạo trang khi chưa có ảnh xác nhận.
+   `parentId` trỏ vào đúng trang tab cha (vd `seed-tab-maths`). **3 tab còn lại (Rhino, Kangaroo2, Wb)
+   CHƯA có panel — vẫn đang chờ user chụp ảnh ribbon thật để xác nhận trước khi tạo**, đặc biệt tab
+   Rhino cần xác nhận riêng vì user dùng Rhino 8 và dữ liệu tra online là bản Rhino 7/2022 (có thể
+   thiếu panel mới). Danh sách "khá chắc" đã tra được từ nghiên cứu online (agent, ưu tiên đối chiếu
+   khi user gửi ảnh, KHÔNG tự ý tạo trang khi chưa có ảnh xác nhận):
+   - Rhino: Annotations, Content, Drafting, Model, Objects, Render, Viewports (bản Rhino 7/2022, thứ
+     tự alphabet — chưa xác nhận, cần ảnh Rhino 8 thật)
+   - Kangaroo2: Goals, Goals-6dof, Goals-Angle, Goals-Co, Goals-Col, Goals-Lin, Goals-Mesh, Goals-On,
+     Goals-Pt, Main, Mesh, Morph, SubD, Triangulation, Utility (15 panel, thứ tự alphabet — chưa xác
+     nhận, chỉ 1 nguồn)
+   - Wb (Weaverbird): Wb Create, Wb Define, Wb Extract, Wb Smoothen, Wb SubD, Wb Transform (thứ tự
+     alphabet — chưa xác nhận, chỉ 1 nguồn)
 
-   Ví dụ: lệnh **Loft** thuộc tab Surface, panel **Freeform** trong Grasshopper thật (đã tra khá chắc
-   nhưng CHƯA xác nhận bằng ảnh) → khi Surface có panel rồi thì `parentId` sẽ trỏ vào
-   `seed-panel-surface-freeform`; trong lúc panel Surface chưa được tạo, tạm thời vẫn dùng
-   `parentId:'seed-tab-surface'` như quy tắc cũ.
+   Ví dụ: lệnh **Loft** thuộc tab Surface, panel **Freeform** đã xác nhận đúng → `parentId` trỏ vào
+   `seed-panel-surface-freeform`.
 
    **Phân loại phải khớp 100% với Grasshopper thật, không được áng chừng/đoán đại.** Trước khi gán
    `parentId`, xác nhận đúng tab mà lệnh nằm trong ribbon Grasshopper thật (ưu tiên tra theo đúng thứ

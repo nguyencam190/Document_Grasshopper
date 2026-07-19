@@ -2986,7 +2986,7 @@ const STORE_KEY='projectdocs_v3';
 // Bump SEED_VERSION any time SEED_DOCS content changes (e.g. a new Grasshopper
 // command page is added) to re-sync all visitors automatically, even ones
 // with old data already saved locally.
-const SEED_VERSION=15;
+const SEED_VERSION=16;
 // Real image assets referenced by SEED_DOCS via data-cfimgid — every visitor's
 // browser needs these in its OWN IndexedDB (see init() below) so images both
 // (a) display correctly, and (b) get recognized by the app's own Optimized
@@ -3251,6 +3251,75 @@ const SEED_DOCS=[
 <hr>
 <h2>Ví dụ trong dự án Voronoi</h2>
 <p><strong>Custom Preview</strong> hữu ích để tô màu Gradient cho các ô Voronoi theo khoảng cách tới tâm — giúp nhìn rõ cấu trúc xoắn ốc trước khi quyết định bake ra Rhino.</p>`},
+  {id:'seed-panel-surface-analysis',title:'Analysis',section:'default',parentId:'seed-tab-surface',images:[],textBoxes:[],createdAt:'2026-07-19T00:00:00.000Z',updatedAt:'2026-07-19T00:00:00.000Z',content:`<h1>Analysis</h1>
+<div class="cf-panel info" contenteditable="false"><span class="cf-panel-icon">ℹ️</span><div class="cf-panel-content" contenteditable="true">Panel trong tab Surface, chứa component đo/phân tích mặt (diện tích, thể tích, độ cong, điểm gần nhất...).</div></div>
+<p><em>Đây là 1 panel (nhóm lệnh con) trong tab Surface của Grasshopper. Các lệnh cụ thể thuộc panel này sẽ được thêm dần vào đây dưới dạng trang con khi được nghiên cứu.</em></p>`},
+  {id:'seed-panel-surface-freeform',title:'Freeform',section:'default',parentId:'seed-tab-surface',images:[],textBoxes:[],createdAt:'2026-07-19T00:00:00.000Z',updatedAt:'2026-07-19T00:00:00.000Z',content:`<h1>Freeform</h1>
+<div class="cf-panel info" contenteditable="false"><span class="cf-panel-icon">ℹ️</span><div class="cf-panel-content" contenteditable="true">Panel trong tab Surface, chứa component dựng mặt tự do phức tạp (Loft, Sweep, Network Surface, Patch...).</div></div>
+<p><em>Đây là 1 panel (nhóm lệnh con) trong tab Surface của Grasshopper. Các lệnh cụ thể thuộc panel này sẽ được thêm dần vào đây dưới dạng trang con khi được nghiên cứu.</em></p>`},
+  {id:'seed-panel-surface-primitive',title:'Primitive',section:'default',parentId:'seed-tab-surface',images:[],textBoxes:[],createdAt:'2026-07-19T00:00:00.000Z',updatedAt:'2026-07-19T00:00:00.000Z',content:`<h1>Primitive</h1>
+<div class="cf-panel info" contenteditable="false"><span class="cf-panel-icon">ℹ️</span><div class="cf-panel-content" contenteditable="true">Panel trong tab Surface, chứa component dựng mặt hình dạng cơ bản (Box, Sphere, Cylinder, Plane Surface...).</div></div>
+<p><em>Đây là 1 panel (nhóm lệnh con) trong tab Surface của Grasshopper. Các lệnh cụ thể thuộc panel này sẽ được thêm dần vào đây dưới dạng trang con khi được nghiên cứu.</em></p>`},
+  {id:'seed-panel-surface-subd',title:'SubD',section:'default',parentId:'seed-tab-surface',images:[],textBoxes:[],createdAt:'2026-07-19T00:00:00.000Z',updatedAt:'2026-07-19T00:00:00.000Z',content:`<h1>SubD</h1>
+<div class="cf-panel info" contenteditable="false"><span class="cf-panel-icon">ℹ️</span><div class="cf-panel-content" contenteditable="true">Panel trong tab Surface, chứa component dựng và chỉnh sửa khối SubD (bề mặt chia nhỏ, bo tròn mượt).</div></div>
+<p><em>Đây là 1 panel (nhóm lệnh con) trong tab Surface của Grasshopper. Các lệnh cụ thể thuộc panel này sẽ được thêm dần vào đây dưới dạng trang con khi được nghiên cứu.</em></p>`},
+  {id:'seed-panel-surface-util',title:'Util',section:'default',parentId:'seed-tab-surface',images:[],textBoxes:[],createdAt:'2026-07-19T00:00:00.000Z',updatedAt:'2026-07-19T00:00:00.000Z',content:`<h1>Util</h1>
+<div class="cf-panel info" contenteditable="false"><span class="cf-panel-icon">ℹ️</span><div class="cf-panel-content" contenteditable="true">Panel trong tab Surface, nhóm các công cụ tiện ích khác cho mặt (Offset, Extend, Merge Surface...).</div></div>
+<p><em>Đây là 1 panel (nhóm lệnh con) trong tab Surface của Grasshopper. Các lệnh cụ thể thuộc panel này sẽ được thêm dần vào đây dưới dạng trang con khi được nghiên cứu.</em></p>`},
+  {id:'seed-panel-mesh-analysis',title:'Analysis',section:'default',parentId:'seed-tab-mesh',images:[],textBoxes:[],createdAt:'2026-07-19T00:00:00.000Z',updatedAt:'2026-07-19T00:00:00.000Z',content:`<h1>Analysis</h1>
+<div class="cf-panel info" contenteditable="false"><span class="cf-panel-icon">ℹ️</span><div class="cf-panel-content" contenteditable="true">Panel trong tab Mesh, chứa component đo/phân tích lưới mesh (diện tích, thể tích, hướng pháp tuyến...).</div></div>
+<p><em>Đây là 1 panel (nhóm lệnh con) trong tab Mesh của Grasshopper. Các lệnh cụ thể thuộc panel này sẽ được thêm dần vào đây dưới dạng trang con khi được nghiên cứu.</em></p>`},
+  {id:'seed-panel-mesh-primitive',title:'Primitive',section:'default',parentId:'seed-tab-mesh',images:[],textBoxes:[],createdAt:'2026-07-19T00:00:00.000Z',updatedAt:'2026-07-19T00:00:00.000Z',content:`<h1>Primitive</h1>
+<div class="cf-panel info" contenteditable="false"><span class="cf-panel-icon">ℹ️</span><div class="cf-panel-content" contenteditable="true">Panel trong tab Mesh, chứa component dựng mesh hình dạng cơ bản (Mesh Box, Mesh Sphere...).</div></div>
+<p><em>Đây là 1 panel (nhóm lệnh con) trong tab Mesh của Grasshopper. Các lệnh cụ thể thuộc panel này sẽ được thêm dần vào đây dưới dạng trang con khi được nghiên cứu.</em></p>`},
+  {id:'seed-panel-mesh-triangulation',title:'Triangulation',section:'default',parentId:'seed-tab-mesh',images:[],textBoxes:[],createdAt:'2026-07-19T00:00:00.000Z',updatedAt:'2026-07-19T00:00:00.000Z',content:`<h1>Triangulation</h1>
+<div class="cf-panel info" contenteditable="false"><span class="cf-panel-icon">ℹ️</span><div class="cf-panel-content" contenteditable="true">Panel trong tab Mesh, chứa component chia tập điểm/mặt thành lưới tam giác (Delaunay Mesh, Voronoi...). Đây chính là nơi lệnh <strong>Voronoi</strong> thực sự nằm trong Grasshopper.</div></div>
+<p><em>Đây là 1 panel (nhóm lệnh con) trong tab Mesh của Grasshopper. Các lệnh cụ thể thuộc panel này sẽ được thêm dần vào đây dưới dạng trang con khi được nghiên cứu.</em></p>`},
+  {id:'seed-panel-mesh-util',title:'Util',section:'default',parentId:'seed-tab-mesh',images:[],textBoxes:[],createdAt:'2026-07-19T00:00:00.000Z',updatedAt:'2026-07-19T00:00:00.000Z',content:`<h1>Util</h1>
+<div class="cf-panel info" contenteditable="false"><span class="cf-panel-icon">ℹ️</span><div class="cf-panel-content" contenteditable="true">Panel trong tab Mesh, nhóm các công cụ tiện ích khác cho mesh (Join Meshes, Weld, Explode...).</div></div>
+<p><em>Đây là 1 panel (nhóm lệnh con) trong tab Mesh của Grasshopper. Các lệnh cụ thể thuộc panel này sẽ được thêm dần vào đây dưới dạng trang con khi được nghiên cứu.</em></p>`},
+  {id:'seed-panel-intersect-mathematical',title:'Mathematical',section:'default',parentId:'seed-tab-intersect',images:[],textBoxes:[],createdAt:'2026-07-19T00:00:00.000Z',updatedAt:'2026-07-19T00:00:00.000Z',content:`<h1>Mathematical</h1>
+<div class="cf-panel info" contenteditable="false"><span class="cf-panel-icon">ℹ️</span><div class="cf-panel-content" contenteditable="true">Panel trong tab Intersect, chứa component tìm giao điểm/giao tuyến kiểu toán học thuần túy giữa đường, mặt, mặt phẳng.</div></div>
+<p><em>Đây là 1 panel (nhóm lệnh con) trong tab Intersect của Grasshopper. Các lệnh cụ thể thuộc panel này sẽ được thêm dần vào đây dưới dạng trang con khi được nghiên cứu.</em></p>`},
+  {id:'seed-panel-intersect-physical',title:'Physical',section:'default',parentId:'seed-tab-intersect',images:[],textBoxes:[],createdAt:'2026-07-19T00:00:00.000Z',updatedAt:'2026-07-19T00:00:00.000Z',content:`<h1>Physical</h1>
+<div class="cf-panel info" contenteditable="false"><span class="cf-panel-icon">ℹ️</span><div class="cf-panel-content" contenteditable="true">Panel trong tab Intersect, chứa component kiểm tra va chạm/tiếp xúc hình học kiểu vật lý thực tế (Collision, Clash...).</div></div>
+<p><em>Đây là 1 panel (nhóm lệnh con) trong tab Intersect của Grasshopper. Các lệnh cụ thể thuộc panel này sẽ được thêm dần vào đây dưới dạng trang con khi được nghiên cứu.</em></p>`},
+  {id:'seed-panel-intersect-region',title:'Region',section:'default',parentId:'seed-tab-intersect',images:[],textBoxes:[],createdAt:'2026-07-19T00:00:00.000Z',updatedAt:'2026-07-19T00:00:00.000Z',content:`<h1>Region</h1>
+<div class="cf-panel info" contenteditable="false"><span class="cf-panel-icon">ℹ️</span><div class="cf-panel-content" contenteditable="true">Panel trong tab Intersect, chứa component giao/hợp/trừ giữa các vùng phẳng khép kín (Region Union, Region Intersection...).</div></div>
+<p><em>Đây là 1 panel (nhóm lệnh con) trong tab Intersect của Grasshopper. Các lệnh cụ thể thuộc panel này sẽ được thêm dần vào đây dưới dạng trang con khi được nghiên cứu.</em></p>`},
+  {id:'seed-panel-intersect-shape',title:'Shape',section:'default',parentId:'seed-tab-intersect',images:[],textBoxes:[],createdAt:'2026-07-19T00:00:00.000Z',updatedAt:'2026-07-19T00:00:00.000Z',content:`<h1>Shape</h1>
+<div class="cf-panel info" contenteditable="false"><span class="cf-panel-icon">ℹ️</span><div class="cf-panel-content" contenteditable="true">Panel trong tab Intersect, chứa component giao/hợp/trừ giữa các khối 3D đặc (Solid Union, Solid Difference...).</div></div>
+<p><em>Đây là 1 panel (nhóm lệnh con) trong tab Intersect của Grasshopper. Các lệnh cụ thể thuộc panel này sẽ được thêm dần vào đây dưới dạng trang con khi được nghiên cứu.</em></p>`},
+  {id:'seed-panel-transform-affine',title:'Affine',section:'default',parentId:'seed-tab-transform',images:[],textBoxes:[],createdAt:'2026-07-19T00:00:00.000Z',updatedAt:'2026-07-19T00:00:00.000Z',content:`<h1>Affine</h1>
+<div class="cf-panel info" contenteditable="false"><span class="cf-panel-icon">ℹ️</span><div class="cf-panel-content" contenteditable="true">Panel trong tab Transform, chứa các phép biến đổi tuyến tính có thể làm đổi tỉ lệ/góc (Scale, Shear, Orient...).</div></div>
+<p><em>Đây là 1 panel (nhóm lệnh con) trong tab Transform của Grasshopper. Các lệnh cụ thể thuộc panel này sẽ được thêm dần vào đây dưới dạng trang con khi được nghiên cứu.</em></p>`},
+  {id:'seed-panel-transform-array',title:'Array',section:'default',parentId:'seed-tab-transform',images:[],textBoxes:[],createdAt:'2026-07-19T00:00:00.000Z',updatedAt:'2026-07-19T00:00:00.000Z',content:`<h1>Array</h1>
+<div class="cf-panel info" contenteditable="false"><span class="cf-panel-icon">ℹ️</span><div class="cf-panel-content" contenteditable="true">Panel trong tab Transform, chứa component nhân bản đối tượng theo mẫu lặp (Linear Array, Rectangular Array, Polar Array...).</div></div>
+<p><em>Đây là 1 panel (nhóm lệnh con) trong tab Transform của Grasshopper. Các lệnh cụ thể thuộc panel này sẽ được thêm dần vào đây dưới dạng trang con khi được nghiên cứu.</em></p>`},
+  {id:'seed-panel-transform-euclidean',title:'Euclidean',section:'default',parentId:'seed-tab-transform',images:[],textBoxes:[],createdAt:'2026-07-19T00:00:00.000Z',updatedAt:'2026-07-19T00:00:00.000Z',content:`<h1>Euclidean</h1>
+<div class="cf-panel info" contenteditable="false"><span class="cf-panel-icon">ℹ️</span><div class="cf-panel-content" contenteditable="true">Panel trong tab Transform, chứa các phép biến đổi giữ nguyên hình dạng/kích thước gốc (Move, Rotate, Mirror...).</div></div>
+<p><em>Đây là 1 panel (nhóm lệnh con) trong tab Transform của Grasshopper. Các lệnh cụ thể thuộc panel này sẽ được thêm dần vào đây dưới dạng trang con khi được nghiên cứu.</em></p>`},
+  {id:'seed-panel-transform-morph',title:'Morph',section:'default',parentId:'seed-tab-transform',images:[],textBoxes:[],createdAt:'2026-07-19T00:00:00.000Z',updatedAt:'2026-07-19T00:00:00.000Z',content:`<h1>Morph</h1>
+<div class="cf-panel info" contenteditable="false"><span class="cf-panel-icon">ℹ️</span><div class="cf-panel-content" contenteditable="true">Panel trong tab Transform, chứa component biến dạng hình học theo khuôn/hộp tham chiếu (Box Morph, Surface Morph, Blend...).</div></div>
+<p><em>Đây là 1 panel (nhóm lệnh con) trong tab Transform của Grasshopper. Các lệnh cụ thể thuộc panel này sẽ được thêm dần vào đây dưới dạng trang con khi được nghiên cứu.</em></p>`},
+  {id:'seed-panel-transform-util',title:'Util',section:'default',parentId:'seed-tab-transform',images:[],textBoxes:[],createdAt:'2026-07-19T00:00:00.000Z',updatedAt:'2026-07-19T00:00:00.000Z',content:`<h1>Util</h1>
+<div class="cf-panel info" contenteditable="false"><span class="cf-panel-icon">ℹ️</span><div class="cf-panel-content" contenteditable="true">Panel trong tab Transform, nhóm các công cụ tiện ích khác cho biến đổi hình học.</div></div>
+<p><em>Đây là 1 panel (nhóm lệnh con) trong tab Transform của Grasshopper. Các lệnh cụ thể thuộc panel này sẽ được thêm dần vào đây dưới dạng trang con khi được nghiên cứu.</em></p>`},
+  {id:'seed-panel-display-colour',title:'Colour',section:'default',parentId:'seed-tab-display',images:[],textBoxes:[],createdAt:'2026-07-19T00:00:00.000Z',updatedAt:'2026-07-19T00:00:00.000Z',content:`<h1>Colour</h1>
+<div class="cf-panel info" contenteditable="false"><span class="cf-panel-icon">ℹ️</span><div class="cf-panel-content" contenteditable="true">Panel trong tab Display, chứa component tạo/tách màu sắc dùng cho hiển thị (Colour Swatch, Gradient, HSL/HSV...).</div></div>
+<p><em>Đây là 1 panel (nhóm lệnh con) trong tab Display của Grasshopper. Các lệnh cụ thể thuộc panel này sẽ được thêm dần vào đây dưới dạng trang con khi được nghiên cứu.</em></p>`},
+  {id:'seed-panel-display-dimensions',title:'Dimensions',section:'default',parentId:'seed-tab-display',images:[],textBoxes:[],createdAt:'2026-07-19T00:00:00.000Z',updatedAt:'2026-07-19T00:00:00.000Z',content:`<h1>Dimensions</h1>
+<div class="cf-panel info" contenteditable="false"><span class="cf-panel-icon">ℹ️</span><div class="cf-panel-content" contenteditable="true">Panel trong tab Display, chứa component tạo chú thích kích thước/nhãn hiển thị trực tiếp trên viewport Rhino (Dimension, Tag...).</div></div>
+<p><em>Đây là 1 panel (nhóm lệnh con) trong tab Display của Grasshopper. Các lệnh cụ thể thuộc panel này sẽ được thêm dần vào đây dưới dạng trang con khi được nghiên cứu.</em></p>`},
+  {id:'seed-panel-display-graphs',title:'Graphs',section:'default',parentId:'seed-tab-display',images:[],textBoxes:[],createdAt:'2026-07-19T00:00:00.000Z',updatedAt:'2026-07-19T00:00:00.000Z',content:`<h1>Graphs</h1>
+<div class="cf-panel info" contenteditable="false"><span class="cf-panel-icon">ℹ️</span><div class="cf-panel-content" contenteditable="true">Panel trong tab Display, chứa component vẽ biểu đồ trực quan hoá dữ liệu (Bar Graph, Histogram...).</div></div>
+<p><em>Đây là 1 panel (nhóm lệnh con) trong tab Display của Grasshopper. Các lệnh cụ thể thuộc panel này sẽ được thêm dần vào đây dưới dạng trang con khi được nghiên cứu.</em></p>`},
+  {id:'seed-panel-display-preview',title:'Preview',section:'default',parentId:'seed-tab-display',images:[],textBoxes:[],createdAt:'2026-07-19T00:00:00.000Z',updatedAt:'2026-07-19T00:00:00.000Z',content:`<h1>Preview</h1>
+<div class="cf-panel info" contenteditable="false"><span class="cf-panel-icon">ℹ️</span><div class="cf-panel-content" contenteditable="true">Panel trong tab Display, chứa component điều khiển cách geometry hiển thị trên viewport (Custom Preview, Colour Wireframe...).</div></div>
+<p><em>Đây là 1 panel (nhóm lệnh con) trong tab Display của Grasshopper. Các lệnh cụ thể thuộc panel này sẽ được thêm dần vào đây dưới dạng trang con khi được nghiên cứu.</em></p>`},
+  {id:'seed-panel-display-vector',title:'Vector',section:'default',parentId:'seed-tab-display',images:[],textBoxes:[],createdAt:'2026-07-19T00:00:00.000Z',updatedAt:'2026-07-19T00:00:00.000Z',content:`<h1>Vector</h1>
+<div class="cf-panel info" contenteditable="false"><span class="cf-panel-icon">ℹ️</span><div class="cf-panel-content" contenteditable="true">Panel trong tab Display, chứa component hiển thị trực quan vector/trường vector trên viewport.</div></div>
+<p><em>Đây là 1 panel (nhóm lệnh con) trong tab Display của Grasshopper. Các lệnh cụ thể thuộc panel này sẽ được thêm dần vào đây dưới dạng trang con khi được nghiên cứu.</em></p>`},
   {id:'seed-tab-rhino',title:'Rhino',section:'default',parentId:'seed-grasshopper',images:[],textBoxes:[],createdAt:'2026-07-18T00:00:00.000Z',updatedAt:'2026-07-18T00:00:00.000Z',content:`<h1>Rhino</h1>
 <div class="cf-panel info" contenteditable="false"><span class="cf-panel-icon">ℹ️</span><div class="cf-panel-content" contenteditable="true">🟢 Cơ bản — Cầu nối dữ liệu giữa Grasshopper và file Rhino.</div></div>
 <h2>Chức năng</h2>
