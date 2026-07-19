@@ -202,6 +202,18 @@ nhưng không dùng nó để sửa nữa). Quy trình lấy/ghi file qua API (r
       `DELETE /repos/.../contents/{path}` kèm `sha` hiện tại, tránh rác thừa trong repo.
    j. Bump `SEED_VERSION`, `PUT Grasshopper.html` như bước 5 cũ.
 
+**Trang cha riêng cho nội dung Step-by-step (quy trình dựng mẫu từ video):**
+Khác với trang tham khảo 1 component đơn lẻ (nhét vào 1 trong 13 trang danh mục ở trên), nội dung
+**step-by-step dựng nguyên 1 mẫu/pattern** (đúc kết từ video user quay + tải lên `Video/`) đi vào
+**1 trang cha riêng, ngang hàng với trang gốc "Grasshopper"**:
+
+- id: `seed-step-by-step`, title: **"Hướng dẫn dựng mẫu (Step-by-step)"**, `parentId: null`.
+- Mọi trang step-by-step mới (mỗi video/mẫu 1 trang con) đặt `parentId:'seed-step-by-step'`, đặt tên
+  theo mẫu `[Tên mẫu] — Quy trình dựng từng bước`.
+- Không áp dụng quy tắc phân loại theo 13 tab GH cho loại trang này (vì đây là quy trình phối hợp
+  nhiều component, không phải tài liệu 1 component).
+- Vẫn áp dụng Bước 0 (kiểm tra trùng) trước khi tạo trang mới trong nhóm này.
+
 **Chi tiết kỹ thuật quan trọng (để không lặp lại lỗi):**
 - **Đã sửa lỗi app tự làm mất chất lượng SVG khi export**: hàm `_compressForExportBlob()` trong
   `Grasshopper.html` trước đây rasterize MỌI ảnh qua canvas ở chế độ "Nén ảnh tự động" (mặc định),
