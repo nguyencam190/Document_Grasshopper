@@ -2986,18 +2986,49 @@ const STORE_KEY='projectdocs_v3';
 // Bump SEED_VERSION any time SEED_DOCS content changes (e.g. a new Grasshopper
 // command page is added) to re-sync all visitors automatically, even ones
 // with old data already saved locally.
-const SEED_VERSION=39;
+const SEED_VERSION=40;
 // Real image assets referenced by SEED_DOCS via data-cfimgid — every visitor's
 // browser needs these in its OWN IndexedDB (see init() below) so images both
 // (a) display correctly, and (b) get recognized by the app's own Optimized
 // Website export if the user runs Publish themselves later.
-const SEED_ASSETS={'tab-params':'svg','tab-maths':'svg','tab-sets':'svg','tab-vector':'svg','tab-curve':'svg','tab-surface':'svg','tab-mesh':'svg','tab-intersect':'svg','tab-transform':'svg','tab-display':'svg','tab-rhino':'svg','tab-kangaroo2':'svg','tab-wb':'svg','fitloft2':'svg','extrude2':'svg','fitloft-workflow2':'svg','extrude-workflow2':'svg','series':'svg','series-workflow':'svg','point':'svg','point-workflow':'svg','coincident':'svg','coincident-workflow':'svg','maelstrom':'svg','maelstrom-workflow':'svg','maelstrom-example':'svg','domain':'svg','domain-workflow':'svg','domain-example':'svg','fitloft-example2':'svg','extrude-example2':'svg','series-example2':'svg','point-example2':'svg','coincident-example2':'svg','datatree':'svg','expression':'svg','setnumber':'svg','paramprops-pattern-example':'svg'};
+const SEED_ASSETS={'tab-params':'svg','tab-maths':'svg','tab-sets':'svg','tab-vector':'svg','tab-curve':'svg','tab-surface':'svg','tab-mesh':'svg','tab-intersect':'svg','tab-transform':'svg','tab-display':'svg','tab-rhino':'svg','tab-kangaroo2':'svg','tab-wb':'svg','fitloft2':'svg','extrude2':'svg','fitloft-workflow2':'svg','extrude-workflow2':'svg','series':'svg','series-workflow':'svg','point':'svg','point-workflow':'svg','coincident':'svg','coincident-workflow':'svg','maelstrom':'svg','maelstrom-workflow':'svg','maelstrom-example':'svg','domain':'svg','domain-workflow':'svg','domain-example':'svg','fitloft-example2':'svg','extrude-example2':'svg','series-example2':'svg','point-example2':'svg','coincident-example2':'svg','datatree':'svg','expression':'svg','setnumber':'svg','paramprops-pattern-example':'svg','rimprofile-stations':'svg'};
 // Default project logo baked into the seed (path in the repo, not an IDB-blob id like
 // SEED_ASSETS — headerLogo/projectLogo store a data: URL directly in state, see init()).
 const SEED_HEADER_LOGO='assets/images/logo-grasshopper.png';
 const SEED_DOCS=[
   {id:'seed-grasshopper',title:'Grasshopper',section:'default',parentId:null,content:'',images:[],textBoxes:[],createdAt:'2026-07-18T00:00:00.000Z',updatedAt:'2026-07-18T00:00:00.000Z'},
   {id:'seed-step-by-step',title:'Example Step-by-Step',section:'default',parentId:null,content:'',images:[],textBoxes:[],createdAt:'2026-07-19T00:00:00.000Z',updatedAt:'2026-07-19T00:00:00.000Z'},
+  {id:'seed-step-rimprofile',locked:true,title:'Voronoi Alpha 1 Wheel — Dựng Profile Vành (Rim Profile)',section:'default',parentId:'seed-step-by-step',images:[],textBoxes:[],createdAt:'2026-07-19T00:00:00.000Z',updatedAt:'2026-07-19T00:00:00.000Z',content:`<h1>Voronoi Alpha 1 Wheel — Dựng Profile Vành (Rim Profile)</h1>
+<div class="cf-panel info" contenteditable="false"><span class="cf-panel-icon">ℹ️</span><div class="cf-panel-content" contenteditable="true">🟡 Trung bình — Phân tích từ video "Parametric Design - Voronoi Alpha 1" (Handlebar3D, tác giả Raymundo Burgueno). Chỉ phân tích phần dựng PROFILE vành, chưa gồm phần tạo pattern Voronoi bề mặt.</div></div>
+<p><strong>Nguồn:</strong> video quảng bá ngắn (~2.5 phút), không phải tutorial từng bước — không có lời giảng/phụ đề, phân tích hoàn toàn qua hình ảnh canvas Grasshopper xuất hiện trong video. Video showcase 1 mẫu vành xe Voronoi dùng custom UI panel (Human UI) điều khiển tham số.</p>
+
+<h2>Cấu trúc tổng quan</h2>
+<p>Definition tách profile vành thành 2 cụm (cluster) độc lập, mỗi cụm có 1 nhóm slider tham số riêng:</p>
+<ol>
+<li><strong>Builds Center Curves</strong> — hình học chức năng: lỗ tâm trục, vòng bu-lông, ổ trục. Đây là kích thước phải khớp hub xe thật, không thuần thẩm mỹ.</li>
+<li><strong>Builds Backside Curves</strong> — profile thành vành (mặt cắt nhìn nghiêng), quyết định hình dáng thẩm mỹ chính của vành.</li>
+</ol>
+
+<h2>Bước 1: Builds Center Curves</h2>
+<p>4 input: <strong>Center Bore</strong> (đường kính lỗ tâm), <strong>Center Offset</strong> (+ toggle Outboard/Inboard), <strong>Lug Diameter</strong> (đường kính vòng bu-lông), <strong>Lug Clearance</strong> (khoảng hở).</p>
+<p>Mỗi giá trị đi qua Multiplication/Addition để tính toạ độ, rồi đưa vào <strong>Construct Plane</strong> — dựng 1 mặt phẳng làm việc tại đúng vị trí đó dọc trục bánh xe. 3 mặt phẳng liên tiếp (Center Bore, Center Bore Back, Axle Pad Height) được nối bằng Line (2Pt) thành 2 đường tham chiếu đặt tên <strong>"Center Bore"</strong> và <strong>"Axle Pad"</strong> — 2 đường này được dùng lại ở Bước 2.</p>
+
+<h2>Bước 2: Builds Backside Curves</h2>
+<p>4 input: <strong>Center Width</strong>, <strong>Middle Width</strong>, <strong>Top Width</strong> (độ rộng thành vành tại 3 trạm khác nhau dọc profile), <strong>Backside Middle Fillet</strong> (độ bo góc).</p>
+<p>Kỹ thuật cốt lõi nằm trong cụm con <strong>"Calculates Mid Vector"</strong>:</p>
+<ol>
+<li>2× <strong>Vector 2Pt</strong> tính vector nối giữa các điểm-trạm liền kề (Center→Middle là V1, Middle→Top là V2).</li>
+<li><strong>Angle</strong> đo góc giữa V1 và V2 tại điểm-trạm giữa.</li>
+<li>Góc đó đưa vào <strong>Amplitude</strong> để tính độ bo góc/chuyển tiếp — bo góc THÍCH ỨNG theo hình học thực tế tại từng điểm, không phải 1 bán kính cố định.</li>
+</ol>
+<p>Sau đó tách riêng <strong>Inner Thickness</strong> và <strong>Outer Thickness</strong> (vì thành vành thật rỗng — 2 lớp trong/ngoài, không phải khối đặc), rồi nhân đôi mọi thứ thành cặp <strong>Main Side/Mirror Side</strong> và <strong>Main Backside/Mirror Backside</strong> để lấy nửa còn lại bằng Mirror thay vì vẽ tay.</p>
+<div class="cf-img-block" data-cfimgid="rimprofile-stations" data-cfimgtype="image" data-align="center" data-name="stations.svg"><div class="cf-img-wrap"><div class="cf-img-inner" style="width:100%;max-width:640px"><img style="width:100%;height:auto;display:block" alt="Profile vành dựng qua 3 trạm Center/Middle/Top Width, vector V1 V2 nối các trạm, góc giữa V1 V2 điều khiển Amplitude bo góc, sau đó Mirror lấy nửa còn lại"><div class="cf-img-resize-h left"></div><div class="cf-img-resize-h right"></div></div></div><div class="cf-img-caption"></div></div>
+
+<h2>Nguyên lý cốt lõi</h2>
+<p>Đây là kỹ thuật <strong>"profile theo trạm" (station-based profile)</strong>: thay vì vẽ 1 đường cong cố định, định nghĩa vài giá trị Width/Offset đặt tên tại các trạm mốc, dựng Plane tại mỗi trạm bằng phép toán đơn giản trên chính các giá trị đó, rồi dùng <strong>Vector 2Pt + Angle + Amplitude</strong> để máy tự tính độ bo góc theo hình học cục bộ. Đây là lý do panel bên phải ghi được "Any Wheel size" — đổi 1 slider là toàn bộ hệ trạm scale/bo lại theo, không vỡ hình như khi chỉnh tay 1 curve cố định.</p>
+
+<hr>
+<div class="cf-panel warning" contenteditable="false"><span class="cf-panel-icon">⚠️</span><div class="cf-panel-content" contenteditable="true">Phân tích dựa trên hình ảnh canvas độ phân giải thấp trong video quảng bá, KHÔNG phải file .gh gốc hay tutorial có lời giảng. Tên cụm/label (Builds Center Curves, Calculates Mid Vector...) đọc trực tiếp từ caption trong video nên chính xác; tên component cụ thể bên trong (Vector 2Pt, Angle, Construct Plane...) suy luận từ icon + số cổng khớp, độ tin cậy cao nhưng không tuyệt đối 100%. Không tái tạo được toàn bộ dây nối chi tiết do độ phân giải giới hạn.</div></div>`},
   {id:'seed-param-properties',locked:true,title:'Thuộc tính Param & Data Tree',section:'default',parentId:null,images:[],textBoxes:[],createdAt:'2026-07-19T00:00:00.000Z',updatedAt:'2026-07-19T00:00:00.000Z',content:`<h1>Thuộc tính Param & Data Tree</h1>
 <div class="cf-panel info" contenteditable="false"><span class="cf-panel-icon">ℹ️</span><div class="cf-panel-content" contenteditable="true">Các mục right-click xuất hiện trên HẦU HẾT Param (Number, Point, Curve...) trong Grasshopper — không thuộc riêng 1 component nào, mà là công cụ quản lý dữ liệu dùng xuyên suốt mọi lúc.</div></div>
 <p>Đây là menu chuột phải chuẩn xuất hiện khi right-click vào 1 Param hoặc 1 cổng input/output của component (vd Number, Point, Curve...). Vì các thuộc tính này lặp lại ở gần như mọi Param, trang này tổng hợp riêng thay vì lặp lại trong từng trang component.</p>
