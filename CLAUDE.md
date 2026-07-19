@@ -1,4 +1,4 @@
-# Dự án: Grasshopper Voronoi Pattern
+# Dự án: Grasshopper
 
 Dự án Rhino + Grasshopper tạo pattern Voronoi dạng **hoa hướng dương / xoắn ốc (phyllotaxis)**.
 
