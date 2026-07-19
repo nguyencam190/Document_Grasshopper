@@ -237,6 +237,12 @@ Khác với trang tham khảo 1 component đơn lẻ (nhét vào 1 trong 13 tran
   '100%'`) rồi nối vào cssText mới thay vì ghi đè mất, ở cả 2 hàm export. Khi debug lỗi ảnh không
   hiện ra ở bản export/publish (khác với bản xem trực tiếp trên GitHub Pages), luôn nghi ngờ style bị
   ghi đè kiểu này trước.
+- **Bug tiếp theo trong CHÍNH fix ở trên (đã sửa lần 2)**: lần sửa đầu chỉ giữ lại `width`, nhưng vẫn
+  hardcode cứng `max-width:100%` trong cssText mới — vô tình xoá mất `max-width:640px` (giá trị đã
+  tăng lên khi phóng to ảnh minh họa), khiến ảnh export vẫn nhỏ hơn mong đợi dù không còn collapse
+  ~3px nữa. Bài học: khi ảnh gốc có CẢ `width` LẪN `max-width` set riêng (không phải 1 giá trị chung),
+  bản export phải giữ lại **toàn bộ 2 thuộc tính đó**, không chỉ 1 — đã sửa bằng cách đọc thêm
+  `const _origMaxW=media.style.maxWidth||'100%'` và dùng cả 2 biến khi build cssText mới.
 
 ## Git workflow
 User muốn mọi commit trong repo này **push/merge thẳng vào nhánh `main`**, không giữ lại lâu trên
