@@ -258,8 +258,19 @@
 <text x="1150" y="24" font-family="Consolas, monospace" font-size="12" fill="#555">Front</text>
 <path d="M 1235.0,363.0 C 1232.8,359.7 1225.3,356.3 1222.0,343.0 C 1218.7,329.7 1207.0,300.0 1215.0,283.0 C 1223.0,266.0 1250.8,248.5 1270.0,241.0 C 1289.2,233.5 1320.0,238.5 1330.0,238.0 C 1340.0,238.5 1370.8,233.5 1390.0,241.0 C 1409.2,248.5 1437.0,266.0 1445.0,283.0 C 1453.0,300.0 1441.3,329.7 1438.0,343.0 C 1434.7,356.3 1427.2,359.7 1425.0,363.0" fill="none" stroke="#222222" stroke-width="2.2"/>
 <path d="M 1242.6,363.4 C 1240.6,360.4 1233.7,357.3 1230.6,345.0 C 1227.6,332.8 1216.8,305.5 1224.2,289.8 C 1231.6,274.2 1257.2,258.1 1274.8,251.2 C 1292.4,244.3 1320.8,248.9 1330.0,248.4 C 1339.2,248.9 1367.6,244.3 1385.2,251.2 C 1402.8,258.1 1428.4,274.2 1435.8,289.8 C 1443.2,305.5 1432.4,332.8 1429.4,345.0 C 1426.3,357.3 1419.4,360.4 1417.4,363.4" fill="none" stroke="#1f8a8a" stroke-width="1.6"/>
+<circle cx="1330.0" cy="238.0" r="4.5" fill="#c0392b" stroke="#FFFFFF" stroke-width="1.2"/>
+<text x="1330.0" y="224.0" text-anchor="middle" font-size="12" font-weight="700" fill="#c0392b">P0</text>
+<circle cx="1390.0" cy="241.0" r="4.5" fill="#c0392b" stroke="#FFFFFF" stroke-width="1.2"/>
+<text x="1400.0" y="231.0" text-anchor="start" font-size="12" font-weight="700" fill="#c0392b">P1</text>
+<circle cx="1445.0" cy="283.0" r="4.5" fill="#c0392b" stroke="#FFFFFF" stroke-width="1.2"/>
+<text x="1457.0" y="287.0" text-anchor="start" font-size="12" font-weight="700" fill="#c0392b">P2</text>
+<circle cx="1438.0" cy="343.0" r="4.5" fill="#c0392b" stroke="#FFFFFF" stroke-width="1.2"/>
+<text x="1450.0" y="347.0" text-anchor="start" font-size="12" font-weight="700" fill="#c0392b">P3</text>
+<circle cx="1425.0" cy="363.0" r="4.5" fill="#c0392b" stroke="#FFFFFF" stroke-width="1.2"/>
+<text x="1437.0" y="377.0" text-anchor="start" font-size="12" font-weight="700" fill="#c0392b">P4</text>
 <line x1="1160" y1="363" x2="1500" y2="363" stroke="#D0D0D0" stroke-width="1"/>
 <text x="1150" y="390" font-size="10.5" fill="#222">Đường đen: profile gốc (sau Mirror)</text>
 <text x="1150" y="406" font-size="10.5" fill="#1f8a8a">Đường xanh ngọc: Offset Curve (viền trong)</text>
+<text x="1150" y="426" font-size="10" fill="#c0392b">Chấm đỏ: vị trí P0..P4 (nửa bên phải, trước Mirror)</text>
 
 </svg>
