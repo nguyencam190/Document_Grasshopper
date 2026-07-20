@@ -1,0 +1,50 @@
+<svg width="700" height="300" viewBox="0 0 700 300" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, Arial, sans-serif">
+<defs>
+  <linearGradient id="ghBody" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0%" stop-color="#F0F0F0"/>
+    <stop offset="100%" stop-color="#D8D8D8"/>
+  </linearGradient>
+  <pattern id="dg" width="18" height="18" patternUnits="userSpaceOnUse">
+    <circle cx="1" cy="1" r="1" fill="#E0E0DA"/>
+  </pattern>
+</defs>
+<rect x="0" y="0" width="700" height="300" fill="#FAFAF7"/>
+<rect x="0" y="0" width="700" height="300" fill="url(#dg)"/>
+
+<!-- A slider -->
+<rect x="20" y="70" width="140" height="34" rx="5" fill="#F0F0F0" stroke="#8C8C8C"/>
+<rect x="28" y="81" width="70" height="10" rx="3" fill="#E4E4E4" stroke="#B0B0B0"/>
+<circle cx="80" cy="86" r="5" fill="#8C8C8C"/>
+<text x="152" y="91" text-anchor="end" font-size="10" fill="#333">A = 7</text>
+<rect x="158" y="80" width="10" height="14" rx="3" fill="#E8E8E8" stroke="#8C8C8C"/><circle cx="163" cy="87" r="2.3" fill="#4A4A4A"/>
+
+<!-- B slider -->
+<rect x="20" y="140" width="140" height="34" rx="5" fill="#F0F0F0" stroke="#8C8C8C"/>
+<rect x="28" y="151" width="70" height="10" rx="3" fill="#E4E4E4" stroke="#B0B0B0"/>
+<circle cx="45" cy="156" r="5" fill="#8C8C8C"/>
+<text x="152" y="161" text-anchor="end" font-size="10" fill="#333">B = 3</text>
+<rect x="158" y="150" width="10" height="14" rx="3" fill="#E8E8E8" stroke="#8C8C8C"/><circle cx="163" cy="157" r="2.3" fill="#4A4A4A"/>
+
+<path d="M 163,87 C 195,87 195,110 222,110" stroke="#4A4A4A" stroke-width="1.4" fill="none"/>
+<path d="M 163,157 C 195,157 195,134 222,134" stroke="#4A4A4A" stroke-width="1.4" fill="none"/>
+
+<!-- Modulus box x=230 y=70 w=150 h=100 -->
+<g>
+  <rect x="230" y="70" width="150" height="100" rx="6" fill="url(#ghBody)" stroke="#8C8C8C" stroke-width="1.2"/>
+  <text x="305" y="95" text-anchor="middle" font-size="13" font-weight="bold" fill="#222">Modulus</text>
+  <line x1="245" y1="103" x2="365" y2="103" stroke="#B5B5B0" stroke-width="1"/>
+  <rect x="222" y="103" width="10" height="14" rx="3" fill="#E8E8E8" stroke="#8C8C8C"/><circle cx="227" cy="110" r="2.3" fill="#4A4A4A"/>
+  <text x="240" y="114" font-size="11" fill="#333">A</text>
+  <rect x="222" y="127" width="10" height="14" rx="3" fill="#E8E8E8" stroke="#8C8C8C"/><circle cx="227" cy="134" r="2.3" fill="#4A4A4A"/>
+  <text x="240" y="138" font-size="11" fill="#333">B</text>
+  <rect x="378" y="115" width="10" height="14" rx="3" fill="#E8E8E8" stroke="#8C8C8C"/><circle cx="383" cy="122" r="2.3" fill="#4A4A4A"/>
+  <text x="368" y="118" text-anchor="end" font-size="11" fill="#333">R</text>
+</g>
+
+<path d="M 388,122 C 405,122 405,122 420,122" stroke="#4A4A4A" stroke-width="1.4" fill="none"/>
+<rect x="422" y="105" width="70" height="34" fill="#FFFFFF" stroke="#8C8C8C" stroke-width="1"/>
+<text x="457" y="126" text-anchor="middle" font-size="14" fill="#222">1</text>
+
+<text x="20" y="220" font-size="12.5" fill="#333">Modulus chia A cho B, trả về phần dư (7 ÷ 3 = 2 dư 1 → R=1)</text>
+<text x="20" y="242" font-size="11" fill="#555">Khác Division — Division trả về thương số (2.33), Modulus chỉ lấy phần dư.</text>
+</svg>

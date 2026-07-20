@@ -2986,12 +2986,12 @@ const STORE_KEY='projectdocs_v3';
 // Bump SEED_VERSION any time SEED_DOCS content changes (e.g. a new Grasshopper
 // command page is added) to re-sync all visitors automatically, even ones
 // with old data already saved locally.
-const SEED_VERSION=46;
+const SEED_VERSION=47;
 // Real image assets referenced by SEED_DOCS via data-cfimgid — every visitor's
 // browser needs these in its OWN IndexedDB (see init() below) so images both
 // (a) display correctly, and (b) get recognized by the app's own Optimized
 // Website export if the user runs Publish themselves later.
-const SEED_ASSETS={'tab-params':'svg','tab-maths':'svg','tab-sets':'svg','tab-vector':'svg','tab-curve':'svg','tab-surface':'svg','tab-mesh':'svg','tab-intersect':'svg','tab-transform':'svg','tab-display':'svg','tab-rhino':'svg','tab-kangaroo2':'svg','tab-wb':'svg','fitloft2':'svg','extrude2':'svg','fitloft-workflow2':'svg','extrude-workflow2':'svg','series':'svg','series-workflow':'svg','point':'svg','point-workflow':'svg','coincident':'svg','coincident-workflow':'svg','maelstrom':'svg','maelstrom-workflow':'svg','maelstrom-example':'svg','domain':'svg','domain-workflow':'svg','domain-example':'svg','fitloft-example2':'svg','extrude-example2':'svg','series-example2':'svg','point-example2':'svg','coincident-example2':'svg','datatree':'svg','expression':'svg','setnumber':'svg','paramprops-pattern-example':'svg','rimprofile-stations':'svg','rimprofile-buildsteps':'svg','shatter':'svg','shatter-workflow':'svg','shatter-example':'svg','curveclosestpoint':'svg','curveclosestpoint-workflow':'svg','curveclosestpoint-example':'svg','tireprofile-stations':'svg','tireprofile-stations2':'svg','tireprofile-stations3':'svg','tireprofile-stations4':'svg'};
+const SEED_ASSETS={'tab-params':'svg','tab-maths':'svg','tab-sets':'svg','tab-vector':'svg','tab-curve':'svg','tab-surface':'svg','tab-mesh':'svg','tab-intersect':'svg','tab-transform':'svg','tab-display':'svg','tab-rhino':'svg','tab-kangaroo2':'svg','tab-wb':'svg','fitloft2':'svg','extrude2':'svg','fitloft-workflow2':'svg','extrude-workflow2':'svg','series':'svg','series-workflow':'svg','point':'svg','point-workflow':'svg','coincident':'svg','coincident-workflow':'svg','maelstrom':'svg','maelstrom-workflow':'svg','maelstrom-example':'svg','domain':'svg','domain-workflow':'svg','domain-example':'svg','fitloft-example2':'svg','extrude-example2':'svg','series-example2':'svg','point-example2':'svg','coincident-example2':'svg','datatree':'svg','expression':'svg','setnumber':'svg','paramprops-pattern-example':'svg','rimprofile-stations':'svg','rimprofile-buildsteps':'svg','shatter':'svg','shatter-workflow':'svg','shatter-example':'svg','curveclosestpoint':'svg','curveclosestpoint-workflow':'svg','curveclosestpoint-example':'svg','tireprofile-stations':'svg','tireprofile-stations2':'svg','tireprofile-stations3':'svg','tireprofile-stations4':'svg','multiplication':'svg','multiplication-workflow':'svg','multiplication-example':'svg','modulus':'svg','modulus-workflow':'svg','modulus-example':'svg'};
 // Default project logo baked into the seed (path in the repo, not an IDB-blob id like
 // SEED_ASSETS — headerLogo/projectLogo store a data: URL directly in state, see init()).
 const SEED_HEADER_LOGO='assets/images/logo-grasshopper.png';
@@ -3247,6 +3247,116 @@ const SEED_DOCS=[
 <h2>Ví dụ ứng dụng thực tế</h2>
 <p>Snap danh sách điểm attractor rải rác vào đúng biên dạng đường viền mái vòm cong, đảm bảo mọi module pattern (phần tử lặp) bám sát bề mặt cong thay vì trôi tự do trong không gian.</p>
 <div class="cf-img-block" data-cfimgid="curveclosestpoint-example" data-cfimgtype="image" data-align="center" data-name="curveclosestpoint-example.svg"><div class="cf-img-wrap"><div class="cf-img-inner" style="width:100%;max-width:640px"><img style="width:100%;height:auto;display:block" alt="6 điểm attractor rải rác được Curve Closest Point snap vào đúng đường viền mái vòm cong, mỗi điểm đã snap đặt 1 module pattern hình thoi bám theo đường cong"><div class="cf-img-resize-h left"></div><div class="cf-img-resize-h right"></div></div></div><div class="cf-img-caption"></div></div>`},
+  {id:'seed-cmd-multiplication',locked:true,title:'Multiplication',section:'default',parentId:'seed-panel-maths-operators',images:[],textBoxes:[],createdAt:'2026-07-20T00:00:00.000Z',updatedAt:'2026-07-20T00:00:00.000Z',content:`<h1>Multiplication</h1>
+<div class="cf-panel info" contenteditable="false"><span class="cf-panel-icon">ℹ️</span><div class="cf-panel-content" contenteditable="true">🟢 Cơ bản — Nhân 2 số A × B, trả về kết quả R.</div></div>
+<h2>Chức năng</h2>
+<p>Multiplication nhân 2 giá trị số <strong>A × B</strong>, trả về kết quả <strong>R</strong>. Là 1 trong 4 phép toán cơ bản (cùng Addition, Subtraction, Division) trong panel Operators.</p>
+<h2>Khi nào sử dụng</h2>
+<p>Dùng khi cần nhân giá trị — tính diện tích, tỉ lệ scale, tổng số phần tử, hoặc suy ra 1 kích thước từ kích thước khác theo tỉ lệ cố định. Không dùng cho phép nhân vector/ma trận hình học phức tạp — trường hợp đó dùng <strong>Amplitude</strong> (nhân vector với số) hoặc các component Transform riêng.</p>
+<h2>Input/Output</h2>
+<div class="tbl-frame"><div class="tbl-outer"><table style="border-collapse:collapse;font-size:14px;table-layout:fixed;width:100%" data-colwidths="36px,20.02%,20.02%,59.959%">
+<thead><tr><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Tên</th><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Kiểu dữ liệu</th><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Mô tả</th></tr></thead>
+<tbody>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>A</strong> — input</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Number</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Số thứ nhất.</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>B</strong> — input</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Number</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Số thứ hai.</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>R</strong> — output</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Number</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Kết quả A × B.</td></tr>
+</tbody></table></div></div>
+<h2>Thuộc tính</h2>
+<p>Không nối dây vào A hoặc B thì có thể chuột phải gõ số cố định trực tiếp. Ngoài ra chỉ có các mục chuẩn của mọi component: Preview, Bake, Flatten/Graft/Simplify.</p>
+<h2>Cách dùng</h2>
+<ol>
+<li>Kéo thả component <strong>Multiplication</strong> (panel Maths &gt; Operators) ra canvas.</li>
+<li>Nối số hoặc slider vào input <strong>A</strong> và <strong>B</strong> — hoặc chuột phải gõ số cố định nếu không cần thay đổi.</li>
+<li>Lấy output <strong>R</strong> nối tiếp vào component cần dùng kết quả.</li>
+</ol>
+<div class="cf-img-block" data-cfimgid="multiplication" data-cfimgtype="image" data-align="center" data-name="multiplication.svg"><div class="cf-img-wrap"><div class="cf-img-inner" style="width:100%;max-width:640px"><img style="width:100%;height:auto;display:block" alt="Multiplication nhận 2 Number Slider A=5, B=4, nhân ra kết quả R=20 hiển thị trong Panel"><div class="cf-img-resize-h left"></div><div class="cf-img-resize-h right"></div></div></div><div class="cf-img-caption"></div></div>
+<h2>Ứng dụng</h2>
+<p>Parametric Design / Pattern Generation — tính kích thước dẫn xuất từ 1 tham số gốc theo tỉ lệ cố định, vd <code>Height = Width × Ratio</code> (kỹ thuật dùng để tính chiều cao thành lốp từ Tire Width trong case study Voronoi Wheel), hoặc tính tổng số module cần sinh trong 1 lưới pattern (Cột × Hàng).</p>
+<h2>Kết nối</h2>
+<p><strong>Nhận dữ liệu từ:</strong></p>
+<table style="width:100%;border-collapse:collapse;font-size:14px">
+<thead><tr><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Component</th><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Data Type</th><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Có thể nối</th></tr></thead>
+<tbody>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Number Slider, Panel, bất kỳ output Number nào</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Number</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Có — vào A hoặc B</td></tr>
+</tbody></table>
+<p><strong>Xuất dữ liệu đến:</strong></p>
+<table style="width:100%;border-collapse:collapse;font-size:14px">
+<thead><tr><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Component</th><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Data Type</th><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Có thể nối</th></tr></thead>
+<tbody>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Construct Point, Move, bất kỳ input Number nào</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Number</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Có — nhận thẳng output R</td></tr>
+</tbody></table>
+<p><strong>Không thể kết nối:</strong></p>
+<table style="width:100%;border-collapse:collapse;font-size:14px">
+<thead><tr><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Component</th><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Lý do</th></tr></thead>
+<tbody>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Nối thẳng Vector/Point vào A hoặc B</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">A, B chỉ nhận kiểu Number — cần nhân Vector với số thì dùng <strong>Amplitude</strong> thay vì Multiplication.</td></tr>
+</tbody></table>
+<h2>Workflow phổ biến</h2>
+<p>Width, Ratio → Multiplication → Height (dùng làm toạ độ Y cho Construct Point)</p>
+<p>Số cột, Số hàng → Multiplication → Tổng số module cần sinh trong pattern lưới</p>
+<div class="cf-img-block" data-cfimgid="multiplication-workflow" data-cfimgtype="image" data-align="center" data-name="multiplication-workflow.svg"><div class="cf-img-wrap"><div class="cf-img-inner" style="width:100%;max-width:640px"><img style="width:100%;height:auto;display:block" alt="Width=325 và Ratio=0.3 nối vào Multiplication ra Height=97.5, dùng làm toạ độ chiều cao trong viewport"><div class="cf-img-resize-h left"></div><div class="cf-img-resize-h right"></div></div></div><div class="cf-img-caption"></div></div>
+<h2>Kiểu dữ liệu</h2>
+<p>Input/Output: Number (Integer hoặc Double). Hỗ trợ list — nếu A, B là 2 list khác độ dài, Grasshopper ghép theo kiểu Longest List mặc định.</p>
+<hr>
+<div class="cf-panel warning" contenteditable="false"><span class="cf-panel-icon">⚠️</span><div class="cf-panel-content" contenteditable="true">Nếu A và B là 2 danh sách (list) khác độ dài, Grasshopper mặc định ghép kiểu <strong>Longest List</strong> — tự lặp lại phần tử cuối của list ngắn hơn cho đủ số lượng. Dễ gây kết quả sai lệch nếu bạn tưởng 2 list khớp theo từng cặp chỉ số — kiểm tra lại độ dài 2 list nếu kết quả không như mong đợi.</div></div>
+<h2>Ví dụ ứng dụng thực tế</h2>
+<p>Tính trước tổng số module cần sinh trong 1 lưới pattern hình chữ nhật: 6 cột × 4 hàng = 24 module — dùng số này để cấu hình các component sinh dạng tiếp theo (Series, Range) mà không cần đếm tay.</p>
+<div class="cf-img-block" data-cfimgid="multiplication-example" data-cfimgtype="image" data-align="center" data-name="multiplication-example.svg"><div class="cf-img-wrap"><div class="cf-img-inner" style="width:100%;max-width:640px"><img style="width:100%;height:auto;display:block" alt="Lưới pattern 6 cột x 4 hàng, tổng số module = 6x4 = 24 tính bằng Multiplication"><div class="cf-img-resize-h left"></div><div class="cf-img-resize-h right"></div></div></div><div class="cf-img-caption"></div></div>`},
+  {id:'seed-cmd-modulus',locked:true,title:'Modulus',section:'default',parentId:'seed-panel-maths-operators',images:[],textBoxes:[],createdAt:'2026-07-20T00:00:00.000Z',updatedAt:'2026-07-20T00:00:00.000Z',content:`<h1>Modulus</h1>
+<div class="cf-panel info" contenteditable="false"><span class="cf-panel-icon">ℹ️</span><div class="cf-panel-content" contenteditable="true">🟡 Trung bình — Chia A cho B, trả về PHẦN DƯ (remainder), không phải thương số.</div></div>
+<h2>Chức năng</h2>
+<p>Modulus chia <strong>A</strong> cho <strong>B</strong>, trả về <strong>phần dư</strong> của phép chia (R). Khác <strong>Division</strong> — Division trả về thương số (vd 7÷3=2.33), còn Modulus chỉ lấy phần dư (7 mod 3 = 1).</p>
+<h2>Khi nào sử dụng</h2>
+<p>Dùng khi cần xử lý theo <strong>chu kỳ lặp</strong> — kiểm tra chẵn/lẻ, chọn cứ N phần tử thì 1 phần tử khác biệt, hoặc bọc 1 chỉ số quay vòng trong phạm vi cố định. Không dùng nếu chỉ cần thương số nguyên — trường hợp đó dùng <strong>Division</strong> rồi làm tròn xuống.</p>
+<h2>Input/Output</h2>
+<div class="tbl-frame"><div class="tbl-outer"><table style="border-collapse:collapse;font-size:14px;table-layout:fixed;width:100%" data-colwidths="36px,20.02%,20.02%,59.959%">
+<thead><tr><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Tên</th><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Kiểu dữ liệu</th><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Mô tả</th></tr></thead>
+<tbody>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>A</strong> — input</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Number</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Số bị chia.</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>B</strong> — input</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Number</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Số chia.</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>R</strong> — output</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Number</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Phần dư của phép chia A cho B.</td></tr>
+</tbody></table></div></div>
+<h2>Thuộc tính</h2>
+<p>Không nối dây vào A hoặc B thì có thể chuột phải gõ số cố định trực tiếp. Ngoài ra chỉ có các mục chuẩn của mọi component: Preview, Bake, Flatten/Graft/Simplify.</p>
+<h2>Cách dùng</h2>
+<ol>
+<li>Kéo thả component <strong>Modulus</strong> (panel Maths &gt; Operators) ra canvas.</li>
+<li>Nối số bị chia vào <strong>A</strong>, số chia vào <strong>B</strong>.</li>
+<li>Lấy output <strong>R</strong> (phần dư) nối tiếp vào component cần dùng — thường là <strong>Equality</strong> để kiểm tra điều kiện chia hết.</li>
+</ol>
+<div class="cf-img-block" data-cfimgid="modulus" data-cfimgtype="image" data-align="center" data-name="modulus.svg"><div class="cf-img-wrap"><div class="cf-img-inner" style="width:100%;max-width:640px"><img style="width:100%;height:auto;display:block" alt="Modulus nhận A=7, B=3, trả về phần dư R=1 (7 chia 3 được 2 dư 1)"><div class="cf-img-resize-h left"></div><div class="cf-img-resize-h right"></div></div></div><div class="cf-img-caption"></div></div>
+<h2>Ứng dụng</h2>
+<p>Parametric Design / Pattern Generation — dùng làm "bộ đếm chu kỳ" để tạo pattern lặp có kiểm soát: cứ N module thì 1 module đổi màu/kích thước/hình dạng khác, mà không cần liệt kê tay từng vị trí — chỉ cần đổi số N là chu kỳ tự thay đổi theo toàn bộ pattern.</p>
+<h2>Kết nối</h2>
+<p><strong>Nhận dữ liệu từ:</strong></p>
+<table style="width:100%;border-collapse:collapse;font-size:14px">
+<thead><tr><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Component</th><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Data Type</th><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Có thể nối</th></tr></thead>
+<tbody>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Series, List Item (thường là chỉ số index)</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Number</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Có — vào A</td></tr>
+</tbody></table>
+<p><strong>Xuất dữ liệu đến:</strong></p>
+<table style="width:100%;border-collapse:collapse;font-size:14px">
+<thead><tr><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Component</th><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Data Type</th><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Có thể nối</th></tr></thead>
+<tbody>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Equality (kiểm tra R=0), Larger Than</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Number</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Có — nhận thẳng output R để so sánh điều kiện</td></tr>
+</tbody></table>
+<p><strong>Không thể kết nối:</strong></p>
+<table style="width:100%;border-collapse:collapse;font-size:14px">
+<thead><tr><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Component</th><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Lý do</th></tr></thead>
+<tbody>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Nối thẳng output R vào Cull Pattern's input P</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">R là Number (phần dư), không phải Boolean — Cull Pattern cần list True/False, phải qua <strong>Equality</strong> để đổi Number → Boolean trước.</td></tr>
+</tbody></table>
+<h2>Workflow phổ biến</h2>
+<p>Series (0..N) → Modulus (B=2) → Equality (=0) → Cull Pattern → lọc ra các phần tử chỉ số chẵn</p>
+<p>List Item index → Modulus (B=số màu) → Chọn màu xoay vòng cho từng phần tử trong pattern</p>
+<div class="cf-img-block" data-cfimgid="modulus-workflow" data-cfimgtype="image" data-align="center" data-name="modulus-workflow.svg"><div class="cf-img-wrap"><div class="cf-img-inner" style="width:100%;max-width:900px"><img style="width:100%;height:auto;display:block" alt="Series 0..9 nối vào Modulus B=2, ra Equality so sánh =0, kết quả Boolean nối vào Cull Pattern P để lọc điểm chỉ số chẵn, viewport bên phải hiển thị điểm đỏ được giữ lại xen kẽ điểm xám bị loại"><div class="cf-img-resize-h left"></div><div class="cf-img-resize-h right"></div></div></div><div class="cf-img-caption"></div></div>
+<h2>Kiểu dữ liệu</h2>
+<p>Input/Output: Number (thường dùng với Integer làm chỉ số index). Hỗ trợ list qua Data Matching giống các phép toán khác.</p>
+<hr>
+<div class="cf-panel warning" contenteditable="false"><span class="cf-panel-icon">⚠️</span><div class="cf-panel-content" contenteditable="true">B = 0 gây lỗi/cảnh báo "không thể chia cho 0" — component chuyển màu cam kèm biểu tượng cảnh báo, không tính được kết quả. Nếu A là số âm, dấu của kết quả R giữ theo dấu của A (quy ước .NET), không phải luôn dương như định nghĩa modulus toán học thuần tuý — cần lưu ý khi dùng A âm.</div></div>
+<h2>Ví dụ ứng dụng thực tế</h2>
+<p>Tạo pattern 12 module theo hàng, cứ 3 module thì 1 module đổi màu (chỉ số i sao cho i Mod 3 = 2) — chỉ cần đổi số 3 thành số khác là toàn bộ chu kỳ pattern tự thay đổi theo, không cần liệt kê tay từng vị trí cần đổi màu.</p>
+<div class="cf-img-block" data-cfimgid="modulus-example" data-cfimgtype="image" data-align="center" data-name="modulus-example.svg"><div class="cf-img-wrap"><div class="cf-img-inner" style="width:100%;max-width:640px"><img style="width:100%;height:auto;display:block" alt="Hàng 12 module vuông, module đỏ tại chỉ số i Mod 3 = 2 (2,5,8,11), minh hoạ dùng Modulus tạo pattern lặp chu kỳ"><div class="cf-img-resize-h left"></div><div class="cf-img-resize-h right"></div></div></div><div class="cf-img-caption"></div></div>`},
   {id:'seed-tab-params',title:'Params',section:'default',parentId:'seed-grasshopper',images:[],textBoxes:[],createdAt:'2026-07-18T00:00:00.000Z',updatedAt:'2026-07-18T00:00:00.000Z',content:`<h1>Params</h1>
 <div class="cf-panel info" contenteditable="false"><span class="cf-panel-icon">ℹ️</span><div class="cf-panel-content" contenteditable="true">🟢 Cơ bản — Nơi khai báo và giữ dữ liệu (Points, Curves, Breps, Lists, Trees...) để dùng xuyên suốt file Grasshopper.</div></div>
 <h2>Chức năng</h2>
@@ -3465,9 +3575,7 @@ const SEED_DOCS=[
   {id:'seed-panel-maths-matrix',title:'Matrix',section:'default',parentId:'seed-tab-maths',images:[],textBoxes:[],createdAt:'2026-07-19T00:00:00.000Z',updatedAt:'2026-07-19T00:00:00.000Z',content:`<h1>Matrix</h1>
 <div class="cf-panel info" contenteditable="false"><span class="cf-panel-icon">ℹ️</span><div class="cf-panel-content" contenteditable="true">Panel trong tab Maths, chứa công cụ dựng và chỉnh sửa ma trận (bảng số xếp theo hàng/cột).</div></div>
 <p><em>Đây là 1 panel (nhóm lệnh con) trong tab Maths của Grasshopper. Các lệnh cụ thể thuộc panel này sẽ được thêm dần vào đây dưới dạng trang con khi được nghiên cứu.</em></p>`},
-  {id:'seed-panel-maths-operators',title:'Operators',section:'default',parentId:'seed-tab-maths',images:[],textBoxes:[],createdAt:'2026-07-19T00:00:00.000Z',updatedAt:'2026-07-19T00:00:00.000Z',content:`<h1>Operators</h1>
-<div class="cf-panel info" contenteditable="false"><span class="cf-panel-icon">ℹ️</span><div class="cf-panel-content" contenteditable="true">Panel trong tab Maths, chứa các phép toán cơ bản (cộng, trừ, nhân, chia) và phép so sánh logic (lớn hơn, nhỏ hơn, bằng nhau...).</div></div>
-<p><em>Đây là 1 panel (nhóm lệnh con) trong tab Maths của Grasshopper. Các lệnh cụ thể thuộc panel này sẽ được thêm dần vào đây dưới dạng trang con khi được nghiên cứu.</em></p>`},
+  {id:'seed-panel-maths-operators',title:'Operators',section:'default',parentId:'seed-tab-maths',images:[],textBoxes:[],createdAt:'2026-07-19T00:00:00.000Z',updatedAt:'2026-07-19T00:00:00.000Z',content:`<h1>Operators</h1><div class="cf-panel info" contenteditable="false"><span class="cf-panel-icon">ℹ️</span><div class="cf-panel-content" contenteditable="true">Panel trong tab Maths, chứa các phép toán cơ bản (cộng, trừ, nhân, chia) và phép so sánh logic (lớn hơn, nhỏ hơn, bằng nhau...).</div></div><h2>Danh sách component</h2><div class="tbl-frame"><div class="tbl-outer"><table style="border-collapse: collapse; font-size: 14px; table-layout: fixed; width: 100%;" data-colwidths="36px,8.1%,14.9%,77%"><thead><tr><th style="text-align: center; padding: 8px 6px; border-bottom: 2px solid var(--border); position: relative; min-width: 40px;" contenteditable="true">Icon</th><th style="text-align: left; padding: 8px 10px; border-bottom: 2px solid var(--border); position: relative; min-width: 40px;" contenteditable="true">Tên</th><th style="text-align: left; padding: 8px 10px; border-bottom: 2px solid var(--border); position: relative; min-width: 40px;" contenteditable="true">Chức năng</th></tr></thead><tbody><tr><td style="text-align: center; padding: 6px; border-bottom: 1px solid var(--border); position: relative; min-width: 40px;" contenteditable="true"><span style="display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;background:#242424;border-radius:7px"><i class="ti ti-x" style="color:#e8e8e8;font-size:17px"></i></span></td><td style="padding: 6px 10px; border-bottom: 1px solid var(--border); position: relative; min-width: 40px; vertical-align: middle;" contenteditable="true"><strong>Multiplication</strong></td><td style="padding: 6px 10px; border-bottom: 1px solid var(--border); position: relative; min-width: 40px; vertical-align: middle;" contenteditable="true">Nhân 2 số A×B, trả về kết quả R.</td></tr><tr><td style="text-align: center; padding: 6px; border-bottom: 1px solid var(--border); position: relative; min-width: 40px;" contenteditable="true"><span style="display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;background:#242424;border-radius:7px"><i class="ti ti-percentage" style="color:#e8e8e8;font-size:17px"></i></span></td><td style="padding: 6px 10px; border-bottom: 1px solid var(--border); position: relative; min-width: 40px; vertical-align: middle;" contenteditable="true"><strong>Modulus</strong></td><td style="padding: 6px 10px; border-bottom: 1px solid var(--border); position: relative; min-width: 40px; vertical-align: middle;" contenteditable="true">Chia A cho B, trả về phần dư R (không phải thương số).</td></tr></tbody></table></div></div>`},
   {id:'seed-panel-maths-polynomials',title:'Polynomials',section:'default',parentId:'seed-tab-maths',images:[],textBoxes:[],createdAt:'2026-07-19T00:00:00.000Z',updatedAt:'2026-07-19T00:00:00.000Z',content:`<h1>Polynomials</h1>
 <div class="cf-panel info" contenteditable="false"><span class="cf-panel-icon">ℹ️</span><div class="cf-panel-content" contenteditable="true">Panel trong tab Maths, chứa các phép tính đa thức (giai thừa, logarit, luỹ thừa...).</div></div>
 <p><em>Đây là 1 panel (nhóm lệnh con) trong tab Maths của Grasshopper. Các lệnh cụ thể thuộc panel này sẽ được thêm dần vào đây dưới dạng trang con khi được nghiên cứu.</em></p>`},

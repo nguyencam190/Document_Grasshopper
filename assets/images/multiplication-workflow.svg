@@ -1,0 +1,60 @@
+<svg width="900" height="320" viewBox="0 0 900 320" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, Arial, sans-serif">
+<defs>
+  <linearGradient id="ghBody" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0%" stop-color="#F0F0F0"/>
+    <stop offset="100%" stop-color="#D8D8D8"/>
+  </linearGradient>
+  <pattern id="dg" width="18" height="18" patternUnits="userSpaceOnUse">
+    <circle cx="1" cy="1" r="1" fill="#E0E0DA"/>
+  </pattern>
+</defs>
+<rect x="0" y="0" width="520" height="320" fill="#FAFAF7"/>
+<rect x="0" y="0" width="520" height="320" fill="url(#dg)"/>
+
+<!-- Width slider -->
+<rect x="20" y="60" width="140" height="34" rx="5" fill="#F0F0F0" stroke="#8C8C8C"/>
+<rect x="28" y="71" width="70" height="10" rx="3" fill="#E4E4E4" stroke="#B0B0B0"/>
+<circle cx="90" cy="76" r="5" fill="#8C8C8C"/>
+<text x="152" y="81" text-anchor="end" font-size="10" fill="#333">Width=325</text>
+<rect x="158" y="70" width="10" height="14" rx="3" fill="#E8E8E8" stroke="#8C8C8C"/><circle cx="163" cy="77" r="2.3" fill="#4A4A4A"/>
+
+<!-- Ratio slider -->
+<rect x="20" y="130" width="140" height="34" rx="5" fill="#F0F0F0" stroke="#8C8C8C"/>
+<rect x="28" y="141" width="70" height="10" rx="3" fill="#E4E4E4" stroke="#B0B0B0"/>
+<circle cx="50" cy="146" r="5" fill="#8C8C8C"/>
+<text x="152" y="151" text-anchor="end" font-size="10" fill="#333">Ratio=0.3</text>
+<rect x="158" y="140" width="10" height="14" rx="3" fill="#E8E8E8" stroke="#8C8C8C"/><circle cx="163" cy="147" r="2.3" fill="#4A4A4A"/>
+
+<path d="M 163,77 C 195,77 195,100 222,100" stroke="#4A4A4A" stroke-width="1.4" fill="none"/>
+<path d="M 163,147 C 195,147 195,124 222,124" stroke="#4A4A4A" stroke-width="1.4" fill="none"/>
+
+<!-- Multiplication box -->
+<g>
+  <rect x="230" y="60" width="150" height="100" rx="6" fill="url(#ghBody)" stroke="#8C8C8C" stroke-width="1.2"/>
+  <text x="305" y="85" text-anchor="middle" font-size="13" font-weight="bold" fill="#222">Multiplication</text>
+  <line x1="245" y1="93" x2="365" y2="93" stroke="#B5B5B0" stroke-width="1"/>
+  <rect x="222" y="93" width="10" height="14" rx="3" fill="#E8E8E8" stroke="#8C8C8C"/><circle cx="227" cy="100" r="2.3" fill="#4A4A4A"/>
+  <text x="240" y="104" font-size="11" fill="#333">A</text>
+  <rect x="222" y="117" width="10" height="14" rx="3" fill="#E8E8E8" stroke="#8C8C8C"/><circle cx="227" cy="124" r="2.3" fill="#4A4A4A"/>
+  <text x="240" y="128" font-size="11" fill="#333">B</text>
+  <rect x="378" y="105" width="10" height="14" rx="3" fill="#E8E8E8" stroke="#8C8C8C"/><circle cx="383" cy="112" r="2.3" fill="#4A4A4A"/>
+  <text x="368" y="108" text-anchor="end" font-size="11" fill="#333">R</text>
+</g>
+
+<path d="M 388,112 C 405,112 405,112 420,112" stroke="#4A4A4A" stroke-width="1.4" fill="none"/>
+<rect x="422" y="95" width="80" height="34" fill="#FFFFFF" stroke="#8C8C8C" stroke-width="1"/>
+<text x="462" y="116" text-anchor="middle" font-size="12" fill="#222">Height=97.5</text>
+
+<text x="20" y="220" font-size="12" fill="#333">Width, Ratio → Multiplication → Height</text>
+<text x="20" y="242" font-size="11" fill="#555">Height dùng tiếp làm toạ độ Y cho Construct Point (xem trang Tire Profile).</text>
+
+<!-- Right side viewport hint -->
+<rect x="520" y="0" width="380" height="320" fill="#FFFFFF" stroke="#B0B0B0"/>
+<text x="530" y="24" font-family="Consolas, monospace" font-size="12" fill="#555">Front</text>
+<line x1="560" y1="260" x2="860" y2="260" stroke="#D0D0D0" stroke-width="1"/>
+<line x1="700" y1="260" x2="700" y2="150" stroke="#c0392b" stroke-width="1.4" stroke-dasharray="3,2"/>
+<circle cx="700" cy="150" r="4" fill="#c0392b"/>
+<text x="710" y="153" font-size="10.5" fill="#c0392b">Height = 97.5</text>
+<rect x="640" y="150" width="120" height="110" fill="none" stroke="#222" stroke-width="2"/>
+<text x="530" y="290" font-size="10.5" fill="#555">Height quyết định chiều cao khối/điểm dựng trong viewport</text>
+</svg>

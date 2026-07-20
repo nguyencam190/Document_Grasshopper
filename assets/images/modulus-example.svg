@@ -1,0 +1,28 @@
+<svg width="640" height="260" viewBox="0 0 640 260" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, Arial, sans-serif">
+<rect x="0" y="0" width="640" height="260" fill="#FFFFFF" stroke="#B0B0B0"/>
+<text x="14" y="26" font-family="Consolas, monospace" font-size="12" fill="#555">Top</text>
+
+<g stroke-width="1.4">
+<rect x="40" y="70" width="44" height="44" fill="#eef3ff" stroke="#3a5fcd"/>
+<rect x="88" y="70" width="44" height="44" fill="#eef3ff" stroke="#3a5fcd"/>
+<rect x="136" y="70" width="44" height="44" fill="#c0392b" stroke="#7a1f14"/>
+<rect x="184" y="70" width="44" height="44" fill="#eef3ff" stroke="#3a5fcd"/>
+<rect x="232" y="70" width="44" height="44" fill="#eef3ff" stroke="#3a5fcd"/>
+<rect x="280" y="70" width="44" height="44" fill="#c0392b" stroke="#7a1f14"/>
+<rect x="328" y="70" width="44" height="44" fill="#eef3ff" stroke="#3a5fcd"/>
+<rect x="376" y="70" width="44" height="44" fill="#eef3ff" stroke="#3a5fcd"/>
+<rect x="424" y="70" width="44" height="44" fill="#c0392b" stroke="#7a1f14"/>
+<rect x="472" y="70" width="44" height="44" fill="#eef3ff" stroke="#3a5fcd"/>
+<rect x="520" y="70" width="44" height="44" fill="#eef3ff" stroke="#3a5fcd"/>
+<rect x="568" y="70" width="44" height="44" fill="#c0392b" stroke="#7a1f14"/>
+</g>
+<g font-size="9.5" fill="#999" text-anchor="middle">
+<text x="62" y="130">0</text><text x="110" y="130">1</text><text x="158" y="130">2</text>
+<text x="206" y="130">3</text><text x="254" y="130">4</text><text x="302" y="130">5</text>
+<text x="350" y="130">6</text><text x="398" y="130">7</text><text x="446" y="130">8</text>
+<text x="494" y="130">9</text><text x="542" y="130">10</text><text x="590" y="130">11</text>
+</g>
+
+<text x="320" y="170" text-anchor="middle" font-size="13" fill="#222">Module đỏ = chỉ số i sao cho i Mod 3 = 2 (cứ 3 module thì 1 đổi màu)</text>
+<text x="320" y="190" text-anchor="middle" font-size="10.5" fill="#555">Modulus dùng làm bộ đếm chu kỳ để tạo pattern lặp có kiểm soát, thay vì random</text>
+</svg>

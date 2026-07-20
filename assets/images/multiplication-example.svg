@@ -1,0 +1,44 @@
+<svg width="640" height="380" viewBox="0 0 640 380" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, Arial, sans-serif">
+<rect x="0" y="0" width="640" height="380" fill="#FFFFFF" stroke="#B0B0B0"/>
+<text x="14" y="26" font-family="Consolas, monospace" font-size="12" fill="#555">Top</text>
+
+<g fill="#eef3ff" stroke="#3a5fcd" stroke-width="1.4">
+<!-- generated rects -->
+<rect x="60" y="60" width="70" height="50"/>
+<rect x="140" y="60" width="70" height="50"/>
+<rect x="220" y="60" width="70" height="50"/>
+<rect x="300" y="60" width="70" height="50"/>
+<rect x="380" y="60" width="70" height="50"/>
+<rect x="460" y="60" width="70" height="50"/>
+
+<rect x="60" y="120" width="70" height="50"/>
+<rect x="140" y="120" width="70" height="50"/>
+<rect x="220" y="120" width="70" height="50"/>
+<rect x="300" y="120" width="70" height="50"/>
+<rect x="380" y="120" width="70" height="50"/>
+<rect x="460" y="120" width="70" height="50"/>
+
+<rect x="60" y="180" width="70" height="50"/>
+<rect x="140" y="180" width="70" height="50"/>
+<rect x="220" y="180" width="70" height="50"/>
+<rect x="300" y="180" width="70" height="50"/>
+<rect x="380" y="180" width="70" height="50"/>
+<rect x="460" y="180" width="70" height="50"/>
+
+<rect x="60" y="240" width="70" height="50"/>
+<rect x="140" y="240" width="70" height="50"/>
+<rect x="220" y="240" width="70" height="50"/>
+<rect x="300" y="240" width="70" height="50"/>
+<rect x="380" y="240" width="70" height="50"/>
+<rect x="460" y="240" width="70" height="50"/>
+</g>
+
+<!-- dimension markers -->
+<line x1="60" y1="45" x2="530" y2="45" stroke="#c0392b" stroke-width="1"/>
+<text x="295" y="40" text-anchor="middle" font-size="11" fill="#c0392b">6 cột</text>
+<line x1="45" y1="60" x2="45" y2="290" stroke="#c0392b" stroke-width="1"/>
+<text x="30" y="180" text-anchor="middle" font-size="11" fill="#c0392b" transform="rotate(-90 30 180)">4 hàng</text>
+
+<text x="320" y="330" text-anchor="middle" font-size="13" fill="#222">Tổng số module = Cột × Hàng = 6 × 4 = 24</text>
+<text x="320" y="350" text-anchor="middle" font-size="10.5" fill="#555">Multiplication dùng để tính trước số lượng module cần sinh trong pattern lưới</text>
+</svg>
