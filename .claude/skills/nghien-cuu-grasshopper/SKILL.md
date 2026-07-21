@@ -23,6 +23,14 @@ thực tiễn (áp dụng được ngay) hơn lý thuyết.
 Đây là thứ tự bắt buộc khi có mâu thuẫn giữa các nguồn — luôn nêu rõ nếu phát hiện khác biệt:
 
 1. **Tài liệu chính thức Rhino/Grasshopper** — nguồn có độ tin cậy cao nhất, luôn thắng nếu mâu thuẫn.
+   Trang mặc định phải tham khảo ĐẦU TIÊN cho mọi nghiên cứu component:
+   `https://www.rhino3d.com/learn/?query=kind:%20grasshopper` (Rhino Learn, lọc theo Grasshopper).
+   Ngoài ra ưu tiên `developer.rhino3d.com` (RhinoCommon API — mô tả hành vi hàm lõi, vd
+   `Curve.CreateFilletCurves`) khi cần xác nhận bản chất kỹ thuật của 1 component.
+   **Lưu ý môi trường**: WebFetch hay bị chặn 403 (lỗi tầng mạng/proxy của môi trường chạy, không
+   phải do trang từ chối) khi fetch thẳng các domain này — cách khả thi hơn là dùng WebSearch với
+   `site:rhino3d.com` hoặc `site:developer.rhino3d.com` kèm từ khoá component, đọc qua đoạn tóm tắt
+   kết quả tìm kiếm. Luôn thử tier 1 này trước, chỉ hạ xuống forum/blog khi tier 1 không ra kết quả.
 2. **AAD: Algorithms-Aided Design – Parametric Strategies Using Grasshopper** (Arturo Tedeschi,
    Le Penseur, 2014) — dùng cho cách tư duy/phương pháp phân tích component, không dùng để phủ
    quyết tài liệu chính thức.
