@@ -1,0 +1,36 @@
+<svg width="640" height="300" viewBox="0 0 640 300" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, Arial, sans-serif">
+<defs>
+  <linearGradient id="ghBody" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0%" stop-color="#F0F0F0"/>
+    <stop offset="100%" stop-color="#D8D8D8"/>
+  </linearGradient>
+  <pattern id="dg" width="18" height="18" patternUnits="userSpaceOnUse">
+    <circle cx="1" cy="1" r="1" fill="#E0E0DA"/>
+  </pattern>
+</defs>
+<rect x="0" y="0" width="640" height="300" fill="#FAFAF7"/><rect x="0" y="0" width="640" height="300" fill="url(#dg)"/>
+<rect x="20" y="20" width="290" height="260" fill="#FFFFFF" stroke="#B0B0B0"/>
+<text x="28" y="38" font-family="Consolas, monospace" font-size="11" fill="#555">Trước mô phỏng</text>
+<line x1="70" y1="80" x2="130" y2="80" stroke="#4A90D9" stroke-width="1.6"/>
+<line x1="130" y1="80" x2="190" y2="80" stroke="#4A90D9" stroke-width="1.6"/>
+<line x1="190" y1="80" x2="250" y2="80" stroke="#4A90D9" stroke-width="1.6"/>
+<circle cx="70" cy="80" r="5" fill="#c0392b"/>
+<circle cx="130" cy="80" r="5" fill="#333"/>
+<circle cx="190" cy="80" r="5" fill="#333"/>
+<circle cx="250" cy="80" r="5" fill="#c0392b"/>
+<text x="30" y="230" font-size="9.5" fill="#888">Đường thẳng: hạt (particle) nối bằng lò xo</text>
+<rect x="330" y="20" width="290" height="260" fill="#FFFFFF" stroke="#B0B0B0"/>
+<text x="338" y="38" font-family="Consolas, monospace" font-size="11" fill="#555">Sau khi cân bằng (gravity)</text>
+<path d="M 400,80 L 432,158 L 463,204 L 495,220 L 527,204 L 558,158 L 590,80" fill="none" stroke="#4A90D9" stroke-width="1.6"/>
+<circle cx="400" cy="80" r="5" fill="#c0392b"/>
+<circle cx="432" cy="158" r="5" fill="#333"/>
+<circle cx="463" cy="204" r="5" fill="#333"/>
+<circle cx="495" cy="220" r="5" fill="#333"/>
+<circle cx="527" cy="204" r="5" fill="#333"/>
+<circle cx="558" cy="158" r="5" fill="#333"/>
+<circle cx="590" cy="80" r="5" fill="#c0392b"/>
+<line x1="490" y1="250" x2="490" y2="270" stroke="#222" stroke-width="1.2" marker-end="url(#arrow)"/>
+<text x="498" y="268" font-size="9.5" fill="#333">gravity</text>
+<text x="340" y="230" font-size="9.5" fill="#888">Điểm đỏ = anchor cố định, còn lại rơi theo lực tới cân bằng</text>
+<defs><marker id="arrow" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="#222"/></marker></defs>
+</svg>

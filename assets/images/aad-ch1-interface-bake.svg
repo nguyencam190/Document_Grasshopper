@@ -1,0 +1,32 @@
+<svg width="720" height="340" viewBox="0 0 720 340" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, Arial, sans-serif">
+<defs>
+  <linearGradient id="ghBody" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0%" stop-color="#F0F0F0"/>
+    <stop offset="100%" stop-color="#D8D8D8"/>
+  </linearGradient>
+  <pattern id="dg" width="18" height="18" patternUnits="userSpaceOnUse">
+    <circle cx="1" cy="1" r="1" fill="#E0E0DA"/>
+  </pattern>
+</defs>
+<rect x="0" y="0" width="720" height="340" fill="#FAFAF7"/><rect x="0" y="0" width="720" height="340" fill="url(#dg)"/>
+<rect x="30" y="60" width="150" height="30" rx="4" fill="#F0F0F0" stroke="#8C8C8C"/><rect x="36" y="71.5" width="92" height="7" rx="2.5" fill="#E4E4E4" stroke="#B0B0B0"/><circle cx="82.0" cy="75.0" r="3.5" fill="#8C8C8C"/><text x="174" y="78.0" text-anchor="end" font-size="9.5" fill="#333">Radius=40</text>
+<rect x="230" y="100" width="140" height="60" rx="6" fill="url(#ghBody)" stroke="#8C8C8C" stroke-width="1.2"/>
+<text x="300.0" y="122" text-anchor="middle" font-family="Segoe UI, sans-serif" font-size="13" font-weight="bold" fill="#222">Circle</text>
+<rect x="222" y="123.0" width="10" height="14" rx="3" fill="#E8E8E8" stroke="#8C8C8C"/><circle cx="227" cy="130.0" r="2.5" fill="#4A4A4A"/>
+<text x="238" y="134.0" font-size="10" fill="#333">R</text>
+<rect x="368" y="123.0" width="10" height="14" rx="3" fill="#E8E8E8" stroke="#8C8C8C"/><circle cx="373" cy="130.0" r="2.5" fill="#4A4A4A"/>
+<text x="362" y="134.0" text-anchor="end" font-size="10" fill="#333">C</text>
+<path d="M 180,75 C 203.5,75 203.5,130.0 227,130.0" stroke="#4A4A4A" stroke-width="1.4" fill="none"/>
+<rect x="420" y="40" width="260" height="260" fill="#FFFFFF" stroke="#B0B0B0"/>
+<text x="428" y="58" font-family="Consolas, monospace" font-size="11" fill="#555">Perspective</text>
+<circle cx="550" cy="170" r="55" fill="none" stroke="#222" stroke-width="1.6"/>
+<path d="M 373,130.0 C 397.5,130.0 397.5,168 422,168" stroke="#4A4A4A" stroke-width="1.4" fill="none"/>
+<text x="428" y="230" font-size="10" fill="#888">(preview tạm thời)</text>
+<rect x="230" y="210" width="120" height="60" rx="4" fill="#FFFFFF" stroke="#B0B0B0" stroke-width="1"/>
+<rect x="230" y="210" width="120" height="24" fill="#F0F0F0"/>
+<text x="240" y="226" font-size="10" fill="#333">Preview</text>
+<rect x="230" y="234" width="120" height="24" fill="#4A90D9"/>
+<text x="240" y="250" font-size="10.5" font-weight="700" fill="#fff">Bake...</text>
+<text x="240" y="266" font-size="10" fill="#333">Enable</text>
+<text x="230" y="202" font-size="10" fill="#c0392b">Chuột phải → Bake = tạo object Rhino thật</text>
+</svg>

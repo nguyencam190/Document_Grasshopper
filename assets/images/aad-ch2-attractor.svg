@@ -1,0 +1,73 @@
+<svg width="720" height="320" viewBox="0 0 720 320" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, Arial, sans-serif">
+<defs>
+  <linearGradient id="ghBody" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0%" stop-color="#F0F0F0"/>
+    <stop offset="100%" stop-color="#D8D8D8"/>
+  </linearGradient>
+  <pattern id="dg" width="18" height="18" patternUnits="userSpaceOnUse">
+    <circle cx="1" cy="1" r="1" fill="#E0E0DA"/>
+  </pattern>
+</defs>
+<rect x="0" y="0" width="720" height="320" fill="#FAFAF7"/><rect x="0" y="0" width="720" height="320" fill="url(#dg)"/>
+<rect x="20" y="20" width="460" height="280" fill="#FFFFFF" stroke="#B0B0B0"/>
+<text x="28" y="38" font-family="Consolas, monospace" font-size="11" fill="#555">Perspective</text>
+<circle cx="170" cy="170" r="6" fill="#c0392b"/>
+<text x="170" y="158" text-anchor="middle" font-size="10.5" font-weight="700" fill="#c0392b">Attractor Point</text>
+<circle cx="60" cy="70" r="7.6" fill="none" stroke="#222" stroke-width="1.4"/>
+<circle cx="60" cy="125" r="10.1" fill="none" stroke="#222" stroke-width="1.4"/>
+<circle cx="60" cy="180" r="10.8" fill="none" stroke="#222" stroke-width="1.4"/>
+<circle cx="60" cy="235" r="9.4" fill="none" stroke="#222" stroke-width="1.4"/>
+<circle cx="115" cy="70" r="10.5" fill="none" stroke="#222" stroke-width="1.4"/>
+<circle cx="115" cy="125" r="14.1" fill="none" stroke="#222" stroke-width="1.4"/>
+<circle cx="115" cy="180" r="15.3" fill="none" stroke="#222" stroke-width="1.4"/>
+<circle cx="115" cy="235" r="12.9" fill="none" stroke="#222" stroke-width="1.4"/>
+<circle cx="170" cy="70" r="11.7" fill="none" stroke="#222" stroke-width="1.4"/>
+<circle cx="170" cy="125" r="16.2" fill="none" stroke="#222" stroke-width="1.4"/>
+<circle cx="170" cy="180" r="19.2" fill="none" stroke="#222" stroke-width="1.4"/>
+<circle cx="170" cy="235" r="14.6" fill="none" stroke="#222" stroke-width="1.4"/>
+<circle cx="225" cy="70" r="10.5" fill="none" stroke="#222" stroke-width="1.4"/>
+<circle cx="225" cy="125" r="14.1" fill="none" stroke="#222" stroke-width="1.4"/>
+<circle cx="225" cy="180" r="15.3" fill="none" stroke="#222" stroke-width="1.4"/>
+<circle cx="225" cy="235" r="12.9" fill="none" stroke="#222" stroke-width="1.4"/>
+<circle cx="280" cy="70" r="7.6" fill="none" stroke="#222" stroke-width="1.4"/>
+<circle cx="280" cy="125" r="10.1" fill="none" stroke="#222" stroke-width="1.4"/>
+<circle cx="280" cy="180" r="10.8" fill="none" stroke="#222" stroke-width="1.4"/>
+<circle cx="280" cy="235" r="9.4" fill="none" stroke="#222" stroke-width="1.4"/>
+<circle cx="335" cy="70" r="4.0" fill="none" stroke="#222" stroke-width="1.4"/>
+<circle cx="335" cy="125" r="5.7" fill="none" stroke="#222" stroke-width="1.4"/>
+<circle cx="335" cy="180" r="6.2" fill="none" stroke="#222" stroke-width="1.4"/>
+<circle cx="335" cy="235" r="5.2" fill="none" stroke="#222" stroke-width="1.4"/>
+<circle cx="390" cy="70" r="4.0" fill="none" stroke="#222" stroke-width="1.4"/>
+<circle cx="390" cy="125" r="4.0" fill="none" stroke="#222" stroke-width="1.4"/>
+<circle cx="390" cy="180" r="4.0" fill="none" stroke="#222" stroke-width="1.4"/>
+<circle cx="390" cy="235" r="4.0" fill="none" stroke="#222" stroke-width="1.4"/>
+<circle cx="445" cy="70" r="4.0" fill="none" stroke="#222" stroke-width="1.4"/>
+<circle cx="445" cy="125" r="4.0" fill="none" stroke="#222" stroke-width="1.4"/>
+<circle cx="445" cy="180" r="4.0" fill="none" stroke="#222" stroke-width="1.4"/>
+<circle cx="445" cy="235" r="4.0" fill="none" stroke="#222" stroke-width="1.4"/>
+<text x="28" y="290" font-size="10" fill="#888">Càng gần Attractor → hình càng to</text>
+<rect x="500" y="40" width="130" height="60" rx="6" fill="url(#ghBody)" stroke="#8C8C8C" stroke-width="1.2"/>
+<text x="565.0" y="62" text-anchor="middle" font-family="Segoe UI, sans-serif" font-size="13" font-weight="bold" fill="#222">Distance</text>
+<rect x="492" y="53.0" width="10" height="14" rx="3" fill="#E8E8E8" stroke="#8C8C8C"/><circle cx="497" cy="60.0" r="2.5" fill="#4A4A4A"/>
+<text x="508" y="64.0" font-size="10" fill="#333">A</text>
+<rect x="492" y="73.0" width="10" height="14" rx="3" fill="#E8E8E8" stroke="#8C8C8C"/><circle cx="497" cy="80.0" r="2.5" fill="#4A4A4A"/>
+<text x="508" y="84.0" font-size="10" fill="#333">B</text>
+<rect x="628" y="63.0" width="10" height="14" rx="3" fill="#E8E8E8" stroke="#8C8C8C"/><circle cx="633" cy="70.0" r="2.5" fill="#4A4A4A"/>
+<text x="622" y="74.0" text-anchor="end" font-size="10" fill="#333">D</text>
+<rect x="500" y="140" width="130" height="60" rx="6" fill="url(#ghBody)" stroke="#8C8C8C" stroke-width="1.2"/>
+<text x="565.0" y="162" text-anchor="middle" font-family="Segoe UI, sans-serif" font-size="13" font-weight="bold" fill="#222">Remap Numbers</text>
+<rect x="492" y="163.0" width="10" height="14" rx="3" fill="#E8E8E8" stroke="#8C8C8C"/><circle cx="497" cy="170.0" r="2.5" fill="#4A4A4A"/>
+<text x="508" y="174.0" font-size="10" fill="#333">V</text>
+<rect x="628" y="163.0" width="10" height="14" rx="3" fill="#E8E8E8" stroke="#8C8C8C"/><circle cx="633" cy="170.0" r="2.5" fill="#4A4A4A"/>
+<text x="622" y="174.0" text-anchor="end" font-size="10" fill="#333">R</text>
+<path d="M 633,70.0 C 565.0,70.0 565.0,170.0 497,170.0" stroke="#4A4A4A" stroke-width="1.4" fill="none"/>
+<rect x="500" y="240" width="130" height="60" rx="6" fill="url(#ghBody)" stroke="#8C8C8C" stroke-width="1.2"/>
+<text x="565.0" y="262" text-anchor="middle" font-family="Segoe UI, sans-serif" font-size="13" font-weight="bold" fill="#222">Scale</text>
+<rect x="492" y="253.0" width="10" height="14" rx="3" fill="#E8E8E8" stroke="#8C8C8C"/><circle cx="497" cy="260.0" r="2.5" fill="#4A4A4A"/>
+<text x="508" y="264.0" font-size="10" fill="#333">G</text>
+<rect x="492" y="273.0" width="10" height="14" rx="3" fill="#E8E8E8" stroke="#8C8C8C"/><circle cx="497" cy="280.0" r="2.5" fill="#4A4A4A"/>
+<text x="508" y="284.0" font-size="10" fill="#333">F</text>
+<rect x="628" y="263.0" width="10" height="14" rx="3" fill="#E8E8E8" stroke="#8C8C8C"/><circle cx="633" cy="270.0" r="2.5" fill="#4A4A4A"/>
+<text x="622" y="274.0" text-anchor="end" font-size="10" fill="#333">G</text>
+<path d="M 633,170.0 C 565.0,170.0 565.0,280.0 497,280.0" stroke="#4A4A4A" stroke-width="1.4" fill="none"/>
+</svg>
