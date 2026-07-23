@@ -2986,7 +2986,7 @@ const STORE_KEY='projectdocs_v3';
 // Bump SEED_VERSION any time SEED_DOCS content changes (e.g. a new Grasshopper
 // command page is added) to re-sync all visitors automatically, even ones
 // with old data already saved locally.
-const SEED_VERSION=61;
+const SEED_VERSION=62;
 // Real image assets referenced by SEED_DOCS via data-cfimgid — every visitor's
 // browser needs these in its OWN IndexedDB (see init() below) so images both
 // (a) display correctly, and (b) get recognized by the app's own Optimized
@@ -2998,6 +2998,260 @@ const SEED_HEADER_LOGO='assets/images/logo-grasshopper.png';
 const SEED_DOCS=[
   {id:'seed-grasshopper',title:'Grasshopper',section:'default',parentId:null,content:'',images:[],textBoxes:[],createdAt:'2026-07-18T00:00:00.000Z',updatedAt:'2026-07-18T00:00:00.000Z'},
   {id:'seed-step-by-step',title:'Example Step-by-Step',section:'default',parentId:null,content:'',images:[],textBoxes:[],createdAt:'2026-07-19T00:00:00.000Z',updatedAt:'2026-07-19T00:00:00.000Z'},
+  {id:'seed-book-primer-a0',title:'A.0 — Bảng chú giải Component',section:'default',parentId:'seed-book-primer',images:[],textBoxes:[],createdAt:'2026-07-23T00:00:00.000Z',updatedAt:'2026-07-23T00:00:00.000Z',content:`<h1>A.0 — Bảng chú giải Component</h1>
+<div class="cf-panel info" contenteditable="false"><span class="cf-panel-icon">ℹ️</span><div class="cf-panel-content" contenteditable="true">🟢 Cơ bản — Dịch phần Index (A.0) của sách Grasshopper Primer: bảng tra nhanh ~90 component hay dùng, mô tả 1 câu mỗi lệnh. Không phải danh sách đầy đủ (Grasshopper có hơn 500 component) — chỉ các lệnh sách có nhắc tới.</div></div>
+<h2>Parameters — Geometry</h2>
+<table style="width:100%;border-collapse:collapse;font-size:14px">
+<thead><tr><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Component</th><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Mô tả</th></tr></thead><tbody>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>Curve Parameter</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Đại diện cho 1 tập hợp dữ liệu Curve (đường cong) — kiểu chung cho mọi loại curve trong Grasshopper.</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>Circle Parameter</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Đại diện cho 1 tập hợp Circle (đường tròn).</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>Geometry Parameter</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Đại diện cho 1 tập hợp hình học 3D bất kỳ.</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>Geometry Pipeline</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Định nghĩa 1 đường ống dẫn hình học từ Rhino sang Grasshopper.</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>Point Parameter</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Đại diện cho 1 tập hợp Point (điểm), có thể lưu dữ liệu cố định (persistent) qua menu.</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>Surface Parameter</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Đại diện cho 1 tập hợp Surface (mặt) — kiểu chung cho mọi loại surface.</td></tr>
+</tbody></table>
+<h2>Parameters — Primitive</h2>
+<table style="width:100%;border-collapse:collapse;font-size:14px">
+<thead><tr><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Component</th><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Mô tả</th></tr></thead><tbody>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>Boolean Parameter</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Đại diện cho 1 tập hợp giá trị Boolean (True/False).</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>Domain Parameter</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Đại diện cho 1 tập hợp Domain 1 chiều — 2 số xác định giới hạn trên/dưới, dùng biểu diễn đoạn curve hoặc khoảng số liên tục.</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>Domain² Parameter</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Đại diện cho 1 tập hợp Domain 2 chiều (gồm 2 domain 1 chiều) — thường dùng biểu diễn mảnh surface.</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>Guid Parameter</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Đại diện cho 1 tập hợp mã định danh duy nhất (GUID), có thể lưu dữ liệu cố định.</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>Integer Parameter</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Đại diện cho 1 tập hợp số nguyên, có thể lưu dữ liệu cố định.</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>Number Parameter</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Đại diện cho 1 tập hợp số thực (dấu phẩy động), có thể lưu dữ liệu cố định.</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>File Path</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Đại diện cho 1 tập hợp đường dẫn file.</td></tr>
+</tbody></table>
+<h2>Parameters — Input</h2>
+<table style="width:100%;border-collapse:collapse;font-size:14px">
+<thead><tr><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Component</th><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Mô tả</th></tr></thead><tbody>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>Boolean Toggle</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Nút bật/tắt giá trị True/False.</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>Button</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Nút bấm — khi bấm trả về True rồi tự reset về False.</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>Colour Swatch</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Ô chọn nhanh 1 màu — đổi màu qua menu chuột phải.</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>Gradient Control</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Định nghĩa 1 dải màu chuyển tiếp (gradient) trong 1 khoảng số (mặc định 0–1). Kéo từ bánh xe màu để thêm điểm màu (grip), chuột phải để đổi màu từng điểm.</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>Graph Mapper</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Ánh xạ lại 1 tập số theo 1 hàm đồ thị — mặc định 0–1, chỉnh qua Graph Editor. Kéo các núm (grip) để thay đổi hình dạng hàm.</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>Number Slider</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Thanh trượt chỉnh nhanh 1 giá trị số — chỉnh qua menu hoặc double-click; chỉ có output, không có input. Kéo cạnh phải để đổi độ dài thanh trượt.</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>Panel</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Khung hiển thị ghi chú/text tuỳ ý — nối 1 output vào Panel để xem nội dung dữ liệu đó theo thời gian thực.</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>Value List</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Danh sách các giá trị dựng sẵn để chọn nhanh.</td></tr>
+</tbody></table>
+<h2>Parameters — Utilities</h2>
+<table style="width:100%;border-collapse:collapse;font-size:14px">
+<thead><tr><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Component</th><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Mô tả</th></tr></thead><tbody>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>Cluster Input / Cluster Output</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Đại diện cho input/output của 1 Cluster (nhóm component đóng gói lại).</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>Data Dam</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Giữ/trì hoãn dữ liệu trên đường truyền qua tài liệu, chỉ cho đi tiếp khi được lệnh.</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>Jump</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Nhảy dữ liệu giữa các vị trí khác nhau trên canvas.</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>Param Viewer</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Bộ xem cấu trúc dữ liệu.</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>Scribble</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Ghi chú nhanh dạng chữ viết tay trên canvas.</td></tr>
+</tbody></table>
+<h2>Maths — Domain</h2>
+<table style="width:100%;border-collapse:collapse;font-size:14px">
+<thead><tr><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Component</th><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Mô tả</th></tr></thead><tbody>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>Bounds</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Tạo 1 domain số bao trọn 1 danh sách số.</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>Consecutive Domains</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Tạo các domain liên tiếp nhau từ 1 danh sách số.</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>Construct Domain</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Tạo 1 domain số từ 2 giá trị đầu-cuối.</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>Construct Domain²</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Tạo 1 domain 2 chiều từ 4 số.</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>Deconstruct Domain</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Tách 1 domain số ra thành các thành phần.</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>Deconstruct Domain²</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Tách 1 domain 2 chiều ra thành 4 số.</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>Divide Domain²</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Chia 1 domain 2 chiều thành các phần bằng nhau.</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>Includes</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Kiểm tra 1 số có nằm trong domain hay không.</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>Remap Numbers</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Ánh xạ lại 1 tập số sang 1 domain số mới.</td></tr>
+</tbody></table>
+<h2>Maths — Operators</h2>
+<table style="width:100%;border-collapse:collapse;font-size:14px">
+<thead><tr><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Component</th><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Mô tả</th></tr></thead><tbody>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>Addition</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Phép cộng.</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>Division</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Phép chia.</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>Equality</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Kiểm tra 2 số có bằng nhau không.</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>Gate And</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Cổng luận lý AND — cả 2 input phải True thì kết quả mới True.</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>Gate Not</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Cổng luận lý NOT — đảo ngược giá trị boolean.</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>Gate Or</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Cổng luận lý OR — chỉ cần 1 input True là kết quả True.</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>Larger Than</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">So sánh lớn hơn (hoặc bằng).</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>Multiplication</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Phép nhân.</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>Smaller Than</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">So sánh nhỏ hơn (hoặc bằng).</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>Similarity</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Kiểm tra 2 số có gần giống nhau không (trong 1 sai số cho phép).</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>Subtraction</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Phép trừ.</td></tr>
+</tbody></table>
+<h2>Maths — Script</h2>
+<table style="width:100%;border-collapse:collapse;font-size:14px">
+<thead><tr><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Component</th><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Mô tả</th></tr></thead><tbody>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>Evaluate</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Tính giá trị 1 biểu thức với số lượng biến tuỳ chỉnh.</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>Expression</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Tính giá trị 1 biểu thức toán học.</td></tr>
+</tbody></table>
+<h2>Maths — Trig</h2>
+<table style="width:100%;border-collapse:collapse;font-size:14px">
+<thead><tr><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Component</th><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Mô tả</th></tr></thead><tbody>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>Cosine</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Tính cosin của 1 giá trị.</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>Degrees</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Đổi góc từ radian sang độ.</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>Radians</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Đổi góc từ độ sang radian.</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>Sine</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Tính sin của 1 giá trị.</td></tr>
+</tbody></table>
+<h2>Maths — Util</h2>
+<table style="width:100%;border-collapse:collapse;font-size:14px">
+<thead><tr><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Component</th><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Mô tả</th></tr></thead><tbody>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>Average</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Tính trung bình cộng 1 tập giá trị.</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>Golden Ratio</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Trả về hệ số tỉ lệ vàng (Phi).</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>Pi</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Trả về hệ số Pi.</td></tr>
+</tbody></table>
+<h2>Sets — List</h2>
+<table style="width:100%;border-collapse:collapse;font-size:14px">
+<thead><tr><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Component</th><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Mô tả</th></tr></thead><tbody>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>Combine Data</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Gộp các phần tử khác null từ nhiều input lại.</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>Cross Reference</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Ghép chéo dữ liệu từ nhiều danh sách.</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>Dispatch</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Tách 1 danh sách thành 2 danh sách kết quả theo điều kiện — tương tự Cull Pattern nhưng xuất cả 2 nhánh (giữ/loại) thay vì chỉ 1.</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>Insert Items</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Chèn thêm phần tử vào 1 danh sách.</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>List Item</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Lấy 1 phần tử cụ thể từ danh sách.</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>List Length</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Đo độ dài danh sách — phần tử đầu tiên có chỉ số 0, chỉ số lớn nhất bằng độ dài trừ 1.</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>Longest List</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Kéo dài các danh sách cho bằng danh sách dài nhất trong nhóm.</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>Replace Items</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Thay thế 1 số phần tử trong danh sách.</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>Reverse List</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Đảo ngược thứ tự danh sách.</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>Shift List</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Dịch chuyển toàn bộ phần tử trong danh sách theo 1 khoảng; nếu bật Wrap, phần tử rơi ra ngoài sẽ được nối lại đầu kia.</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>Shortest List</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Rút ngắn các danh sách cho bằng danh sách ngắn nhất trong nhóm.</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>Sift Pattern</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Tách phần tử trong danh sách theo 1 mẫu chỉ số lặp lại.</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>Sort List</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Sắp xếp danh sách theo khoá số/chuỗi — chỉ Number và String so sánh trực tiếp được, kiểu khác cần tạo khoá riêng trước.</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>Weave</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Dệt nhiều luồng dữ liệu theo 1 mẫu chỉ số tuỳ chỉnh.</td></tr>
+</tbody></table>
+<h2>Sets — Sets</h2>
+<table style="width:100%;border-collapse:collapse;font-size:14px">
+<thead><tr><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Component</th><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Mô tả</th></tr></thead><tbody>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>Cull Index</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Loại bỏ phần tử theo chỉ số cụ thể.</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>Cull Pattern</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Loại bỏ phần tử theo 1 mẫu Boolean lặp lại (bit mask).</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>Duplicate Data</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Nhân bản dữ liệu theo số lần định trước.</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>Jitter</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Xáo trộn ngẫu nhiên thứ tự 1 danh sách — tham số jitter quyết định biên độ xáo trộn.</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>Random</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Sinh dãy số giả ngẫu nhiên — cùng seed luôn ra cùng kết quả.</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>Range</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Tạo dãy số chia đều trong 1 domain — dùng khi cần số lượng số cố định giữa 2 mốc.</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>Repeat Data</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Lặp lại 1 mẫu cho tới khi đạt độ dài yêu cầu.</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>Series</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Tạo dãy số cách đều theo bước nhảy {Step} — dùng khi cần kiểm soát khoảng cách giữa các số.</td></tr>
+</tbody></table>
+<h2>Sets — Tree</h2>
+<table style="width:100%;border-collapse:collapse;font-size:14px">
+<thead><tr><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Component</th><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Mô tả</th></tr></thead><tbody>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>Explode Tree</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Tách tất cả nhánh ra khỏi 1 tree.</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>Flatten Tree</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Làm phẳng tree bằng cách xoá hết thông tin phân nhánh.</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>Flip Matrix</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Lật 1 tree dạng ma trận bằng cách hoán đổi hàng/cột.</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>Graft Tree</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Tạo 1 nhánh riêng cho từng phần tử dữ liệu — bình thường phần tử nằm chung 1 nhánh theo chỉ số (0,1,2...), Graft tách mỗi phần tử ra 1 path riêng (vd {0;1}).</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>Merge</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Gộp nhiều luồng dữ liệu lại với nhau.</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>Path Mapper</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Thực hiện phép biến đổi path bằng mẫu chữ (lexical mask/pattern) — ánh xạ logic giữa path và chỉ số.</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>Prune Tree</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Xoá các nhánh có số lượng phần tử nằm ngoài giới hạn trên/dưới cho phép.</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>Simplify Tree</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Đơn giản hoá tree bằng cách bỏ phần path trùng lặp chung giữa các nhánh.</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>Tree Statistics</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Xem thống kê cấu trúc của 1 tree.</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>Unflatten Tree</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Khôi phục lại cấu trúc nhánh cho tree đã bị làm phẳng.</td></tr>
+</tbody></table>
+<h2>Vector — Grid</h2>
+<table style="width:100%;border-collapse:collapse;font-size:14px">
+<thead><tr><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Component</th><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Mô tả</th></tr></thead><tbody>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>Hexagonal</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Lưới 2D dạng ô lục giác.</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>Rectangular</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Lưới 2D dạng ô chữ nhật.</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>Square</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Lưới 2D dạng ô vuông.</td></tr>
+</tbody></table>
+<h2>Vector — Point</h2>
+<table style="width:100%;border-collapse:collapse;font-size:14px">
+<thead><tr><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Component</th><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Mô tả</th></tr></thead><tbody>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>Construct Point</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Dựng 1 điểm từ toạ độ {x,y,z}.</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>Deconstruct</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Tách 1 điểm ra thành các thành phần toạ độ.</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>Distance</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Tính khoảng cách Euclid giữa 2 điểm.</td></tr>
+</tbody></table>
+<h2>Vector — Vector</h2>
+<table style="width:100%;border-collapse:collapse;font-size:14px">
+<thead><tr><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Component</th><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Mô tả</th></tr></thead><tbody>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>Unit X</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Vector đơn vị song song trục X thế giới.</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>Unit Y</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Vector đơn vị song song trục Y thế giới.</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>Vector 2Pt</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Tạo 1 vector nối giữa 2 điểm.</td></tr>
+</tbody></table>
+<h2>Curve — Division</h2>
+<table style="width:100%;border-collapse:collapse;font-size:14px">
+<thead><tr><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Component</th><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Mô tả</th></tr></thead><tbody>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>Divide Curve</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Chia đường cong thành các đoạn dài bằng nhau.</td></tr>
+</tbody></table>
+<h2>Curve — Primitive</h2>
+<table style="width:100%;border-collapse:collapse;font-size:14px">
+<thead><tr><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Component</th><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Mô tả</th></tr></thead><tbody>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>Circle</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Tạo đường tròn từ mặt phẳng gốc và bán kính.</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>Circle 3Pt</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Tạo đường tròn qua 3 điểm.</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>Circle CNR</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Tạo đường tròn từ tâm, pháp tuyến và bán kính.</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>Line SDL</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Tạo đoạn thẳng từ điểm bắt đầu, hướng tiếp tuyến và độ dài.</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>Polygon</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Tạo đa giác, có thể bo tròn góc.</td></tr>
+</tbody></table>
+<h2>Curve — Spline</h2>
+<table style="width:100%;border-collapse:collapse;font-size:14px">
+<thead><tr><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Component</th><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Mô tả</th></tr></thead><tbody>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>Interpolate</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Dựng đường cong nội suy đi qua 1 tập điểm.</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>Kinky Curve</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Dựng đường cong nội suy qua các điểm, có ngưỡng góc gãy (kink angle) — góc gấp hơn ngưỡng sẽ giữ nhọn thay vì làm mượt.</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>Nurbs Curve</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Dựng đường cong NURBS từ các điểm điều khiển.</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>PolyLine</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Tạo đường gấp khúc nối qua 1 tập điểm.</td></tr>
+</tbody></table>
+<h2>Curve — Util</h2>
+<table style="width:100%;border-collapse:collapse;font-size:14px">
+<thead><tr><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Component</th><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Mô tả</th></tr></thead><tbody>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>Explode</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Tách 1 đường cong thành các đoạn nhỏ hơn.</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>Offset</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Đẩy song song đường cong ra 1 khoảng cách chỉ định.</td></tr>
+</tbody></table>
+<h2>Surface — Analysis</h2>
+<table style="width:100%;border-collapse:collapse;font-size:14px">
+<thead><tr><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Component</th><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Mô tả</th></tr></thead><tbody>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>Deconstruct Brep</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Tách 1 khối Brep ra thành các thành phần cấu tạo.</td></tr>
+</tbody></table>
+<h2>Surface — Freeform</h2>
+<table style="width:100%;border-collapse:collapse;font-size:14px">
+<thead><tr><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Component</th><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Mô tả</th></tr></thead><tbody>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>Boundary Surfaces</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Tạo mặt phẳng từ tập đường cong biên khép kín.</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>Extrude</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Kéo đường/mặt theo 1 vector.</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>Extrude Point</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Kéo đường/mặt hội tụ về 1 điểm.</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>Loft</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Tạo mặt loft qua 1 tập đường cong mặt cắt.</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>Revolution</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Tạo mặt tròn xoay quanh 1 trục.</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>Sweep2</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Tạo mặt quét theo 2 đường ray dẫn hướng.</td></tr>
+</tbody></table>
+<h2>Surface — Primitive</h2>
+<table style="width:100%;border-collapse:collapse;font-size:14px">
+<thead><tr><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Component</th><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Mô tả</th></tr></thead><tbody>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>Bounding Box</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Giải hộp bao (bounding box) định hướng cho hình học.</td></tr>
+</tbody></table>
+<h2>Surface — Util</h2>
+<table style="width:100%;border-collapse:collapse;font-size:14px">
+<thead><tr><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Component</th><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Mô tả</th></tr></thead><tbody>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>Divide Surface</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Sinh lưới điểm {u,v} trên 1 mặt.</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>Isotrim</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Trích 1 phần nhỏ theo tham số isoparametric của mặt.</td></tr>
+</tbody></table>
+<h2>Mesh — Triangulation</h2>
+<table style="width:100%;border-collapse:collapse;font-size:14px">
+<thead><tr><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Component</th><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Mô tả</th></tr></thead><tbody>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>Voronoi</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Sơ đồ Voronoi phẳng cho 1 tập điểm.</td></tr>
+</tbody></table>
+<h2>Transform — Affine</h2>
+<table style="width:100%;border-collapse:collapse;font-size:14px">
+<thead><tr><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Component</th><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Mô tả</th></tr></thead><tbody>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>Rectangle Mapping</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Biến đổi hình học từ 1 hình chữ nhật sang 1 hình chữ nhật khác.</td></tr>
+</tbody></table>
+<h2>Transform — Array</h2>
+<table style="width:100%;border-collapse:collapse;font-size:14px">
+<thead><tr><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Component</th><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Mô tả</th></tr></thead><tbody>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>Linear Array</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Tạo mảng hình học theo đường thẳng.</td></tr>
+</tbody></table>
+<h2>Transform — Morph</h2>
+<table style="width:100%;border-collapse:collapse;font-size:14px">
+<thead><tr><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Component</th><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Mô tả</th></tr></thead><tbody>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>Box Morph</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Biến dạng đối tượng theo 1 hộp xoắn.</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>Surface Box</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Tạo 1 hộp xoắn trên 1 mảnh mặt.</td></tr>
+</tbody></table>
+<h2>Display — Colour</h2>
+<table style="width:100%;border-collapse:collapse;font-size:14px">
+<thead><tr><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Component</th><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Mô tả</th></tr></thead><tbody>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>Colour HSL</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Tạo màu từ 3 kênh {H,S,L} dạng số thực.</td></tr>
+</tbody></table>
+<h2>Display — Dimensions</h2>
+<table style="width:100%;border-collapse:collapse;font-size:14px">
+<thead><tr><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Component</th><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Mô tả</th></tr></thead><tbody>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>Text Tags</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Vẽ chữ (String) trong viewport làm nhãn phản hồi — khi Bake sẽ biến thành Text Dot.</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>Text Tag 3D</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Danh sách nhãn chữ 3D hiển thị trong viewport Rhino.</td></tr>
+</tbody></table>
+<h2>Display — Preview</h2>
+<table style="width:100%;border-collapse:collapse;font-size:14px">
+<thead><tr><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Component</th><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Mô tả</th></tr></thead><tbody>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>Custom Preview</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Cho phép tuỳ chỉnh cách hiển thị preview hình học.</td></tr>
+</tbody></table>
+<h2>Display — Vector</h2>
+<table style="width:100%;border-collapse:collapse;font-size:14px">
+<thead><tr><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Component</th><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Mô tả</th></tr></thead><tbody>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>Point List</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Hiển thị chi tiết thông tin danh sách điểm.</td></tr>
+</tbody></table>`},
   {id:'seed-book-primer',title:'Sách Grasshopper Primer (Mode Lab, tóm tắt)',section:'default',parentId:null,images:[],textBoxes:[],createdAt:'2026-07-23T00:00:00.000Z',updatedAt:'2026-07-23T00:00:00.000Z',content:`<h1>Sách Grasshopper Primer (Mode Lab, tóm tắt)</h1>
 <div class="cf-panel info" contenteditable="false"><span class="cf-panel-icon">ℹ️</span><div class="cf-panel-content" contenteditable="true">🟢 Cơ bản — Dịch/diễn giải "The Grasshopper Primer" (Third Edition, Mode Lab — Andrew Heumann và cộng sự) sang tiếng Việt cho người mới. Sách gốc MIỄN PHÍ, phát hành theo giấy phép <strong>Creative Commons Attribution-NonCommercial-ShareAlike 3.0</strong> (nguồn chính thức: modelab.gitbooks.io/grasshopper-primer, github.com/modelab/grasshopper-primer). Hình minh hoạ trong các trang con là hình tự vẽ nguyên bản, không sao chép hình gốc trong sách.</div></div>
 <p>Sách chia làm 5 phần chính (F.0–F.4), xem trang con bên dưới. Mỗi phần dịch chi tiết theo từng mục con, giữ nguyên tên chính xác component Grasshopper được nhắc tới.</p>`},
