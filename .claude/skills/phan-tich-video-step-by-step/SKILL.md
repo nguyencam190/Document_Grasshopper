@@ -33,9 +33,22 @@ description: Quy trình phân tích 1 video hoặc 1/nhiều hình ảnh hướn
   đó — trình bày thành 1 trình tự logic mạch lạc từ đầu tới cuối (không liệt kê nhiều phương án rời
   rạc, không mô tả tách rời theo từng ảnh nguồn). Đây là mục đích chính của việc "kết hợp tất cả các
   graph": biến nhiều nguồn quan sát rời rạc thành 1 quy trình dựng rõ ràng, dễ làm theo nhất.
-- Vẫn giữ nguyên tắc không bịa đặt (xem `nghien-cuu-grasshopper`): đoạn nào không đọc rõ được (mờ,
-  bị che, thiếu frame) → ghi rõ "không chắc chắn/không đọc được đoạn này", không suy đoán cho có vẻ
-  hợp lý.
+
+> ⚠️ **TUYỆT ĐỐI KHÔNG ĐƯỢC BỊA ĐẶT HƯỚNG DẪN SAI** — quy tắc quan trọng nhất của skill này, đứng
+> trên cả yêu cầu "hướng dẫn tối ưu/dễ hiểu nhất" ở trên. "Tổng hợp/kết hợp toàn bộ graph" nghĩa là
+> GHÉP LẠI đúng những gì thực sự quan sát được qua các ảnh/frame — KHÔNG PHẢI tự bịa thêm bước, tự
+> đoán tên component, hay tự suy diễn giá trị input/kết nối để lấp chỗ trống cho hướng dẫn "nghe có
+> vẻ mượt/hợp lý hơn". User sẽ dùng hướng dẫn này để dựng lại graph thật trên Grasshopper — 1 bước
+> bịa sai (tên component sai, thứ tự nối dây sai, giá trị slider bịa) khiến cả chuỗi graph phía sau
+> sai theo, và user debug oan uổng nhiều giờ mà không biết lỗi bắt đầu từ đâu vì tin tưởng hướng dẫn
+> là đúng 100%. Khi 1 đoạn/1 bước không đọc rõ được (mờ, bị che, thiếu frame, phụ đề không nhắc tới):
+> - Ghi thẳng trong hướng dẫn là **"không xác định được — [lý do cụ thể]"** ngay tại bước đó, không
+>   bỏ qua im lặng và cũng không điền đại 1 giá trị/component có vẻ hợp lý để hướng dẫn liền mạch hơn.
+> - Nếu suy luận được từ ngữ cảnh xung quanh (vd theo lời giảng, theo kết quả hình học cuối cùng),
+>   phải ghi rõ đây là **suy luận**, tách bạch với phần **quan sát trực tiếp** được từ hình/frame —
+>   không trộn lẫn 2 loại thông tin này làm 1 khiến user tưởng tất cả đều đã xác nhận chắc chắn.
+> - Thà 1 bản hướng dẫn có vài chỗ ghi "không chắc chắn" còn hơn 1 bản hướng dẫn mượt mà nhưng có chi
+>   tiết bịa — độ chính xác luôn quan trọng hơn độ mượt/đầy đủ của hướng dẫn.
 
 ## Vị trí trang trong app — khác hẳn trang component đơn lẻ
 
