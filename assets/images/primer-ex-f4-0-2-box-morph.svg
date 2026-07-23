@@ -1,0 +1,94 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1180" height="300" viewBox="0 0 1180 300" font-family="Segoe UI, sans-serif">
+<defs>
+<linearGradient id="ghBody" x1="0" y1="0" x2="0" y2="1">
+<stop offset="0%" stop-color="#F0F0F0"/><stop offset="100%" stop-color="#D8D8D8"/>
+</linearGradient>
+<pattern id="dots" width="18" height="18" patternUnits="userSpaceOnUse">
+<circle cx="1" cy="1" r="1" fill="#E0E0DA"/>
+</pattern>
+</defs>
+
+<rect x="0" y="0" width="1180" height="300" fill="#FAFAF7"/>
+<rect x="0" y="0" width="1180" height="300" fill="url(#dots)"/>
+<text x="16" y="24" font-size="14" font-weight="600" fill="#333">F.4.0.2 — Box Morph dàn hình học lên surface theo hộp xoắn</text>
+<g>
+<rect x="40" y="74" width="132" height="56" rx="6" fill="url(#ghBody)" stroke="#8C8C8C" stroke-width="1"/>
+<text x="106.0" y="106.0" text-anchor="middle" font-family="Segoe UI, sans-serif" font-size="12" fill="#222">Surface</text>
+<rect x="32.0" y="94.0" width="10" height="16" rx="3" fill="#E8E8E8" stroke="#8C8C8C"/>
+<circle cx="37.0" cy="102.0" r="2.5" fill="#4A4A4A"/>
+<rect x="170.0" y="94.0" width="10" height="16" rx="3" fill="#E8E8E8" stroke="#8C8C8C"/>
+<circle cx="175.0" cy="102.0" r="2.5" fill="#4A4A4A"/>
+</g>
+<g>
+<rect x="236" y="74" width="132" height="56" rx="6" fill="url(#ghBody)" stroke="#8C8C8C" stroke-width="1"/>
+<text x="302.0" y="106.0" text-anchor="middle" font-family="Segoe UI, sans-serif" font-size="12" fill="#222">Divide Domain2</text>
+<rect x="228.0" y="94.0" width="10" height="16" rx="3" fill="#E8E8E8" stroke="#8C8C8C"/>
+<circle cx="233.0" cy="102.0" r="2.5" fill="#4A4A4A"/>
+<rect x="366.0" y="94.0" width="10" height="16" rx="3" fill="#E8E8E8" stroke="#8C8C8C"/>
+<circle cx="371.0" cy="102.0" r="2.5" fill="#4A4A4A"/>
+</g>
+<path d="M 175.0,102.0 C 204.0,102.0 204.0,102.0 233.0,102.0" stroke="#4A4A4A" stroke-width="1.5" fill="none"/>
+<g>
+<rect x="432" y="74" width="132" height="56" rx="6" fill="url(#ghBody)" stroke="#8C8C8C" stroke-width="1"/>
+<text x="498.0" y="106.0" text-anchor="middle" font-family="Segoe UI, sans-serif" font-size="12" fill="#222">Surface Box</text>
+<rect x="424.0" y="86.5" width="10" height="16" rx="3" fill="#E8E8E8" stroke="#8C8C8C"/>
+<circle cx="429.0" cy="94.5" r="2.5" fill="#4A4A4A"/>
+<rect x="424.0" y="101.5" width="10" height="16" rx="3" fill="#E8E8E8" stroke="#8C8C8C"/>
+<circle cx="429.0" cy="109.5" r="2.5" fill="#4A4A4A"/>
+<rect x="562.0" y="94.0" width="10" height="16" rx="3" fill="#E8E8E8" stroke="#8C8C8C"/>
+<circle cx="567.0" cy="102.0" r="2.5" fill="#4A4A4A"/>
+</g>
+<path d="M 371.0,102.0 C 400.0,102.0 400.0,94.5 429.0,94.5" stroke="#4A4A4A" stroke-width="1.5" fill="none"/>
+<path d="M 175.0,102.0 C 302.0,102.0 302.0,109.5 429.0,109.5" stroke="#4A4A4A" stroke-width="1.5" fill="none"/>
+<g>
+<rect x="628" y="74" width="132" height="56" rx="6" fill="url(#ghBody)" stroke="#8C8C8C" stroke-width="1"/>
+<text x="694.0" y="106.0" text-anchor="middle" font-family="Segoe UI, sans-serif" font-size="12" fill="#222">Box Morph</text>
+<rect x="620.0" y="84.0" width="10" height="16" rx="3" fill="#E8E8E8" stroke="#8C8C8C"/>
+<circle cx="625.0" cy="92.0" r="2.5" fill="#4A4A4A"/>
+<rect x="620.0" y="94.0" width="10" height="16" rx="3" fill="#E8E8E8" stroke="#8C8C8C"/>
+<circle cx="625.0" cy="102.0" r="2.5" fill="#4A4A4A"/>
+<rect x="620.0" y="104.0" width="10" height="16" rx="3" fill="#E8E8E8" stroke="#8C8C8C"/>
+<circle cx="625.0" cy="112.0" r="2.5" fill="#4A4A4A"/>
+<rect x="758.0" y="94.0" width="10" height="16" rx="3" fill="#E8E8E8" stroke="#8C8C8C"/>
+<circle cx="763.0" cy="102.0" r="2.5" fill="#4A4A4A"/>
+</g>
+<path d="M 567.0,102.0 C 596.0,102.0 596.0,92.0 625.0,92.0" stroke="#4A4A4A" stroke-width="1.5" fill="none"/>
+<g>
+<rect x="236" y="210" width="132" height="56" rx="6" fill="url(#ghBody)" stroke="#8C8C8C" stroke-width="1"/>
+<text x="302.0" y="236.0" text-anchor="middle" font-family="Segoe UI, sans-serif" font-size="12" fill="#222">Geometry</text>
+<text x="302.0" y="251.0" text-anchor="middle" font-family="Consolas, monospace" font-size="9.5" fill="#555">(hình học gốc)</text>
+<rect x="228.0" y="230.0" width="10" height="16" rx="3" fill="#E8E8E8" stroke="#8C8C8C"/>
+<circle cx="233.0" cy="238.0" r="2.5" fill="#4A4A4A"/>
+<rect x="366.0" y="230.0" width="10" height="16" rx="3" fill="#E8E8E8" stroke="#8C8C8C"/>
+<circle cx="371.0" cy="238.0" r="2.5" fill="#4A4A4A"/>
+</g>
+<g>
+<rect x="432" y="210" width="132" height="56" rx="6" fill="url(#ghBody)" stroke="#8C8C8C" stroke-width="1"/>
+<text x="498.0" y="242.0" text-anchor="middle" font-family="Segoe UI, sans-serif" font-size="12" fill="#222">Bounding Box</text>
+<rect x="424.0" y="230.0" width="10" height="16" rx="3" fill="#E8E8E8" stroke="#8C8C8C"/>
+<circle cx="429.0" cy="238.0" r="2.5" fill="#4A4A4A"/>
+<rect x="562.0" y="230.0" width="10" height="16" rx="3" fill="#E8E8E8" stroke="#8C8C8C"/>
+<circle cx="567.0" cy="238.0" r="2.5" fill="#4A4A4A"/>
+</g>
+<path d="M 371.0,238.0 C 400.0,238.0 400.0,238.0 429.0,238.0" stroke="#4A4A4A" stroke-width="1.5" fill="none"/>
+<path d="M 567.0,238.0 C 596.0,238.0 596.0,102.0 625.0,102.0" stroke="#4A4A4A" stroke-width="1.5" fill="none"/>
+<path d="M 371.0,238.0 C 498.0,238.0 498.0,112.0 625.0,112.0" stroke="#4A4A4A" stroke-width="1.5" fill="none"/>
+<g>
+<rect x="780" y="68" width="160" height="90" fill="#FFFFFF" stroke="#B0B0B0"/>
+<g stroke="#D8D8D8" stroke-width="1">
+<line x1="780" y1="146.0" x2="940" y2="146.0"/>
+<line x1="780" y1="133.6" x2="940" y2="133.6"/>
+<line x1="780" y1="125.2" x2="940" y2="125.2"/>
+<line x1="780" y1="120.8" x2="940" y2="120.8"/>
+</g>
+<text x="786" y="82" font-family="Consolas, monospace" font-size="10" fill="#555">Perspective</text>
+<g stroke="#111" stroke-width="1" fill="#C2C2B8" fill-opacity="0.6">
+<polygon points="832.0,111.0 848.0,107.0 848.0,117.0 832.0,121.0"/>
+<line x1="832.0" y1="116.0" x2="848.0" y2="112.0" stroke-width="0.6"/>
+<polygon points="852.0,107.0 868.0,110.0 868.0,120.0 852.0,117.0"/>
+<line x1="852.0" y1="112.0" x2="868.0" y2="115.0" stroke-width="0.6"/>
+<polygon points="872.0,113.0 888.0,111.0 888.0,121.0 872.0,123.0"/>
+<line x1="872.0" y1="118.0" x2="888.0" y2="116.0" stroke-width="0.6"/>
+</g>
+</g>
+</svg>

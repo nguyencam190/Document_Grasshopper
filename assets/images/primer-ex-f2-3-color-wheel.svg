@@ -1,0 +1,106 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1300" height="300" viewBox="0 0 1300 300" font-family="Segoe UI, sans-serif">
+<defs>
+<linearGradient id="ghBody" x1="0" y1="0" x2="0" y2="1">
+<stop offset="0%" stop-color="#F0F0F0"/><stop offset="100%" stop-color="#D8D8D8"/>
+</linearGradient>
+<pattern id="dots" width="18" height="18" patternUnits="userSpaceOnUse">
+<circle cx="1" cy="1" r="1" fill="#E0E0DA"/>
+</pattern>
+</defs>
+
+<rect x="0" y="0" width="1300" height="300" fill="#FAFAF7"/>
+<rect x="0" y="0" width="1300" height="300" fill="url(#dots)"/>
+<text x="16" y="24" font-size="14" font-weight="600" fill="#333">F.2.3 — Colour HSL tô màu từng mặt theo Hue</text>
+<g>
+<rect x="40" y="74" width="132" height="56" rx="6" fill="url(#ghBody)" stroke="#8C8C8C" stroke-width="1"/>
+<text x="106.0" y="106.0" text-anchor="middle" font-family="Segoe UI, sans-serif" font-size="12" fill="#222">Polygon</text>
+<rect x="32.0" y="94.0" width="10" height="16" rx="3" fill="#E8E8E8" stroke="#8C8C8C"/>
+<circle cx="37.0" cy="102.0" r="2.5" fill="#4A4A4A"/>
+<rect x="170.0" y="94.0" width="10" height="16" rx="3" fill="#E8E8E8" stroke="#8C8C8C"/>
+<circle cx="175.0" cy="102.0" r="2.5" fill="#4A4A4A"/>
+</g>
+<g>
+<rect x="228" y="74" width="132" height="56" rx="6" fill="url(#ghBody)" stroke="#8C8C8C" stroke-width="1"/>
+<text x="294.0" y="106.0" text-anchor="middle" font-family="Segoe UI, sans-serif" font-size="12" fill="#222">Explode</text>
+<rect x="220.0" y="94.0" width="10" height="16" rx="3" fill="#E8E8E8" stroke="#8C8C8C"/>
+<circle cx="225.0" cy="102.0" r="2.5" fill="#4A4A4A"/>
+<rect x="358.0" y="94.0" width="10" height="16" rx="3" fill="#E8E8E8" stroke="#8C8C8C"/>
+<circle cx="363.0" cy="102.0" r="2.5" fill="#4A4A4A"/>
+</g>
+<path d="M 175.0,102.0 C 200.0,102.0 200.0,102.0 225.0,102.0" stroke="#4A4A4A" stroke-width="1.5" fill="none"/>
+<g>
+<rect x="416" y="74" width="132" height="56" rx="6" fill="url(#ghBody)" stroke="#8C8C8C" stroke-width="1"/>
+<text x="482.0" y="106.0" text-anchor="middle" font-family="Segoe UI, sans-serif" font-size="12" fill="#222">Extrude Point</text>
+<rect x="408.0" y="94.0" width="10" height="16" rx="3" fill="#E8E8E8" stroke="#8C8C8C"/>
+<circle cx="413.0" cy="102.0" r="2.5" fill="#4A4A4A"/>
+<rect x="546.0" y="94.0" width="10" height="16" rx="3" fill="#E8E8E8" stroke="#8C8C8C"/>
+<circle cx="551.0" cy="102.0" r="2.5" fill="#4A4A4A"/>
+</g>
+<path d="M 363.0,102.0 C 388.0,102.0 388.0,102.0 413.0,102.0" stroke="#4A4A4A" stroke-width="1.5" fill="none"/>
+<g>
+<rect x="604" y="74" width="132" height="56" rx="6" fill="url(#ghBody)" stroke="#8C8C8C" stroke-width="1"/>
+<text x="670.0" y="106.0" text-anchor="middle" font-family="Segoe UI, sans-serif" font-size="12" fill="#222">Deconstruct Brep</text>
+<rect x="596.0" y="94.0" width="10" height="16" rx="3" fill="#E8E8E8" stroke="#8C8C8C"/>
+<circle cx="601.0" cy="102.0" r="2.5" fill="#4A4A4A"/>
+<rect x="734.0" y="94.0" width="10" height="16" rx="3" fill="#E8E8E8" stroke="#8C8C8C"/>
+<circle cx="739.0" cy="102.0" r="2.5" fill="#4A4A4A"/>
+</g>
+<path d="M 551.0,102.0 C 576.0,102.0 576.0,102.0 601.0,102.0" stroke="#4A4A4A" stroke-width="1.5" fill="none"/>
+<g>
+<rect x="792" y="74" width="132" height="56" rx="6" fill="url(#ghBody)" stroke="#8C8C8C" stroke-width="1"/>
+<text x="858.0" y="106.0" text-anchor="middle" font-family="Segoe UI, sans-serif" font-size="12" fill="#222">Custom Preview</text>
+<rect x="784.0" y="86.5" width="10" height="16" rx="3" fill="#E8E8E8" stroke="#8C8C8C"/>
+<circle cx="789.0" cy="94.5" r="2.5" fill="#4A4A4A"/>
+<rect x="784.0" y="101.5" width="10" height="16" rx="3" fill="#E8E8E8" stroke="#8C8C8C"/>
+<circle cx="789.0" cy="109.5" r="2.5" fill="#4A4A4A"/>
+<rect x="922.0" y="94.0" width="10" height="16" rx="3" fill="#E8E8E8" stroke="#8C8C8C"/>
+<circle cx="927.0" cy="102.0" r="2.5" fill="#4A4A4A"/>
+</g>
+<path d="M 739.0,102.0 C 764.0,102.0 764.0,94.5 789.0,94.5" stroke="#4A4A4A" stroke-width="1.5" fill="none"/>
+<g>
+<rect x="416" y="210" width="132" height="56" rx="6" fill="url(#ghBody)" stroke="#8C8C8C" stroke-width="1"/>
+<text x="482.0" y="242.0" text-anchor="middle" font-family="Segoe UI, sans-serif" font-size="12" fill="#222">Divide Domain</text>
+<rect x="408.0" y="230.0" width="10" height="16" rx="3" fill="#E8E8E8" stroke="#8C8C8C"/>
+<circle cx="413.0" cy="238.0" r="2.5" fill="#4A4A4A"/>
+<rect x="546.0" y="230.0" width="10" height="16" rx="3" fill="#E8E8E8" stroke="#8C8C8C"/>
+<circle cx="551.0" cy="238.0" r="2.5" fill="#4A4A4A"/>
+</g>
+<g>
+<rect x="604" y="210" width="132" height="56" rx="6" fill="url(#ghBody)" stroke="#8C8C8C" stroke-width="1"/>
+<text x="670.0" y="242.0" text-anchor="middle" font-family="Segoe UI, sans-serif" font-size="12" fill="#222">Deconstruct Domain</text>
+<rect x="596.0" y="230.0" width="10" height="16" rx="3" fill="#E8E8E8" stroke="#8C8C8C"/>
+<circle cx="601.0" cy="238.0" r="2.5" fill="#4A4A4A"/>
+<rect x="734.0" y="230.0" width="10" height="16" rx="3" fill="#E8E8E8" stroke="#8C8C8C"/>
+<circle cx="739.0" cy="238.0" r="2.5" fill="#4A4A4A"/>
+</g>
+<path d="M 551.0,238.0 C 576.0,238.0 576.0,238.0 601.0,238.0" stroke="#4A4A4A" stroke-width="1.5" fill="none"/>
+<g>
+<rect x="792" y="210" width="132" height="56" rx="6" fill="url(#ghBody)" stroke="#8C8C8C" stroke-width="1"/>
+<text x="858.0" y="242.0" text-anchor="middle" font-family="Segoe UI, sans-serif" font-size="12" fill="#222">Colour HSL</text>
+<rect x="784.0" y="230.0" width="10" height="16" rx="3" fill="#E8E8E8" stroke="#8C8C8C"/>
+<circle cx="789.0" cy="238.0" r="2.5" fill="#4A4A4A"/>
+<rect x="922.0" y="230.0" width="10" height="16" rx="3" fill="#E8E8E8" stroke="#8C8C8C"/>
+<circle cx="927.0" cy="238.0" r="2.5" fill="#4A4A4A"/>
+</g>
+<path d="M 739.0,238.0 C 764.0,238.0 764.0,238.0 789.0,238.0" stroke="#4A4A4A" stroke-width="1.5" fill="none"/>
+<path d="M 927.0,238.0 C 858.0,238.0 858.0,109.5 789.0,109.5" stroke="#4A4A4A" stroke-width="1.5" fill="none"/>
+<g>
+<rect x="964" y="68" width="160" height="100" fill="#FFFFFF" stroke="#B0B0B0"/>
+<g stroke="#D8D8D8" stroke-width="1">
+<line x1="964" y1="156.0" x2="1124" y2="156.0"/>
+<line x1="964" y1="142.0" x2="1124" y2="142.0"/>
+<line x1="964" y1="132.0" x2="1124" y2="132.0"/>
+<line x1="964" y1="126.0" x2="1124" y2="126.0"/>
+</g>
+<text x="970" y="82" font-family="Consolas, monospace" font-size="10" fill="#555">Shaded</text>
+<g stroke="#333" stroke-width="0.6">
+<path d="M 1044.0,124.0 L 1044.0,98.0 A 26,26 0 0 1 1064.3,107.8 Z" fill="#E05A4E" fill-opacity="0.85"/>
+<path d="M 1044.0,124.0 L 1064.3,107.8 A 26,26 0 0 1 1069.3,129.8 Z" fill="#E0A24E" fill-opacity="0.85"/>
+<path d="M 1044.0,124.0 L 1069.3,129.8 A 26,26 0 0 1 1055.3,147.4 Z" fill="#D8CE4E" fill-opacity="0.85"/>
+<path d="M 1044.0,124.0 L 1055.3,147.4 A 26,26 0 0 1 1032.7,147.4 Z" fill="#7FC94E" fill-opacity="0.85"/>
+<path d="M 1044.0,124.0 L 1032.7,147.4 A 26,26 0 0 1 1018.7,129.8 Z" fill="#4EC0C9" fill-opacity="0.85"/>
+<path d="M 1044.0,124.0 L 1018.7,129.8 A 26,26 0 0 1 1023.7,107.8 Z" fill="#4E7FE0" fill-opacity="0.85"/>
+<path d="M 1044.0,124.0 L 1023.7,107.8 A 26,26 0 0 1 1044.0,98.0 Z" fill="#8A4EE0" fill-opacity="0.85"/>
+</g>
+</g>
+</svg>

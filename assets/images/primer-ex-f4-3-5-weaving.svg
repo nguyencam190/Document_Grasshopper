@@ -1,0 +1,108 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1580" height="300" viewBox="0 0 1580 300" font-family="Segoe UI, sans-serif">
+<defs>
+<linearGradient id="ghBody" x1="0" y1="0" x2="0" y2="1">
+<stop offset="0%" stop-color="#F0F0F0"/><stop offset="100%" stop-color="#D8D8D8"/>
+</linearGradient>
+<pattern id="dots" width="18" height="18" patternUnits="userSpaceOnUse">
+<circle cx="1" cy="1" r="1" fill="#E0E0DA"/>
+</pattern>
+</defs>
+
+<rect x="0" y="0" width="1580" height="300" fill="#FAFAF7"/>
+<rect x="0" y="0" width="1580" height="300" fill="url(#dots)"/>
+<text x="16" y="24" font-size="14" font-weight="600" fill="#333">F.4.3.5 — Dispatch + Weave dệt điểm tạo surface xoay</text>
+<g>
+<rect x="40" y="74" width="132" height="56" rx="6" fill="url(#ghBody)" stroke="#8C8C8C" stroke-width="1"/>
+<text x="106.0" y="106.0" text-anchor="middle" font-family="Segoe UI, sans-serif" font-size="12" fill="#222">Line SDL</text>
+<rect x="32.0" y="94.0" width="10" height="16" rx="3" fill="#E8E8E8" stroke="#8C8C8C"/>
+<circle cx="37.0" cy="102.0" r="2.5" fill="#4A4A4A"/>
+<rect x="170.0" y="94.0" width="10" height="16" rx="3" fill="#E8E8E8" stroke="#8C8C8C"/>
+<circle cx="175.0" cy="102.0" r="2.5" fill="#4A4A4A"/>
+</g>
+<g>
+<rect x="226" y="74" width="132" height="56" rx="6" fill="url(#ghBody)" stroke="#8C8C8C" stroke-width="1"/>
+<text x="292.0" y="106.0" text-anchor="middle" font-family="Segoe UI, sans-serif" font-size="12" fill="#222">Linear Array</text>
+<rect x="218.0" y="94.0" width="10" height="16" rx="3" fill="#E8E8E8" stroke="#8C8C8C"/>
+<circle cx="223.0" cy="102.0" r="2.5" fill="#4A4A4A"/>
+<rect x="356.0" y="94.0" width="10" height="16" rx="3" fill="#E8E8E8" stroke="#8C8C8C"/>
+<circle cx="361.0" cy="102.0" r="2.5" fill="#4A4A4A"/>
+</g>
+<path d="M 175.0,102.0 C 199.0,102.0 199.0,102.0 223.0,102.0" stroke="#4A4A4A" stroke-width="1.5" fill="none"/>
+<g>
+<rect x="412" y="74" width="132" height="56" rx="6" fill="url(#ghBody)" stroke="#8C8C8C" stroke-width="1"/>
+<text x="478.0" y="106.0" text-anchor="middle" font-family="Segoe UI, sans-serif" font-size="12" fill="#222">Dispatch</text>
+<rect x="404.0" y="94.0" width="10" height="16" rx="3" fill="#E8E8E8" stroke="#8C8C8C"/>
+<circle cx="409.0" cy="102.0" r="2.5" fill="#4A4A4A"/>
+<rect x="542.0" y="86.5" width="10" height="16" rx="3" fill="#E8E8E8" stroke="#8C8C8C"/>
+<circle cx="547.0" cy="94.5" r="2.5" fill="#4A4A4A"/>
+<rect x="542.0" y="101.5" width="10" height="16" rx="3" fill="#E8E8E8" stroke="#8C8C8C"/>
+<circle cx="547.0" cy="109.5" r="2.5" fill="#4A4A4A"/>
+</g>
+<path d="M 361.0,102.0 C 385.0,102.0 385.0,102.0 409.0,102.0" stroke="#4A4A4A" stroke-width="1.5" fill="none"/>
+<g>
+<rect x="598" y="34" width="132" height="56" rx="6" fill="url(#ghBody)" stroke="#8C8C8C" stroke-width="1"/>
+<text x="664.0" y="66.0" text-anchor="middle" font-family="Segoe UI, sans-serif" font-size="12" fill="#222">Divide+Cull A</text>
+<rect x="590.0" y="54.0" width="10" height="16" rx="3" fill="#E8E8E8" stroke="#8C8C8C"/>
+<circle cx="595.0" cy="62.0" r="2.5" fill="#4A4A4A"/>
+<rect x="728.0" y="54.0" width="10" height="16" rx="3" fill="#E8E8E8" stroke="#8C8C8C"/>
+<circle cx="733.0" cy="62.0" r="2.5" fill="#4A4A4A"/>
+</g>
+<g>
+<rect x="598" y="114" width="132" height="56" rx="6" fill="url(#ghBody)" stroke="#8C8C8C" stroke-width="1"/>
+<text x="664.0" y="146.0" text-anchor="middle" font-family="Segoe UI, sans-serif" font-size="12" fill="#222">Divide+Cull B</text>
+<rect x="590.0" y="134.0" width="10" height="16" rx="3" fill="#E8E8E8" stroke="#8C8C8C"/>
+<circle cx="595.0" cy="142.0" r="2.5" fill="#4A4A4A"/>
+<rect x="728.0" y="134.0" width="10" height="16" rx="3" fill="#E8E8E8" stroke="#8C8C8C"/>
+<circle cx="733.0" cy="142.0" r="2.5" fill="#4A4A4A"/>
+</g>
+<path d="M 547.0,94.5 C 571.0,94.5 571.0,62.0 595.0,62.0" stroke="#4A4A4A" stroke-width="1.5" fill="none"/>
+<path d="M 547.0,109.5 C 571.0,109.5 571.0,142.0 595.0,142.0" stroke="#4A4A4A" stroke-width="1.5" fill="none"/>
+<g>
+<rect x="784" y="74" width="132" height="56" rx="6" fill="url(#ghBody)" stroke="#8C8C8C" stroke-width="1"/>
+<text x="850.0" y="106.0" text-anchor="middle" font-family="Segoe UI, sans-serif" font-size="12" fill="#222">Weave</text>
+<rect x="776.0" y="86.5" width="10" height="16" rx="3" fill="#E8E8E8" stroke="#8C8C8C"/>
+<circle cx="781.0" cy="94.5" r="2.5" fill="#4A4A4A"/>
+<rect x="776.0" y="101.5" width="10" height="16" rx="3" fill="#E8E8E8" stroke="#8C8C8C"/>
+<circle cx="781.0" cy="109.5" r="2.5" fill="#4A4A4A"/>
+<rect x="914.0" y="94.0" width="10" height="16" rx="3" fill="#E8E8E8" stroke="#8C8C8C"/>
+<circle cx="919.0" cy="102.0" r="2.5" fill="#4A4A4A"/>
+</g>
+<path d="M 733.0,62.0 C 757.0,62.0 757.0,94.5 781.0,94.5" stroke="#4A4A4A" stroke-width="1.5" fill="none"/>
+<path d="M 733.0,142.0 C 757.0,142.0 757.0,109.5 781.0,109.5" stroke="#4A4A4A" stroke-width="1.5" fill="none"/>
+<g>
+<rect x="970" y="74" width="132" height="56" rx="6" fill="url(#ghBody)" stroke="#8C8C8C" stroke-width="1"/>
+<text x="1036.0" y="106.0" text-anchor="middle" font-family="Segoe UI, sans-serif" font-size="12" fill="#222">Nurbs Curve</text>
+<rect x="962.0" y="94.0" width="10" height="16" rx="3" fill="#E8E8E8" stroke="#8C8C8C"/>
+<circle cx="967.0" cy="102.0" r="2.5" fill="#4A4A4A"/>
+<rect x="1100.0" y="94.0" width="10" height="16" rx="3" fill="#E8E8E8" stroke="#8C8C8C"/>
+<circle cx="1105.0" cy="102.0" r="2.5" fill="#4A4A4A"/>
+</g>
+<path d="M 919.0,102.0 C 943.0,102.0 943.0,102.0 967.0,102.0" stroke="#4A4A4A" stroke-width="1.5" fill="none"/>
+<g>
+<rect x="1156" y="74" width="132" height="56" rx="6" fill="url(#ghBody)" stroke="#8C8C8C" stroke-width="1"/>
+<text x="1222.0" y="106.0" text-anchor="middle" font-family="Segoe UI, sans-serif" font-size="12" fill="#222">Revolution ×2</text>
+<rect x="1148.0" y="86.5" width="10" height="16" rx="3" fill="#E8E8E8" stroke="#8C8C8C"/>
+<circle cx="1153.0" cy="94.5" r="2.5" fill="#4A4A4A"/>
+<rect x="1148.0" y="101.5" width="10" height="16" rx="3" fill="#E8E8E8" stroke="#8C8C8C"/>
+<circle cx="1153.0" cy="109.5" r="2.5" fill="#4A4A4A"/>
+<rect x="1286.0" y="94.0" width="10" height="16" rx="3" fill="#E8E8E8" stroke="#8C8C8C"/>
+<circle cx="1291.0" cy="102.0" r="2.5" fill="#4A4A4A"/>
+</g>
+<path d="M 1105.0,102.0 C 1129.0,102.0 1129.0,94.5 1153.0,94.5" stroke="#4A4A4A" stroke-width="1.5" fill="none"/>
+<path d="M 547.0,94.5 C 577.0,260.0 1123.0,260.0 1153.0,109.5" stroke="#4A4A4A" stroke-width="1.5" fill="none"/>
+<g>
+<rect x="1328" y="68" width="160" height="90" fill="#FFFFFF" stroke="#B0B0B0"/>
+<g stroke="#D8D8D8" stroke-width="1">
+<line x1="1328" y1="146.0" x2="1488" y2="146.0"/>
+<line x1="1328" y1="133.6" x2="1488" y2="133.6"/>
+<line x1="1328" y1="125.2" x2="1488" y2="125.2"/>
+<line x1="1328" y1="120.8" x2="1488" y2="120.8"/>
+</g>
+<text x="1334" y="82" font-family="Consolas, monospace" font-size="10" fill="#555">Perspective</text>
+<g stroke="#111" stroke-width="1" fill="#C2C2B8" fill-opacity="0.5">
+<ellipse cx="1408.0" cy="101.0" rx="24" ry="6"/>
+<path d="M 1384.0,101.0 C 1378.0,117.0 1392.0,133.0 1408.0,135.0 C 1424.0,133.0 1438.0,117.0 1432.0,101.0" fill="none"/>
+<ellipse cx="1408.0" cy="135.0" rx="10" ry="3"/>
+</g>
+</g>
+</svg>

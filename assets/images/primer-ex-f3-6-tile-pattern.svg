@@ -1,0 +1,108 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1260" height="300" viewBox="0 0 1260 300" font-family="Segoe UI, sans-serif">
+<defs>
+<linearGradient id="ghBody" x1="0" y1="0" x2="0" y2="1">
+<stop offset="0%" stop-color="#F0F0F0"/><stop offset="100%" stop-color="#D8D8D8"/>
+</linearGradient>
+<pattern id="dots" width="18" height="18" patternUnits="userSpaceOnUse">
+<circle cx="1" cy="1" r="1" fill="#E0E0DA"/>
+</pattern>
+</defs>
+
+<rect x="0" y="0" width="1260" height="300" fill="#FAFAF7"/>
+<rect x="0" y="0" width="1260" height="300" fill="url(#dots)"/>
+<text x="16" y="24" font-size="14" font-weight="600" fill="#333">F.3.6 — List Item chọn tile theo pattern 0/1</text>
+<g>
+<rect x="40" y="74" width="132" height="56" rx="6" fill="url(#ghBody)" stroke="#8C8C8C" stroke-width="1"/>
+<text x="106.0" y="106.0" text-anchor="middle" font-family="Segoe UI, sans-serif" font-size="12" fill="#222">Rectangular Grid</text>
+<rect x="32.0" y="94.0" width="10" height="16" rx="3" fill="#E8E8E8" stroke="#8C8C8C"/>
+<circle cx="37.0" cy="102.0" r="2.5" fill="#4A4A4A"/>
+<rect x="170.0" y="94.0" width="10" height="16" rx="3" fill="#E8E8E8" stroke="#8C8C8C"/>
+<circle cx="175.0" cy="102.0" r="2.5" fill="#4A4A4A"/>
+</g>
+<g>
+<rect x="232" y="74" width="132" height="56" rx="6" fill="url(#ghBody)" stroke="#8C8C8C" stroke-width="1"/>
+<text x="298.0" y="106.0" text-anchor="middle" font-family="Segoe UI, sans-serif" font-size="12" fill="#222">Merge ×2</text>
+<rect x="224.0" y="94.0" width="10" height="16" rx="3" fill="#E8E8E8" stroke="#8C8C8C"/>
+<circle cx="229.0" cy="102.0" r="2.5" fill="#4A4A4A"/>
+<rect x="362.0" y="94.0" width="10" height="16" rx="3" fill="#E8E8E8" stroke="#8C8C8C"/>
+<circle cx="367.0" cy="102.0" r="2.5" fill="#4A4A4A"/>
+</g>
+<g>
+<rect x="424" y="74" width="132" height="56" rx="6" fill="url(#ghBody)" stroke="#8C8C8C" stroke-width="1"/>
+<text x="490.0" y="106.0" text-anchor="middle" font-family="Segoe UI, sans-serif" font-size="12" fill="#222">Repeat Data</text>
+<rect x="416.0" y="86.5" width="10" height="16" rx="3" fill="#E8E8E8" stroke="#8C8C8C"/>
+<circle cx="421.0" cy="94.5" r="2.5" fill="#4A4A4A"/>
+<rect x="416.0" y="101.5" width="10" height="16" rx="3" fill="#E8E8E8" stroke="#8C8C8C"/>
+<circle cx="421.0" cy="109.5" r="2.5" fill="#4A4A4A"/>
+<rect x="554.0" y="94.0" width="10" height="16" rx="3" fill="#E8E8E8" stroke="#8C8C8C"/>
+<circle cx="559.0" cy="102.0" r="2.5" fill="#4A4A4A"/>
+</g>
+<g>
+<rect x="616" y="74" width="132" height="56" rx="6" fill="url(#ghBody)" stroke="#8C8C8C" stroke-width="1"/>
+<text x="682.0" y="106.0" text-anchor="middle" font-family="Segoe UI, sans-serif" font-size="12" fill="#222">List Item ×2</text>
+<rect x="608.0" y="86.5" width="10" height="16" rx="3" fill="#E8E8E8" stroke="#8C8C8C"/>
+<circle cx="613.0" cy="94.5" r="2.5" fill="#4A4A4A"/>
+<rect x="608.0" y="101.5" width="10" height="16" rx="3" fill="#E8E8E8" stroke="#8C8C8C"/>
+<circle cx="613.0" cy="109.5" r="2.5" fill="#4A4A4A"/>
+<rect x="746.0" y="94.0" width="10" height="16" rx="3" fill="#E8E8E8" stroke="#8C8C8C"/>
+<circle cx="751.0" cy="102.0" r="2.5" fill="#4A4A4A"/>
+</g>
+<path d="M 367.0,102.0 C 490.0,102.0 490.0,94.5 613.0,94.5" stroke="#4A4A4A" stroke-width="1.5" fill="none"/>
+<path d="M 559.0,102.0 C 586.0,102.0 586.0,109.5 613.0,109.5" stroke="#4A4A4A" stroke-width="1.5" fill="none"/>
+<g>
+<rect x="808" y="74" width="132" height="56" rx="6" fill="url(#ghBody)" stroke="#8C8C8C" stroke-width="1"/>
+<text x="874.0" y="106.0" text-anchor="middle" font-family="Segoe UI, sans-serif" font-size="12" fill="#222">Rectangle Mapping</text>
+<rect x="800.0" y="86.5" width="10" height="16" rx="3" fill="#E8E8E8" stroke="#8C8C8C"/>
+<circle cx="805.0" cy="94.5" r="2.5" fill="#4A4A4A"/>
+<rect x="800.0" y="101.5" width="10" height="16" rx="3" fill="#E8E8E8" stroke="#8C8C8C"/>
+<circle cx="805.0" cy="109.5" r="2.5" fill="#4A4A4A"/>
+<rect x="938.0" y="94.0" width="10" height="16" rx="3" fill="#E8E8E8" stroke="#8C8C8C"/>
+<circle cx="943.0" cy="102.0" r="2.5" fill="#4A4A4A"/>
+</g>
+<path d="M 751.0,102.0 C 778.0,102.0 778.0,94.5 805.0,94.5" stroke="#4A4A4A" stroke-width="1.5" fill="none"/>
+<path d="M 175.0,102.0 C 205.0,285.0 775.0,285.0 805.0,109.5" stroke="#4A4A4A" stroke-width="1.5" fill="none"/>
+<g>
+<rect x="232" y="210" width="132" height="56" rx="6" fill="url(#ghBody)" stroke="#8C8C8C" stroke-width="1"/>
+<text x="298.0" y="242.0" text-anchor="middle" font-family="Segoe UI, sans-serif" font-size="12" fill="#222">List Length</text>
+<rect x="224.0" y="230.0" width="10" height="16" rx="3" fill="#E8E8E8" stroke="#8C8C8C"/>
+<circle cx="229.0" cy="238.0" r="2.5" fill="#4A4A4A"/>
+<rect x="362.0" y="230.0" width="10" height="16" rx="3" fill="#E8E8E8" stroke="#8C8C8C"/>
+<circle cx="367.0" cy="238.0" r="2.5" fill="#4A4A4A"/>
+</g>
+<path d="M 175.0,102.0 C 202.0,102.0 202.0,238.0 229.0,238.0" stroke="#4A4A4A" stroke-width="1.5" fill="none"/>
+<path d="M 367.0,238.0 C 394.0,238.0 394.0,94.5 421.0,94.5" stroke="#4A4A4A" stroke-width="1.5" fill="none"/>
+<g>
+<rect x="424" y="210" width="132" height="56" rx="6" fill="url(#ghBody)" stroke="#8C8C8C" stroke-width="1"/>
+<text x="490.0" y="236.0" text-anchor="middle" font-family="Segoe UI, sans-serif" font-size="12" fill="#222">Panel</text>
+<text x="490.0" y="251.0" text-anchor="middle" font-family="Consolas, monospace" font-size="9.5" fill="#555">1 / 0 / 0</text>
+<rect x="416.0" y="230.0" width="10" height="16" rx="3" fill="#E8E8E8" stroke="#8C8C8C"/>
+<circle cx="421.0" cy="238.0" r="2.5" fill="#4A4A4A"/>
+<rect x="554.0" y="230.0" width="10" height="16" rx="3" fill="#E8E8E8" stroke="#8C8C8C"/>
+<circle cx="559.0" cy="238.0" r="2.5" fill="#4A4A4A"/>
+</g>
+<path d="M 559.0,238.0 C 490.0,238.0 490.0,109.5 421.0,109.5" stroke="#4A4A4A" stroke-width="1.5" fill="none"/>
+<g>
+<rect x="980" y="68" width="160" height="90" fill="#FFFFFF" stroke="#B0B0B0"/>
+<g stroke="#D8D8D8" stroke-width="1">
+<line x1="980" y1="146.0" x2="1140" y2="146.0"/>
+<line x1="980" y1="133.6" x2="1140" y2="133.6"/>
+<line x1="980" y1="125.2" x2="1140" y2="125.2"/>
+<line x1="980" y1="120.8" x2="1140" y2="120.8"/>
+</g>
+<text x="986" y="82" font-family="Consolas, monospace" font-size="10" fill="#555">Perspective</text>
+<g stroke="#4A4A4A" stroke-width="1">
+<rect x="1028.0" y="95.0" width="16.0" height="14.7" fill="#C2C2B8"/>
+<rect x="1044.0" y="95.0" width="16.0" height="14.7" fill="#FFFFFF"/>
+<rect x="1060.0" y="95.0" width="16.0" height="14.7" fill="#C2C2B8"/>
+<rect x="1076.0" y="95.0" width="16.0" height="14.7" fill="#FFFFFF"/>
+<rect x="1028.0" y="109.7" width="16.0" height="14.7" fill="#FFFFFF"/>
+<rect x="1044.0" y="109.7" width="16.0" height="14.7" fill="#C2C2B8"/>
+<rect x="1060.0" y="109.7" width="16.0" height="14.7" fill="#FFFFFF"/>
+<rect x="1076.0" y="109.7" width="16.0" height="14.7" fill="#C2C2B8"/>
+<rect x="1028.0" y="124.3" width="16.0" height="14.7" fill="#C2C2B8"/>
+<rect x="1044.0" y="124.3" width="16.0" height="14.7" fill="#FFFFFF"/>
+<rect x="1060.0" y="124.3" width="16.0" height="14.7" fill="#C2C2B8"/>
+<rect x="1076.0" y="124.3" width="16.0" height="14.7" fill="#FFFFFF"/>
+</g>
+</g>
+</svg>
