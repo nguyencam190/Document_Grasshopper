@@ -2986,7 +2986,7 @@ const STORE_KEY='projectdocs_v3';
 // Bump SEED_VERSION any time SEED_DOCS content changes (e.g. a new Grasshopper
 // command page is added) to re-sync all visitors automatically, even ones
 // with old data already saved locally.
-const SEED_VERSION=68;
+const SEED_VERSION=69;
 // Real image assets referenced by SEED_DOCS via data-cfimgid — every visitor's
 // browser needs these in its OWN IndexedDB (see init() below) so images both
 // (a) display correctly, and (b) get recognized by the app's own Optimized
@@ -4996,6 +4996,19 @@ const SEED_DOCS=[
 <div class="cf-panel warning" contenteditable="false"><span class="cf-panel-icon">⚠️</span><div class="cf-panel-content" contenteditable="true">Cũng như panel "Main Dimensions", KHÔNG có khung hình nào lộ node graph thật đứng sau panel "Main Fillet" — chỉ đọc được label + giá trị số hiển thị trên UI, không biết được các giá trị này nối vào component nào/tính toán ra sao. Ghi nhận thêm 1 quan sát nhỏ để tham khảo: đoạn video có kéo riêng slider <strong>Ratio</strong> (Tire Thickness) từ 43 xuống 42 trong khi Tire Width giữ nguyên 272 — đường cong profile ở viewport KHÔNG thấy đổi hình dạng rõ rệt giữa 2 khung hình đó. Biên độ thay đổi khá nhỏ (chỉ 1 đơn vị) nên chưa đủ để kết luận công thức "Height = Tire Width × Ratio/100" ở trên sai, nhưng cũng chưa có bằng chứng hình ảnh xác nhận công thức đó — vẫn giữ nguyên là suy luận, không phải xác nhận.</div></div>
 <h2>Nguyên lý cốt lõi</h2>
 <p>Đây là kỹ thuật <strong>"profile theo trạm" (station-based profile)</strong>: thay vì vẽ 1 đường cong cố định, định nghĩa vài giá trị Width/Offset đặt tên tại các trạm mốc, dựng Plane tại mỗi trạm bằng phép toán đơn giản trên chính các giá trị đó, rồi dùng <strong>Vector 2Pt + Angle + Amplitude</strong> để máy tự tính độ bo góc theo hình học cục bộ. Đây là lý do panel bên phải ghi được "Any Wheel size" — đổi 1 slider là toàn bộ hệ trạm scale/bo lại theo, không vỡ hình như khi chỉnh tay 1 curve cố định.</p>
+<div class="cf-panel info" contenteditable="false"><span class="cf-panel-icon">ℹ️</span><div class="cf-panel-content" contenteditable="true">
+<strong>Đối chiếu với sách AAD</strong> (user cho biết tác giả video có học sách AAD trước khi làm bộ vành này): sách
+<em>Algorithms-Aided Design</em> (Arturo Tedeschi) — chương 11 "Environmental Analysis", mục 11.4.1 "Responsive
+skin" — mô tả ĐÚNG nguyên lý tổng quát dùng ở đây: đo góc giữa 2 vector bằng component <strong>Angle</strong>
+(Vector &gt; Vector), rồi dùng chính giá trị góc đo được để điều khiển 1 phép biến đổi hình học khác thay vì
+dùng 1 số cố định — trong sách là <strong>Angle → Remap → Scale</strong> để co giãn cửa sổ mặt đứng theo góc
+nắng chiếu; trong video vành xe là <strong>Angle → Amplitude</strong> để tính độ bo góc profile theo hình học
+cục bộ tại mỗi trạm. Cùng 1 khuôn mẫu tính toán ("đo góc giữa 2 vector → dùng góc đó điều khiển 1 tham số biến
+đổi thích ứng"), khác ứng dụng cụ thể. Đây là bằng chứng gián tiếp CỦNG CỐ khả năng tác giả áp dụng nguyên lý
+học từ sách vào bài toán vành xe — không phải bằng chứng trực tiếp (bản deep-dive tiếng Việt của sách AAD, tổng hợp đủ 11 chương, không hề
+nhắc tới thiết kế vành xe/bánh xe/ô tô ở bất kỳ đâu — đã rà lại bằng từ khoá để xác nhận).
+</div></div>
+
 
 <h2>Cách dựng từng bước (phiên bản đơn giản hoá)</h2>
 <div class="cf-panel note" contenteditable="false"><span class="cf-panel-icon">📝</span><div class="cf-panel-content" contenteditable="true">Đây là bài tập TÁI TẠO nguyên lý cốt lõi (Vector 2Pt + Angle + Amplitude bo góc thích ứng) để tự kéo thử trên canvas thật — KHÔNG phải chép lại chính xác từng dây nối của file gốc trong video (video quảng bá không đủ độ phân giải để đọc hết dây nối thật). Giống cách bản Voronoi hoa hướng dương trong case study của dự án này cũng là bản đơn giản hoá, không phải Fibonacci thật.</div></div>
