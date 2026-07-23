@@ -98,7 +98,10 @@ chính ví dụ đó. Ví dụ phải ngắn gọn, dễ tái tạo lại trên 
      Grasshopper canvas / Rhino viewport** (khối component bo góc xám có núm input/output, dây nối
      cong, viewport nền trắng có lưới phối cảnh...) — không vẽ sơ đồ hộp-mũi tên chung chung kiểu
      flowchart trừ khi thực sự không có ảnh phù hợp. Xem chi tiết màu sắc/hình dạng/khung SVG mẫu ở
-     `references/phong-cach-minh-hoa.md`. Chỉ dùng sơ đồ ASCII khi không dựng được SVG phù hợp.
+     `.claude/skills/xuat-ban-hinh-minh-hoa/references/phong-cach-minh-hoa.md` (skill
+     `xuat-ban-hinh-minh-hoa` lo toàn bộ phần kỹ thuật tạo/gắn ảnh khi cần publish thật vào
+     `Grasshopper.html`, không chỉ trả lời trong chat). Chỉ dùng sơ đồ ASCII khi không dựng được SVG
+     phù hợp.
 
 **11. Lưu ý** — lỗi thường gặp khi dùng component này, giới hạn/hạn chế thực tế, mẹo dùng hiệu quả.
 
