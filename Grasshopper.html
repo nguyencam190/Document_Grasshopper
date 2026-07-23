@@ -2986,7 +2986,7 @@ const STORE_KEY='projectdocs_v3';
 // Bump SEED_VERSION any time SEED_DOCS content changes (e.g. a new Grasshopper
 // command page is added) to re-sync all visitors automatically, even ones
 // with old data already saved locally.
-const SEED_VERSION=64;
+const SEED_VERSION=65;
 // Real image assets referenced by SEED_DOCS via data-cfimgid — every visitor's
 // browser needs these in its OWN IndexedDB (see init() below) so images both
 // (a) display correctly, and (b) get recognized by the app's own Optimized
@@ -3447,7 +3447,15 @@ const SEED_DOCS=[
 <p>Hầu hết parameter lưu được <strong>2 loại dữ liệu</strong>: <strong>Volatile</strong> (dữ liệu tạm/dễ bay hơi) và <strong>Persistent</strong> (dữ liệu bền, do người dùng tự đặt). Volatile data được kế thừa từ 1 hoặc nhiều nguồn và bị huỷ (thu thập lại) mỗi khi 1 solution mới bắt đầu. Persistent data là dữ liệu do người dùng chủ động gán.</p>
 <h3>F.1.2.0 Persistent Data</h3>
 <p>Persistent data được truy cập qua menu ngữ cảnh, cách quản lý khác nhau tùy loại parameter. Sách lấy ví dụ <strong>Point parameter</strong>:</p>
-<p>Trình tự thao tác theo sách: 1. Kéo-thả 1 <strong>Point Parameter</strong> từ panel <strong>Params/Geometry</strong> vào canvas → parameter hiện màu cam (cảnh báo — vì đang rỗng, chưa có persistent record nào và chưa thu thập được volatile data). 2. Right-click parameter → menu ngữ cảnh cho 2 cách gán persistent data: <strong>gán 1 điểm (single)</strong> hoặc <strong>gán nhiều điểm (multiple)</strong> — chọn <strong>Set Multiple Points</strong>. 3. Khi chọn xong 1 trong 2 lệnh trên, cửa sổ Grasshopper tự ẩn đi, và người dùng được yêu cầu <strong>chọn điểm (pick point) trực tiếp trong 1 Rhino viewport</strong>. 4. Sau khi chọn xong các điểm cần thiết, nhấn <strong>Enter</strong> — các điểm đó trở thành 1 phần của persistent data record của parameter. 5. Lúc này parameter không còn rỗng nữa, đổi màu từ <strong>cam sang xám</strong>, quả bóng cảnh báo ở góc trên cũng biến mất. 6. Các điểm lưu trong parameter này giờ có thể dùng làm input cho bất kỳ bước tiếp theo nào trong definition.</p>
+<p>Trình tự thao tác theo sách:</p>
+<ul>
+<li>1. Kéo-thả 1 <strong>Point Parameter</strong> từ panel <strong>Params/Geometry</strong> vào canvas → parameter hiện màu cam (cảnh báo — vì đang rỗng, chưa có persistent record nào và chưa thu thập được volatile data).</li>
+<li>2. Right-click parameter → menu ngữ cảnh cho 2 cách gán persistent data: <strong>gán 1 điểm (single)</strong> hoặc <strong>gán nhiều điểm (multiple)</strong> — chọn <strong>Set Multiple Points</strong>.</li>
+<li>3. Khi chọn xong 1 trong 2 lệnh trên, cửa sổ Grasshopper tự ẩn đi, và người dùng được yêu cầu <strong>chọn điểm (pick point) trực tiếp trong 1 Rhino viewport</strong>.</li>
+<li>4. Sau khi chọn xong các điểm cần thiết, nhấn <strong>Enter</strong> — các điểm đó trở thành 1 phần của persistent data record của parameter.</li>
+<li>5. Lúc này parameter không còn rỗng nữa, đổi màu từ <strong>cam sang xám</strong>, quả bóng cảnh báo ở góc trên cũng biến mất.</li>
+<li>6. Các điểm lưu trong parameter này giờ có thể dùng làm input cho bất kỳ bước tiếp theo nào trong definition.</li>
+</ul>
 <h3>F.1.2.1 Volatile Data</h3>
 <p>Volatile data không tồn tại vĩnh viễn, sẽ bị huỷ mỗi khi solution "hết hạn" (expired) — điều này thường kích hoạt việc tính lại solution và cập nhật scene. Hầu hết dữ liệu tạo ra "ngay lúc chạy" được xem là volatile.</p>
 <p>Mọi parameter (trừ output parameter) đều xác định nơi lấy dữ liệu, và hầu hết không kén chọn kiểu dữ liệu quá mức — ví dụ có thể nối 1 Number parameter (số thập phân) vào 1 nguồn kiểu số nguyên (integer), Grasshopper sẽ tự động chuyển đổi (conversion).</p>
@@ -3514,8 +3522,18 @@ const SEED_DOCS=[
 <h3>F.1.4.1 The Logical Graph</h3>
 <p>Toàn bộ object và dây nối giữa chúng tạo thành <strong>đồ thị logic (logical graph)</strong> của chương trình. Đồ thị này thể hiện dòng chảy dữ liệu và các phụ thuộc (dependencies) của mỗi input với output được nối tới nó. Bất cứ khi nào đồ thị thay đổi (đôi khi gọi là bị <strong>"dirtied"</strong> — "làm bẩn"/đánh dấu cần tính lại), mọi kết nối và object ở downstream sẽ được <strong>cập nhật lại</strong>.</p>
 <p>Sách minh hoạ khái niệm "Directionality of data" (hướng đi của dữ liệu — Upstream/Downstream) bằng 1 chuỗi ví dụ thực tế gồm 2 giai đoạn:</p>
-<p><strong>Ví dụ 1 — dựng và chia curve</strong> (theo đúng trình tự mô tả trong sách, để vẽ lại workflow): 1. Tham chiếu (reference) 1 curve từ Rhino. 2. Reparametrize (chuẩn hoá lại) miền giá trị (domain) của curve về khoảng 0.0–1.0. 3. Chia (divide) curve thành 13 đoạn bằng nhau. 4. Chạy các giá trị tham số tại mỗi điểm chia curve xuyên qua phần còn lại của đồ thị.</p>
-<p><strong>Ví dụ 2 — nối tiếp, dựng vòng tròn biến thiên rồi loft:</strong> 5. Vẽ 1 vòng tròn tại mỗi điểm chia dọc theo curve, <strong>vuông góc (normal)</strong> với vector tiếp tuyến (tangent vector) tại mỗi điểm, với bán kính xác định bởi giá trị tham số (t) đã qua chỉnh sửa của Graph Mapper và nhân với 27 (Multiply each value by 27). 6. Loft 1 bề mặt (surface) nối các vòng tròn đó lại (Loft between circles → "Variable circle radius").</p>
+<p><strong>Ví dụ 1 — dựng và chia curve</strong> (theo đúng trình tự mô tả trong sách, để vẽ lại workflow):</p>
+<ul>
+<li>1. Tham chiếu (reference) 1 curve từ Rhino.</li>
+<li>2. Reparametrize (chuẩn hoá lại) miền giá trị (domain) của curve về khoảng 0.0–1.0.</li>
+<li>3. Chia (divide) curve thành 13 đoạn bằng nhau.</li>
+<li>4. Chạy các giá trị tham số tại mỗi điểm chia curve xuyên qua phần còn lại của đồ thị.</li>
+</ul>
+<p><strong>Ví dụ 2 — nối tiếp, dựng vòng tròn biến thiên rồi loft:</strong></p>
+<ul>
+<li>5. Vẽ 1 vòng tròn tại mỗi điểm chia dọc theo curve, <strong>vuông góc (normal)</strong> với vector tiếp tuyến (tangent vector) tại mỗi điểm, với bán kính xác định bởi giá trị tham số (t) đã qua chỉnh sửa của Graph Mapper và nhân với 27 (Multiply each value by 27).</li>
+<li>6. Loft 1 bề mặt (surface) nối các vòng tròn đó lại (Loft between circles → "Variable circle radius").</li>
+</ul>
 <p>Nói cách khác chuỗi công cụ trong ví dụ minh hoạ gồm: <strong>Curve (reference) → Reparametrize → Divide Curve (13 đoạn) → [Graph Mapper × giá trị t] → Multiply (×27) → Circle (vuông góc tangent, bán kính biến thiên) → Loft</strong>.</p>`},
   {id:'seed-book-primer-f2',title:'F.2 — Building Blocks of Algorithms',section:'default',parentId:'seed-book-primer',images:[],textBoxes:[],createdAt:'2026-07-23T00:00:00.000Z',updatedAt:'2026-07-23T00:00:00.000Z',content:`<h1>F.2 — Building Blocks of Algorithms</h1>
 <div class="cf-img-block" data-cfimgid="primer-f2" data-cfimgtype="image" data-align="center" data-name="primer-f2.svg"><div class="cf-img-wrap"><div class="cf-img-inner" style="width:100%;max-width:760px"><img style="width:100%;height:auto;display:block" alt="Chuỗi 3 component nối tiếp Point, Vector XYZ, Move minh hoạ nguyên tắc dữ liệu chảy trái sang phải"><div class="cf-img-resize-h left"></div><div class="cf-img-resize-h right"></div></div></div><div class="cf-img-caption"></div></div>
@@ -3538,7 +3556,33 @@ const SEED_DOCS=[
 <p>Ví dụ sách nêu (mô tả ý tưởng, không phải ví dụ có bước dựng): vector được vẽ giữa 1 attractor point và tâm điểm của mỗi vòng tròn (circle). Các vector này dùng để định hướng (orientation) các vòng tròn, sao cho chúng luôn hướng mặt về phía attractor point. Cùng 1 attractor đó còn có thể dùng để thay đổi tham số khác của các vòng tròn — vd vòng tròn gần attractor hơn có thể được scale lớn hơn, bằng cách dùng độ dài (length) của mỗi vector để scale bán kính (radius) vòng tròn.</p>
 <h3>F.2.1.0 Attractor Definition — ví dụ thực hành</h3>
 <p>Mục tiêu ví dụ: dùng 1 attractor point để định hướng 1 lưới vòng tròn (grid of circles), dựa theo vector nối giữa tâm mỗi vòng tròn và attractor point. Mỗi vòng tròn sẽ xoay sao cho vuông góc (normal) với — tức hướng mặt về — attractor point.</p>
-<p>Trình tự các bước theo đúng thứ tự sách liệt kê (để dựng lại sơ đồ dây): 1. <code>Ctrl+N</code> — tạo definition mới. 2. <strong>Vector/Grid/Hexagonal</strong> — kéo-thả component <strong>Hexagonal Grid</strong>. 3. <strong>Params/Input/Slider</strong> — kéo-thả 2 Number Slider. 4–9. Slider 1: đặt tên <strong>"Cell Radius"</strong>, Rounding = Floating Point, Lower Limit = 0.000, Upper Limit = 1.000, Value = 0.500. 10–15. Slider 2: đặt tên <strong>"# of Cells"</strong>, Rounding = Integers, Lower Limit = 0, Upper Limit = 10, Value = 10. 16. Nối <strong>Cell Radius</strong> slider → input <strong>Size (S)</strong> của Hexagonal Grid. 17. Nối <strong># of Cells</strong> slider → cả 2 input <strong>Extent X (Ex)</strong> và <strong>Extent Y (Ey)</strong> của Hexagonal Grid. 18. <strong>Curve/Primitive/Circle CNR</strong> — kéo-thả component <strong>Circle CNR</strong>. 19. Nối output <strong>Points (P)</strong> của Hexagonal Grid → input <strong>Center (C)</strong> của Circle CNR. 20. Nối slider <strong>Cell Radius</strong> → input <strong>Radius (R)</strong> của Circle CNR. 21. <strong>Vector/Vector/Vector 2Pt</strong> — kéo-thả component <strong>Vector 2Pt</strong>. 22. Nối output <strong>Points (P)</strong> của Hexagonal Grid → input <strong>Base Point (A)</strong> của Vector 2Pt. 23. <strong>Params/Geometry/Point</strong> — kéo-thả component <strong>Point</strong>. 24. Right-click Point component → <strong>Set One Point</strong>, chọn vị trí attractor point trong model space (Rhino viewport). 25. Nối Point component → input <strong>Tip Point (B)</strong> của Vector 2Pt. 26. Nối output <strong>Vector (V)</strong> của Vector 2Pt → input <strong>Normal (N)</strong> của Circle CNR. 27. <strong>Curve/Util/Offset</strong> — kéo-thả component <strong>Offset</strong>. 28. <strong>Params/Input/Slider</strong> — kéo-thả 1 Number Slider. 29–34. Slider: đặt tên <strong>"Offset Distance"</strong>, Rounding = Floating Point, Lower Limit = -0.500, Upper Limit = 0.500, Value = -0.250. 35. Nối slider <strong>Offset Distance</strong> → input <strong>Distance (D)</strong> của Offset. 36. <strong>Surface/Freeform/Boundary Surfaces</strong> — kéo-thả component <strong>Boundary Surfaces</strong>. 37. Nối output <strong>Curves (C)</strong> của Offset → input <strong>Edges (E)</strong> của Boundary Surfaces. 38. <strong>Params/Geometry/Surface</strong> — kéo-thả component <strong>Surface</strong>. 39. Nối output <strong>Surfaces (S)</strong> của Boundary Surfaces → parameter <strong>Surfaces</strong>.</p>
+<p>Trình tự các bước theo đúng thứ tự sách liệt kê (để dựng lại sơ đồ dây):</p>
+<ul>
+<li>1. <code>Ctrl+N</code> — tạo definition mới.</li>
+<li>2. <strong>Vector/Grid/Hexagonal</strong> — kéo-thả component <strong>Hexagonal Grid</strong>.</li>
+<li>3. <strong>Params/Input/Slider</strong> — kéo-thả 2 Number Slider.</li>
+<li>4–9. Slider 1: đặt tên <strong>"Cell Radius"</strong>, Rounding = Floating Point, Lower Limit = 0.000, Upper Limit = 1.000, Value = 0.500.</li>
+<li>10–15. Slider 2: đặt tên <strong>"# of Cells"</strong>, Rounding = Integers, Lower Limit = 0, Upper Limit = 10, Value = 10.</li>
+<li>16. Nối <strong>Cell Radius</strong> slider → input <strong>Size (S)</strong> của Hexagonal Grid.</li>
+<li>17. Nối <strong># of Cells</strong> slider → cả 2 input <strong>Extent X (Ex)</strong> và <strong>Extent Y (Ey)</strong> của Hexagonal Grid.</li>
+<li>18. <strong>Curve/Primitive/Circle CNR</strong> — kéo-thả component <strong>Circle CNR</strong>.</li>
+<li>19. Nối output <strong>Points (P)</strong> của Hexagonal Grid → input <strong>Center (C)</strong> của Circle CNR.</li>
+<li>20. Nối slider <strong>Cell Radius</strong> → input <strong>Radius (R)</strong> của Circle CNR.</li>
+<li>21. <strong>Vector/Vector/Vector 2Pt</strong> — kéo-thả component <strong>Vector 2Pt</strong>.</li>
+<li>22. Nối output <strong>Points (P)</strong> của Hexagonal Grid → input <strong>Base Point (A)</strong> của Vector 2Pt.</li>
+<li>23. <strong>Params/Geometry/Point</strong> — kéo-thả component <strong>Point</strong>.</li>
+<li>24. Right-click Point component → <strong>Set One Point</strong>, chọn vị trí attractor point trong model space (Rhino viewport).</li>
+<li>25. Nối Point component → input <strong>Tip Point (B)</strong> của Vector 2Pt.</li>
+<li>26. Nối output <strong>Vector (V)</strong> của Vector 2Pt → input <strong>Normal (N)</strong> của Circle CNR.</li>
+<li>27. <strong>Curve/Util/Offset</strong> — kéo-thả component <strong>Offset</strong>.</li>
+<li>28. <strong>Params/Input/Slider</strong> — kéo-thả 1 Number Slider.</li>
+<li>29–34. Slider: đặt tên <strong>"Offset Distance"</strong>, Rounding = Floating Point, Lower Limit = -0.500, Upper Limit = 0.500, Value = -0.250.</li>
+<li>35. Nối slider <strong>Offset Distance</strong> → input <strong>Distance (D)</strong> của Offset.</li>
+<li>36. <strong>Surface/Freeform/Boundary Surfaces</strong> — kéo-thả component <strong>Boundary Surfaces</strong>.</li>
+<li>37. Nối output <strong>Curves (C)</strong> của Offset → input <strong>Edges (E)</strong> của Boundary Surfaces.</li>
+<li>38. <strong>Params/Geometry/Surface</strong> — kéo-thả component <strong>Surface</strong>.</li>
+<li>39. Nối output <strong>Surfaces (S)</strong> của Boundary Surfaces → parameter <strong>Surfaces</strong>.</li>
+</ul>
 <p>Chuỗi logic tóm gọn: <strong>Hexagonal Grid (điểm lưới lục giác) → Circle CNR (vòng tròn tại mỗi điểm lưới) → Vector 2Pt (vector từ điểm lưới tới attractor point) → gán vector đó làm Normal của Circle CNR (để vòng tròn xoay hướng theo attractor) → Offset (thu nhỏ đường viền vòng tròn) → Boundary Surfaces (dựng mặt từ đường viền) → Surface (parameter xuất kết quả)</strong>.</p>
 <div class="cf-img-block" data-cfimgid="primer-ex-f2-1-0-attractor" data-cfimgtype="image" data-align="center" data-name="primer-ex-f2-1-0-attractor.svg"><div class="cf-img-wrap"><div class="cf-img-inner" style="width:100%;max-width:1120px"><img style="width:100%;height:auto;display:block" alt="Sơ đồ chuỗi component: Hexagonal Grid, Circle CNR nhận Normal từ Vector 2Pt (hướng theo Point attractor), Offset, Boundary Surfaces, Surface"><div class="cf-img-resize-h left"></div><div class="cf-img-resize-h right"></div></div></div><div class="cf-img-caption"></div></div>
 <h2>F.2.2 Mathematics, Expressions & Conditionals</h2>
@@ -3581,15 +3625,68 @@ const SEED_DOCS=[
 <li><strong>Helix</strong>: x(t) = cos(t), y(t) = sin(t), z(t) = b(t)</li>
 <li><strong>Spiral</strong>: x(t) = t·cos(t), z(t) = t·sin(t)</li>
 </ul>
-<p>Trình tự các bước dựng (theo đúng thứ tự sách liệt kê): 1. <code>Ctrl+N</code> — tạo definition mới. 2. <strong>Params/Geometry/Point</strong> — kéo-thả Point parameter. 3. Right-click Point parameter → <strong>Set One Point</strong> — chọn 1 điểm trong Rhino viewport. 4. <strong>Vector/Vector/Unit X</strong> — kéo-thả component <strong>Unit X</strong>. 5. <strong>Params/Input/Number Slider</strong> — kéo-thả Number Slider. 6. Đặt slider: Rounding = Integer, Lower Limit = 10, Upper Limit = 40, Value = 20. 7. <strong>Transform/Array/Linear Array</strong> — kéo-thả component <strong>Linear Array</strong>. 8. Nối output Point parameter → input <strong>Geometry (G)</strong> của Linear Array. 9. Nối output <strong>Unit Vector (V)</strong> của Unit X → input <strong>Direction (D)</strong> của Linear Array. 10. Nối Number Slider → input <strong>Count (N)</strong> của Linear Array. → Kết quả: 1 hàng 20 điểm dọc trục X trong Rhino; kéo slider để đổi số lượng điểm trong mảng (array). 11. <strong>Curve/Spline/Interpolate</strong> — kéo-thả component <strong>Interpolate Curve</strong>. 12. Nối output <strong>Geometry (G)</strong> của Linear Array → input <strong>Vertices (V)</strong> của Interpolate Curve. → Kết quả: 1 đường thẳng (line) nối mảng điểm bằng 1 curve.</p>
+<p>Trình tự các bước dựng (theo đúng thứ tự sách liệt kê):</p>
+<ul>
+<li>1. <code>Ctrl+N</code> — tạo definition mới.</li>
+<li>2. <strong>Params/Geometry/Point</strong> — kéo-thả Point parameter.</li>
+<li>3. Right-click Point parameter → <strong>Set One Point</strong> — chọn 1 điểm trong Rhino viewport.</li>
+<li>4. <strong>Vector/Vector/Unit X</strong> — kéo-thả component <strong>Unit X</strong>.</li>
+<li>5. <strong>Params/Input/Number Slider</strong> — kéo-thả Number Slider.</li>
+<li>6. Đặt slider: Rounding = Integer, Lower Limit = 10, Upper Limit = 40, Value = 20.</li>
+<li>7. <strong>Transform/Array/Linear Array</strong> — kéo-thả component <strong>Linear Array</strong>.</li>
+<li>8. Nối output Point parameter → input <strong>Geometry (G)</strong> của Linear Array.</li>
+<li>9. Nối output <strong>Unit Vector (V)</strong> của Unit X → input <strong>Direction (D)</strong> của Linear Array.</li>
+<li>10. Nối Number Slider → input <strong>Count (N)</strong> của Linear Array. → Kết quả: 1 hàng 20 điểm dọc trục X trong Rhino; kéo slider để đổi số lượng điểm trong mảng (array).</li>
+<li>11. <strong>Curve/Spline/Interpolate</strong> — kéo-thả component <strong>Interpolate Curve</strong>.</li>
+<li>12. Nối output <strong>Geometry (G)</strong> của Linear Array → input <strong>Vertices (V)</strong> của Interpolate Curve. → Kết quả: 1 đường thẳng (line) nối mảng điểm bằng 1 curve.</li>
+</ul>
 <p>Tiếp tục dùng component Trigonometry để biến đường thẳng này thành đường cong sin/xoắn ốc:</p>
-<p>13. <strong>Vector/Point/Deconstruct</strong> — kéo-thả component <strong>Deconstruct</strong>. 14. <strong>Vector/Point/Construct Point</strong> — kéo-thả component <strong>Construct Point</strong>. 15. <strong>Maths/Trig/Sine</strong> — kéo-thả component <strong>Sine</strong>. 16. Ngắt (disconnect) dây nối vào input <strong>Vertices (V)</strong> của Interpolate Curve. 17. Nối output <strong>Geometry (G)</strong> của Linear Array → input <strong>Point (P)</strong> của Deconstruct. 18. Nối output <strong>Point X (X)</strong> của Deconstruct → input <strong>X coordinate (X)</strong> của Construct Point. 19. Nối thêm 1 dây thứ 2 từ output <strong>Point X (X)</strong> của Deconstruct → input <strong>Value (x)</strong> của Sine. 20. Nối output <strong>Result (y)</strong> của Sine → input <strong>Y coordinate (Y)</strong> của Construct Point. 21. Nối output <strong>Point (Pt)</strong> của Construct Point → input <strong>Vertices (V)</strong> của Interpolate. → Kết quả: 1 đường cong hình sin (sine wave curve) dọc theo trục X.</p>
+<ul>
+<li>13. <strong>Vector/Point/Deconstruct</strong> — kéo-thả component <strong>Deconstruct</strong>.</li>
+<li>14. <strong>Vector/Point/Construct Point</strong> — kéo-thả component <strong>Construct Point</strong>.</li>
+<li>15. <strong>Maths/Trig/Sine</strong> — kéo-thả component <strong>Sine</strong>.</li>
+<li>16. Ngắt (disconnect) dây nối vào input <strong>Vertices (V)</strong> của Interpolate Curve.</li>
+<li>17. Nối output <strong>Geometry (G)</strong> của Linear Array → input <strong>Point (P)</strong> của Deconstruct.</li>
+<li>18. Nối output <strong>Point X (X)</strong> của Deconstruct → input <strong>X coordinate (X)</strong> của Construct Point.</li>
+<li>19. Nối thêm 1 dây thứ 2 từ output <strong>Point X (X)</strong> của Deconstruct → input <strong>Value (x)</strong> của Sine.</li>
+<li>20. Nối output <strong>Result (y)</strong> của Sine → input <strong>Y coordinate (Y)</strong> của Construct Point.</li>
+<li>21. Nối output <strong>Point (Pt)</strong> của Construct Point → input <strong>Vertices (V)</strong> của Interpolate. → Kết quả: 1 đường cong hình sin (sine wave curve) dọc theo trục X.</li>
+</ul>
 <p>Thêm chiều thứ 3 để tạo 3D helix (xoắn ốc trụ):</p>
-<p>22. <strong>Maths/Trig/Cosine</strong> — kéo-thả component <strong>Cosine</strong>. 23. Nối thêm 1 dây thứ 3 từ output <strong>Point X (X)</strong> của Deconstruct → input <strong>Value (x)</strong> của Cosine. 24. Nối output <strong>Result (y)</strong> của Cosine → input <strong>Z coordinate (Z)</strong> của Construct Point. 25. <strong>Maths/Operators/Multiplication</strong> — kéo-thả <strong>2 component Multiplication</strong>. 26. Nối output <strong>Point X (X)</strong> của Deconstruct → input <strong>(A)</strong> của cả 2 component Multiplication. 27. Nối output <strong>Result (y)</strong> của Sine → input <strong>(B)</strong> của Multiplication thứ nhất. 28. Nối output <strong>Result (y)</strong> của Cosine → input <strong>(B)</strong> của Multiplication thứ hai. 29. Ngắt dây nối vào input <strong>Y Coordinate (Y)</strong> của Construct Point. 30. Nối output <strong>Result (R)</strong> của Multiplication thứ nhất → input <strong>X Coordinate (X)</strong> của Construct Point. 31. Nối output <strong>Result (R)</strong> của Multiplication thứ hai → input <strong>Z Coordinate (Z)</strong> của Construct Point. → Kết quả: 1 đường <strong>helix 3D</strong> (nếu z giữ theo b(t) từ mảng gốc) — sách ghi chú kết quả hiện ra là "3D helix" và cũng đề cập biến thể "spiral curve" tùy input.</p>
+<ul>
+<li>22. <strong>Maths/Trig/Cosine</strong> — kéo-thả component <strong>Cosine</strong>.</li>
+<li>23. Nối thêm 1 dây thứ 3 từ output <strong>Point X (X)</strong> của Deconstruct → input <strong>Value (x)</strong> của Cosine.</li>
+<li>24. Nối output <strong>Result (y)</strong> của Cosine → input <strong>Z coordinate (Z)</strong> của Construct Point.</li>
+<li>25. <strong>Maths/Operators/Multiplication</strong> — kéo-thả <strong>2 component Multiplication</strong>.</li>
+<li>26. Nối output <strong>Point X (X)</strong> của Deconstruct → input <strong>(A)</strong> của cả 2 component Multiplication.</li>
+<li>27. Nối output <strong>Result (y)</strong> của Sine → input <strong>(B)</strong> của Multiplication thứ nhất.</li>
+<li>28. Nối output <strong>Result (y)</strong> của Cosine → input <strong>(B)</strong> của Multiplication thứ hai.</li>
+<li>29. Ngắt dây nối vào input <strong>Y Coordinate (Y)</strong> của Construct Point.</li>
+<li>30. Nối output <strong>Result (R)</strong> của Multiplication thứ nhất → input <strong>X Coordinate (X)</strong> của Construct Point.</li>
+<li>31. Nối output <strong>Result (R)</strong> của Multiplication thứ hai → input <strong>Z Coordinate (Z)</strong> của Construct Point. → Kết quả: 1 đường <strong>helix 3D</strong> (nếu z giữ theo b(t) từ mảng gốc) — sách ghi chú kết quả hiện ra là "3D helix" và cũng đề cập biến thể "spiral curve" tùy input.</li>
+</ul>
 <h3>F.2.2.4 Expressions — ví dụ thực hành spiral/Voronoi</h3>
 <p>Component <strong>Expression</strong> (và họ hàng của nó là <strong>Evaluate</strong>) là công cụ rất linh hoạt — dùng cho nhiều ứng dụng khác nhau, có thể giải thuật toán học và trả về dữ liệu số làm output.</p>
 <p>Ví dụ tiếp theo trong sách khám phá các đường xoắn ốc toán học (mathematical spirals) tìm thấy trong tự nhiên, và cách dùng vài component Function để tạo mẫu tương tự trong Grasshopper — xây dựng tiếp trên definition "Trigonometric curves" ở mục trước.</p>
-<p>Trình tự các bước: 1. Mở lại definition "Trigonometric curves" từ ví dụ trước. 2. <strong>Xoá</strong> các component <strong>Sine, Cosine, Multiplication, Interpolate</strong>. 3. <strong>Params/Input/Number Slider</strong> — kéo-thả Number Slider. 4. Đặt slider: Rounding = Float, Lower Limit = 0.000, Upper Limit = 1.000, Value = 1.000. (Sách chú thích: slider này cho phép chỉnh khoảng cách giữa các điểm trong mảng.) 5. Nối Number Slider → input <strong>Factor (F)</strong> của Unit X. 6. <strong>Maths/Script/Expression</strong> — kéo-thả <strong>2 component Expression</strong>. 7. Double-click Expression thứ nhất, mở <strong>Expression Editor</strong>, nhập biểu thức: <strong><code>x<em>sin(x)</code></strong>. 8. Double-click Expression thứ hai, nhập biểu thức: <strong><code>x</em>cos(x)</code></strong>. 9. Nối 2 dây từ output <strong>Point X (X)</strong> của Deconstruct → input <strong>Variable x (x)</strong> của mỗi Expression. 10. Nối output <strong>Result (R)</strong> của Expression thứ nhất → input <strong>X coordinate (X)</strong> của Construct Point. 11. Nối output <strong>Result (R)</strong> của Expression thứ hai → input <strong>Y coordinate (Y)</strong> của Construct Point. 12. <strong>Mesh/Triangulation/Voronoi</strong> — kéo-thả component <strong>Voronoi</strong>. 13. <strong>Params/Input/Number Slider</strong> — kéo-thả Number Slider. 14. Đặt slider: Rounding = Integer, Lower Limit = 1, Upper Limit = 30, Value = 30. 15. Nối slider → input <strong>Radius (R)</strong> của Voronoi. 16. Nối output <strong>Point (Pt)</strong> của Construct Point → input <strong>Points (P)</strong> của Voronoi.</p>
+<p>Trình tự các bước:</p>
+<ul>
+<li>1. Mở lại definition "Trigonometric curves" từ ví dụ trước.</li>
+<li>2. <strong>Xoá</strong> các component <strong>Sine, Cosine, Multiplication, Interpolate</strong>.</li>
+<li>3. <strong>Params/Input/Number Slider</strong> — kéo-thả Number Slider.</li>
+<li>4. Đặt slider: Rounding = Float, Lower Limit = 0.000, Upper Limit = 1.000, Value = 1.000. (Sách chú thích: slider này cho phép chỉnh khoảng cách giữa các điểm trong mảng.)</li>
+<li>5. Nối Number Slider → input <strong>Factor (F)</strong> của Unit X.</li>
+<li>6. <strong>Maths/Script/Expression</strong> — kéo-thả <strong>2 component Expression</strong>.</li>
+<li>7. Double-click Expression thứ nhất, mở <strong>Expression Editor</strong>, nhập biểu thức: <strong><code>x*sin(x)</code></strong>.</li>
+<li>8. Double-click Expression thứ hai, nhập biểu thức: <strong><code>x*cos(x)</code></strong>.</li>
+<li>9. Nối 2 dây từ output <strong>Point X (X)</strong> của Deconstruct → input <strong>Variable x (x)</strong> của mỗi Expression.</li>
+<li>10. Nối output <strong>Result (R)</strong> của Expression thứ nhất → input <strong>X coordinate (X)</strong> của Construct Point.</li>
+<li>11. Nối output <strong>Result (R)</strong> của Expression thứ hai → input <strong>Y coordinate (Y)</strong> của Construct Point.</li>
+<li>12. <strong>Mesh/Triangulation/Voronoi</strong> — kéo-thả component <strong>Voronoi</strong>.</li>
+<li>13. <strong>Params/Input/Number Slider</strong> — kéo-thả Number Slider.</li>
+<li>14. Đặt slider: Rounding = Integer, Lower Limit = 1, Upper Limit = 30, Value = 30.</li>
+<li>15. Nối slider → input <strong>Radius (R)</strong> của Voronoi.</li>
+<li>16. Nối output <strong>Point (Pt)</strong> của Construct Point → input <strong>Points (P)</strong> của Voronoi.</li>
+</ul>
 <p>Kết quả: có thể tạo nhiều biến thể mẫu Voronoi khác nhau bằng cách chỉnh slider <strong>Factor, Count, Radius</strong>. Sách nêu 3 ví dụ giá trị cụ thể:</p>
 <ul>
 <li>Factor = 1.000, Radius = 15</li>
@@ -3602,7 +3699,36 @@ const SEED_DOCS=[
 <p><strong>Bánh xe màu (color wheel)</strong> là mô hình tổ chức màu sắc dựa trên <strong>hue (sắc độ/tông màu)</strong>. Trong Grasshopper, màu được định nghĩa bằng giá trị hue trong khoảng <strong>0.0 đến 1.0</strong>. <strong>Domain</strong> (miền giá trị) dùng để định nghĩa mọi giá trị khả dĩ giữa 1 cận dưới (A) và 1 cận trên (B).</p>
 <p>Bằng cách chia domain Hue (0.0 tới 1.0) theo số đoạn (segments) mong muốn, có thể gán 1 giá trị hue cho mỗi đoạn để tạo bánh xe màu. Trong bánh xe màu, <strong>hue tương ứng với góc (angle)</strong> — Grasshopper lấy domain góc 0–360 độ và remap lại thành domain 0 tới 1.</p>
 <h3>Ví dụ thực hành: Color Wheel biến thiên số đoạn</h3>
-<p>Trình tự các bước theo sách: 1. <code>Ctrl+N</code> — tạo definition mới. 2. <strong>Curve/Primitive/Polygon</strong> — kéo-thả component <strong>Polygon</strong>. 3. <strong>Params/Geometry/Point</strong> — kéo-thả Point parameter. 4–5. Right-click Point → <strong>Set One Point</strong>, chọn điểm trong model space. 6. Nối Point parameter (Base Point) → input <strong>Plane (P)</strong> của Polygon. 7. <strong>Params/Input/Number Sliders</strong> — kéo-thả 2 Number Slider. 8. Slider 1: Rounding = Integers, Lower Limit = 0, Upper Limit = 10, Value = 10. 9. Slider 2: Rounding = Integers, Lower Limit = 0, Upper Limit = 100, Value = 37. 10. Nối slider (Radius) → input <strong>Radius (R)</strong> của Polygon. 11. Nối slider (Segments) → input <strong>Segments (S)</strong> của Polygon. <em>(Ghi chú sách: khi nối 1 number slider vào 1 input, GH tự đổi tên slider theo đúng tên input mà nó đang nối tới.)</em> 12. <strong>Curve/Util/Explode</strong> — kéo-thả component <strong>Explode</strong>. 13. Nối output <strong>Polygon (P)</strong> của Polygon → input <strong>Curve (C)</strong> của Explode. 14. <strong>Surface/Freeform/Extrude Point</strong> — kéo-thả component <strong>Extrude Point</strong>. 15. Nối output <strong>Segments (S)</strong> của Explode → input <strong>Base (B)</strong> của Extrude Point. 16. Nối Point parameter (Base Point) → input <strong>Extrusion Tip (P)</strong> của Extrude Point. 17. <strong>Surface/Analysis/Deconstruct Brep</strong> — kéo-thả component <strong>Deconstruct Brep</strong>. 18. Nối output <strong>Extrusion (E)</strong> của Extrude Point → input <strong>Brep (B)</strong> của Deconstruct Brep. 19. <strong>Maths/Domain/Divide Domain</strong> — kéo-thả component <strong>Divide Domain</strong>. 20. Nối slider (Segments) → input <strong>Count (C)</strong> của Divide Domain. 21. <strong>Math/Domain/Deconstruct Domain</strong> — kéo-thả component <strong>Deconstruct Domain</strong>. 22. Nối output <strong>Segments (S)</strong> của Divide Domain → input <strong>Domain (I)</strong> của Deconstruct Domain. <em>(Ghi chú sách: input Base Domain (I) đã tự động đặt sẵn trong khoảng 0.0–1.0, đúng khoảng cần dùng cho bài tập này.)</em> 23. <strong>Display/Colour/Colour HSL</strong> — kéo-thả component <strong>Colour HSL</strong>. 24. Nối output <strong>Start (S)</strong> của Deconstruct Domain → input <strong>Hue (H)</strong> của Colour HSL. 25. <strong>Display/Preview/Custom Preview</strong> — kéo-thả component <strong>Custom Preview</strong>. 26. Right-click input <strong>Geometry (G)</strong> của Custom Preview → chọn <strong>Flatten</strong>. 27. Nối output <strong>Faces (F)</strong> của Deconstruct Brep → input <strong>Geometry (G)</strong> của Custom Preview. 28. Nối output <strong>Colour (C)</strong> của Colour HSL → input <strong>Shade (S)</strong> của Custom Preview.</p>
+<p>Trình tự các bước theo sách:</p>
+<ul>
+<li>1. <code>Ctrl+N</code> — tạo definition mới.</li>
+<li>2. <strong>Curve/Primitive/Polygon</strong> — kéo-thả component <strong>Polygon</strong>.</li>
+<li>3. <strong>Params/Geometry/Point</strong> — kéo-thả Point parameter.</li>
+<li>4–5. Right-click Point → <strong>Set One Point</strong>, chọn điểm trong model space.</li>
+<li>6. Nối Point parameter (Base Point) → input <strong>Plane (P)</strong> của Polygon.</li>
+<li>7. <strong>Params/Input/Number Sliders</strong> — kéo-thả 2 Number Slider.</li>
+<li>8. Slider 1: Rounding = Integers, Lower Limit = 0, Upper Limit = 10, Value = 10.</li>
+<li>9. Slider 2: Rounding = Integers, Lower Limit = 0, Upper Limit = 100, Value = 37.</li>
+<li>10. Nối slider (Radius) → input <strong>Radius (R)</strong> của Polygon.</li>
+<li>11. Nối slider (Segments) → input <strong>Segments (S)</strong> của Polygon. <em>(Ghi chú sách: khi nối 1 number slider vào 1 input, GH tự đổi tên slider theo đúng tên input mà nó đang nối tới.)</em></li>
+<li>12. <strong>Curve/Util/Explode</strong> — kéo-thả component <strong>Explode</strong>.</li>
+<li>13. Nối output <strong>Polygon (P)</strong> của Polygon → input <strong>Curve (C)</strong> của Explode.</li>
+<li>14. <strong>Surface/Freeform/Extrude Point</strong> — kéo-thả component <strong>Extrude Point</strong>.</li>
+<li>15. Nối output <strong>Segments (S)</strong> của Explode → input <strong>Base (B)</strong> của Extrude Point.</li>
+<li>16. Nối Point parameter (Base Point) → input <strong>Extrusion Tip (P)</strong> của Extrude Point.</li>
+<li>17. <strong>Surface/Analysis/Deconstruct Brep</strong> — kéo-thả component <strong>Deconstruct Brep</strong>.</li>
+<li>18. Nối output <strong>Extrusion (E)</strong> của Extrude Point → input <strong>Brep (B)</strong> của Deconstruct Brep.</li>
+<li>19. <strong>Maths/Domain/Divide Domain</strong> — kéo-thả component <strong>Divide Domain</strong>.</li>
+<li>20. Nối slider (Segments) → input <strong>Count (C)</strong> của Divide Domain.</li>
+<li>21. <strong>Math/Domain/Deconstruct Domain</strong> — kéo-thả component <strong>Deconstruct Domain</strong>.</li>
+<li>22. Nối output <strong>Segments (S)</strong> của Divide Domain → input <strong>Domain (I)</strong> của Deconstruct Domain. <em>(Ghi chú sách: input Base Domain (I) đã tự động đặt sẵn trong khoảng 0.0–1.0, đúng khoảng cần dùng cho bài tập này.)</em></li>
+<li>23. <strong>Display/Colour/Colour HSL</strong> — kéo-thả component <strong>Colour HSL</strong>.</li>
+<li>24. Nối output <strong>Start (S)</strong> của Deconstruct Domain → input <strong>Hue (H)</strong> của Colour HSL.</li>
+<li>25. <strong>Display/Preview/Custom Preview</strong> — kéo-thả component <strong>Custom Preview</strong>.</li>
+<li>26. Right-click input <strong>Geometry (G)</strong> của Custom Preview → chọn <strong>Flatten</strong>.</li>
+<li>27. Nối output <strong>Faces (F)</strong> của Deconstruct Brep → input <strong>Geometry (G)</strong> của Custom Preview.</li>
+<li>28. Nối output <strong>Colour (C)</strong> của Colour HSL → input <strong>Shade (S)</strong> của Custom Preview.</li>
+</ul>
 <p>Gợi ý biến tấu của sách: thử nối Deconstruct Domain sang input <strong>Saturation (S)</strong> hoặc <strong>Luminance (L)</strong> của Colour HSL thay vì Hue, để có hiệu ứng màu khác.</p>
 <p>Chuỗi logic tóm gọn: <strong>Polygon (đa giác N cạnh) → Explode (tách các cạnh) → Extrude Point (đùn mỗi cạnh thành mặt hướng về 1 điểm) → Deconstruct Brep (tách các mặt) → [song song: Divide Domain → Deconstruct Domain → Colour HSL để tính màu theo Hue] → Custom Preview (tô màu từng mặt theo Hue tương ứng)</strong>.</p>
 <div class="cf-img-block" data-cfimgid="primer-ex-f2-3-color-wheel" data-cfimgtype="image" data-align="center" data-name="primer-ex-f2-3-color-wheel.svg"><div class="cf-img-wrap"><div class="cf-img-inner" style="width:100%;max-width:1120px"><img style="width:100%;height:auto;display:block" alt="Sơ đồ chuỗi: Polygon, Explode, Extrude Point, Deconstruct Brep; nhánh song song Divide Domain, Deconstruct Domain, Colour HSL tính màu Hue nạp vào Custom Preview"><div class="cf-img-resize-h left"></div><div class="cf-img-resize-h right"></div></div></div><div class="cf-img-caption"></div></div>
@@ -3616,7 +3742,12 @@ const SEED_DOCS=[
 <li>Grasshopper còn có các object kiểm tra điều kiện và xuất ra giá trị boolean. Ví dụ nêu: component <strong>Includes</strong> cho phép kiểm tra 1 giá trị số có nằm trong 1 domain hay không. Ví dụ minh hoạ cụ thể: Includes kiểm tra số <strong>6.8</strong> có nằm trong domain <strong>từ 0 đến 10</strong> không → trả về <strong>True</strong>.</li>
 </ul>
 <h3>F.2.4.1 Logical Operators</h3>
-<p>Toán tử logic (Logical operators) chủ yếu hoạt động trên boolean. Toán học boolean do <strong>George Boole (1815–1864)</strong> phát triển, ngày nay là nền tảng cốt lõi của toàn bộ ngành công nghiệp số. Đại số boolean cung cấp công cụ để phân tích, so sánh, mô tả tập dữ liệu. Boole ban đầu định nghĩa 6 toán tử boolean, nhưng sách chỉ thảo luận <strong>3 toán tử</strong>: 1. <strong>Not</strong> 2. <strong>And</strong> 3. <strong>Or</strong></p>
+<p>Toán tử logic (Logical operators) chủ yếu hoạt động trên boolean. Toán học boolean do <strong>George Boole (1815–1864)</strong> phát triển, ngày nay là nền tảng cốt lõi của toàn bộ ngành công nghiệp số. Đại số boolean cung cấp công cụ để phân tích, so sánh, mô tả tập dữ liệu. Boole ban đầu định nghĩa 6 toán tử boolean, nhưng sách chỉ thảo luận <strong>3 toán tử</strong>:</p>
+<ul>
+<li>1. <strong>Not</strong></li>
+<li>2. <strong>And</strong></li>
+<li>3. <strong>Or</strong></li>
+</ul>
 <ul>
 <li><strong>Not</strong>: hơi đặc biệt vì KHÔNG cần 2 giá trị — nó chỉ đảo ngược (invert) giá trị bên phải nó. Ví dụ sách nêu: script kiểm tra xem 1 định nghĩa block (Block definitions) có tồn tại trong Rhino không — nếu block đó <strong>không</strong> tồn tại, thông báo cho người dùng và dừng script.</li>
 <li><strong>And</strong>: cần cả 2 giá trị hai bên đều <strong>True</strong> thì kết quả mới là <strong>True</strong>.</li>
@@ -3686,7 +3817,11 @@ const SEED_DOCS=[
 <h2>F.3.3 Creating Lists</h2>
 <h3>F.3.3.0 Manual List Creation</h3>
 <p>Cách đơn giản nhất (và hay bị bỏ qua nhất) để tạo list: <strong>gõ tay</strong> 1 danh sách giá trị trực tiếp vào 1 parameter. Cách này đặt gánh nặng lên người dùng vì phụ thuộc trực tiếp vào input người dùng (tức persistent data) — muốn đổi giá trị list phải gõ tay từng giá trị, khó khăn nếu list có nhiều mục.</p>
-<p>Có 2 cách tạo list thủ công: 1. Dùng <strong>Number parameter</strong>: right-click, chọn <strong>"Manage Number Collection"</strong>. Trong hộp thoại quản lý: click icon <strong>Add Item</strong> để thêm 1 số vào list; double-click 1 số để đổi giá trị nó. 2. Nhập trực tiếp các item vào 1 <strong>Panel</strong> — cần đảm bảo <strong>"Multiline Data" đang bị bỏ chọn</strong> (deselected).</p>
+<p>Có 2 cách tạo list thủ công:</p>
+<ul>
+<li>1. Dùng <strong>Number parameter</strong>: right-click, chọn <strong>"Manage Number Collection"</strong>. Trong hộp thoại quản lý: click icon <strong>Add Item</strong> để thêm 1 số vào list; double-click 1 số để đổi giá trị nó.</li>
+<li>2. Nhập trực tiếp các item vào 1 <strong>Panel</strong> — cần đảm bảo <strong>"Multiline Data" đang bị bỏ chọn</strong> (deselected).</li>
+</ul>
 <h3>F.3.3.1 Range</h3>
 <p>Component <strong>Range</strong> (<code>Sets/Sequence/Range</code>) tạo 1 list các con số cách đều nhau (evenly spaced), nằm giữa 1 giá trị thấp và 1 giá trị cao, gọi chung là <strong>Domain</strong>. Domain (đôi khi gọi là interval) là mọi con số khả dĩ giữa 2 giá trị cực trị.</p>
 <p>Component Range chia 1 domain số thành các đoạn đều nhau và trả về 1 list giá trị. Lưu ý quan trọng: nếu chỉ nối 1 giá trị đơn vào input domain, Grasshopper sẽ TỰ GIẢ ĐỊNH bạn đang định nghĩa domain giữa 0 và giá trị đó (để tránh lỗi). Muốn tạo range giữa 2 số KHÔNG bắt đầu từ 0, phải dùng component <strong>Construct Domain</strong> để chỉ định domain rõ ràng.</p>
@@ -3730,7 +3865,45 @@ const SEED_DOCS=[
 <p>Component <strong>Cull Pattern</strong> (<code>Sets/Sequence/Cull Pattern</code>) loại bỏ các phần tử trong 1 list, dùng 1 "bit mask" lặp lại (repeating bit mask). Bit mask là 1 list các giá trị Boolean (true/false) — bit mask sẽ được <strong>lặp lại</strong> cho tới khi mọi phần tử trong data list đã được đánh giá xong.</p>
 <h2>F.3.6 Working with Lists — ví dụ thực hành: tile pattern</h2>
 <p>Ví dụ này minh hoạ: tạo 1 mẫu lát gạch (tile pattern) bằng cách ánh xạ hình học vào 1 lưới chữ nhật (rectangular grid). Mẫu được tạo bằng cách dùng component <strong>List Item</strong> để lấy ra đúng "viên gạch" (tile) mong muốn từ 1 list hình học.</p>
-<p>Trình tự các bước theo sách: 1. Bắt đầu 1 file Rhino, tạo 2 hình vuông kích thước bằng nhau, mỗi hình vuông chứa 1 hình học riêng (khác nhau). <em>(Sách dùng ví dụ: 1 bề mặt có tab được bo tròn/fillet để phân biệt hướng, và đế được fillet để phân biệt 2 hình học với nhau.)</em> 2. <code>Ctrl+N</code> — tạo definition mới. 3. <strong>Params/Geometry/Geometry</strong> — kéo-thả 2 <strong>Geometry parameter</strong>. 4. Right-click Geometry parameter 1 → <strong>Set one Geometry</strong>, chọn hình học đầu tiên. 5. Right-click Geometry parameter 2 → <strong>Set one Geometry</strong>, chọn hình học thứ hai. <em>(Sách lưu ý: có thể tham chiếu nhiều hơn 2 hình học, nhưng để đơn giản ví dụ chỉ dùng 2.)</em> 6. <strong>Params/Geometry/Curve</strong> — kéo-thả 2 <strong>Curve parameter</strong>. 7. Right-click Curve parameter 1 → <strong>Set one Curve</strong>, chọn hình vuông thứ nhất tương ứng. 8. Right-click Curve parameter 2 → <strong>Set one Curve</strong>, chọn hình vuông thứ hai tương ứng. <em>(Lưu ý: phải đảm bảo hình học và hình vuông tham chiếu tương ứng đúng cặp với nhau.)</em> 9. <strong>Vector/Grid/Rectangular</strong> — kéo-thả component <strong>Rectangular Grid</strong>. 10. <strong>Params/Input/Slider</strong> — kéo-thả <strong>3 Number Slider</strong>. 11. Slider 1: Rounding = Integers, Lower Limit = 0, Upper Limit = 10, Value = 10. 12. Slider 2: Rounding = Integers, Lower Limit = 0, Upper Limit = 10, Value = 10. 13. Slider 3: đặt tên <strong>"Extents X & Y"</strong>, Rounding = Integers, Lower Limit = 0, Upper Limit = 10, Value = 10. 14. Nối slider 1 → input <strong>Size X (Sx)</strong> của Rectangular Grid. 15. Nối slider 2 → input <strong>Size Y (Sy)</strong> của Rectangular Grid. 16. Nối slider 3 → cả 2 input <strong>Extent X (Ex)</strong> và <strong>Extent Y (Ey)</strong> của Rectangular Grid. 17. <strong>Sets/Tree/Merge</strong> — kéo-thả <strong>2 component Merge</strong>. 18. Nối Geometry parameter 1 → input <strong>Data Stream 1 (D1)</strong> của Merge thứ nhất. 19. Nối Geometry parameter 2 → input <strong>Data Stream 2 (D2)</strong> của Merge thứ nhất. 20. Nối Curve parameter 1 → input <strong>Data Stream 1 (D1)</strong> của Merge thứ hai. 21. Nối Curve parameter 2 → input <strong>Data Stream 2 (D2)</strong> của Merge thứ hai. 22. Right-click output <strong>Cells (C)</strong> của Rectangular Grid → chọn <strong>Flatten</strong>. 23. <strong>Sets/List/List Length</strong> — kéo-thả component <strong>List Length</strong>. 24. Nối output <strong>Cells (C)</strong> của Rectangular Grid → input <strong>List (L)</strong> của List Length. 25. <strong>Sets/Sequence/Repeat Data</strong> — kéo-thả component <strong>Repeat Data</strong>. 26. Nối output <strong>Length (L)</strong> của List Length → input <strong>Length (L)</strong> của Repeat Data. 27. <strong>Params/Input/Panel</strong> — kéo-thả 1 Panel. Double-click, bỏ chọn <strong>Multiline Data, Wrap Items, Special Codes</strong>, nhập nội dung: <code>1</code>, <code>0</code>, <code>0</code> (mỗi giá trị 1 dòng). Đây là pattern quyết định hình học nào (0 hay 1) xuất hiện tại mỗi ô của lưới — đổi thứ tự sẽ đổi mẫu lát gạch. 28. Nối Panel → input <strong>Data (D)</strong> của Repeat Data. 29. <strong>Sets/List/List Item</strong> — kéo-thả <strong>2 component List Item</strong>. 30. Nối output <strong>Result (R)</strong> của Merge thứ nhất → input <strong>List (L)</strong> của List Item thứ nhất. 31. Nối output <strong>Result (R)</strong> của Merge thứ hai → input <strong>List (L)</strong> của List Item thứ hai. 32. Nối output <strong>Data (D)</strong> của Repeat Data → input <strong>Index (i)</strong> của cả 2 List Item. 33. <strong>Transform/Affine/Rectangle Mapping</strong> — kéo-thả component <strong>Rectangle Mapping</strong>. 34. Nối output <strong>Cells (C)</strong> của Rectangular Grid → input <strong>Target (T)</strong> của Rectangle Mapping. 35. Nối output <strong>Items (I)</strong> của List Item thứ nhất → input <strong>Geometry (G)</strong> của Rectangle Mapping. 36. Nối output <strong>Items (I)</strong> của List Item thứ hai → input <strong>Source (S)</strong> của Rectangle Mapping.</p>
+<p>Trình tự các bước theo sách:</p>
+<ul>
+<li>1. Bắt đầu 1 file Rhino, tạo 2 hình vuông kích thước bằng nhau, mỗi hình vuông chứa 1 hình học riêng (khác nhau). <em>(Sách dùng ví dụ: 1 bề mặt có tab được bo tròn/fillet để phân biệt hướng, và đế được fillet để phân biệt 2 hình học với nhau.)</em></li>
+<li>2. <code>Ctrl+N</code> — tạo definition mới.</li>
+<li>3. <strong>Params/Geometry/Geometry</strong> — kéo-thả 2 <strong>Geometry parameter</strong>.</li>
+<li>4. Right-click Geometry parameter 1 → <strong>Set one Geometry</strong>, chọn hình học đầu tiên.</li>
+<li>5. Right-click Geometry parameter 2 → <strong>Set one Geometry</strong>, chọn hình học thứ hai. <em>(Sách lưu ý: có thể tham chiếu nhiều hơn 2 hình học, nhưng để đơn giản ví dụ chỉ dùng 2.)</em></li>
+<li>6. <strong>Params/Geometry/Curve</strong> — kéo-thả 2 <strong>Curve parameter</strong>.</li>
+<li>7. Right-click Curve parameter 1 → <strong>Set one Curve</strong>, chọn hình vuông thứ nhất tương ứng.</li>
+<li>8. Right-click Curve parameter 2 → <strong>Set one Curve</strong>, chọn hình vuông thứ hai tương ứng. <em>(Lưu ý: phải đảm bảo hình học và hình vuông tham chiếu tương ứng đúng cặp với nhau.)</em></li>
+<li>9. <strong>Vector/Grid/Rectangular</strong> — kéo-thả component <strong>Rectangular Grid</strong>.</li>
+<li>10. <strong>Params/Input/Slider</strong> — kéo-thả <strong>3 Number Slider</strong>.</li>
+<li>11. Slider 1: Rounding = Integers, Lower Limit = 0, Upper Limit = 10, Value = 10.</li>
+<li>12. Slider 2: Rounding = Integers, Lower Limit = 0, Upper Limit = 10, Value = 10.</li>
+<li>13. Slider 3: đặt tên <strong>"Extents X & Y"</strong>, Rounding = Integers, Lower Limit = 0, Upper Limit = 10, Value = 10.</li>
+<li>14. Nối slider 1 → input <strong>Size X (Sx)</strong> của Rectangular Grid.</li>
+<li>15. Nối slider 2 → input <strong>Size Y (Sy)</strong> của Rectangular Grid.</li>
+<li>16. Nối slider 3 → cả 2 input <strong>Extent X (Ex)</strong> và <strong>Extent Y (Ey)</strong> của Rectangular Grid.</li>
+<li>17. <strong>Sets/Tree/Merge</strong> — kéo-thả <strong>2 component Merge</strong>.</li>
+<li>18. Nối Geometry parameter 1 → input <strong>Data Stream 1 (D1)</strong> của Merge thứ nhất.</li>
+<li>19. Nối Geometry parameter 2 → input <strong>Data Stream 2 (D2)</strong> của Merge thứ nhất.</li>
+<li>20. Nối Curve parameter 1 → input <strong>Data Stream 1 (D1)</strong> của Merge thứ hai.</li>
+<li>21. Nối Curve parameter 2 → input <strong>Data Stream 2 (D2)</strong> của Merge thứ hai.</li>
+<li>22. Right-click output <strong>Cells (C)</strong> của Rectangular Grid → chọn <strong>Flatten</strong>.</li>
+<li>23. <strong>Sets/List/List Length</strong> — kéo-thả component <strong>List Length</strong>.</li>
+<li>24. Nối output <strong>Cells (C)</strong> của Rectangular Grid → input <strong>List (L)</strong> của List Length.</li>
+<li>25. <strong>Sets/Sequence/Repeat Data</strong> — kéo-thả component <strong>Repeat Data</strong>.</li>
+<li>26. Nối output <strong>Length (L)</strong> của List Length → input <strong>Length (L)</strong> của Repeat Data.</li>
+<li>27. <strong>Params/Input/Panel</strong> — kéo-thả 1 Panel. Double-click, bỏ chọn <strong>Multiline Data, Wrap Items, Special Codes</strong>, nhập nội dung: <code>1</code>, <code>0</code>, <code>0</code> (mỗi giá trị 1 dòng). Đây là pattern quyết định hình học nào (0 hay 1) xuất hiện tại mỗi ô của lưới — đổi thứ tự sẽ đổi mẫu lát gạch.</li>
+<li>28. Nối Panel → input <strong>Data (D)</strong> của Repeat Data.</li>
+<li>29. <strong>Sets/List/List Item</strong> — kéo-thả <strong>2 component List Item</strong>.</li>
+<li>30. Nối output <strong>Result (R)</strong> của Merge thứ nhất → input <strong>List (L)</strong> của List Item thứ nhất.</li>
+<li>31. Nối output <strong>Result (R)</strong> của Merge thứ hai → input <strong>List (L)</strong> của List Item thứ hai.</li>
+<li>32. Nối output <strong>Data (D)</strong> của Repeat Data → input <strong>Index (i)</strong> của cả 2 List Item.</li>
+<li>33. <strong>Transform/Affine/Rectangle Mapping</strong> — kéo-thả component <strong>Rectangle Mapping</strong>.</li>
+<li>34. Nối output <strong>Cells (C)</strong> của Rectangular Grid → input <strong>Target (T)</strong> của Rectangle Mapping.</li>
+<li>35. Nối output <strong>Items (I)</strong> của List Item thứ nhất → input <strong>Geometry (G)</strong> của Rectangle Mapping.</li>
+<li>36. Nối output <strong>Items (I)</strong> của List Item thứ hai → input <strong>Source (S)</strong> của Rectangle Mapping.</li>
+</ul>
 <p>Chuỗi logic tóm gọn: <strong>Rectangular Grid (lưới ô vuông) → Merge (gộp 2 nguồn hình học/2 nguồn hình vuông tham chiếu thành 1 danh sách) → Repeat Data (lặp lại pattern 0/1 cho đủ số ô của lưới, dựa theo List Length) → List Item (lấy đúng hình học tương ứng mỗi ô theo giá trị pattern) → Rectangle Mapping (ánh xạ hình học từ hình vuông gốc vào từng ô của lưới đích)</strong>. Đổi hình học input hoặc đổi pattern 0/1/hybrid trong Panel sẽ cho ra mẫu lát gạch cuối cùng khác nhau.</p>
 <div class="cf-img-block" data-cfimgid="primer-ex-f3-6-tile-pattern" data-cfimgtype="image" data-align="center" data-name="primer-ex-f3-6-tile-pattern.svg"><div class="cf-img-wrap"><div class="cf-img-inner" style="width:100%;max-width:1120px"><img style="width:100%;height:auto;display:block" alt="Sơ đồ chuỗi: Rectangular Grid, Merge gộp 2 nguồn hình học, Repeat Data lặp pattern 0/1 từ Panel, List Item chọn đúng hình học, Rectangle Mapping ánh xạ vào lưới"><div class="cf-img-resize-h left"></div><div class="cf-img-resize-h right"></div></div></div><div class="cf-img-caption"></div></div>`},
   {id:'seed-book-primer-f4',title:'F.4 — Designing with Data Trees',section:'default',parentId:'seed-book-primer',images:[],textBoxes:[],createdAt:'2026-07-23T00:00:00.000Z',updatedAt:'2026-07-23T00:00:00.000Z',content:`<h1>F.4 — Designing with Data Trees</h1>
@@ -3761,7 +3934,31 @@ const SEED_DOCS=[
 <p><em>(Ghi chú sách: có thể hình dung "projection" giống như hình học đổ bóng (casting a shadow) lên surface, còn "mapping" giống như hình học bị kéo giãn (stretched) trải trên surface.)</em></p>
 <h3>F.4.0.2 Morphing Definition — ví dụ thực hành box morph</h3>
 <p>Mục tiêu ví dụ: dùng component <strong>Box Morph</strong> để phân bố 1 thành phần hình học lên 1 NURBS surface.</p>
-<p>Trình tự các bước theo sách: 1. <code>Ctrl+N</code> — tạo definition mới. 2. <strong>Params/Geometry/Surface</strong> — kéo-thả Surface parameter. 3. <strong>Params/Geometry/Geometry</strong> — kéo-thả Geometry parameter. 4. Right-click Surface parameter → <strong>"Set One Surface"</strong> — chọn 1 surface trong Rhino viewport. 5. Right-click Geometry parameter → <strong>"Set One Geometry"</strong> — chọn hình học Rhino sẽ dùng làm thành phần dàn trải (component sẽ được array lên surface). 6. <strong>Maths/Domain/Divide Domain2</strong> — kéo-thả component <strong>Divide Domain2</strong>. 7. <strong>Params/Input/Number Slider</strong> — kéo-thả <strong>3 Number Slider</strong>. 8. Slider 1: Rounding = Integer, Lower Limit = 0, Upper Limit = 10, Value = 5. 9. Đặt slider 2 và 3 giống hệt slider 1. 10. Nối output Surface parameter → input <strong>Domain (I)</strong> của Divide Domain2. 11. Nối slider 1 → input <strong>U Count (U)</strong> của Divide Domain2. 12. Nối slider 2 → input <strong>V Count (V)</strong> của Divide Domain2. 13. <strong>Transform/Morph/Surface Box</strong> — kéo-thả component <strong>Surface Box</strong>. 14. Nối output Surface parameter → input <strong>Surface (S)</strong> của Surface Box. 15. Nối output <strong>Segments (S)</strong> của Divide Domain2 → input <strong>Domain (D)</strong> của Surface Box. <em>(Kết quả: lưới hộp xoắn (twisted boxes) phân bố trên surface tham chiếu — đổi slider U/V Count để đổi số lượng hộp.)</em> 16. Nối slider 3 → input <strong>Height (H)</strong> của Surface Box. <em>(Slider height chỉnh chiều cao hộp xoắn.)</em> 17. <strong>Surface/Primitive/Bounding Box</strong> — kéo-thả component <strong>Bounding Box</strong>. 18. <strong>Transform/Morph/Box Morph</strong> — kéo-thả component <strong>Box Morph</strong>. 19. Nối output Geometry parameter → input <strong>Content (C)</strong> của Bounding Box. 20. Nối output Geometry parameter → input <strong>Geometry (G)</strong> của Box Morph. 21. Nối output <strong>Box (B)</strong> của Bounding Box → input <strong>Reference (R)</strong> của Box Morph. 22. Nối output <strong>Twisted Box (B)</strong> của Surface Box → input <strong>Target (T)</strong> của Box Morph. <em>(Kết quả: hình học referenced được phân bố (populate) lên toàn bộ surface, theo đúng hình dạng đã "xoắn" của từng patch.)</em></p>
+<p>Trình tự các bước theo sách:</p>
+<ul>
+<li>1. <code>Ctrl+N</code> — tạo definition mới.</li>
+<li>2. <strong>Params/Geometry/Surface</strong> — kéo-thả Surface parameter.</li>
+<li>3. <strong>Params/Geometry/Geometry</strong> — kéo-thả Geometry parameter.</li>
+<li>4. Right-click Surface parameter → <strong>"Set One Surface"</strong> — chọn 1 surface trong Rhino viewport.</li>
+<li>5. Right-click Geometry parameter → <strong>"Set One Geometry"</strong> — chọn hình học Rhino sẽ dùng làm thành phần dàn trải (component sẽ được array lên surface).</li>
+<li>6. <strong>Maths/Domain/Divide Domain2</strong> — kéo-thả component <strong>Divide Domain2</strong>.</li>
+<li>7. <strong>Params/Input/Number Slider</strong> — kéo-thả <strong>3 Number Slider</strong>.</li>
+<li>8. Slider 1: Rounding = Integer, Lower Limit = 0, Upper Limit = 10, Value = 5.</li>
+<li>9. Đặt slider 2 và 3 giống hệt slider 1.</li>
+<li>10. Nối output Surface parameter → input <strong>Domain (I)</strong> của Divide Domain2.</li>
+<li>11. Nối slider 1 → input <strong>U Count (U)</strong> của Divide Domain2.</li>
+<li>12. Nối slider 2 → input <strong>V Count (V)</strong> của Divide Domain2.</li>
+<li>13. <strong>Transform/Morph/Surface Box</strong> — kéo-thả component <strong>Surface Box</strong>.</li>
+<li>14. Nối output Surface parameter → input <strong>Surface (S)</strong> của Surface Box.</li>
+<li>15. Nối output <strong>Segments (S)</strong> của Divide Domain2 → input <strong>Domain (D)</strong> của Surface Box. <em>(Kết quả: lưới hộp xoắn (twisted boxes) phân bố trên surface tham chiếu — đổi slider U/V Count để đổi số lượng hộp.)</em></li>
+<li>16. Nối slider 3 → input <strong>Height (H)</strong> của Surface Box. <em>(Slider height chỉnh chiều cao hộp xoắn.)</em></li>
+<li>17. <strong>Surface/Primitive/Bounding Box</strong> — kéo-thả component <strong>Bounding Box</strong>.</li>
+<li>18. <strong>Transform/Morph/Box Morph</strong> — kéo-thả component <strong>Box Morph</strong>.</li>
+<li>19. Nối output Geometry parameter → input <strong>Content (C)</strong> của Bounding Box.</li>
+<li>20. Nối output Geometry parameter → input <strong>Geometry (G)</strong> của Box Morph.</li>
+<li>21. Nối output <strong>Box (B)</strong> của Bounding Box → input <strong>Reference (R)</strong> của Box Morph.</li>
+<li>22. Nối output <strong>Twisted Box (B)</strong> của Surface Box → input <strong>Target (T)</strong> của Box Morph. <em>(Kết quả: hình học referenced được phân bố (populate) lên toàn bộ surface, theo đúng hình dạng đã "xoắn" của từng patch.)</em></li>
+</ul>
 <p>Chuỗi logic tóm gọn: <strong>Surface (tham chiếu) → Divide Domain2 (chia domain u,v) → Surface Box (dựng hộp xoắn trên mỗi patch, có chiều cao) →[song song]→ Bounding Box (khung bao hình học gốc) → Box Morph (biến dạng hình học gốc theo từng hộp xoắn đích)</strong>.</p>
 <div class="cf-img-block" data-cfimgid="primer-ex-f4-0-2-box-morph" data-cfimgtype="image" data-align="center" data-name="primer-ex-f4-0-2-box-morph.svg"><div class="cf-img-wrap"><div class="cf-img-inner" style="width:100%;max-width:1120px"><img style="width:100%;height:auto;display:block" alt="Sơ đồ chuỗi: Surface, Divide Domain2, Surface Box dựng hộp xoắn; nhánh Geometry, Bounding Box; cả 2 nạp vào Box Morph"><div class="cf-img-resize-h left"></div><div class="cf-img-resize-h right"></div></div></div><div class="cf-img-caption"></div></div>
 <h2>F.4.1 What is a Data Tree?</h2>
@@ -3800,21 +3997,145 @@ const SEED_DOCS=[
 <p>Sách minh hoạ 1 ví dụ ánh xạ phức tạp qua hình vẽ: 1 lưới path dạng <code>{hàng;cột}</code> (ví dụ <code>{0;0}</code>, <code>{0;1}</code>... tới <code>{3;7}</code>) tương ứng 4 hàng × 8 cột, bị remap qua Path Mapper thành 1 trật tự path khác hẳn — nhóm lại theo cặp <code>A n / B n</code> xen kẽ (<code>A 0, B 0, A 1, B 1...</code>). Đây là ví dụ trực quan hoá cách Path Mapper có thể sắp xếp lại hoàn toàn cấu trúc cây, không kèm chuỗi bước dựng cụ thể.</p>
 <h3>F.4.3.5 Weaving Definition — ví dụ thực hành: dệt điểm tạo surface xoay</h3>
 <p>Mục tiêu ví dụ: thao tác list và data tree để <strong>dệt (weave)</strong> các list điểm, định nghĩa 1 pattern, và tạo hình học surface.</p>
-<p>Trình tự các bước theo sách: 1. <code>Ctrl+N</code> — tạo definition mới. 2. <strong>Curve/Primitive/Line SDL</strong> — kéo-thả component <strong>Line SDL</strong>. 3. <strong>Vector/Point/Construct Point</strong> — kéo-thả component <strong>Construct Point</strong>. 4. Nối output <strong>Point (Pt)</strong> của Construct Point → input <strong>Start (S)</strong> của Line SDL. 5. <strong>Vector/Vector/Unit Y</strong> — kéo-thả component <strong>Unit Y</strong>. 6. Nối Unit Y → input <strong>Direction (D)</strong> của Line SDL. <em>(Ghi chú sách: factor mặc định của các component Unit Vector là 1.0.)</em> 7. <strong>Params/Input/Number Slider</strong> — kéo-thả Number Slider. 8. Đặt slider: tên <strong>"Length"</strong>, Rounding = Integer, Lower Limit = 0, Upper Limit = 96, Value = 96. 9. Nối slider <strong>Length</strong> → input <strong>Length (L)</strong> của Line SDL. 10. <strong>Transform/Array/Linear Array</strong> — kéo-thả component <strong>Linear Array</strong>. 11. Nối output <strong>Line (L)</strong> của Line SDL → input <strong>Geometry (G)</strong> của Linear Array. 12. <strong>Vector/Vector/Unit X</strong> — kéo-thả component <strong>Unit X</strong>. 13. <strong>Params/Input/Number Slider</strong> — kéo-thả <strong>2 Number Slider</strong>. 14. Slider 1: tên <strong>"Offset Distance"</strong>, Rounding = Integer, Lower Limit = 1, Upper Limit = 10, Value = 4. 15. Slider 2: tên <strong>"# of Offsets"</strong>, Rounding = <strong>Even</strong> (chẵn), Lower Limit = 2, Upper Limit = 20, Value = 20. 16. Nối slider <strong>Offset Distance</strong> → input <strong>Factor (F)</strong> của Unit X. 17. Nối output <strong>Vector (V)</strong> của Unit X → input <strong>Direction (D)</strong> của Linear Array. 18. Nối slider <strong># of Offsets</strong> → input <strong>Count (N)</strong> của Linear Array. <em>(Kết quả: 1 mảng đường thẳng (array of lines) trong Rhino — 3 slider điều khiển chiều dài, khoảng cách giữa các đường, và số lượng đường trong mảng.)</em> 19. <strong>Sets/Lists/Dispatch</strong> — kéo-thả component <strong>Dispatch</strong>. 20. Nối output <strong>Geometry (G)</strong> của Linear Array → input <strong>List (L)</strong> của Dispatch. 21. <strong>Params/Input/Panel</strong> — kéo-thả 1 Panel, nhập 2 dòng: <code>true</code>, <code>false</code>. Sách lưu ý: đảm bảo tick chọn <strong>Multiline Data, Wrap Items, Special Codes</strong>. 22. Nối Panel → input <strong>Pattern (P)</strong> của Dispatch. <em>(Dispatch gửi mỗi đường thẳng thứ 2 trong mảng vào 1 list riêng — theo pattern true/false.)</em> 23. <strong>Curve/Division/Divide Curve</strong> — kéo-thả <strong>2 component Divide Curve</strong>. 24. Nối output <strong>List A (A)</strong> của Dispatch → input <strong>Curve (C)</strong> của Divide Curve thứ nhất. 25. Nối output <strong>List B (B)</strong> của Dispatch → input <strong>Curve (C)</strong> của Divide Curve thứ hai. 26. <strong>Params/Input/Number Slider</strong> — kéo-thả Number Slider. 27. Đặt slider: tên <strong>"Divisions"</strong>, Rounding = Integer, Lower Limit = 0, Upper Limit = 20, Value = 20. 28. Nối slider <strong>Divisions</strong> → input <strong>Count (N)</strong> của cả 2 Divide Curve. <em>(Divide Curve chia mỗi curve thành số đoạn theo slider — kéo slider để đổi số điểm.)</em> 29. <strong>Sets/Sequence/Cull Pattern</strong> — kéo-thả <strong>2 component Cull Pattern</strong>. 30. Nối output <strong>Points (P)</strong> của Divide Curve thứ nhất → input <strong>List (L)</strong> của Cull Pattern thứ nhất. 31. Nối output <strong>Points (P)</strong> của Divide Curve thứ hai → input <strong>List (L)</strong> của Cull Pattern thứ hai. 32. <strong>Params/Input/Panel</strong> — kéo-thả 1 Panel thứ 2. Double-click, <strong>bỏ chọn</strong> Multiline Data, Wrap Items, Special Codes. Nhập 4 dòng: <code>1</code>, <code>1</code>, <code>0</code>, <code>0</code>. <em>(Sách chú thích: dùng 1 và 0 thay cho true/false — đây là 2 cú pháp Grasshopper đều chấp nhận cho giá trị boolean.)</em> 33. Nối Panel thứ 2 → input <strong>Pattern (P)</strong> của Cull Pattern thứ nhất. 34. Nối Panel thứ 2 → input <strong>Pattern (P)</strong> của Cull Pattern thứ hai. 35. Right-click input <strong>Pattern (P)</strong> của Cull Pattern thứ hai → chọn <strong>Invert</strong>. <em>(Ghi chú sách: đảo ngược Cull Pattern là 1 mẹo hữu ích để giữ definition ngắn gọn — dùng chung 1 panel pattern cho 2 component nhưng đảo 1 bên.)</em> 36. <strong>Sets/List/Weave</strong> — kéo-thả component <strong>Weave</strong>. 37. Nối Panel thứ 2 → input <strong>Pattern (P)</strong> của Weave. 38. Right-click input <strong>Pattern (P)</strong> của Weave → chọn <strong>reverse</strong>. 39. Nối output <strong>List (L)</strong> của Cull Pattern thứ nhất → input <strong>Stream 0</strong> của Weave. 40. Nối output <strong>List (L)</strong> của Cull Pattern thứ hai → input <strong>Stream 1</strong> của Weave. <em>(Cull Pattern loại bỏ các điểm xen kẽ khỏi mỗi list; Weave gom dữ liệu từ 2 list điểm theo pattern tuỳ chỉnh.)</em> 41. <strong>Curve/Spline/Nurbs Curve</strong> — kéo-thả component <strong>Nurbs Curve</strong>. 42. Nối output <strong>Weave (W)</strong> của Weave → input <strong>Vertices (V)</strong> của Nurbs Curve. <em>(Dữ liệu dệt được nạp vào component tạo curve.)</em> 43. <strong>Surface/Freeform/Revolution</strong> — kéo-thả <strong>2 component Revolution</strong>. 44. Nối output <strong>Curve</strong> của Nurbs Curve → input <strong>Profile Curve (P)</strong> của cả 2 Revolution. 45. Right-click input <strong>Axis (A)</strong> của cả 2 Revolution → chọn <strong>Graft</strong>. 46. Nối output <strong>List A (A)</strong> của Dispatch → input <strong>Axis (A)</strong> của Revolution thứ nhất. 47. Nối output <strong>List B (B)</strong> của Dispatch → input <strong>Axis (A)</strong> của Revolution thứ hai.</p>
+<p>Trình tự các bước theo sách:</p>
+<ul>
+<li>1. <code>Ctrl+N</code> — tạo definition mới.</li>
+<li>2. <strong>Curve/Primitive/Line SDL</strong> — kéo-thả component <strong>Line SDL</strong>.</li>
+<li>3. <strong>Vector/Point/Construct Point</strong> — kéo-thả component <strong>Construct Point</strong>.</li>
+<li>4. Nối output <strong>Point (Pt)</strong> của Construct Point → input <strong>Start (S)</strong> của Line SDL.</li>
+<li>5. <strong>Vector/Vector/Unit Y</strong> — kéo-thả component <strong>Unit Y</strong>.</li>
+<li>6. Nối Unit Y → input <strong>Direction (D)</strong> của Line SDL. <em>(Ghi chú sách: factor mặc định của các component Unit Vector là 1.0.)</em></li>
+<li>7. <strong>Params/Input/Number Slider</strong> — kéo-thả Number Slider.</li>
+<li>8. Đặt slider: tên <strong>"Length"</strong>, Rounding = Integer, Lower Limit = 0, Upper Limit = 96, Value = 96.</li>
+<li>9. Nối slider <strong>Length</strong> → input <strong>Length (L)</strong> của Line SDL.</li>
+<li>10. <strong>Transform/Array/Linear Array</strong> — kéo-thả component <strong>Linear Array</strong>.</li>
+<li>11. Nối output <strong>Line (L)</strong> của Line SDL → input <strong>Geometry (G)</strong> của Linear Array.</li>
+<li>12. <strong>Vector/Vector/Unit X</strong> — kéo-thả component <strong>Unit X</strong>.</li>
+<li>13. <strong>Params/Input/Number Slider</strong> — kéo-thả <strong>2 Number Slider</strong>.</li>
+<li>14. Slider 1: tên <strong>"Offset Distance"</strong>, Rounding = Integer, Lower Limit = 1, Upper Limit = 10, Value = 4.</li>
+<li>15. Slider 2: tên <strong>"# of Offsets"</strong>, Rounding = <strong>Even</strong> (chẵn), Lower Limit = 2, Upper Limit = 20, Value = 20.</li>
+<li>16. Nối slider <strong>Offset Distance</strong> → input <strong>Factor (F)</strong> của Unit X.</li>
+<li>17. Nối output <strong>Vector (V)</strong> của Unit X → input <strong>Direction (D)</strong> của Linear Array.</li>
+<li>18. Nối slider <strong># of Offsets</strong> → input <strong>Count (N)</strong> của Linear Array. <em>(Kết quả: 1 mảng đường thẳng (array of lines) trong Rhino — 3 slider điều khiển chiều dài, khoảng cách giữa các đường, và số lượng đường trong mảng.)</em></li>
+<li>19. <strong>Sets/Lists/Dispatch</strong> — kéo-thả component <strong>Dispatch</strong>.</li>
+<li>20. Nối output <strong>Geometry (G)</strong> của Linear Array → input <strong>List (L)</strong> của Dispatch.</li>
+<li>21. <strong>Params/Input/Panel</strong> — kéo-thả 1 Panel, nhập 2 dòng: <code>true</code>, <code>false</code>. Sách lưu ý: đảm bảo tick chọn <strong>Multiline Data, Wrap Items, Special Codes</strong>.</li>
+<li>22. Nối Panel → input <strong>Pattern (P)</strong> của Dispatch. <em>(Dispatch gửi mỗi đường thẳng thứ 2 trong mảng vào 1 list riêng — theo pattern true/false.)</em></li>
+<li>23. <strong>Curve/Division/Divide Curve</strong> — kéo-thả <strong>2 component Divide Curve</strong>.</li>
+<li>24. Nối output <strong>List A (A)</strong> của Dispatch → input <strong>Curve (C)</strong> của Divide Curve thứ nhất.</li>
+<li>25. Nối output <strong>List B (B)</strong> của Dispatch → input <strong>Curve (C)</strong> của Divide Curve thứ hai.</li>
+<li>26. <strong>Params/Input/Number Slider</strong> — kéo-thả Number Slider.</li>
+<li>27. Đặt slider: tên <strong>"Divisions"</strong>, Rounding = Integer, Lower Limit = 0, Upper Limit = 20, Value = 20.</li>
+<li>28. Nối slider <strong>Divisions</strong> → input <strong>Count (N)</strong> của cả 2 Divide Curve. <em>(Divide Curve chia mỗi curve thành số đoạn theo slider — kéo slider để đổi số điểm.)</em></li>
+<li>29. <strong>Sets/Sequence/Cull Pattern</strong> — kéo-thả <strong>2 component Cull Pattern</strong>.</li>
+<li>30. Nối output <strong>Points (P)</strong> của Divide Curve thứ nhất → input <strong>List (L)</strong> của Cull Pattern thứ nhất.</li>
+<li>31. Nối output <strong>Points (P)</strong> của Divide Curve thứ hai → input <strong>List (L)</strong> của Cull Pattern thứ hai.</li>
+<li>32. <strong>Params/Input/Panel</strong> — kéo-thả 1 Panel thứ 2. Double-click, <strong>bỏ chọn</strong> Multiline Data, Wrap Items, Special Codes. Nhập 4 dòng: <code>1</code>, <code>1</code>, <code>0</code>, <code>0</code>. <em>(Sách chú thích: dùng 1 và 0 thay cho true/false — đây là 2 cú pháp Grasshopper đều chấp nhận cho giá trị boolean.)</em></li>
+<li>33. Nối Panel thứ 2 → input <strong>Pattern (P)</strong> của Cull Pattern thứ nhất.</li>
+<li>34. Nối Panel thứ 2 → input <strong>Pattern (P)</strong> của Cull Pattern thứ hai.</li>
+<li>35. Right-click input <strong>Pattern (P)</strong> của Cull Pattern thứ hai → chọn <strong>Invert</strong>. <em>(Ghi chú sách: đảo ngược Cull Pattern là 1 mẹo hữu ích để giữ definition ngắn gọn — dùng chung 1 panel pattern cho 2 component nhưng đảo 1 bên.)</em></li>
+<li>36. <strong>Sets/List/Weave</strong> — kéo-thả component <strong>Weave</strong>.</li>
+<li>37. Nối Panel thứ 2 → input <strong>Pattern (P)</strong> của Weave.</li>
+<li>38. Right-click input <strong>Pattern (P)</strong> của Weave → chọn <strong>reverse</strong>.</li>
+<li>39. Nối output <strong>List (L)</strong> của Cull Pattern thứ nhất → input <strong>Stream 0</strong> của Weave.</li>
+<li>40. Nối output <strong>List (L)</strong> của Cull Pattern thứ hai → input <strong>Stream 1</strong> của Weave. <em>(Cull Pattern loại bỏ các điểm xen kẽ khỏi mỗi list; Weave gom dữ liệu từ 2 list điểm theo pattern tuỳ chỉnh.)</em></li>
+<li>41. <strong>Curve/Spline/Nurbs Curve</strong> — kéo-thả component <strong>Nurbs Curve</strong>.</li>
+<li>42. Nối output <strong>Weave (W)</strong> của Weave → input <strong>Vertices (V)</strong> của Nurbs Curve. <em>(Dữ liệu dệt được nạp vào component tạo curve.)</em></li>
+<li>43. <strong>Surface/Freeform/Revolution</strong> — kéo-thả <strong>2 component Revolution</strong>.</li>
+<li>44. Nối output <strong>Curve</strong> của Nurbs Curve → input <strong>Profile Curve (P)</strong> của cả 2 Revolution.</li>
+<li>45. Right-click input <strong>Axis (A)</strong> của cả 2 Revolution → chọn <strong>Graft</strong>.</li>
+<li>46. Nối output <strong>List A (A)</strong> của Dispatch → input <strong>Axis (A)</strong> của Revolution thứ nhất.</li>
+<li>47. Nối output <strong>List B (B)</strong> của Dispatch → input <strong>Axis (A)</strong> của Revolution thứ hai.</li>
+</ul>
 <p><em>(Ghi chú kỹ thuật sách thêm: nên chọn tất cả component TRỪ 2 component Revolution và tắt preview của chúng, để tập trung quan sát hình học mới nhất trong lúc dựng definition.)</em></p>
 <p>Chuỗi logic tóm gọn: <strong>Line SDL (đường gốc) → Linear Array (mảng đường song song) → Dispatch (tách xen kẽ true/false thành 2 list) → Divide Curve × 2 (chia điểm mỗi list) → Cull Pattern × 2 (loại bớt điểm xen kẽ, 1 bên bị invert) → Weave (dệt lại 2 list điểm theo pattern) → Nurbs Curve (dựng curve từ điểm đã dệt) → Revolution × 2 (xoay curve quanh trục lấy từ Dispatch để tạo surface)</strong>.</p>
 <div class="cf-img-block" data-cfimgid="primer-ex-f4-3-5-weaving" data-cfimgtype="image" data-align="center" data-name="primer-ex-f4-3-5-weaving.svg"><div class="cf-img-wrap"><div class="cf-img-inner" style="width:100%;max-width:1120px"><img style="width:100%;height:auto;display:block" alt="Sơ đồ chuỗi: Line SDL, Linear Array, Dispatch tách 2 nhánh Divide Curve + Cull Pattern, Weave dệt lại, Nurbs Curve, Revolution xoay tạo surface"><div class="cf-img-resize-h left"></div><div class="cf-img-resize-h right"></div></div></div><div class="cf-img-caption"></div></div>
 <h3>F.4.3.6 Rail Intersect Definition — ví dụ thực hành: lưới vây giao nhau (intersecting fins)</h3>
 <p>Mục tiêu ví dụ: dùng công cụ thao tác data tree để lấy, sắp xếp lại (reorganize), và interpolate các điểm mong muốn chứa trong 1 data tree, tạo ra 1 dàn vây (lattice of intersecting fins) giao nhau.</p>
-<p>Trình tự các bước theo sách: 1. <code>Ctrl+N</code> — tạo definition mới. 2. <strong>Params/Geometry/Curve</strong> — kéo-thả <strong>3 Curve parameter</strong>. 3. <strong>Surface/Freeform/Sweep2</strong> — kéo-thả component <strong>Sweep2</strong>. 4. Right-click Curve parameter 1 → <strong>"Set one curve"</strong> — chọn <strong>rail curve thứ nhất</strong> trong Rhino. 5. Right-click Curve parameter 2 → <strong>"Set one curve"</strong> — chọn <strong>rail curve thứ hai</strong>. 6. Right-click Curve parameter 3 → <strong>"Set one curve"</strong> — chọn <strong>section curve</strong>. 7. Nối 3 curve parameter → lần lượt input <strong>Rail 1 (R1)</strong>, <strong>Rail 2 (R2)</strong>, <strong>Sections (S)</strong> của Sweep2. 8. <strong>Params/Geometry/Surface</strong> — kéo-thả 1 Surface parameter. 9. Nối output <strong>Brep (S)</strong> của Sweep2 → input của Surface parameter. <em>(Kết quả: 1 NURBS surface dựng bằng sweep 2 rail.)</em> 10. Right-click Surface parameter → chọn <strong>"Reparameterize"</strong>. <em>(Remap lại domain u,v của surface về khoảng 0 tới 1 — cần thiết cho các thao tác kế tiếp.)</em> 11. <strong>Maths/Domain/Divide Domain2</strong> — kéo-thả component <strong>Divide Domain2</strong>. 12. <strong>Params/Input/Number Slider</strong> — kéo-thả <strong>2 Number Slider</strong>. 13. Slider 1: Rounding = Integer, Lower Limit = 1, Upper Limit = 40, Value = 20. 14. Đặt slider 2 giống hệt slider 1. 15. Nối output Surface parameter (đã reparameterize) → input <strong>Domain (I)</strong> của Divide Domain2. 16. Nối slider 1 → input <strong>U Count (U)</strong> của Divide Domain2. 17. Nối slider 2 → input <strong>V Count (V)</strong> của Divide Domain2. 18. <strong>Surface/Util/Isotrim</strong> — kéo-thả component <strong>Isotrim</strong>. 19. Nối output <strong>Segments (S)</strong> của Divide Domain2 → input <strong>Domain (D)</strong> của Isotrim. 20. Nối output Surface parameter → input <strong>Surface (S)</strong> của Isotrim. <em>(Kết quả: surface được chia thành nhiều surface con nhỏ hơn, kích thước bằng nhau — chỉnh slider U/V Count để đổi số lần chia.)</em></p>
+<p>Trình tự các bước theo sách:</p>
+<ul>
+<li>1. <code>Ctrl+N</code> — tạo definition mới.</li>
+<li>2. <strong>Params/Geometry/Curve</strong> — kéo-thả <strong>3 Curve parameter</strong>.</li>
+<li>3. <strong>Surface/Freeform/Sweep2</strong> — kéo-thả component <strong>Sweep2</strong>.</li>
+<li>4. Right-click Curve parameter 1 → <strong>"Set one curve"</strong> — chọn <strong>rail curve thứ nhất</strong> trong Rhino.</li>
+<li>5. Right-click Curve parameter 2 → <strong>"Set one curve"</strong> — chọn <strong>rail curve thứ hai</strong>.</li>
+<li>6. Right-click Curve parameter 3 → <strong>"Set one curve"</strong> — chọn <strong>section curve</strong>.</li>
+<li>7. Nối 3 curve parameter → lần lượt input <strong>Rail 1 (R1)</strong>, <strong>Rail 2 (R2)</strong>, <strong>Sections (S)</strong> của Sweep2.</li>
+<li>8. <strong>Params/Geometry/Surface</strong> — kéo-thả 1 Surface parameter.</li>
+<li>9. Nối output <strong>Brep (S)</strong> của Sweep2 → input của Surface parameter. <em>(Kết quả: 1 NURBS surface dựng bằng sweep 2 rail.)</em></li>
+<li>10. Right-click Surface parameter → chọn <strong>"Reparameterize"</strong>. <em>(Remap lại domain u,v của surface về khoảng 0 tới 1 — cần thiết cho các thao tác kế tiếp.)</em></li>
+<li>11. <strong>Maths/Domain/Divide Domain2</strong> — kéo-thả component <strong>Divide Domain2</strong>.</li>
+<li>12. <strong>Params/Input/Number Slider</strong> — kéo-thả <strong>2 Number Slider</strong>.</li>
+<li>13. Slider 1: Rounding = Integer, Lower Limit = 1, Upper Limit = 40, Value = 20.</li>
+<li>14. Đặt slider 2 giống hệt slider 1.</li>
+<li>15. Nối output Surface parameter (đã reparameterize) → input <strong>Domain (I)</strong> của Divide Domain2.</li>
+<li>16. Nối slider 1 → input <strong>U Count (U)</strong> của Divide Domain2.</li>
+<li>17. Nối slider 2 → input <strong>V Count (V)</strong> của Divide Domain2.</li>
+<li>18. <strong>Surface/Util/Isotrim</strong> — kéo-thả component <strong>Isotrim</strong>.</li>
+<li>19. Nối output <strong>Segments (S)</strong> của Divide Domain2 → input <strong>Domain (D)</strong> của Isotrim.</li>
+<li>20. Nối output Surface parameter → input <strong>Surface (S)</strong> của Isotrim. <em>(Kết quả: surface được chia thành nhiều surface con nhỏ hơn, kích thước bằng nhau — chỉnh slider U/V Count để đổi số lần chia.)</em></li>
+</ul>
 <p>Tiếp tục thêm Graph Mapper để chia không đều (variable size):</p>
-<p>21. <strong>Maths/Domain/Deconstruct Domain2</strong> — kéo-thả component <strong>Deconstruct Domain2</strong>. 22. <strong>Maths/Domain/Construct Domain2</strong> — kéo-thả component <strong>Construct Domain2</strong>. 23. <strong>Params/Input/Graph Mapper</strong> — kéo-thả component <strong>Graph Mapper</strong>. 24. <strong>Sets/List/List Length</strong> — kéo-thả component <strong>List Length</strong>. 25. <strong>Sets/Tree/Merge</strong> — kéo-thả component <strong>Merge</strong>. 26. <strong>Sets/List/Split List</strong> — kéo-thả component <strong>Split List</strong>. 27. Nối output <strong>U min (U0)</strong> và <strong>U max (U1)</strong> của Deconstruct Domain2 → lần lượt input <strong>Data 1 (D1)</strong> và <strong>Data 2 (D2)</strong> của Merge. <em>(Ghi chú sách: dùng Merge + Split ở đây để có thể dùng CHUNG 1 Graph Mapper cho cả giá trị U min lẫn U max.)</em> 28. Nối output <strong>Result (R)</strong> của Merge → input của Graph Mapper. 29. Right-click Graph Mapper → chọn <strong>"Bezier"</strong> dưới mục <strong>"Graph Types"</strong>. 30. Nối thêm 1 dây thứ 2 từ output <strong>U max (U1)</strong> của Deconstruct Domain2 → input <strong>List (L)</strong> của List Length. 31. Nối output Graph Mapper → input <strong>List (L)</strong> của Split List. 32. Nối output <strong>Length (L)</strong> của List Length → input <strong>Index (i)</strong> của Split List. 33. Nối output <strong>List A (A)</strong> của Split List → input <strong>U min (U0)</strong> của Construct Domain2. 34. Nối output <strong>List B (B)</strong> của Split List → input <strong>U max (U1)</strong> của Construct Domain2. 35. Nối output <strong>V min (V0)</strong> của Deconstruct Domain2 → input <strong>V min (V0)</strong> của Construct Domain2. 36. Nối output <strong>V max (V1)</strong> của Deconstruct Domain2 → input <strong>V max (V1)</strong> của Construct Domain2. 37. Nối output <strong>2D Domain (I2)</strong> của Construct Domain2 → input <strong>Domain (D)</strong> của Isotrim (thay thế kết nối cũ). <em>(Kết quả: các domain của mỗi mảnh surface đã bị deconstruct, remap giá trị U bằng Graph Mapper, rồi reconstruct lại — kéo grip của Graph Mapper để đổi cách phân bố các mảnh surface.)</em></p>
+<ul>
+<li>21. <strong>Maths/Domain/Deconstruct Domain2</strong> — kéo-thả component <strong>Deconstruct Domain2</strong>.</li>
+<li>22. <strong>Maths/Domain/Construct Domain2</strong> — kéo-thả component <strong>Construct Domain2</strong>.</li>
+<li>23. <strong>Params/Input/Graph Mapper</strong> — kéo-thả component <strong>Graph Mapper</strong>.</li>
+<li>24. <strong>Sets/List/List Length</strong> — kéo-thả component <strong>List Length</strong>.</li>
+<li>25. <strong>Sets/Tree/Merge</strong> — kéo-thả component <strong>Merge</strong>.</li>
+<li>26. <strong>Sets/List/Split List</strong> — kéo-thả component <strong>Split List</strong>.</li>
+<li>27. Nối output <strong>U min (U0)</strong> và <strong>U max (U1)</strong> của Deconstruct Domain2 → lần lượt input <strong>Data 1 (D1)</strong> và <strong>Data 2 (D2)</strong> của Merge. <em>(Ghi chú sách: dùng Merge + Split ở đây để có thể dùng CHUNG 1 Graph Mapper cho cả giá trị U min lẫn U max.)</em></li>
+<li>28. Nối output <strong>Result (R)</strong> của Merge → input của Graph Mapper.</li>
+<li>29. Right-click Graph Mapper → chọn <strong>"Bezier"</strong> dưới mục <strong>"Graph Types"</strong>.</li>
+<li>30. Nối thêm 1 dây thứ 2 từ output <strong>U max (U1)</strong> của Deconstruct Domain2 → input <strong>List (L)</strong> của List Length.</li>
+<li>31. Nối output Graph Mapper → input <strong>List (L)</strong> của Split List.</li>
+<li>32. Nối output <strong>Length (L)</strong> của List Length → input <strong>Index (i)</strong> của Split List.</li>
+<li>33. Nối output <strong>List A (A)</strong> của Split List → input <strong>U min (U0)</strong> của Construct Domain2.</li>
+<li>34. Nối output <strong>List B (B)</strong> của Split List → input <strong>U max (U1)</strong> của Construct Domain2.</li>
+<li>35. Nối output <strong>V min (V0)</strong> của Deconstruct Domain2 → input <strong>V min (V0)</strong> của Construct Domain2.</li>
+<li>36. Nối output <strong>V max (V1)</strong> của Deconstruct Domain2 → input <strong>V max (V1)</strong> của Construct Domain2.</li>
+<li>37. Nối output <strong>2D Domain (I2)</strong> của Construct Domain2 → input <strong>Domain (D)</strong> của Isotrim (thay thế kết nối cũ). <em>(Kết quả: các domain của mỗi mảnh surface đã bị deconstruct, remap giá trị U bằng Graph Mapper, rồi reconstruct lại — kéo grip của Graph Mapper để đổi cách phân bố các mảnh surface.)</em></li>
+</ul>
 <p>Tiếp tục lấy vertex và tạo đường chéo:</p>
-<p>38. <strong>Surface/Analysis/Deconstruct Brep</strong> — kéo-thả component <strong>Deconstruct Brep</strong>. 39. <strong>Sets/Tree/Flip Matrix</strong> — kéo-thả component <strong>Flip Matrix</strong>. 40. <strong>Sets/Tree/Explode Tree</strong> — kéo-thả component <strong>Explode Tree</strong>. 41. Nối output <strong>Surface (S)</strong> của Isotrim → input <strong>Brep (B)</strong> của Deconstruct Brep. <em>(Deconstruct Brep tách 1 Brep thành Faces, Edges, Vertices — hữu ích để thao tác riêng 1 thành phần cụ thể của surface.)</em> 42. Nối output <strong>Vertices (V)</strong> của Deconstruct Brep → input <strong>Data (D)</strong> của Flip Matrix. <em>(Đổi cấu trúc cây từ "1 list 4 vertex cho mỗi surface" thành "4 list, mỗi list chứa 1 vertex của mỗi surface".)</em> 43. Nối output <strong>Data (D)</strong> của Flip Matrix → input <strong>Data (D)</strong> của Explode Tree. 44. Right-click Explode Tree → chọn <strong>"Match Outputs"</strong>. 45. Right-click input <strong>Data (D)</strong> của Explode Tree → chọn <strong>simplify</strong>. <em>(Mỗi output của Explode Tree giờ chứa 1 list gồm đúng 1 loại góc (vertex) của mỗi surface — 1 list toàn góc trên-phải, 1 list toàn góc dưới-phải, v.v.)</em> 46. <strong>Curve/Primitive/Line</strong> — kéo-thả <strong>2 component Line</strong>. 47. Nối output <strong>Branch 0 {0}</strong> của Explode Tree → input <strong>Start Point (A)</strong> của Line thứ nhất. 48. Nối output <strong>Branch 1 {1}</strong> của Explode Tree → input <strong>Start Point (A)</strong> của Line thứ hai. 49. Nối output <strong>Branch 2 {2}</strong> của Explode Tree → input <strong>End Point (B)</strong> của Line thứ nhất. 50. Nối output <strong>Branch 3 {3}</strong> của Explode Tree → input <strong>End Point (B)</strong> của Line thứ hai. <em>(Ghi chú sách: giữ phím Shift để nối nhiều dây vào cùng 1 input. Kết quả: đã nối các điểm góc của mỗi surface bằng đường chéo.)</em></p>
+<ul>
+<li>38. <strong>Surface/Analysis/Deconstruct Brep</strong> — kéo-thả component <strong>Deconstruct Brep</strong>.</li>
+<li>39. <strong>Sets/Tree/Flip Matrix</strong> — kéo-thả component <strong>Flip Matrix</strong>.</li>
+<li>40. <strong>Sets/Tree/Explode Tree</strong> — kéo-thả component <strong>Explode Tree</strong>.</li>
+<li>41. Nối output <strong>Surface (S)</strong> của Isotrim → input <strong>Brep (B)</strong> của Deconstruct Brep. <em>(Deconstruct Brep tách 1 Brep thành Faces, Edges, Vertices — hữu ích để thao tác riêng 1 thành phần cụ thể của surface.)</em></li>
+<li>42. Nối output <strong>Vertices (V)</strong> của Deconstruct Brep → input <strong>Data (D)</strong> của Flip Matrix. <em>(Đổi cấu trúc cây từ "1 list 4 vertex cho mỗi surface" thành "4 list, mỗi list chứa 1 vertex của mỗi surface".)</em></li>
+<li>43. Nối output <strong>Data (D)</strong> của Flip Matrix → input <strong>Data (D)</strong> của Explode Tree.</li>
+<li>44. Right-click Explode Tree → chọn <strong>"Match Outputs"</strong>.</li>
+<li>45. Right-click input <strong>Data (D)</strong> của Explode Tree → chọn <strong>simplify</strong>. <em>(Mỗi output của Explode Tree giờ chứa 1 list gồm đúng 1 loại góc (vertex) của mỗi surface — 1 list toàn góc trên-phải, 1 list toàn góc dưới-phải, v.v.)</em></li>
+<li>46. <strong>Curve/Primitive/Line</strong> — kéo-thả <strong>2 component Line</strong>.</li>
+<li>47. Nối output <strong>Branch 0 {0}</strong> của Explode Tree → input <strong>Start Point (A)</strong> của Line thứ nhất.</li>
+<li>48. Nối output <strong>Branch 1 {1}</strong> của Explode Tree → input <strong>Start Point (A)</strong> của Line thứ hai.</li>
+<li>49. Nối output <strong>Branch 2 {2}</strong> của Explode Tree → input <strong>End Point (B)</strong> của Line thứ nhất.</li>
+<li>50. Nối output <strong>Branch 3 {3}</strong> của Explode Tree → input <strong>End Point (B)</strong> của Line thứ hai. <em>(Ghi chú sách: giữ phím Shift để nối nhiều dây vào cùng 1 input. Kết quả: đã nối các điểm góc của mỗi surface bằng đường chéo.)</em></li>
+</ul>
 <p>Nối các đường chéo lại thành curve, loại bỏ nhánh không đủ điểm:</p>
-<p>51. <strong>Curve/Util/Join Curves</strong> — kéo-thả component <strong>Join Curves</strong>. 52. <strong>Curve/Analysis/Control Points</strong> — kéo-thả component <strong>Control Points</strong>. 53. <strong>Curve/Spline/Interpolate</strong> — kéo-thả component <strong>Interpolate</strong>. 54. Nối output <strong>Line (L)</strong> của cả 2 Line component → input <strong>Curves (C)</strong> của Join Curves. 55. Nối output <strong>Curves (C)</strong> của Join Curves → input <strong>Curve (C)</strong> của Control Points. 56. Nối output <strong>Points (P)</strong> của Control Points → input <strong>Vertices (V)</strong> của Interpolate. <em>(Ghi chú sách: trong viewport, có thể thấy các curve ngắn hơn vẫn là đường thẳng — vì KHÔNG THỂ tạo 1 NURBS curve degree 3 với ít hơn 4 control point. Cần thao tác data tree để loại bỏ các list control point có ít hơn 4 item.)</em> 57. <strong>Sets/Tree/Prune Tree</strong> — kéo-thả component <strong>Prune Tree</strong>. 58. <strong>Params/Input/Panel</strong> — kéo-thả 1 Panel. 59. Nối output <strong>Points (P)</strong> của Control Points → input <strong>Tree (T)</strong> của Prune Tree. 60. Double-click Panel, nhập giá trị <strong>4</strong>. 61. Nối Panel → input <strong>Minimum (N0)</strong> của Prune Tree. 62. Nối output <strong>Tree (T)</strong> của Prune Tree → input <strong>Vertices (V)</strong> của Interpolate (thay thế kết nối cũ). <em>(Ghi chú sách: nối 1 Param Viewer vào output Points của Control Points, và 1 Param Viewer khác vào output Tree của Prune Tree, sẽ thấy số lượng branch đã giảm — các branch dưới 4 điểm bị loại bỏ.)</em></p>
+<ul>
+<li>51. <strong>Curve/Util/Join Curves</strong> — kéo-thả component <strong>Join Curves</strong>.</li>
+<li>52. <strong>Curve/Analysis/Control Points</strong> — kéo-thả component <strong>Control Points</strong>.</li>
+<li>53. <strong>Curve/Spline/Interpolate</strong> — kéo-thả component <strong>Interpolate</strong>.</li>
+<li>54. Nối output <strong>Line (L)</strong> của cả 2 Line component → input <strong>Curves (C)</strong> của Join Curves.</li>
+<li>55. Nối output <strong>Curves (C)</strong> của Join Curves → input <strong>Curve (C)</strong> của Control Points.</li>
+<li>56. Nối output <strong>Points (P)</strong> của Control Points → input <strong>Vertices (V)</strong> của Interpolate. <em>(Ghi chú sách: trong viewport, có thể thấy các curve ngắn hơn vẫn là đường thẳng — vì KHÔNG THỂ tạo 1 NURBS curve degree 3 với ít hơn 4 control point. Cần thao tác data tree để loại bỏ các list control point có ít hơn 4 item.)</em></li>
+<li>57. <strong>Sets/Tree/Prune Tree</strong> — kéo-thả component <strong>Prune Tree</strong>.</li>
+<li>58. <strong>Params/Input/Panel</strong> — kéo-thả 1 Panel.</li>
+<li>59. Nối output <strong>Points (P)</strong> của Control Points → input <strong>Tree (T)</strong> của Prune Tree.</li>
+<li>60. Double-click Panel, nhập giá trị <strong>4</strong>.</li>
+<li>61. Nối Panel → input <strong>Minimum (N0)</strong> của Prune Tree.</li>
+<li>62. Nối output <strong>Tree (T)</strong> của Prune Tree → input <strong>Vertices (V)</strong> của Interpolate (thay thế kết nối cũ). <em>(Ghi chú sách: nối 1 Param Viewer vào output Points của Control Points, và 1 Param Viewer khác vào output Tree của Prune Tree, sẽ thấy số lượng branch đã giảm — các branch dưới 4 điểm bị loại bỏ.)</em></li>
+</ul>
 <p>Cuối cùng, đùn (extrude) các curve thành vây (fins):</p>
-<p>63. <strong>Surface/Freeform/Extrude</strong> — kéo-thả component <strong>Extrude</strong>. 64. <strong>Vector/Vector/Unit Y</strong> — kéo-thả component <strong>Unit Y</strong>. <em>(Ghi chú sách: có thể cần dùng Unit X thay vì Unit Y, tùy hướng hình học tham chiếu trong Rhino.)</em> 65. <strong>Params/Input/Number Slider</strong> — kéo-thả Number Slider. 66. Đặt slider: Rounding = Integer, Lower Limit = 1, Upper Limit = 5, Value = 3. 67. Nối output <strong>Curve (C)</strong> của Interpolate → input <strong>Base (B)</strong> của Extrude. 68. Nối Number Slider → input <strong>Factor (F)</strong> của Unit Y. 69. Nối output <strong>Unit Vector (V)</strong> của Unit Y → input <strong>Direction (D)</strong> của Extrude. <em>(Kết quả: 1 lưới chéo (diagonal grid) dạng dải/vây trong Rhino Viewport — chỉnh slider Factor để đổi độ sâu của vây.)</em></p>
+<ul>
+<li>63. <strong>Surface/Freeform/Extrude</strong> — kéo-thả component <strong>Extrude</strong>.</li>
+<li>64. <strong>Vector/Vector/Unit Y</strong> — kéo-thả component <strong>Unit Y</strong>. <em>(Ghi chú sách: có thể cần dùng Unit X thay vì Unit Y, tùy hướng hình học tham chiếu trong Rhino.)</em></li>
+<li>65. <strong>Params/Input/Number Slider</strong> — kéo-thả Number Slider.</li>
+<li>66. Đặt slider: Rounding = Integer, Lower Limit = 1, Upper Limit = 5, Value = 3.</li>
+<li>67. Nối output <strong>Curve (C)</strong> của Interpolate → input <strong>Base (B)</strong> của Extrude.</li>
+<li>68. Nối Number Slider → input <strong>Factor (F)</strong> của Unit Y.</li>
+<li>69. Nối output <strong>Unit Vector (V)</strong> của Unit Y → input <strong>Direction (D)</strong> của Extrude. <em>(Kết quả: 1 lưới chéo (diagonal grid) dạng dải/vây trong Rhino Viewport — chỉnh slider Factor để đổi độ sâu của vây.)</em></li>
+</ul>
 <p>Chuỗi logic tóm gọn: <strong>Sweep2 (dựng surface từ 2 rail + section) → Reparameterize → Divide Domain2 (chia u,v) → [Graph Mapper chỉnh phân bố không đều] → Isotrim (cắt thành các mảnh surface con) → Deconstruct Brep (lấy vertex mỗi mảnh) → Flip Matrix + Explode Tree (đổi cấu trúc cây, tách theo loại góc) → Line × 2 (nối chéo góc) → Join Curves → Control Points → Prune Tree (loại nhánh thiếu điểm) → Interpolate (dựng curve mượt qua các điểm còn lại) → Extrude (đùn curve thành các vây giao nhau)</strong>.</p>
 <div class="cf-img-block" data-cfimgid="primer-ex-f4-3-6-rail-fins" data-cfimgtype="image" data-align="center" data-name="primer-ex-f4-3-6-rail-fins.svg"><div class="cf-img-wrap"><div class="cf-img-inner" style="width:100%;max-width:1120px"><img style="width:100%;height:auto;display:block" alt="Sơ đồ chuỗi: Sweep2, Isotrim chia nhỏ surface, Deconstruct Brep, Explode Tree tách góc, Line nối đường chéo, Interpolate, Extrude dựng vây"><div class="cf-img-resize-h left"></div><div class="cf-img-resize-h right"></div></div></div><div class="cf-img-caption"></div></div>`},
   {id:'seed-book-aad',title:'Sách AAD — Algorithms-Aided Design (Tóm tắt)',section:'default',parentId:null,images:[],textBoxes:[],createdAt:'2026-07-22T00:00:00.000Z',updatedAt:'2026-07-22T00:00:00.000Z',content:`<h1>Sách AAD — Algorithms-Aided Design (Tóm tắt)</h1>
