@@ -1,6 +1,6 @@
 ---
 name: phan-tich-video-step-by-step
-description: Quy trình phân tích 1 video hướng dẫn dựng nguyên 1 mẫu/pattern Grasshopper (khác với tài liệu 1 component đơn lẻ) và viết thành 1 trang con trong "Example Step-by-Step" của Grasshopper.html. Bao gồm cách đọc video không xem trực tiếp được (trích frame bằng ffmpeg, đọc phụ đề .srt), kiểm tra trùng nội dung trước khi phân tích, và cấu trúc trang cha/con. LUÔN dùng skill này khi user yêu cầu "phân tích step-by-step", "phân tích video này", hoặc đưa 1 video/mẫu dựng sẵn muốn đúc kết thành quy trình từng bước. Không dùng cho tài liệu tham khảo 1 component đơn lẻ (dùng nghien-cuu-grasshopper + xuat-ban-trang-doc).
+description: Quy trình phân tích 1 video hoặc 1/nhiều hình ảnh hướng dẫn dựng nguyên 1 mẫu/pattern Grasshopper (khác với tài liệu 1 component đơn lẻ) và viết thành 1 trang con trong "Example Step-by-Step" của Grasshopper.html. Bao gồm cách đọc video không xem trực tiếp được (trích frame bằng ffmpeg, đọc phụ đề .srt), nguyên tắc nghiên cứu kỹ + kết hợp toàn bộ graph rải rác qua nhiều ảnh/frame thành 1 hướng dẫn tổng hợp duy nhất, kiểm tra trùng nội dung trước khi phân tích, và cấu trúc trang cha/con. LUÔN dùng skill này khi user yêu cầu "phân tích step-by-step", "phân tích video này", gửi hình ảnh canvas Grasshopper kèm ý muốn được hướng dẫn cách làm/dựng lại, hoặc đưa 1 video/mẫu dựng sẵn muốn đúc kết thành quy trình từng bước. Không dùng cho tài liệu tham khảo 1 component đơn lẻ (dùng nghien-cuu-grasshopper + xuat-ban-trang-doc).
 ---
 
 # Phân tích video dựng pattern — Example Step-by-Step
@@ -12,6 +12,30 @@ description: Quy trình phân tích 1 video hướng dẫn dựng nguyên 1 mẫ
 - Nếu video có lời giảng, cần file phụ đề `.srt` đi kèm (user cung cấp) — đọc phụ đề để nắm lời giảng,
   không nghe được audio. Ưu tiên thông tin từ lời giảng hơn suy đoán từ hình khi có mâu thuẫn (vd giá
   trị slider chính xác, mục đích 1 bước — hình chỉ cho thấy TRẠNG THÁI, lời giảng giải thích LÝ DO).
+
+## Nghiên cứu kỹ + kết hợp TOÀN BỘ graph trước khi viết hướng dẫn — bắt buộc
+
+> ⚠️ Áp dụng mỗi khi user gửi hình ảnh (1 hoặc nhiều ảnh canvas GH) hoặc muốn xem video để **hướng
+> dẫn cách làm** 1 mẫu/pattern — không riêng lệnh "phân tích step-by-step".
+
+- **Nghiên cứu thật kỹ trước khi viết** — không dừng lại ở lần xem đầu tiên/ấn tượng ban đầu về 1
+  frame hay 1 ảnh. Đọc kỹ từng chi tiết nhìn thấy được (tên component, giá trị input, cách nối dây)
+  trước khi kết luận.
+- **Xem xuyên suốt TẤT CẢ hình/frame có được, không chỉ 1-2 ảnh đại diện** — nếu có nhiều frame từ
+  video hoặc nhiều ảnh user gửi, đối chiếu trạng thái graph ở nhiều thời điểm khác nhau (đầu, giữa,
+  cuối quy trình) để thấy rõ graph thay đổi thế nào qua từng bước, không chỉ chốt hiểu theo 1 khung
+  hình duy nhất.
+- **Kết hợp (ghép) tất cả các graph thành 1 bức tranh hoàn chỉnh** — khi thông tin về definition nằm
+  rải rác qua nhiều frame/ảnh khác nhau (mỗi ảnh chỉ thấy 1 phần canvas, hoặc canvas thay đổi dần qua
+  các bước), phải tự ghép lại thành sơ đồ dây đầy đủ của toàn bộ quy trình trước khi viết hướng dẫn —
+  không viết hướng dẫn rời rạc kiểu "ảnh 1 cho thấy X, ảnh 2 cho thấy Y" mà không tổng hợp lại.
+- **Mục tiêu cuối cùng: 1 bản hướng dẫn DUY NHẤT, tối ưu nhất và dễ hiểu nhất** về cách làm ra kết quả
+  đó — trình bày thành 1 trình tự logic mạch lạc từ đầu tới cuối (không liệt kê nhiều phương án rời
+  rạc, không mô tả tách rời theo từng ảnh nguồn). Đây là mục đích chính của việc "kết hợp tất cả các
+  graph": biến nhiều nguồn quan sát rời rạc thành 1 quy trình dựng rõ ràng, dễ làm theo nhất.
+- Vẫn giữ nguyên tắc không bịa đặt (xem `nghien-cuu-grasshopper`): đoạn nào không đọc rõ được (mờ,
+  bị che, thiếu frame) → ghi rõ "không chắc chắn/không đọc được đoạn này", không suy đoán cho có vẻ
+  hợp lý.
 
 ## Vị trí trang trong app — khác hẳn trang component đơn lẻ
 
