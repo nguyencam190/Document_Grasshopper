@@ -2986,7 +2986,7 @@ const STORE_KEY='projectdocs_v3';
 // Bump SEED_VERSION any time SEED_DOCS content changes (e.g. a new Grasshopper
 // command page is added) to re-sync all visitors automatically, even ones
 // with old data already saved locally.
-const SEED_VERSION=67;
+const SEED_VERSION=68;
 // Real image assets referenced by SEED_DOCS via data-cfimgid — every visitor's
 // browser needs these in its OWN IndexedDB (see init() below) so images both
 // (a) display correctly, and (b) get recognized by the app's own Optimized
@@ -4938,7 +4938,7 @@ const SEED_DOCS=[
 <p>Nhập kết quả bằng <strong>EcoGridRequest</strong>, vẽ mesh tô màu bằng <strong>EcoMeshGrid</strong> — như mục 11.7, input [A] của EcoGridRequest chọn thuộc tính cụ thể. Có thể hiển thị trực tiếp giá trị số ngay trên grid bằng component <strong>Text Tag 3D</strong> (Display > Dimensions): input L nhận điểm grid (P-output của EcoGridRequest), input T nhận giá trị đã tính, input S chỉnh cỡ chữ hiển thị.</p>
 <h3>11.8.2 Practical Exercise Galapagos + GECO, visual comfort optimization (Bài tập thực hành: tối ưu tiện nghi thị giác)</h3>
 <p>Bài tập kết hợp: dùng <strong>Galapagos</strong> (chương 10) để tối ưu tiện nghi thị giác 1 không gian bằng cách thay đổi số lượng và hình dạng của các thiết bị che nắng (sun shading devices) — chi tiết đầy đủ dẫn qua mã QR, không có trong text đọc được.</p>`},
-  {id:'seed-step-rimprofile',locked:true,title:'Voronoi Alpha 1 Wheel — Dựng Profile Vành (Rim Profile)',section:'default',parentId:'seed-step-by-step',images:[],textBoxes:[],createdAt:'2026-07-19T00:00:00.000Z',updatedAt:'2026-07-19T00:00:00.000Z',content:`<h1>Voronoi Alpha 1 Wheel — Dựng Profile Vành (Rim Profile)</h1>
+  {id:'seed-step-rimprofile',locked:true,title:'Voronoi Alpha 1 Wheel — Dựng Profile Vành (Rim Profile)',section:'default',parentId:'seed-step-by-step',images:[],textBoxes:[],createdAt:'2026-07-19T00:00:00.000Z',updatedAt:'2026-07-23T00:00:00.000Z',content:`<h1>Voronoi Alpha 1 Wheel — Dựng Profile Vành (Rim Profile)</h1>
 <div class="cf-panel info" contenteditable="false"><span class="cf-panel-icon">ℹ️</span><div class="cf-panel-content" contenteditable="true">🟡 Trung bình — Phân tích từ video "Parametric Design - Voronoi Alpha 1" (Handlebar3D, tác giả Raymundo Burgueno). Phân tích phần dựng PROFILE vành + kích thước lốp (Main Dimensions), chưa gồm phần tạo pattern Voronoi bề mặt.</div></div>
 <p><strong>Nguồn:</strong> video quảng bá ngắn (~2.5 phút), không phải tutorial từng bước — không có lời giảng/phụ đề, phân tích hoàn toàn qua hình ảnh canvas Grasshopper xuất hiện trong video. Video showcase 1 mẫu vành xe Voronoi dùng custom UI panel (Human UI) điều khiển tham số.</p>
 
@@ -4956,6 +4956,7 @@ const SEED_DOCS=[
 
 <h2>Bước 2: Builds Backside Curves</h2>
 <p>4 input: <strong>Center Width</strong>, <strong>Middle Width</strong>, <strong>Top Width</strong> (độ rộng thành vành tại 3 trạm khác nhau dọc profile), <strong>Backside Middle Fillet</strong> (độ bo góc).</p>
+<p>Nickname thật của 4 slider này đọc trực tiếp trên canvas (tag xám bên trái mỗi thanh trượt, khác với label hiển thị): <strong>Center Width</strong> → nickname <code>B</code> (0.535), <strong>Middle Width</strong> → nickname <code>Amplitude</code> (41), <strong>Top Width</strong> → nickname <code>Length</code> (47), <strong>Backside Middle Fillet</strong> → nickname <code>B</code> (0.414) — 2 slider khác nhau (Center Width, Backside Middle Fillet) cùng dùng nickname "B" trùng nhau, không phải lỗi đọc nhầm.</p>
 <p>Kỹ thuật cốt lõi nằm trong cụm con <strong>"Calculates Mid Vector"</strong>:</p>
 <ol>
 <li>2× <strong>Vector 2Pt</strong> tính vector nối giữa các điểm-trạm liền kề (Center→Middle là V1, Middle→Top là V2).</li>
@@ -4980,6 +4981,19 @@ const SEED_DOCS=[
 <p style="text-align:center"><strong>Chiều cao thành lốp = Tire Width × (Ratio ÷ 100)</strong></p>
 <p>Vì chiều cao không phải số độc lập mà luôn tính RA TỪ Tire Width, nên kéo 1 slider là đổi cả 2 chiều cùng lúc.</p>
 <div class="cf-panel warning" contenteditable="false"><span class="cf-panel-icon">⚠️</span><div class="cf-panel-content" contenteditable="true">Đã rà soát toàn bộ 153 khung hình (mỗi giây) của video — KHÔNG có đoạn nào quay cận sơ đồ node cho cụm "Main Dimensions" này, chỉ thấy panel điều khiển + kết quả hình, không thấy dây nối thật bên trong. Công thức nhân ở trên là suy luận có căn cứ (quy ước lốp xe thật + số liệu quan sát trực tiếp qua nhiều khung hình liên tiếp), KHÔNG phải đọc trực tiếp từ node graph như 2 cụm Bước 1/2.</div></div>
+<h2>Bước 3b: Main Fillet — panel chưa từng nhắc tới trước đây</h2>
+<p>Ngay dưới panel "Main Dimensions" (nhóm hồng), video còn 1 panel Human UI thứ hai (nhóm xanh lá) xuất hiện đồng thời — bị bỏ sót ở lần phân tích trước. Bảng giá trị quan sát được (đọc trực tiếp qua nhiều khung hình liên tiếp, các giá trị này KHÔNG đổi trong suốt đoạn video):</p>
+<table style="width:100%;border-collapse:collapse;font-size:14px">
+<thead><tr><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Label hiển thị</th><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Nickname/tên field</th><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Giá trị quan sát được</th></tr></thead>
+<tbody>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>Main Fillet</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><code>B</code> / <code>Bulge A</code></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">B = 0.197, Bulge A = 0.518</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Rim Balance</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><code>Value</code></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">0.440</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Accent Extension</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><code>End</code></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">7</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Rim Offset</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><code>Value</code></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">0.573</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Repitition</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><code>B</code></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">8</td></tr>
+</tbody></table>
+<p>Panel này nằm giữa "Main Dimensions" và cụm pattern bề mặt "Air Flow Control" (Rotations/Rows/Middle Spoke Count...) — nhiều khả năng vẫn thuộc phạm vi dựng PROFILE vành (tên "Main Fillet", "Rim Balance", "Rim Offset" đều nói về hình dáng vành, không phải hoạ tiết bề mặt), nhưng chưa xác nhận được 100% ranh giới rõ ràng vì không có đoạn nào quay cận node graph của panel này.</p>
+<div class="cf-panel warning" contenteditable="false"><span class="cf-panel-icon">⚠️</span><div class="cf-panel-content" contenteditable="true">Cũng như panel "Main Dimensions", KHÔNG có khung hình nào lộ node graph thật đứng sau panel "Main Fillet" — chỉ đọc được label + giá trị số hiển thị trên UI, không biết được các giá trị này nối vào component nào/tính toán ra sao. Ghi nhận thêm 1 quan sát nhỏ để tham khảo: đoạn video có kéo riêng slider <strong>Ratio</strong> (Tire Thickness) từ 43 xuống 42 trong khi Tire Width giữ nguyên 272 — đường cong profile ở viewport KHÔNG thấy đổi hình dạng rõ rệt giữa 2 khung hình đó. Biên độ thay đổi khá nhỏ (chỉ 1 đơn vị) nên chưa đủ để kết luận công thức "Height = Tire Width × Ratio/100" ở trên sai, nhưng cũng chưa có bằng chứng hình ảnh xác nhận công thức đó — vẫn giữ nguyên là suy luận, không phải xác nhận.</div></div>
 <h2>Nguyên lý cốt lõi</h2>
 <p>Đây là kỹ thuật <strong>"profile theo trạm" (station-based profile)</strong>: thay vì vẽ 1 đường cong cố định, định nghĩa vài giá trị Width/Offset đặt tên tại các trạm mốc, dựng Plane tại mỗi trạm bằng phép toán đơn giản trên chính các giá trị đó, rồi dùng <strong>Vector 2Pt + Angle + Amplitude</strong> để máy tự tính độ bo góc theo hình học cục bộ. Đây là lý do panel bên phải ghi được "Any Wheel size" — đổi 1 slider là toàn bộ hệ trạm scale/bo lại theo, không vỡ hình như khi chỉnh tay 1 curve cố định.</p>
 
