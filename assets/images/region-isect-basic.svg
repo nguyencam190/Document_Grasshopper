@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="740" height="240" viewBox="0 0 740 240" font-family="Segoe UI, sans-serif">
+<defs>
+<linearGradient id="ghBody" x1="0" y1="0" x2="0" y2="1">
+<stop offset="0%" stop-color="#F0F0F0"/><stop offset="100%" stop-color="#D8D8D8"/>
+</linearGradient>
+<pattern id="dots" width="18" height="18" patternUnits="userSpaceOnUse">
+<circle cx="1" cy="1" r="1" fill="#E0E0DA"/>
+</pattern>
+</defs>
+
+<rect x="0" y="0" width="740" height="240" fill="#FAFAF7"/>
+<rect x="0" y="0" width="740" height="240" fill="url(#dots)"/>
+<text x="16" y="24" font-size="14" font-weight="600" fill="#333">Region Intersection — giao 2 vùng khep kin (A ∩ B) = vung xanh</text>
+<g>
+<rect x="60" y="96" width="150" height="56" rx="6" fill="url(#ghBody)" stroke="#8C8C8C" stroke-width="1"/>
+<text x="135.0" y="128.0" text-anchor="middle" font-family="Segoe UI, sans-serif" font-size="12" fill="#222">Region Intersection</text>
+<rect x="52.0" y="106.0" width="10" height="16" rx="3" fill="#E8E8E8" stroke="#8C8C8C"/>
+<circle cx="57.0" cy="114.0" r="2.5" fill="#4A4A4A"/>
+<rect x="52.0" y="116.0" width="10" height="16" rx="3" fill="#E8E8E8" stroke="#8C8C8C"/>
+<circle cx="57.0" cy="124.0" r="2.5" fill="#4A4A4A"/>
+<rect x="52.0" y="126.0" width="10" height="16" rx="3" fill="#E8E8E8" stroke="#8C8C8C"/>
+<circle cx="57.0" cy="134.0" r="2.5" fill="#4A4A4A"/>
+<rect x="208.0" y="116.0" width="10" height="16" rx="3" fill="#E8E8E8" stroke="#8C8C8C"/>
+<circle cx="213.0" cy="124.0" r="2.5" fill="#4A4A4A"/>
+</g>
+<text x="39.0" y="117.0" font-family="Consolas, monospace" font-size="9.5" fill="#777">A</text>
+<text x="39.0" y="127.0" font-family="Consolas, monospace" font-size="9.5" fill="#777">B</text>
+<text x="39.0" y="137.0" font-family="Consolas, monospace" font-size="9.5" fill="#777">P</text>
+<text x="223.0" y="127.0" font-family="Consolas, monospace" font-size="9.5" fill="#777">R</text>
+<g>
+<rect x="300" y="62" width="200" height="130" fill="#FFFFFF" stroke="#B0B0B0"/>
+<g stroke="#D8D8D8" stroke-width="1">
+<line x1="300" y1="180.0" x2="500" y2="180.0"/>
+<line x1="300" y1="161.2" x2="500" y2="161.2"/>
+<line x1="300" y1="146.4" x2="500" y2="146.4"/>
+<line x1="300" y1="135.6" x2="500" y2="135.6"/>
+</g>
+<text x="306" y="76" font-family="Consolas, monospace" font-size="10" fill="#555">Top</text>
+<g fill="none">
+<rect x="400.0" y="113.0" width="40" height="40" stroke="#B03A3A" stroke-width="1.4"/>
+<circle cx="388.0" cy="133.0" r="26" stroke="#3A6BB0" stroke-width="1.4"/>
+<path d="M 400.0,109.9 A 26,26 0 0 1 400.0,156.1 Z" fill="#7FC94E" fill-opacity="0.6" stroke="#3E7A1E" stroke-width="1.6"/>
+</g>
+</g>
+</svg>

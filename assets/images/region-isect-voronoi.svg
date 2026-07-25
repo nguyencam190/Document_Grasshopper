@@ -1,0 +1,124 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="980" height="270" viewBox="0 0 980 270" font-family="Segoe UI, sans-serif">
+<defs>
+<linearGradient id="ghBody" x1="0" y1="0" x2="0" y2="1">
+<stop offset="0%" stop-color="#F0F0F0"/><stop offset="100%" stop-color="#D8D8D8"/>
+</linearGradient>
+<pattern id="dots" width="18" height="18" patternUnits="userSpaceOnUse">
+<circle cx="1" cy="1" r="1" fill="#E0E0DA"/>
+</pattern>
+</defs>
+
+<rect x="0" y="0" width="980" height="270" fill="#FAFAF7"/>
+<rect x="0" y="0" width="980" height="270" fill="url(#dots)"/>
+<text x="16" y="24" font-size="14" font-weight="600" fill="#333">Vi du pattern — o Voronoi bo gon trong vong tron + tam moi o (ke ca o bien)</text>
+<g>
+<rect x="36" y="110" width="100" height="46" rx="6" fill="url(#ghBody)" stroke="#8C8C8C" stroke-width="1"/>
+<text x="86.0" y="137.0" text-anchor="middle" font-family="Segoe UI, sans-serif" font-size="12" fill="#222">Voronoi</text>
+<rect x="28.0" y="125.0" width="10" height="16" rx="3" fill="#E8E8E8" stroke="#8C8C8C"/>
+<circle cx="33.0" cy="133.0" r="2.5" fill="#4A4A4A"/>
+<rect x="134.0" y="125.0" width="10" height="16" rx="3" fill="#E8E8E8" stroke="#8C8C8C"/>
+<circle cx="139.0" cy="133.0" r="2.5" fill="#4A4A4A"/>
+</g>
+<text x="149.0" y="136.0" font-family="Consolas, monospace" font-size="9.5" fill="#777">C</text>
+<g>
+<rect x="190" y="110" width="84" height="46" rx="6" fill="url(#ghBody)" stroke="#8C8C8C" stroke-width="1"/>
+<text x="232.0" y="137.0" text-anchor="middle" font-family="Segoe UI, sans-serif" font-size="12" fill="#222">Graft</text>
+<rect x="182.0" y="125.0" width="10" height="16" rx="3" fill="#E8E8E8" stroke="#8C8C8C"/>
+<circle cx="187.0" cy="133.0" r="2.5" fill="#4A4A4A"/>
+<rect x="272.0" y="125.0" width="10" height="16" rx="3" fill="#E8E8E8" stroke="#8C8C8C"/>
+<circle cx="277.0" cy="133.0" r="2.5" fill="#4A4A4A"/>
+</g>
+<path d="M 139.0,133.0 C 163.0,133.0 163.0,133.0 187.0,133.0" stroke="#4A4A4A" stroke-width="1.5" fill="none"/>
+<g>
+<rect x="328" y="110" width="152" height="54" rx="6" fill="url(#ghBody)" stroke="#8C8C8C" stroke-width="1"/>
+<text x="404.0" y="141.0" text-anchor="middle" font-family="Segoe UI, sans-serif" font-size="12" fill="#222">Region Intersection</text>
+<rect x="320.0" y="119.7" width="10" height="16" rx="3" fill="#E8E8E8" stroke="#8C8C8C"/>
+<circle cx="325.0" cy="127.7" r="2.5" fill="#4A4A4A"/>
+<rect x="320.0" y="129.0" width="10" height="16" rx="3" fill="#E8E8E8" stroke="#8C8C8C"/>
+<circle cx="325.0" cy="137.0" r="2.5" fill="#4A4A4A"/>
+<rect x="320.0" y="138.3" width="10" height="16" rx="3" fill="#E8E8E8" stroke="#8C8C8C"/>
+<circle cx="325.0" cy="146.3" r="2.5" fill="#4A4A4A"/>
+<rect x="478.0" y="129.0" width="10" height="16" rx="3" fill="#E8E8E8" stroke="#8C8C8C"/>
+<circle cx="483.0" cy="137.0" r="2.5" fill="#4A4A4A"/>
+</g>
+<path d="M 277.0,133.0 C 301.0,133.0 301.0,127.7 325.0,127.7" stroke="#4A4A4A" stroke-width="1.5" fill="none"/>
+<text x="309.0" y="130.7" font-family="Consolas, monospace" font-size="9.5" fill="#777">A</text>
+<text x="309.0" y="140.0" font-family="Consolas, monospace" font-size="9.5" fill="#777">B</text>
+<text x="309.0" y="149.3" font-family="Consolas, monospace" font-size="9.5" fill="#777">P</text>
+<g>
+<rect x="322" y="182" width="84" height="36" rx="6" fill="url(#ghBody)" stroke="#8C8C8C" stroke-width="1"/>
+<text x="364.0" y="204.0" text-anchor="middle" font-family="Segoe UI, sans-serif" font-size="12" fill="#222">Circle</text>
+<rect x="314.0" y="192.0" width="10" height="16" rx="3" fill="#E8E8E8" stroke="#8C8C8C"/>
+<circle cx="319.0" cy="200.0" r="2.5" fill="#4A4A4A"/>
+<rect x="404.0" y="192.0" width="10" height="16" rx="3" fill="#E8E8E8" stroke="#8C8C8C"/>
+<circle cx="409.0" cy="200.0" r="2.5" fill="#4A4A4A"/>
+</g>
+<path d="M 409.0,200.0 C 367.0,200.0 367.0,137.0 325.0,137.0" stroke="#4A4A4A" stroke-width="1.5" fill="none"/>
+<g>
+<rect x="534" y="110" width="84" height="46" rx="6" fill="url(#ghBody)" stroke="#8C8C8C" stroke-width="1"/>
+<text x="576.0" y="137.0" text-anchor="middle" font-family="Segoe UI, sans-serif" font-size="12" fill="#222">Area</text>
+<rect x="526.0" y="125.0" width="10" height="16" rx="3" fill="#E8E8E8" stroke="#8C8C8C"/>
+<circle cx="531.0" cy="133.0" r="2.5" fill="#4A4A4A"/>
+<rect x="616.0" y="120.0" width="10" height="16" rx="3" fill="#E8E8E8" stroke="#8C8C8C"/>
+<circle cx="621.0" cy="128.0" r="2.5" fill="#4A4A4A"/>
+<rect x="616.0" y="130.0" width="10" height="16" rx="3" fill="#E8E8E8" stroke="#8C8C8C"/>
+<circle cx="621.0" cy="138.0" r="2.5" fill="#4A4A4A"/>
+</g>
+<path d="M 483.0,137.0 C 507.0,137.0 507.0,133.0 531.0,133.0" stroke="#4A4A4A" stroke-width="1.5" fill="none"/>
+<text x="631.0" y="141.0" font-family="Consolas, monospace" font-size="9.5" fill="#777">C</text>
+<g>
+<rect x="652" y="68" width="190" height="150" fill="#FFFFFF" stroke="#B0B0B0"/>
+<g stroke="#D8D8D8" stroke-width="1">
+<line x1="652" y1="206.0" x2="842" y2="206.0"/>
+<line x1="652" y1="184.0" x2="842" y2="184.0"/>
+<line x1="652" y1="166.0" x2="842" y2="166.0"/>
+<line x1="652" y1="152.0" x2="842" y2="152.0"/>
+</g>
+<text x="658" y="82" font-family="Consolas, monospace" font-size="10" fill="#555">Top</text>
+<g>
+<clipPath id="clipC"><circle cx="747.0" cy="151.0" r="40"/></clipPath>
+<g clip-path="url(#clipC)" stroke="#B03A3A" stroke-width="1" fill="none">
+<polygon points="756.9,152.2 749.9,160.5 737.7,154.7 739.1,144.9 751.7,142.2"/>
+<polygon points="772.9,158.5 763.3,169.9 751.6,165.1 751.9,151.2 766.2,147.8"/>
+<polygon points="761.1,169.9 751.5,178.1 739.8,171.7 740.9,159.8 755.5,156.6"/>
+<polygon points="745.8,163.3 737.2,172.3 728.8,167.9 729.5,157.5 739.8,154.6"/>
+<polygon points="740.9,150.8 732.4,160.3 722.7,155.9 723.2,144.4 736.0,141.9"/>
+<polygon points="748.0,139.8 739.1,148.8 727.6,142.3 729.7,130.8 743.4,129.3"/>
+<polygon points="760.8,137.9 752.1,145.5 742.5,140.8 744.0,128.3 755.6,126.5"/>
+<polygon points="773.2,145.5 764.3,155.8 755.5,154.4 750.1,143.1 758.2,133.4 767.9,134.7"/>
+<polygon points="775.7,177.5 768.7,184.5 756.3,179.2 758.9,166.5 771.2,165.6"/>
+<polygon points="759.8,182.6 753.4,190.3 743.8,188.8 740.3,178.4 747.6,171.1 756.2,173.0"/>
+<polygon points="744.1,180.1 735.8,188.4 723.5,182.6 726.0,169.6 738.1,167.8"/>
+<polygon points="732.2,166.2 725.3,176.4 715.0,175.5 709.9,165.7 715.7,156.4 728.7,158.0"/>
+<polygon points="726.3,150.8 717.4,159.1 708.7,154.0 709.7,143.8 721.0,141.2"/>
+<polygon points="732.0,136.1 723.0,143.5 714.1,138.8 715.3,127.0 726.5,124.7"/>
+<polygon points="747.4,123.7 738.7,134.5 725.8,129.4 726.8,115.7 740.9,112.8"/>
+<polygon points="763.3,122.4 757.5,131.1 745.7,129.9 742.0,119.6 748.1,111.7 758.3,112.4"/>
+<polygon points="779.1,130.8 768.2,140.8 756.7,133.1 759.8,120.6 773.0,118.9"/>
+<polygon points="786.3,144.1 779.5,153.4 770.9,152.5 765.9,143.6 771.6,134.7 781.6,135.2"/>
+<polygon points="785.4,161.0 776.8,170.6 766.4,165.2 769.3,152.8 780.2,151.9"/>
+</g>
+<circle cx="747.0" cy="151.0" r="40" stroke="#B03A3A" stroke-width="1.6" fill="none"/>
+<g fill="#C0392B">
+<circle cx="747.0" cy="151.0" r="1.7"/>
+<circle cx="761.2" cy="158.4" r="1.7"/>
+<circle cx="750.1" cy="166.7" r="1.7"/>
+<circle cx="736.6" cy="163.2" r="1.7"/>
+<circle cx="731.0" cy="150.5" r="1.7"/>
+<circle cx="737.4" cy="138.2" r="1.7"/>
+<circle cx="751.0" cy="135.5" r="1.7"/>
+<circle cx="761.6" cy="144.5" r="1.7"/>
+<circle cx="765.6" cy="174.5" r="1.7"/>
+<circle cx="750.0" cy="180.9" r="1.7"/>
+<circle cx="733.4" cy="177.7" r="1.7"/>
+<circle cx="721.1" cy="166.1" r="1.7"/>
+<circle cx="717.0" cy="149.7" r="1.7"/>
+<circle cx="722.5" cy="133.7" r="1.7"/>
+<circle cx="735.7" cy="123.2" r="1.7"/>
+<circle cx="752.5" cy="121.5" r="1.7"/>
+<circle cx="767.6" cy="129.2" r="1.7"/>
+<circle cx="776.1" cy="143.8" r="1.7"/>
+<circle cx="775.4" cy="160.7" r="1.7"/>
+</g></g>
+</g>
+</svg>
