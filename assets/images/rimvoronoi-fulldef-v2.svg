@@ -1,0 +1,278 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="2100" height="680" viewBox="0 0 2100 680" font-family="Segoe UI, sans-serif">
+<defs><linearGradient id="gb" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#F0F0F0"/><stop offset="100%" stop-color="#D8D8D8"/></linearGradient><linearGradient id="sl" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#EAF1F8"/><stop offset="100%" stop-color="#D5E3F0"/></linearGradient><pattern id="dots" width="17" height="17" patternUnits="userSpaceOnUse"><circle cx="1" cy="1" r="0.9" fill="#E4E4DE"/></pattern></defs>
+<rect x="0" y="0" width="2100" height="680" fill="#FAFAF7"/><rect x="0" y="0" width="2100" height="680" fill="url(#dots)"/>
+<text x="24" y="32" font-size="16" font-weight="600" fill="#333">Sơ đồ definition HOÀN CHỈNH — mọi slider/input nối vào đúng cổng (dây rõ điểm nối)</text>
+<rect x="40" y="72" width="120" height="132" rx="6" fill="url(#gb)" stroke="#8C8C8C"/>
+<text x="100" y="87" text-anchor="middle" font-size="12.5" font-weight="600" fill="#222">Construct Point</text>
+<rect x="33" y="108" width="8" height="12" rx="2" fill="#E8E8E8" stroke="#8C8C8C"/>
+<circle cx="37" cy="114" r="2.3" fill="#4A4A4A"/>
+<text x="47" y="117" text-anchor="start" font-family="Consolas, monospace" font-size="9" fill="#555">X</text>
+<rect x="33" y="140" width="8" height="12" rx="2" fill="#E8E8E8" stroke="#8C8C8C"/>
+<circle cx="37" cy="146" r="2.3" fill="#4A4A4A"/>
+<text x="47" y="149" text-anchor="start" font-family="Consolas, monospace" font-size="9" fill="#555">Y</text>
+<rect x="33" y="172" width="8" height="12" rx="2" fill="#E8E8E8" stroke="#8C8C8C"/>
+<circle cx="37" cy="178" r="2.3" fill="#4A4A4A"/>
+<text x="47" y="181" text-anchor="start" font-family="Consolas, monospace" font-size="9" fill="#555">Z</text>
+<rect x="159" y="140" width="8" height="12" rx="2" fill="#E8E8E8" stroke="#8C8C8C"/>
+<circle cx="163" cy="146" r="2.3" fill="#4A4A4A"/>
+<text x="153" y="149" text-anchor="end" font-family="Consolas, monospace" font-size="9" fill="#555">Pt</text>
+<rect x="300" y="72" width="120" height="132" rx="6" fill="url(#gb)" stroke="#8C8C8C"/>
+<text x="360" y="87" text-anchor="middle" font-size="12.5" font-weight="600" fill="#222">Line SDL</text>
+<rect x="293" y="108" width="8" height="12" rx="2" fill="#E8E8E8" stroke="#8C8C8C"/>
+<circle cx="297" cy="114" r="2.3" fill="#4A4A4A"/>
+<text x="307" y="117" text-anchor="start" font-family="Consolas, monospace" font-size="9" fill="#555">S</text>
+<rect x="293" y="140" width="8" height="12" rx="2" fill="#E8E8E8" stroke="#8C8C8C"/>
+<circle cx="297" cy="146" r="2.3" fill="#4A4A4A"/>
+<text x="307" y="149" text-anchor="start" font-family="Consolas, monospace" font-size="9" fill="#555">D</text>
+<rect x="293" y="172" width="8" height="12" rx="2" fill="#E8E8E8" stroke="#8C8C8C"/>
+<circle cx="297" cy="178" r="2.3" fill="#4A4A4A"/>
+<text x="307" y="181" text-anchor="start" font-family="Consolas, monospace" font-size="9" fill="#555">L</text>
+<rect x="419" y="140" width="8" height="12" rx="2" fill="#E8E8E8" stroke="#8C8C8C"/>
+<circle cx="423" cy="146" r="2.3" fill="#4A4A4A"/>
+<text x="413" y="149" text-anchor="end" font-family="Consolas, monospace" font-size="9" fill="#555">L</text>
+<rect x="560" y="72" width="120" height="132" rx="6" fill="url(#gb)" stroke="#8C8C8C"/>
+<text x="620" y="87" text-anchor="middle" font-size="12.5" font-weight="600" fill="#222">Polar Array</text>
+<rect x="553" y="104" width="8" height="12" rx="2" fill="#E8E8E8" stroke="#8C8C8C"/>
+<circle cx="557" cy="110" r="2.3" fill="#4A4A4A"/>
+<text x="567" y="113" text-anchor="start" font-family="Consolas, monospace" font-size="9" fill="#555">G</text>
+<rect x="553" y="128" width="8" height="12" rx="2" fill="#E8E8E8" stroke="#8C8C8C"/>
+<circle cx="557" cy="134" r="2.3" fill="#4A4A4A"/>
+<text x="567" y="137" text-anchor="start" font-family="Consolas, monospace" font-size="9" fill="#555">P</text>
+<rect x="553" y="152" width="8" height="12" rx="2" fill="#E8E8E8" stroke="#8C8C8C"/>
+<circle cx="557" cy="158" r="2.3" fill="#4A4A4A"/>
+<text x="567" y="161" text-anchor="start" font-family="Consolas, monospace" font-size="9" fill="#555">N</text>
+<rect x="553" y="176" width="8" height="12" rx="2" fill="#E8E8E8" stroke="#8C8C8C"/>
+<circle cx="557" cy="182" r="2.3" fill="#4A4A4A"/>
+<text x="567" y="185" text-anchor="start" font-family="Consolas, monospace" font-size="9" fill="#555">A</text>
+<rect x="679" y="140" width="8" height="12" rx="2" fill="#E8E8E8" stroke="#8C8C8C"/>
+<circle cx="683" cy="146" r="2.3" fill="#4A4A4A"/>
+<text x="673" y="149" text-anchor="end" font-family="Consolas, monospace" font-size="9" fill="#555">G</text>
+<rect x="820" y="72" width="132" height="132" rx="6" fill="url(#gb)" stroke="#8C8C8C"/>
+<text x="886" y="87" text-anchor="middle" font-size="12.5" font-weight="600" fill="#222">Maelstrom</text>
+<rect x="813" y="102" width="8" height="12" rx="2" fill="#E8E8E8" stroke="#8C8C8C"/>
+<circle cx="817" cy="108" r="2.3" fill="#4A4A4A"/>
+<text x="827" y="111" text-anchor="start" font-family="Consolas, monospace" font-size="9" fill="#555">G</text>
+<rect x="813" y="121" width="8" height="12" rx="2" fill="#E8E8E8" stroke="#8C8C8C"/>
+<circle cx="817" cy="127" r="2.3" fill="#4A4A4A"/>
+<text x="827" y="130" text-anchor="start" font-family="Consolas, monospace" font-size="9" fill="#555">P</text>
+<rect x="813" y="140" width="8" height="12" rx="2" fill="#E8E8E8" stroke="#8C8C8C"/>
+<circle cx="817" cy="146" r="2.3" fill="#4A4A4A"/>
+<text x="827" y="149" text-anchor="start" font-family="Consolas, monospace" font-size="9" fill="#555">R0</text>
+<rect x="813" y="159" width="8" height="12" rx="2" fill="#E8E8E8" stroke="#8C8C8C"/>
+<circle cx="817" cy="165" r="2.3" fill="#4A4A4A"/>
+<text x="827" y="168" text-anchor="start" font-family="Consolas, monospace" font-size="9" fill="#555">R1</text>
+<rect x="813" y="178" width="8" height="12" rx="2" fill="#E8E8E8" stroke="#8C8C8C"/>
+<circle cx="817" cy="184" r="2.3" fill="#4A4A4A"/>
+<text x="827" y="187" text-anchor="start" font-family="Consolas, monospace" font-size="9" fill="#555">A</text>
+<rect x="951" y="140" width="8" height="12" rx="2" fill="#E8E8E8" stroke="#8C8C8C"/>
+<circle cx="955" cy="146" r="2.3" fill="#4A4A4A"/>
+<text x="945" y="149" text-anchor="end" font-family="Consolas, monospace" font-size="9" fill="#555">G</text>
+<rect x="1090" y="72" width="120" height="132" rx="6" fill="url(#gb)" stroke="#8C8C8C"/>
+<text x="1150" y="87" text-anchor="middle" font-size="12.5" font-weight="600" fill="#222">Divide Curve</text>
+<rect x="1083" y="116" width="8" height="12" rx="2" fill="#E8E8E8" stroke="#8C8C8C"/>
+<circle cx="1087" cy="122" r="2.3" fill="#4A4A4A"/>
+<text x="1097" y="125" text-anchor="start" font-family="Consolas, monospace" font-size="9" fill="#555">C</text>
+<rect x="1083" y="164" width="8" height="12" rx="2" fill="#E8E8E8" stroke="#8C8C8C"/>
+<circle cx="1087" cy="170" r="2.3" fill="#4A4A4A"/>
+<text x="1097" y="173" text-anchor="start" font-family="Consolas, monospace" font-size="9" fill="#555">N</text>
+<rect x="1209" y="140" width="8" height="12" rx="2" fill="#E8E8E8" stroke="#8C8C8C"/>
+<circle cx="1213" cy="146" r="2.3" fill="#4A4A4A"/>
+<text x="1203" y="149" text-anchor="end" font-family="Consolas, monospace" font-size="9" fill="#555">P</text>
+<rect x="1350" y="72" width="120" height="132" rx="6" fill="url(#gb)" stroke="#8C8C8C"/>
+<text x="1410" y="87" text-anchor="middle" font-size="12.5" font-weight="600" fill="#222">Cull Index</text>
+<rect x="1343" y="116" width="8" height="12" rx="2" fill="#E8E8E8" stroke="#8C8C8C"/>
+<circle cx="1347" cy="122" r="2.3" fill="#4A4A4A"/>
+<text x="1357" y="125" text-anchor="start" font-family="Consolas, monospace" font-size="9" fill="#555">L</text>
+<rect x="1343" y="164" width="8" height="12" rx="2" fill="#E8E8E8" stroke="#8C8C8C"/>
+<circle cx="1347" cy="170" r="2.3" fill="#4A4A4A"/>
+<text x="1357" y="173" text-anchor="start" font-family="Consolas, monospace" font-size="9" fill="#555">i</text>
+<rect x="1469" y="140" width="8" height="12" rx="2" fill="#E8E8E8" stroke="#8C8C8C"/>
+<circle cx="1473" cy="146" r="2.3" fill="#4A4A4A"/>
+<text x="1463" y="149" text-anchor="end" font-family="Consolas, monospace" font-size="9" fill="#555">L</text>
+<rect x="1610" y="72" width="120" height="132" rx="6" fill="url(#gb)" stroke="#8C8C8C"/>
+<text x="1670" y="87" text-anchor="middle" font-size="12.5" font-weight="600" fill="#222">Voronoi</text>
+<rect x="1603" y="116" width="8" height="12" rx="2" fill="#E8E8E8" stroke="#8C8C8C"/>
+<circle cx="1607" cy="122" r="2.3" fill="#4A4A4A"/>
+<text x="1617" y="125" text-anchor="start" font-family="Consolas, monospace" font-size="9" fill="#555">P</text>
+<rect x="1603" y="164" width="8" height="12" rx="2" fill="#E8E8E8" stroke="#8C8C8C"/>
+<circle cx="1607" cy="170" r="2.3" fill="#4A4A4A"/>
+<text x="1617" y="173" text-anchor="start" font-family="Consolas, monospace" font-size="9" fill="#555">B</text>
+<rect x="1729" y="140" width="8" height="12" rx="2" fill="#E8E8E8" stroke="#8C8C8C"/>
+<circle cx="1733" cy="146" r="2.3" fill="#4A4A4A"/>
+<text x="1723" y="149" text-anchor="end" font-family="Consolas, monospace" font-size="9" fill="#555">C</text>
+<rect x="1850" y="72" width="120" height="132" rx="6" fill="url(#gb)" stroke="#8C8C8C"/>
+<text x="1910" y="87" text-anchor="middle" font-size="12.5" font-weight="600" fill="#222">Fillet</text>
+<rect x="1843" y="116" width="8" height="12" rx="2" fill="#E8E8E8" stroke="#8C8C8C"/>
+<circle cx="1847" cy="122" r="2.3" fill="#4A4A4A"/>
+<text x="1857" y="125" text-anchor="start" font-family="Consolas, monospace" font-size="9" fill="#555">C</text>
+<rect x="1843" y="164" width="8" height="12" rx="2" fill="#E8E8E8" stroke="#8C8C8C"/>
+<circle cx="1847" cy="170" r="2.3" fill="#4A4A4A"/>
+<text x="1857" y="173" text-anchor="start" font-family="Consolas, monospace" font-size="9" fill="#555">R</text>
+<rect x="1969" y="140" width="8" height="12" rx="2" fill="#E8E8E8" stroke="#8C8C8C"/>
+<circle cx="1973" cy="146" r="2.3" fill="#4A4A4A"/>
+<text x="1963" y="149" text-anchor="end" font-family="Consolas, monospace" font-size="9" fill="#555">C</text>
+<rect x="1990" y="80" width="96" height="104" fill="#FFFFFF" stroke="#B0B0B0"/>
+<text x="1995" y="93" font-family="Consolas, monospace" font-size="8.5" fill="#555">Perspective</text>
+<g stroke="#111" stroke-width="0.9" fill="none">
+<line x1="2042.9" y1="136.9" x2="2048.2" y2="140.1"/>
+<line x1="2048.2" y1="140.1" x2="2052.2" y2="145.4"/>
+<line x1="2052.2" y1="145.4" x2="2054.1" y2="152.4"/>
+<line x1="2054.1" y1="152.4" x2="2053.7" y2="160.4"/>
+<line x1="2041.5" y1="139.6" x2="2043.9" y2="145.3"/>
+<line x1="2043.9" y1="145.3" x2="2043.9" y2="151.9"/>
+<line x1="2043.9" y1="151.9" x2="2041.4" y2="158.7"/>
+<line x1="2041.4" y1="158.7" x2="2036.3" y2="165.0"/>
+<line x1="2038.7" y1="140.9" x2="2037.3" y2="147.0"/>
+<line x1="2037.3" y1="147.0" x2="2033.4" y2="152.4"/>
+<line x1="2033.4" y1="152.4" x2="2027.4" y2="156.4"/>
+<line x1="2027.4" y1="156.4" x2="2019.6" y2="158.4"/>
+<line x1="2035.7" y1="140.4" x2="2031.0" y2="144.5"/>
+<line x1="2031.0" y1="144.5" x2="2024.7" y2="146.6"/>
+<line x1="2024.7" y1="146.6" x2="2017.4" y2="146.3"/>
+<line x1="2017.4" y1="146.3" x2="2009.9" y2="143.4"/>
+<line x1="2033.5" y1="138.2" x2="2027.3" y2="138.7"/>
+<line x1="2027.3" y1="138.7" x2="2021.0" y2="136.7"/>
+<line x1="2021.0" y1="136.7" x2="2015.3" y2="132.2"/>
+<line x1="2015.3" y1="132.2" x2="2011.0" y2="125.5"/>
+<line x1="2033.1" y1="135.1" x2="2027.8" y2="131.9"/>
+<line x1="2027.8" y1="131.9" x2="2023.8" y2="126.6"/>
+<line x1="2023.8" y1="126.6" x2="2021.9" y2="119.6"/>
+<line x1="2021.9" y1="119.6" x2="2022.3" y2="111.6"/>
+<line x1="2034.5" y1="132.4" x2="2032.1" y2="126.7"/>
+<line x1="2032.1" y1="126.7" x2="2032.1" y2="120.1"/>
+<line x1="2032.1" y1="120.1" x2="2034.6" y2="113.3"/>
+<line x1="2034.6" y1="113.3" x2="2039.7" y2="107.0"/>
+<line x1="2037.3" y1="131.1" x2="2038.7" y2="125.0"/>
+<line x1="2038.7" y1="125.0" x2="2042.6" y2="119.6"/>
+<line x1="2042.6" y1="119.6" x2="2048.6" y2="115.6"/>
+<line x1="2048.6" y1="115.6" x2="2056.4" y2="113.6"/>
+<line x1="2040.3" y1="131.6" x2="2045.0" y2="127.5"/>
+<line x1="2045.0" y1="127.5" x2="2051.3" y2="125.4"/>
+<line x1="2051.3" y1="125.4" x2="2058.6" y2="125.7"/>
+<line x1="2058.6" y1="125.7" x2="2066.1" y2="128.6"/>
+<line x1="2042.5" y1="133.8" x2="2048.7" y2="133.3"/>
+<line x1="2048.7" y1="133.3" x2="2055.0" y2="135.3"/>
+<line x1="2055.0" y1="135.3" x2="2060.7" y2="139.8"/>
+<line x1="2060.7" y1="139.8" x2="2065.0" y2="146.5"/>
+<line x1="2048.2" y1="140.1" x2="2043.9" y2="145.3"/>
+<line x1="2043.9" y1="145.3" x2="2037.3" y2="147.0"/>
+<line x1="2037.3" y1="147.0" x2="2031.0" y2="144.5"/>
+<line x1="2031.0" y1="144.5" x2="2027.3" y2="138.7"/>
+<line x1="2027.3" y1="138.7" x2="2027.8" y2="131.9"/>
+<line x1="2027.8" y1="131.9" x2="2032.1" y2="126.7"/>
+<line x1="2032.1" y1="126.7" x2="2038.7" y2="125.0"/>
+<line x1="2038.7" y1="125.0" x2="2045.0" y2="127.5"/>
+<line x1="2045.0" y1="127.5" x2="2048.7" y2="133.3"/>
+<line x1="2048.7" y1="133.3" x2="2048.2" y2="140.1"/>
+<line x1="2052.2" y1="145.4" x2="2043.9" y2="151.9"/>
+<line x1="2043.9" y1="151.9" x2="2033.4" y2="152.4"/>
+<line x1="2033.4" y1="152.4" x2="2024.7" y2="146.6"/>
+<line x1="2024.7" y1="146.6" x2="2021.0" y2="136.7"/>
+<line x1="2021.0" y1="136.7" x2="2023.8" y2="126.6"/>
+<line x1="2023.8" y1="126.6" x2="2032.1" y2="120.1"/>
+<line x1="2032.1" y1="120.1" x2="2042.6" y2="119.6"/>
+<line x1="2042.6" y1="119.6" x2="2051.3" y2="125.4"/>
+<line x1="2051.3" y1="125.4" x2="2055.0" y2="135.3"/>
+<line x1="2055.0" y1="135.3" x2="2052.2" y2="145.4"/>
+<line x1="2054.1" y1="152.4" x2="2041.4" y2="158.7"/>
+<line x1="2041.4" y1="158.7" x2="2027.4" y2="156.4"/>
+<line x1="2027.4" y1="156.4" x2="2017.4" y2="146.3"/>
+<line x1="2017.4" y1="146.3" x2="2015.3" y2="132.2"/>
+<line x1="2015.3" y1="132.2" x2="2021.9" y2="119.6"/>
+<line x1="2021.9" y1="119.6" x2="2034.6" y2="113.3"/>
+<line x1="2034.6" y1="113.3" x2="2048.6" y2="115.6"/>
+<line x1="2048.6" y1="115.6" x2="2058.6" y2="125.7"/>
+<line x1="2058.6" y1="125.7" x2="2060.7" y2="139.8"/>
+<line x1="2060.7" y1="139.8" x2="2054.1" y2="152.4"/>
+<line x1="2053.7" y1="160.4" x2="2036.3" y2="165.0"/>
+<line x1="2036.3" y1="165.0" x2="2019.6" y2="158.4"/>
+<line x1="2019.6" y1="158.4" x2="2009.9" y2="143.4"/>
+<line x1="2009.9" y1="143.4" x2="2011.0" y2="125.5"/>
+<line x1="2011.0" y1="125.5" x2="2022.3" y2="111.6"/>
+<line x1="2022.3" y1="111.6" x2="2039.7" y2="107.0"/>
+<line x1="2039.7" y1="107.0" x2="2056.4" y2="113.6"/>
+<line x1="2056.4" y1="113.6" x2="2066.1" y2="128.6"/>
+<line x1="2066.1" y1="128.6" x2="2065.0" y2="146.5"/>
+<line x1="2065.0" y1="146.5" x2="2053.7" y2="160.4"/>
+</g>
+<path d="M 163,146 C 223,146 237,114 297,114" stroke="#585858" stroke-width="1.4" fill="none"/><circle cx="297" cy="114" r="3.3" fill="#585858"/>
+<path d="M 423,146 C 483,146 497,110 557,110" stroke="#585858" stroke-width="1.4" fill="none"/><circle cx="557" cy="110" r="3.3" fill="#585858"/>
+<path d="M 683,146 C 743,146 757,108 817,108" stroke="#585858" stroke-width="1.4" fill="none"/><circle cx="817" cy="108" r="3.3" fill="#585858"/>
+<path d="M 955,146 C 1014,146 1028,122 1087,122" stroke="#585858" stroke-width="1.4" fill="none"/><circle cx="1087" cy="122" r="3.3" fill="#585858"/>
+<path d="M 1213,146 C 1273,146 1287,122 1347,122" stroke="#585858" stroke-width="1.4" fill="none"/><circle cx="1347" cy="122" r="3.3" fill="#585858"/>
+<path d="M 1473,146 C 1533,146 1547,122 1607,122" stroke="#585858" stroke-width="1.4" fill="none"/><circle cx="1607" cy="122" r="3.3" fill="#585858"/>
+<path d="M 1733,146 C 1784,146 1796,122 1847,122" stroke="#585858" stroke-width="1.4" fill="none"/><circle cx="1847" cy="122" r="3.3" fill="#585858"/>
+<path d="M 1973,146 C 1999,146 1962,132 1988,132" stroke="#585858" stroke-width="1.4" fill="none"/><circle cx="1988" cy="132" r="3.3" fill="#585858"/>
+<rect x="1217" y="124" width="50" height="14" rx="3" fill="#DDEFD6" stroke="#E0863A"/>
+<text x="1242" y="135" text-anchor="middle" font-size="8.5" fill="#333">Flatten ✓</text>
+<rect x="40" y="250" width="126" height="34" rx="5" fill="#FFFFFF" stroke="#8C8C8C"/>
+<text x="48" y="264" font-size="10.5" font-weight="600" fill="#222">Panel</text>
+<text x="48" y="277" font-family="Consolas, monospace" font-size="9" fill="#666">0 / 0 / 0</text>
+<path d="M 103,250 C 133,250 7,146 37,146" stroke="#585858" stroke-width="1.4" fill="none"/><circle cx="37" cy="146" r="3.3" fill="#585858"/>
+<path d="M 103,250 C 133,250 7,114 37,114" stroke="#585858" stroke-width="1.4" fill="none"/><circle cx="37" cy="114" r="3.3" fill="#585858"/>
+<path d="M 103,250 C 133,250 7,178 37,178" stroke="#585858" stroke-width="1.4" fill="none"/><circle cx="37" cy="178" r="3.3" fill="#585858"/>
+<rect x="300" y="250" width="126" height="34" rx="5" fill="#FFFFFF" stroke="#8C8C8C"/>
+<text x="308" y="264" font-size="10.5" font-weight="600" fill="#222">Unit X</text>
+<text x="308" y="277" font-family="Consolas, monospace" font-size="9" fill="#666">Vector</text>
+<path d="M 363,250 C 393,250 267,146 297,146" stroke="#585858" stroke-width="1.4" fill="none"/><circle cx="297" cy="146" r="3.3" fill="#585858"/>
+<rect x="556" y="250" width="126" height="34" rx="5" fill="url(#sl)" stroke="#8C8C8C"/>
+<text x="564" y="264" font-size="10.5" font-weight="600" fill="#222">Spoke×2</text>
+<text x="564" y="277" font-family="Consolas, monospace" font-size="9" fill="#666">Count (chẵn)</text>
+<path d="M 619,250 C 647,250 529,158 557,158" stroke="#585858" stroke-width="1.4" fill="none"/><circle cx="557" cy="158" r="3.3" fill="#585858"/>
+<rect x="556" y="318" width="126" height="34" rx="5" fill="#FFFFFF" stroke="#8C8C8C"/>
+<text x="564" y="332" font-size="10.5" font-weight="600" fill="#222">Panel 360°</text>
+<text x="564" y="345" font-family="Consolas, monospace" font-size="9" fill="#666">Angle</text>
+<path d="M 619,318 C 647,318 529,182 557,182" stroke="#585858" stroke-width="1.4" fill="none"/><circle cx="557" cy="182" r="3.3" fill="#585858"/>
+<rect x="772" y="250" width="126" height="34" rx="5" fill="url(#sl)" stroke="#8C8C8C"/>
+<text x="780" y="264" font-size="10.5" font-weight="600" fill="#222">First</text>
+<text x="780" y="277" font-family="Consolas, monospace" font-size="9" fill="#666">R0 (trong)</text>
+<path d="M 835,250 C 861,250 791,146 817,146" stroke="#585858" stroke-width="1.4" fill="none"/><circle cx="817" cy="146" r="3.3" fill="#585858"/>
+<rect x="908" y="250" width="126" height="34" rx="5" fill="url(#sl)" stroke="#8C8C8C"/>
+<text x="916" y="264" font-size="10.5" font-weight="600" fill="#222">Second</text>
+<text x="916" y="277" font-family="Consolas, monospace" font-size="9" fill="#666">R1 (ngoài)</text>
+<path d="M 971,250 C 1040,250 748,165 817,165" stroke="#585858" stroke-width="1.4" fill="none"/><circle cx="817" cy="165" r="3.3" fill="#585858"/>
+<rect x="820" y="318" width="126" height="34" rx="5" fill="url(#sl)" stroke="#8C8C8C"/>
+<text x="828" y="332" font-size="10.5" font-weight="600" fill="#222">Wind Spiral</text>
+<text x="828" y="345" font-family="Consolas, monospace" font-size="9" fill="#666">Angle (°)</text>
+<path d="M 883,318 C 913,318 787,184 817,184" stroke="#585858" stroke-width="1.4" fill="none"/><circle cx="817" cy="184" r="3.3" fill="#585858"/>
+<rect x="1090" y="250" width="126" height="34" rx="5" fill="url(#sl)" stroke="#8C8C8C"/>
+<text x="1098" y="264" font-size="10.5" font-weight="600" fill="#222">Rows</text>
+<text x="1098" y="277" font-family="Consolas, monospace" font-size="9" fill="#666">Count</text>
+<path d="M 1153,250 C 1183,250 1057,170 1087,170" stroke="#585858" stroke-width="1.4" fill="none"/><circle cx="1087" cy="170" r="3.3" fill="#585858"/>
+<rect x="1350" y="250" width="126" height="34" rx="5" fill="#FFFFFF" stroke="#8C8C8C"/>
+<text x="1358" y="264" font-size="10.5" font-weight="600" fill="#222">Panel</text>
+<text x="1358" y="277" font-family="Consolas, monospace" font-size="9" fill="#666">0</text>
+<path d="M 1413,250 C 1443,250 1317,170 1347,170" stroke="#585858" stroke-width="1.4" fill="none"/><circle cx="1347" cy="170" r="3.3" fill="#585858"/>
+<rect x="1850" y="250" width="126" height="34" rx="5" fill="url(#sl)" stroke="#8C8C8C"/>
+<text x="1858" y="264" font-size="10.5" font-weight="600" fill="#222">Voronoi Fillet</text>
+<text x="1858" y="277" font-family="Consolas, monospace" font-size="9" fill="#666">Radius</text>
+<path d="M 1913,250 C 1943,250 1817,170 1847,170" stroke="#585858" stroke-width="1.4" fill="none"/><circle cx="1847" cy="170" r="3.3" fill="#585858"/>
+<rect x="1590" y="250" width="116" height="52" rx="6" fill="url(#gb)" stroke="#8C8C8C"/>
+<text x="1648" y="265" text-anchor="middle" font-size="12.5" font-weight="600" fill="#222">Circle</text>
+<rect x="1583" y="274" width="8" height="12" rx="2" fill="#E8E8E8" stroke="#8C8C8C"/>
+<circle cx="1587" cy="280" r="2.3" fill="#4A4A4A"/>
+<text x="1597" y="283" text-anchor="start" font-family="Consolas, monospace" font-size="9" fill="#555">P</text>
+<rect x="1583" y="282" width="8" height="12" rx="2" fill="#E8E8E8" stroke="#8C8C8C"/>
+<circle cx="1587" cy="288" r="2.3" fill="#4A4A4A"/>
+<text x="1597" y="291" text-anchor="start" font-family="Consolas, monospace" font-size="9" fill="#555">R</text>
+<rect x="1705" y="278" width="8" height="12" rx="2" fill="#E8E8E8" stroke="#8C8C8C"/>
+<circle cx="1709" cy="284" r="2.3" fill="#4A4A4A"/>
+<text x="1699" y="287" text-anchor="end" font-family="Consolas, monospace" font-size="9" fill="#555">C</text>
+<path d="M 1709,284 C 1755,284 1561,170 1607,170" stroke="#585858" stroke-width="1.4" fill="none"/><circle cx="1607" cy="170" r="3.3" fill="#585858"/>
+<rect x="556" y="410" width="126" height="34" rx="5" fill="#FFFFFF" stroke="#8C8C8C"/>
+<text x="564" y="424" font-size="10.5" font-weight="600" fill="#222">XY Plane</text>
+<text x="564" y="437" font-family="Consolas, monospace" font-size="9" fill="#666">Plane</text>
+<path d="M 619,444 L 619,464 Q 619,470 613,470 L 545,470 Q 539,470 539,464 L 539,134 L 557,134" stroke="#2F6FB0" stroke-width="1.5" fill="none"/><circle cx="557" cy="134" r="3.3" fill="#2F6FB0"/>
+<path d="M 619,444 L 619,464 Q 619,470 625,470 L 793,470 Q 799,470 799,464 L 799,127 L 817,127" stroke="#2F6FB0" stroke-width="1.5" fill="none"/><circle cx="817" cy="127" r="3.3" fill="#2F6FB0"/>
+<path d="M 619,444 L 619,464 Q 619,470 625,470 L 1563,470 Q 1569,470 1569,464 L 1569,280 L 1587,280" stroke="#2F6FB0" stroke-width="1.5" fill="none"/><circle cx="1587" cy="280" r="3.3" fill="#2F6FB0"/>
+<rect x="300" y="410" width="126" height="34" rx="5" fill="url(#sl)" stroke="#8C8C8C"/>
+<text x="308" y="424" font-size="10.5" font-weight="600" fill="#222">Length</text>
+<text x="308" y="437" font-family="Consolas, monospace" font-size="9" fill="#666">bán kính vành</text>
+<path d="M 363,444 L 363,514 Q 363,520 357,520 L 285,520 Q 279,520 279,514 L 279,178 L 297,178" stroke="#3E9E57" stroke-width="1.5" fill="none"/><circle cx="297" cy="178" r="3.3" fill="#3E9E57"/>
+<path d="M 363,444 L 363,514 Q 363,520 369,520 L 1563,520 Q 1569,520 1569,514 L 1569,288 L 1587,288" stroke="#3E9E57" stroke-width="1.5" fill="none"/><circle cx="1587" cy="288" r="3.3" fill="#3E9E57"/>
+<rect x="40" y="560" width="120" height="30" rx="5" fill="url(#sl)" stroke="#8C8C8C"/><text x="172" y="579" font-size="12" fill="#444">Number Slider (kéo chỉnh)</text>
+<rect x="400" y="560" width="120" height="30" rx="5" fill="#FFFFFF" stroke="#8C8C8C"/><text x="532" y="579" font-size="12" fill="#444">Panel / component input (Unit X, XY Plane)</text>
+<line x1="920" y1="575" x2="970" y2="575" stroke="#2F6FB0" stroke-width="2.2"/><text x="978" y="579" font-size="12" fill="#444">net XY Plane (dùng chung 3 chỗ)</text>
+<line x1="1300" y1="575" x2="1350" y2="575" stroke="#3E9E57" stroke-width="2.2"/><text x="1358" y="579" font-size="12" fill="#444">net Length (dùng chung 2 chỗ)</text>
+<text x="40" y="616" font-size="12.5" font-style="italic" fill="#777">Bản TÁI TẠO đạt kết quả tương tự video (dựa case study Voronoi đã kiểm chứng của dự án) — KHÔNG phải definition gốc (video không lộ node graph).</text>
+</svg>
