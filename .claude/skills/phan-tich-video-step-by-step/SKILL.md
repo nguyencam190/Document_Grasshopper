@@ -84,7 +84,7 @@ slider/tham số chính, hướng dẫn dựng từng bước, và các điểm 
 KHÔNG dùng khung chụp trực tiếp từ video nếu chưa xác nhận được quyền sử dụng). Nhớ bump
 `SEED_VERSION` và merge vào `main` theo `Git workflow` ở `CLAUDE.md` sau khi xong.
 
-> ⚠️ **2 THÀNH PHẦN BẮT BUỘC — MỌI trang step-by-step đều PHẢI có đủ, không được thiếu:**
+> ⚠️ **3 THÀNH PHẦN BẮT BUỘC — MỌI trang step-by-step đều PHẢI có đủ, không được thiếu:**
 > 1. **Hướng dẫn dựng TỪNG BƯỚC** — danh sách số (`<ol>`), mỗi bước 1 hành động rõ ràng: thả
 >    component gì, nối cổng nào vào cổng nào, đặt slider bao nhiêu. Không viết gộp cả quy trình thành
 >    1 đoạn văn; phải tách thành các bước làm theo được ngay trên canvas.
@@ -95,9 +95,15 @@ KHÔNG dùng khung chụp trực tiếp từ video nếu chưa xác nhận đư�
 >    graph: người mới cần thấy đúng component nào nối với component nào trên canvas để làm theo. Nếu
 >    quy trình dài, chia thành nhiều ảnh kéo graph theo từng cụm bước (storyboard nối dây). Xem cách
 >    vẽ khối component + dây nối ở skill `xuat-ban-hinh-minh-hoa`.
+> 3. **Dòng "→ Kết quả" ở MỖI bước** — ngay sau nội dung mỗi bước (mỗi `<li>` top-level) phải có 1
+>    dòng note nói **bước đó tạo ra kết quả/hình học gì** (vd "→ Kết quả: 15 tia xoè đều 360° quanh
+>    tâm", "→ Kết quả: lưới ô Voronoi gọn trong vòng tròn"). Người mới cần biết mỗi thao tác dẫn tới
+>    trạng thái nào để tự đối chiếu khi làm. Chuẩn markup dùng thống nhất (nền xanh nhạt, viền trái):
+>    `<div style="margin:5px 0 3px;padding:3px 10px;border-left:3px solid #4a90d9;background:rgba(74,144,217,0.09);font-size:13px">→ <strong>Kết quả:</strong> …</div>` — đặt TRƯỚC `</li>` của
+>    đúng bước đó (với danh sách lồng, đặt ở `</li>` cấp cao nhất, không nhét vào từng sub-bullet).
 >
-> Thiếu 1 trong 2 thành phần này coi như trang chưa hoàn thành. (Trang chỉ có sơ đồ luồng + ảnh kết
-> quả mà thiếu ảnh kéo graph cụ thể là lỗi đã từng mắc — phải bổ sung ảnh nối dây component.)
+> Thiếu 1 trong 3 thành phần này coi như trang chưa hoàn thành. (Trang chỉ có sơ đồ luồng + ảnh kết
+> quả mà thiếu ảnh kéo graph cụ thể, hoặc bước không có dòng "→ Kết quả", đều là lỗi đã từng mắc.)
 
 > ⚠️ **PHẢI thể hiện cờ DATA TREE trên cổng (Flatten / Graft / Simplify / Reverse)** — đây là thiếu
 > sót từng mắc (vẽ graph mà bỏ qua Flatten). Các cờ này bật/tắt trên từng input/output (hiện ở GH bằng
