@@ -170,5 +170,15 @@
 <circle cx="555.0" cy="325.0" r="2.5" fill="#4A4A4A"/>
 </g>
 <path d="M 555.0,325.0 C 503.0,325.0 503.0,262.0 451.0,262.0" stroke="#4A4A4A" stroke-width="1.5" fill="none"/>
+<g>
+<rect x="30" y="162" width="124" height="30" rx="6" fill="url(#ghBody)" stroke="#8C8C8C" stroke-width="1"/>
+<text x="92.0" y="181.0" text-anchor="middle" font-family="Segoe UI, sans-serif" font-size="10" fill="#222">Construct Domain</text>
+<rect x="22.0" y="169.0" width="10" height="16" rx="3" fill="#E8E8E8" stroke="#8C8C8C"/>
+<circle cx="27.0" cy="177.0" r="2.5" fill="#4A4A4A"/>
+<rect x="152.0" y="169.0" width="10" height="16" rx="3" fill="#E8E8E8" stroke="#8C8C8C"/>
+<circle cx="157.0" cy="177.0" r="2.5" fill="#4A4A4A"/>
+</g>
+<text x="167.0" y="180.0" text-anchor="start" font-family="Consolas, monospace" font-size="9" fill="#777">15..300</text>
+<path d="M 157.0,177.0 C 97.0,177.0 97.0,89.5 37.0,89.5" stroke="#4A4A4A" stroke-width="1.5" fill="none"/>
 <text x="16" y="366" font-family="Segoe UI" font-size="11" fill="#666">Sơ đồ nối (tái tạo): Range→Circle→Divide Curve dựng lưới cực · Maelstrom xoắn · Shift List+PolyLine nối 2 họ đường · PolyOffset offset ô · Trim with Region cắt biên. Bước Shift List/PolyLine là phần dễ khác nhất — thử để khớp thứ tự điểm.</text>
 </svg>
