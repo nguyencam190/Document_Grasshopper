@@ -84,6 +84,21 @@ slider/tham số chính, hướng dẫn dựng từng bước, và các điểm 
 KHÔNG dùng khung chụp trực tiếp từ video nếu chưa xác nhận được quyền sử dụng). Nhớ bump
 `SEED_VERSION` và merge vào `main` theo `Git workflow` ở `CLAUDE.md` sau khi xong.
 
+> ⚠️ **2 THÀNH PHẦN BẮT BUỘC — MỌI trang step-by-step đều PHẢI có đủ, không được thiếu:**
+> 1. **Hướng dẫn dựng TỪNG BƯỚC** — danh sách số (`<ol>`), mỗi bước 1 hành động rõ ràng: thả
+>    component gì, nối cổng nào vào cổng nào, đặt slider bao nhiêu. Không viết gộp cả quy trình thành
+>    1 đoạn văn; phải tách thành các bước làm theo được ngay trên canvas.
+> 2. **Hình minh hoạ KÉO GRAPH** — ít nhất 1 ảnh SVG vẽ theo phong cách **canvas Grasshopper thật**
+>    (khối component bo góc có núm input/output, dây nối cong, tên cổng) thể hiện **cách nối dây các
+>    component** của quy trình — KHÔNG chỉ có sơ đồ luồng dạng hộp-mũi tên chung chung hay ảnh kết
+>    quả hình học. Sơ đồ luồng/storyboard hình học là bổ sung tốt, nhưng KHÔNG thay thế được ảnh kéo
+>    graph: người mới cần thấy đúng component nào nối với component nào trên canvas để làm theo. Nếu
+>    quy trình dài, chia thành nhiều ảnh kéo graph theo từng cụm bước (storyboard nối dây). Xem cách
+>    vẽ khối component + dây nối ở skill `xuat-ban-hinh-minh-hoa`.
+>
+> Thiếu 1 trong 2 thành phần này coi như trang chưa hoàn thành. (Trang chỉ có sơ đồ luồng + ảnh kết
+> quả mà thiếu ảnh kéo graph cụ thể là lỗi đã từng mắc — phải bổ sung ảnh nối dây component.)
+
 ## Case study đã có sẵn — Voronoi Pattern
 
 Xem mục "Case study: Voronoi Pattern" ở cuối `CLAUDE.md` cho ví dụ đầy đủ đã hoàn thành (pattern hoa
