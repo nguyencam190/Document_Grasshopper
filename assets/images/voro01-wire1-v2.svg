@@ -148,5 +148,5 @@
 <circle cx="569.0" cy="279.0" r="2.5" fill="#4A4A4A"/>
 </g>
 <path d="M 569.0,279.0 C 433.0,279.0 433.0,227.0 297.0,227.0" stroke="#4A4A4A" stroke-width="1.5" fill="none"/>
-<text x="16" y="330" font-family="Segoe UI" font-size="11" fill="#666">XY Plane → Circle (Radius 8) → Divide Curve (17 điểm quanh vòng) → Line: Start và End cùng 17 điểm, input End bật GRAFT ⌃ → nối MỌI cặp điểm = mạng dây cung (string art). Lấy điểm gieo: Curve Middle (trung điểm mỗi dây) + Divide Curve (4) → Cull Duplicates (bỏ trùng). Cả 2 nguồn Flatten ↓ vào Voronoi (Plane = XY).</text>
+<text x="16" y="330" font-family="Segoe UI" font-size="11" fill="#666">XY Plane → Circle (Radius 8) → Divide Curve (17 điểm quanh vòng) → Line: Start và End cùng 17 điểm, input End bật GRAFT ⌃ → nối MỌI cặp điểm = mạng dây cung (string art). Lấy điểm gieo: Curve Middle (trung điểm mỗi dây) + Divide Curve (4) → Cull Duplicates (bỏ trùng). Cả 2 nguồn Flatten ↓ vào Voronoi (Plane = XY). (Trong file: Circle đi qua 1 Curve param; 2 nguồn điểm đi qua 2 Relay — node truyền dây, không đổi dữ liệu.)</text>
 </svg>
