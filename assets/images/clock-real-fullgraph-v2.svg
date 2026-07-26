@@ -10,7 +10,7 @@
 
 <rect x="0" y="0" width="1030" height="880" fill="#FAFAF7"/>
 <rect x="0" y="0" width="1030" height="880" fill="url(#dots)"/>
-<text x="16" y="24" font-size="14" font-weight="600" fill="#333">GRAPH THẬT — Toàn bộ definition đồng hồ lưới xoắn (vẽ lại từ graph đã chạy)</text>
+<text x="16" y="24" font-size="14" font-weight="600" fill="#333">Toàn bộ definition đồng hồ lưới xoắn</text>
 <text x="16" y="38" font-family="Segoe UI" font-size="13" font-weight="700" fill="#1f3a63">Bước 1 — Dựng 1 spiral gốc</text>
 <g>
 <rect x="30" y="60" width="76" height="48" rx="6" fill="url(#ghBody)" stroke="#8C8C8C" stroke-width="1"/>
