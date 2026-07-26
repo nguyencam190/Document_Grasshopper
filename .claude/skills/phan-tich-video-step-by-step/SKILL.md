@@ -132,6 +132,24 @@ KHÔNG dùng khung chụp trực tiếp từ video nếu chưa xác nhận đư�
 > - Nếu graph quá lớn để vẽ trong 1 ảnh, **chia nhiều ảnh kéo graph** (theo cụm) nhưng tổng các ảnh vẫn
 >   phải phủ hết 100% object + slider đã nối — chia nhỏ KHÔNG phải lý do để bỏ bớt.
 
+> ⛔ **KHI ĐÃ CÓ FILE .ghx → TUYỆT ĐỐI CHÍNH XÁC, KHÔNG ĐƯỢC SAI 1 DÂY NÀO.** File .ghx là sự thật
+> tuyệt đối — user gửi file nghĩa là muốn bản ghi ĐÚNG 100%, sai 1 kết nối là lỗi nghiêm trọng (không
+> phải "gần đúng"). PHẢI **phân tích kỹ file TRƯỚC KHI vẽ**, và mọi dây trong ảnh phải khớp GUID với
+> file. Lỗi ĐÃ TỪNG MẮC: file có **2 Extrude nối vào 2 Boundary Surfaces KHÁC nhau** (1 đùn mặt ô, 1
+> đùn mặt khung) nhưng tôi vẽ cả 2 cùng 1 mặt — vì chỉ thấy "Base ← Boundary Surfaces" mà KHÔNG resolve
+> GUID cụ thể. Quy trình chống sai bắt buộc:
+> - **Khi có NHIỀU instance cùng tên** (vd 3 `Boundary Surfaces`, 2 `Extrude`, 2 `Offset Curve`...),
+>   TUYỆT ĐỐI không được ghi chung chung "Boundary Surfaces" rồi đoán. Phải **resolve từng `Source`
+>   xuống đúng InstanceGuid của container**, và phân biệt các instance bằng GUID (hoặc bằng "nó nhận
+>   Edges/Base từ đâu"). Ghi rõ trong đầu instance nào là instance nào trước khi vẽ.
+> - **Với mỗi node rẽ nhánh / node cuối** (Extrude, Boundary Surfaces, Offset, Merge...), in ra bảng
+>   `node → từng input ← nguồn (GUID + tên + giá trị)` và **map ngược "consumer"** (mỗi output feed vào
+>   những đâu). Chính bảng consumer lộ ra việc "2 Extrude lấy từ 2 mặt khác nhau".
+> - **Đối chiếu ảnh với parse TRƯỚC KHI publish**: rà lại TỪNG dây trong ảnh so với danh sách kết nối đã
+>   parse (đặc biệt Base/Direction của Extrude, Edges của Boundary Surfaces, Curve/Distance của Offset).
+>   Chỉ publish khi mọi dây khớp file 100%.
+> - Nếu 1 chỗ đọc không chắc, **parse lại/hỏi**, KHÔNG đoán — với file .ghx không có chỗ cho suy đoán.
+
 ## Case study đã có sẵn — Voronoi Pattern
 
 Xem mục "Case study: Voronoi Pattern" ở cuối `CLAUDE.md` cho ví dụ đầy đủ đã hoàn thành (pattern hoa
