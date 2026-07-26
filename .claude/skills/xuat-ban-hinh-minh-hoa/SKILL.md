@@ -25,6 +25,24 @@ Xem chi tiết màu sắc, kích thước, cấu trúc SVG mẫu, và checklist 
 khung, dây nối không khớp toạ độ nub) ở `references/phong-cach-minh-hoa.md`. **Luôn render thử bằng
 Playwright và phóng to kiểm tra bằng mắt trước khi publish**, đặc biệt component có ≥3 input.
 
+### Vị trí text chú thích/caption — TUYỆT ĐỐI không đè lên graph
+
+Text chú thích (caption ở đáy ảnh, nhãn "Flatten ↓", tiêu đề phụ...) **phải nằm HOÀN TOÀN bên dưới
+mọi phần tử graph** — không được đè lên hộp component, dây nối, hay slider (kể cả slider feeder xếp
+thấp nhất). Đây là bug thật đã gặp: caption đặt ở `H-14` nhưng slider Angle=59 (feeder của Maelstrom)
+nằm ở `Y+160` tràn xuống đúng vùng đó → chữ chồng lên slider.
+
+Quy tắc bắt buộc khi tính chiều cao canvas:
+- **Chiều cao canvas `H` = (đáy của phần tử THẤP NHẤT trong toàn ảnh) + lề caption (≥30px) + chiều cao
+  dòng caption.** Phần tử thấp nhất thường là hàng slider feeder cắm vào input phía dưới component,
+  KHÔNG phải hàng component chính — luôn cộng cả `Y_component + offset_feeder + chiều cao slider` rồi
+  mới đặt caption bên dưới con số đó.
+- Sau khi sửa vị trí, **bắt buộc render lại + phóng to nhìn bằng mắt** để chắc chắn caption không còn
+  chạm bất kỳ slider/dây/hộp nào. Không tin vào việc "đã tăng H" — phải thấy tận mắt khoảng trắng giữa
+  caption và slider thấp nhất.
+- Ảnh đã sửa vị trí = ảnh đổi nội dung → **đổi id cache-bust** (`-v2`/`-v3`/`-v4`), cập nhật cả
+  `SEED_ASSETS` lẫn `data-cfimgid`/`data-name` trong trang, xoá file cũ, bump `SEED_VERSION`.
+
 ## Cấu trúc khối ảnh đơn — `.cf-img-block`
 
 ```html

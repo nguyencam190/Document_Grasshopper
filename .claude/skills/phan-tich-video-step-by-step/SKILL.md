@@ -112,6 +112,20 @@ KHÔNG dùng khung chụp trực tiếp từ video nếu chưa xác nhận đư�
 >   trong bước tương ứng** ("input Edges của Boundary Surfaces bật Flatten"). Bỏ qua cờ = hướng dẫn
 >   sai, user dựng theo sẽ ra data tree lệch.
 
+> ⚠️ **TUYỆT ĐỐI KHÔNG SÓT component NÀO hay slider NÀO đã nối trong file .ghx** — khi dựng trang từ
+> 1 file .gh/.ghx thật, ảnh kéo graph + hướng dẫn phải phản ánh **ĐẦY ĐỦ** mọi object và mọi slider có
+> dây nối, không được lược bớt "cho gọn". Đây là lỗi từng mắc (vẽ thiếu component/slider so với file
+> gốc). Quy trình bắt buộc để đảm bảo không sót:
+> - **Liệt kê TOÀN BỘ object trước khi vẽ**: parse file đếm hết `<chunk name="Object">` (component) và
+>   mọi `Number Slider`/`Panel`/`Value List` — lập danh sách đầy đủ (tên + InstanceGuid + giá trị).
+> - **Bám theo mọi kết nối (`Source`)**: mỗi input param có thể có nhiều `<item name="Source">` (GUID
+>   nguồn) — theo hết từng dây, không bỏ dây nào. Slider nào có GUID xuất hiện trong 1 `Source` = slider
+>   ĐÃ NỐI, bắt buộc vẽ; chỉ được bỏ qua object hoàn toàn KHÔNG có dây (rời rạc, disabled) và phải nói rõ.
+> - **Đối chiếu số lượng sau khi vẽ**: đếm lại số component + số slider trong ảnh/hướng dẫn PHẢI KHỚP số
+>   đã liệt kê từ file (trừ các object rời đã ghi chú). Lệch số = còn sót, phải bổ sung trước khi publish.
+> - Nếu graph quá lớn để vẽ trong 1 ảnh, **chia nhiều ảnh kéo graph** (theo cụm) nhưng tổng các ảnh vẫn
+>   phải phủ hết 100% object + slider đã nối — chia nhỏ KHÔNG phải lý do để bỏ bớt.
+
 ## Case study đã có sẵn — Voronoi Pattern
 
 Xem mục "Case study: Voronoi Pattern" ở cuối `CLAUDE.md` cho ví dụ đầy đủ đã hoàn thành (pattern hoa

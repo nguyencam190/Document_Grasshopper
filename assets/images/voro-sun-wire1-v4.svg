@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1060" height="300" viewBox="0 0 1060 300" font-family="Segoe UI, sans-serif">
+<svg xmlns="http://www.w3.org/2000/svg" width="1060" height="345" viewBox="0 0 1060 345" font-family="Segoe UI, sans-serif">
 <defs>
 <linearGradient id="ghBody" x1="0" y1="0" x2="0" y2="1">
 <stop offset="0%" stop-color="#F0F0F0"/><stop offset="100%" stop-color="#D8D8D8"/>
@@ -8,8 +8,8 @@
 </pattern>
 </defs>
 
-<rect x="0" y="0" width="1060" height="300" fill="#FAFAF7"/>
-<rect x="0" y="0" width="1060" height="300" fill="url(#dots)"/>
+<rect x="0" y="0" width="1060" height="345" fill="#FAFAF7"/>
+<rect x="0" y="0" width="1060" height="345" fill="url(#dots)"/>
 <text x="16" y="24" font-size="14" font-weight="600" fill="#333">VORONOI THẬT · Bước 1 — Điểm gieo xoắn → ô Voronoi</text>
 <g>
 <rect x="24" y="110" width="112" height="54" rx="6" fill="url(#ghBody)" stroke="#8C8C8C" stroke-width="1"/>
@@ -209,5 +209,5 @@
 <circle cx="783.0" cy="215.0" r="2.5" fill="#4A4A4A"/>
 </g>
 <path d="M 783.0,215.0 C 740.0,215.0 740.0,141.0 697.0,141.0" stroke="#4A4A4A" stroke-width="1.5" fill="none"/>
-<text x="16" y="286" font-family="Segoe UI" font-size="11" fill="#666">Construct Point→Line SDL (tia)→ArrPolar (spoke 15, 360°)→Maelstrom (xoắn: First/Second/Angle)→Divide Curve (Count 5)→Cull Index (bỏ điểm tâm, Panel=0)→Voronoi. LƯU Ý: output Points của Divide Curve bật FLATTEN ↓ (gộp mọi điểm về 1 list phẳng trước Voronoi).</text>
+<text x="16" y="331" font-family="Segoe UI" font-size="11" fill="#666">Construct Point→Line SDL (tia)→ArrPolar (spoke 15, 360°)→Maelstrom (xoắn: First/Second/Angle)→Divide Curve (Count 5)→Cull Index (bỏ điểm tâm, Panel=0)→Voronoi. LƯU Ý: output Points của Divide Curve bật FLATTEN ↓ (gộp mọi điểm về 1 list phẳng trước Voronoi).</text>
 </svg>
