@@ -82,6 +82,13 @@ không phải bản xuất tĩnh chỉ đọc). Repo GitHub (private): `https://
 - Dữ liệu trang (`state.docs`) của app nằm trong **localStorage của trình duyệt**, KHÔNG nằm trong
   file HTML. Vì vậy nội dung phải baked vào source qua `SEED_DOCS`/`SEED_VERSION` (khai báo ngay
   trước `let state=...`) để bất kỳ trình duyệt/máy nào mở `Grasshopper.html` cũng tự đồng bộ đúng.
+- **`File_GHX/`** — thư mục lưu file định nghĩa Grasshopper gốc (`.gh`/`.ghx`) để backup & tra cứu.
+
+> ⚠️ **QUY TẮC LÂU DÀI — user gửi file `.ghx` (hoặc `.gh`) thì LUÔN tự upload lên git giúp user.**
+> Khi user đính kèm 1 file `.gh`/`.ghx` (dù chỉ nói "đọc file này" hay không nói gì thêm), sau khi
+> dùng xong phải copy file đó vào thư mục **`File_GHX/`** trong repo, commit và merge vào `main` như
+> mọi thay đổi khác (xem [Git workflow](#git-workflow)) — không cần hỏi lại. Đặt tên file gợi nhớ
+> (bỏ tiền tố hash ngẫu nhiên của uploads), cập nhật `File_GHX/README.md` nếu cần.
 
 > ⚠️ **QUY TẮC TUYỆT ĐỐI — SỬA `SEED_DOCS` HAY BẤT KỲ NỘI DUNG NÀO CŨNG PHẢI BUMP `SEED_VERSION`**,
 > kể cả khi chỉ sửa 1 dòng CSS/style nhỏ, không phải chỉ khi thêm trang mới. Quên bước này từng gây
