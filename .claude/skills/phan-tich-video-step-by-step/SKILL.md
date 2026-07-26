@@ -99,6 +99,19 @@ KHÔNG dùng khung chụp trực tiếp từ video nếu chưa xác nhận đư�
 > Thiếu 1 trong 2 thành phần này coi như trang chưa hoàn thành. (Trang chỉ có sơ đồ luồng + ảnh kết
 > quả mà thiếu ảnh kéo graph cụ thể là lỗi đã từng mắc — phải bổ sung ảnh nối dây component.)
 
+> ⚠️ **PHẢI thể hiện cờ DATA TREE trên cổng (Flatten / Graft / Simplify / Reverse)** — đây là thiếu
+> sót từng mắc (vẽ graph mà bỏ qua Flatten). Các cờ này bật/tắt trên từng input/output (hiện ở GH bằng
+> icon nhỏ trên núm cổng: ↓ = Flatten, ⤴ = Graft...) và **quyết định graph chạy đúng hay sai** — vd
+> `Divide Curve` output bật Flatten, `Boundary Surfaces` input Edges bật Flatten. Khi dựng trang từ 1
+> graph thật:
+> - Nếu có **file .gh/.ghx**: parse ra để đọc chính xác cổng nào bật cờ gì. File .ghx là XML — mỗi
+>   param lưu `<item name="Mapping">` (1=Flatten, 2=Graft) và `Simplify`/`Reverse` (bool). File .gh
+>   nhị phân thì giải nén bằng `zlib.decompress(data, -15)` (deflate raw) rồi mới đọc. LUÔN xin file
+>   .ghx khi user muốn bản ghi chính xác — đọc file thật gần như 100%, hơn hẳn đọc ảnh chụp bằng mắt.
+> - Trên **ảnh kéo graph**: vẽ 1 badge nhỏ (vd ô đỏ có ↓) ngay tại cổng có Flatten/Graft, và **ghi rõ
+>   trong bước tương ứng** ("input Edges của Boundary Surfaces bật Flatten"). Bỏ qua cờ = hướng dẫn
+>   sai, user dựng theo sẽ ra data tree lệch.
+
 ## Case study đã có sẵn — Voronoi Pattern
 
 Xem mục "Case study: Voronoi Pattern" ở cuối `CLAUDE.md` cho ví dụ đầy đủ đã hoàn thành (pattern hoa
