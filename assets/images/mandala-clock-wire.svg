@@ -1,0 +1,215 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1180" height="346" viewBox="0 0 1180 346" font-family="Segoe UI, sans-serif">
+<defs>
+<linearGradient id="ghBody" x1="0" y1="0" x2="0" y2="1">
+<stop offset="0%" stop-color="#F0F0F0"/><stop offset="100%" stop-color="#D8D8D8"/>
+</linearGradient>
+<pattern id="dots" width="18" height="18" patternUnits="userSpaceOnUse">
+<circle cx="1" cy="1" r="1" fill="#E0E0DA"/>
+</pattern>
+</defs>
+
+<rect x="0" y="0" width="1180" height="346" fill="#FAFAF7"/>
+<rect x="0" y="0" width="1180" height="346" fill="url(#dots)"/>
+<text x="16" y="24" font-size="14" font-weight="600" fill="#333">Mandala hoa cánh chồng — sơ đồ kéo graph (suy luận)</text>
+<g>
+<rect x="24" y="96" width="92" height="50" rx="6" fill="url(#ghBody)" stroke="#8C8C8C" stroke-width="1"/>
+<text x="70.0" y="125.0" text-anchor="middle" font-family="Segoe UI, sans-serif" font-size="10" fill="#222">Interpolate</text>
+<rect x="16.0" y="113.0" width="10" height="16" rx="3" fill="#E8E8E8" stroke="#8C8C8C"/>
+<circle cx="21.0" cy="121.0" r="2.5" fill="#4A4A4A"/>
+<rect x="114.0" y="113.0" width="10" height="16" rx="3" fill="#E8E8E8" stroke="#8C8C8C"/>
+<circle cx="119.0" cy="121.0" r="2.5" fill="#4A4A4A"/>
+</g>
+<text x="12.0" y="124.0" text-anchor="end" font-family="Consolas, monospace" font-size="8.5" fill="#777">V</text>
+<text x="128.0" y="124.0" text-anchor="start" font-family="Consolas, monospace" font-size="8.5" fill="#777">C</text>
+<g>
+<rect x="150" y="96" width="96" height="50" rx="6" fill="url(#ghBody)" stroke="#8C8C8C" stroke-width="1"/>
+<text x="198.0" y="125.0" text-anchor="middle" font-family="Segoe UI, sans-serif" font-size="10" fill="#222">Offset Curve</text>
+<rect x="142.0" y="107.0" width="10" height="16" rx="3" fill="#E8E8E8" stroke="#8C8C8C"/>
+<circle cx="147.0" cy="115.0" r="2.5" fill="#4A4A4A"/>
+<rect x="142.0" y="119.0" width="10" height="16" rx="3" fill="#E8E8E8" stroke="#8C8C8C"/>
+<circle cx="147.0" cy="127.0" r="2.5" fill="#4A4A4A"/>
+<rect x="244.0" y="113.0" width="10" height="16" rx="3" fill="#E8E8E8" stroke="#8C8C8C"/>
+<circle cx="249.0" cy="121.0" r="2.5" fill="#4A4A4A"/>
+</g>
+<text x="138.0" y="118.0" text-anchor="end" font-family="Consolas, monospace" font-size="8.5" fill="#777">C</text>
+<text x="138.0" y="130.0" text-anchor="end" font-family="Consolas, monospace" font-size="8.5" fill="#777">D</text>
+<text x="258.0" y="124.0" text-anchor="start" font-family="Consolas, monospace" font-size="8.5" fill="#777">C</text>
+<path d="M 119.0,121.0 C 133.0,121.0 133.0,115.0 147.0,115.0" stroke="#4A4A4A" stroke-width="1.5" fill="none"/>
+<g>
+<rect x="286" y="96" width="62" height="50" rx="6" fill="url(#ghBody)" stroke="#8C8C8C" stroke-width="1"/>
+<text x="317.0" y="125.0" text-anchor="middle" font-family="Segoe UI, sans-serif" font-size="10" fill="#222">Scale</text>
+<rect x="278.0" y="107.0" width="10" height="16" rx="3" fill="#E8E8E8" stroke="#8C8C8C"/>
+<circle cx="283.0" cy="115.0" r="2.5" fill="#4A4A4A"/>
+<rect x="278.0" y="119.0" width="10" height="16" rx="3" fill="#E8E8E8" stroke="#8C8C8C"/>
+<circle cx="283.0" cy="127.0" r="2.5" fill="#4A4A4A"/>
+<rect x="346.0" y="113.0" width="10" height="16" rx="3" fill="#E8E8E8" stroke="#8C8C8C"/>
+<circle cx="351.0" cy="121.0" r="2.5" fill="#4A4A4A"/>
+</g>
+<text x="274.0" y="118.0" text-anchor="end" font-family="Consolas, monospace" font-size="8.5" fill="#777">G</text>
+<text x="274.0" y="130.0" text-anchor="end" font-family="Consolas, monospace" font-size="8.5" fill="#777">F</text>
+<text x="360.0" y="124.0" text-anchor="start" font-family="Consolas, monospace" font-size="8.5" fill="#777">G</text>
+<path d="M 249.0,121.0 C 266.0,121.0 266.0,115.0 283.0,115.0" stroke="#4A4A4A" stroke-width="1.5" fill="none"/>
+<g>
+<rect x="382" y="96" width="60" height="50" rx="6" fill="url(#ghBody)" stroke="#8C8C8C" stroke-width="1"/>
+<text x="412.0" y="125.0" text-anchor="middle" font-family="Segoe UI, sans-serif" font-size="10" fill="#222">Move</text>
+<rect x="374.0" y="107.0" width="10" height="16" rx="3" fill="#E8E8E8" stroke="#8C8C8C"/>
+<circle cx="379.0" cy="115.0" r="2.5" fill="#4A4A4A"/>
+<rect x="374.0" y="119.0" width="10" height="16" rx="3" fill="#E8E8E8" stroke="#8C8C8C"/>
+<circle cx="379.0" cy="127.0" r="2.5" fill="#4A4A4A"/>
+<rect x="440.0" y="113.0" width="10" height="16" rx="3" fill="#E8E8E8" stroke="#8C8C8C"/>
+<circle cx="445.0" cy="121.0" r="2.5" fill="#4A4A4A"/>
+</g>
+<text x="370.0" y="118.0" text-anchor="end" font-family="Consolas, monospace" font-size="8.5" fill="#777">G</text>
+<text x="370.0" y="130.0" text-anchor="end" font-family="Consolas, monospace" font-size="8.5" fill="#777">T</text>
+<text x="454.0" y="124.0" text-anchor="start" font-family="Consolas, monospace" font-size="8.5" fill="#777">G</text>
+<path d="M 351.0,121.0 C 365.0,121.0 365.0,115.0 379.0,115.0" stroke="#4A4A4A" stroke-width="1.5" fill="none"/>
+<g>
+<rect x="476" y="96" width="66" height="50" rx="6" fill="url(#ghBody)" stroke="#8C8C8C" stroke-width="1"/>
+<text x="509.0" y="125.0" text-anchor="middle" font-family="Segoe UI, sans-serif" font-size="10" fill="#222">Rotate</text>
+<rect x="468.0" y="107.0" width="10" height="16" rx="3" fill="#E8E8E8" stroke="#8C8C8C"/>
+<circle cx="473.0" cy="115.0" r="2.5" fill="#4A4A4A"/>
+<rect x="468.0" y="119.0" width="10" height="16" rx="3" fill="#E8E8E8" stroke="#8C8C8C"/>
+<circle cx="473.0" cy="127.0" r="2.5" fill="#4A4A4A"/>
+<rect x="540.0" y="113.0" width="10" height="16" rx="3" fill="#E8E8E8" stroke="#8C8C8C"/>
+<circle cx="545.0" cy="121.0" r="2.5" fill="#4A4A4A"/>
+</g>
+<text x="464.0" y="118.0" text-anchor="end" font-family="Consolas, monospace" font-size="8.5" fill="#777">G</text>
+<text x="464.0" y="130.0" text-anchor="end" font-family="Consolas, monospace" font-size="8.5" fill="#777">A</text>
+<text x="554.0" y="124.0" text-anchor="start" font-family="Consolas, monospace" font-size="8.5" fill="#777">G</text>
+<path d="M 445.0,121.0 C 459.0,121.0 459.0,115.0 473.0,115.0" stroke="#4A4A4A" stroke-width="1.5" fill="none"/>
+<g>
+<rect x="586" y="96" width="92" height="58" rx="6" fill="url(#ghBody)" stroke="#8C8C8C" stroke-width="1"/>
+<text x="632.0" y="129.0" text-anchor="middle" font-family="Segoe UI, sans-serif" font-size="10" fill="#222">Polar Array</text>
+<rect x="578.0" y="106.3" width="10" height="16" rx="3" fill="#E8E8E8" stroke="#8C8C8C"/>
+<circle cx="583.0" cy="114.3" r="2.5" fill="#4A4A4A"/>
+<rect x="578.0" y="117.0" width="10" height="16" rx="3" fill="#E8E8E8" stroke="#8C8C8C"/>
+<circle cx="583.0" cy="125.0" r="2.5" fill="#4A4A4A"/>
+<rect x="578.0" y="127.7" width="10" height="16" rx="3" fill="#E8E8E8" stroke="#8C8C8C"/>
+<circle cx="583.0" cy="135.7" r="2.5" fill="#4A4A4A"/>
+<rect x="676.0" y="117.0" width="10" height="16" rx="3" fill="#E8E8E8" stroke="#8C8C8C"/>
+<circle cx="681.0" cy="125.0" r="2.5" fill="#4A4A4A"/>
+</g>
+<text x="574.0" y="117.3" text-anchor="end" font-family="Consolas, monospace" font-size="8.5" fill="#777">G</text>
+<text x="574.0" y="128.0" text-anchor="end" font-family="Consolas, monospace" font-size="8.5" fill="#777">P</text>
+<text x="574.0" y="138.7" text-anchor="end" font-family="Consolas, monospace" font-size="8.5" fill="#777">N</text>
+<text x="690.0" y="128.0" text-anchor="start" font-family="Consolas, monospace" font-size="8.5" fill="#777">G</text>
+<path d="M 545.0,121.0 C 564.0,121.0 564.0,114.3 583.0,114.3" stroke="#4A4A4A" stroke-width="1.5" fill="none"/>
+<g>
+<rect x="712" y="96" width="100" height="50" rx="6" fill="url(#ghBody)" stroke="#8C8C8C" stroke-width="1"/>
+<text x="762.0" y="125.0" text-anchor="middle" font-family="Segoe UI, sans-serif" font-size="10" fill="#222">Boundary Surf</text>
+<rect x="704.0" y="113.0" width="10" height="16" rx="3" fill="#E8E8E8" stroke="#8C8C8C"/>
+<circle cx="709.0" cy="121.0" r="2.5" fill="#4A4A4A"/>
+<rect x="810.0" y="113.0" width="10" height="16" rx="3" fill="#E8E8E8" stroke="#8C8C8C"/>
+<circle cx="815.0" cy="121.0" r="2.5" fill="#4A4A4A"/>
+</g>
+<text x="700.0" y="124.0" text-anchor="end" font-family="Consolas, monospace" font-size="8.5" fill="#777">E</text>
+<text x="824.0" y="124.0" text-anchor="start" font-family="Consolas, monospace" font-size="8.5" fill="#777">S</text>
+<path d="M 681.0,125.0 C 695.0,125.0 695.0,121.0 709.0,121.0" stroke="#4A4A4A" stroke-width="1.5" fill="none"/>
+<text x="700" y="80" text-anchor="middle" font-family="Segoe UI" font-size="10" fill="#c98b3a">Graft→Flatten (mỗi vòng 1 nhánh)</text>
+<g>
+<rect x="844" y="96" width="76" height="54" rx="6" fill="url(#ghBody)" stroke="#8C8C8C" stroke-width="1"/>
+<text x="882.0" y="127.0" text-anchor="middle" font-family="Segoe UI, sans-serif" font-size="10" fill="#222">Extrude</text>
+<rect x="836.0" y="108.0" width="10" height="16" rx="3" fill="#E8E8E8" stroke="#8C8C8C"/>
+<circle cx="841.0" cy="116.0" r="2.5" fill="#4A4A4A"/>
+<rect x="836.0" y="122.0" width="10" height="16" rx="3" fill="#E8E8E8" stroke="#8C8C8C"/>
+<circle cx="841.0" cy="130.0" r="2.5" fill="#4A4A4A"/>
+<rect x="918.0" y="115.0" width="10" height="16" rx="3" fill="#E8E8E8" stroke="#8C8C8C"/>
+<circle cx="923.0" cy="123.0" r="2.5" fill="#4A4A4A"/>
+</g>
+<text x="832.0" y="119.0" text-anchor="end" font-family="Consolas, monospace" font-size="8.5" fill="#777">B</text>
+<text x="832.0" y="133.0" text-anchor="end" font-family="Consolas, monospace" font-size="8.5" fill="#777">D</text>
+<text x="932.0" y="126.0" text-anchor="start" font-family="Consolas, monospace" font-size="8.5" fill="#777">E</text>
+<path d="M 815.0,121.0 C 828.0,121.0 828.0,116.0 841.0,116.0" stroke="#4A4A4A" stroke-width="1.5" fill="none"/>
+<g>
+<rect x="952" y="96" width="112" height="50" rx="6" fill="url(#ghBody)" stroke="#8C8C8C" stroke-width="1"/>
+<text x="1008.0" y="125.0" text-anchor="middle" font-family="Segoe UI, sans-serif" font-size="10" fill="#222">Custom Preview</text>
+<rect x="944.0" y="113.0" width="10" height="16" rx="3" fill="#E8E8E8" stroke="#8C8C8C"/>
+<circle cx="949.0" cy="121.0" r="2.5" fill="#4A4A4A"/>
+</g>
+<text x="940.0" y="124.0" text-anchor="end" font-family="Consolas, monospace" font-size="8.5" fill="#777">G</text>
+<path d="M 923.0,123.0 C 936.0,123.0 936.0,121.0 949.0,121.0" stroke="#4A4A4A" stroke-width="1.5" fill="none"/>
+<g>
+<rect x="20" y="188" width="126" height="26" rx="6" fill="url(#ghBody)" stroke="#8C8C8C" stroke-width="1"/>
+<text x="83.0" y="205.0" text-anchor="middle" font-family="Segoe UI, sans-serif" font-size="9" fill="#222">điểm cánh (heart)</text>
+<rect x="12.0" y="193.0" width="10" height="16" rx="3" fill="#E8E8E8" stroke="#8C8C8C"/>
+<circle cx="17.0" cy="201.0" r="2.5" fill="#4A4A4A"/>
+<rect x="144.0" y="193.0" width="10" height="16" rx="3" fill="#E8E8E8" stroke="#8C8C8C"/>
+<circle cx="149.0" cy="201.0" r="2.5" fill="#4A4A4A"/>
+</g>
+<path d="M 149.0,201.0 C 85.0,201.0 85.0,121.0 21.0,121.0" stroke="#4A4A4A" stroke-width="1.5" fill="none"/>
+<g>
+<rect x="150" y="188" width="110" height="26" rx="6" fill="url(#ghBody)" stroke="#8C8C8C" stroke-width="1"/>
+<text x="205.0" y="205.0" text-anchor="middle" font-family="Segoe UI, sans-serif" font-size="9" fill="#222">Distance ≈ 1.5</text>
+<rect x="142.0" y="193.0" width="10" height="16" rx="3" fill="#E8E8E8" stroke="#8C8C8C"/>
+<circle cx="147.0" cy="201.0" r="2.5" fill="#4A4A4A"/>
+<rect x="258.0" y="193.0" width="10" height="16" rx="3" fill="#E8E8E8" stroke="#8C8C8C"/>
+<circle cx="263.0" cy="201.0" r="2.5" fill="#4A4A4A"/>
+</g>
+<path d="M 263.0,201.0 C 205.0,201.0 205.0,127.0 147.0,127.0" stroke="#4A4A4A" stroke-width="1.5" fill="none"/>
+<g>
+<rect x="586" y="188" width="100" height="26" rx="6" fill="url(#ghBody)" stroke="#8C8C8C" stroke-width="1"/>
+<text x="636.0" y="205.0" text-anchor="middle" font-family="Segoe UI, sans-serif" font-size="9" fill="#222">Count = 16</text>
+<rect x="578.0" y="193.0" width="10" height="16" rx="3" fill="#E8E8E8" stroke="#8C8C8C"/>
+<circle cx="583.0" cy="201.0" r="2.5" fill="#4A4A4A"/>
+<rect x="684.0" y="193.0" width="10" height="16" rx="3" fill="#E8E8E8" stroke="#8C8C8C"/>
+<circle cx="689.0" cy="201.0" r="2.5" fill="#4A4A4A"/>
+</g>
+<path d="M 689.0,201.0 C 636.0,201.0 636.0,135.7 583.0,135.7" stroke="#4A4A4A" stroke-width="1.5" fill="none"/>
+<g>
+<rect x="586" y="222" width="100" height="26" rx="6" fill="url(#ghBody)" stroke="#8C8C8C" stroke-width="1"/>
+<text x="636.0" y="239.0" text-anchor="middle" font-family="Segoe UI, sans-serif" font-size="9" fill="#222">XY Plane</text>
+<rect x="578.0" y="227.0" width="10" height="16" rx="3" fill="#E8E8E8" stroke="#8C8C8C"/>
+<circle cx="583.0" cy="235.0" r="2.5" fill="#4A4A4A"/>
+<rect x="684.0" y="227.0" width="10" height="16" rx="3" fill="#E8E8E8" stroke="#8C8C8C"/>
+<circle cx="689.0" cy="235.0" r="2.5" fill="#4A4A4A"/>
+</g>
+<path d="M 689.0,235.0 C 636.0,235.0 636.0,125.0 583.0,125.0" stroke="#4A4A4A" stroke-width="1.5" fill="none"/>
+<g>
+<rect x="844" y="188" width="100" height="26" rx="6" fill="url(#ghBody)" stroke="#8C8C8C" stroke-width="1"/>
+<text x="894.0" y="205.0" text-anchor="middle" font-family="Segoe UI, sans-serif" font-size="9" fill="#222">Unit Z × cao</text>
+<rect x="836.0" y="193.0" width="10" height="16" rx="3" fill="#E8E8E8" stroke="#8C8C8C"/>
+<circle cx="841.0" cy="201.0" r="2.5" fill="#4A4A4A"/>
+<rect x="942.0" y="193.0" width="10" height="16" rx="3" fill="#E8E8E8" stroke="#8C8C8C"/>
+<circle cx="947.0" cy="201.0" r="2.5" fill="#4A4A4A"/>
+</g>
+<path d="M 947.0,201.0 C 894.0,201.0 894.0,130.0 841.0,130.0" stroke="#4A4A4A" stroke-width="1.5" fill="none"/>
+<g>
+<rect x="268" y="246" width="108" height="26" rx="6" fill="url(#ghBody)" stroke="#8C8C8C" stroke-width="1"/>
+<text x="322.0" y="263.0" text-anchor="middle" font-family="Segoe UI, sans-serif" font-size="9" fill="#222">Tỉ lệ s_i ↑</text>
+<rect x="260.0" y="251.0" width="10" height="16" rx="3" fill="#E8E8E8" stroke="#8C8C8C"/>
+<circle cx="265.0" cy="259.0" r="2.5" fill="#4A4A4A"/>
+<rect x="374.0" y="251.0" width="10" height="16" rx="3" fill="#E8E8E8" stroke="#8C8C8C"/>
+<circle cx="379.0" cy="259.0" r="2.5" fill="#4A4A4A"/>
+</g>
+<path d="M 379.0,259.0 C 395.0,166.0 267.0,166.0 283.0,127.0" stroke="#4A4A4A" stroke-width="1.3" fill="none"/>
+<g>
+<rect x="382" y="246" width="108" height="26" rx="6" fill="url(#ghBody)" stroke="#8C8C8C" stroke-width="1"/>
+<text x="436.0" y="263.0" text-anchor="middle" font-family="Segoe UI, sans-serif" font-size="9" fill="#222">Bán kính r_i</text>
+<rect x="374.0" y="251.0" width="10" height="16" rx="3" fill="#E8E8E8" stroke="#8C8C8C"/>
+<circle cx="379.0" cy="259.0" r="2.5" fill="#4A4A4A"/>
+<rect x="488.0" y="251.0" width="10" height="16" rx="3" fill="#E8E8E8" stroke="#8C8C8C"/>
+<circle cx="493.0" cy="259.0" r="2.5" fill="#4A4A4A"/>
+</g>
+<path d="M 493.0,259.0 C 509.0,162.0 363.0,162.0 379.0,127.0" stroke="#4A4A4A" stroke-width="1.3" fill="none"/>
+<g>
+<rect x="500" y="246" width="150" height="26" rx="6" fill="url(#ghBody)" stroke="#8C8C8C" stroke-width="1"/>
+<text x="575.0" y="263.0" text-anchor="middle" font-family="Segoe UI, sans-serif" font-size="9" fill="#222">Lệch θ_i = ½·360/N</text>
+<rect x="492.0" y="251.0" width="10" height="16" rx="3" fill="#E8E8E8" stroke="#8C8C8C"/>
+<circle cx="497.0" cy="259.0" r="2.5" fill="#4A4A4A"/>
+<rect x="648.0" y="251.0" width="10" height="16" rx="3" fill="#E8E8E8" stroke="#8C8C8C"/>
+<circle cx="653.0" cy="259.0" r="2.5" fill="#4A4A4A"/>
+</g>
+<path d="M 653.0,259.0 C 669.0,160.0 457.0,160.0 473.0,127.0" stroke="#4A4A4A" stroke-width="1.3" fill="none"/>
+<g>
+<rect x="24" y="246" width="170" height="30" rx="6" fill="url(#ghBody)" stroke="#8C8C8C" stroke-width="1"/>
+<text x="109.0" y="265.0" text-anchor="middle" font-family="Segoe UI, sans-serif" font-size="9.5" fill="#222">Series i (0..5 = 6 vòng)</text>
+<rect x="16.0" y="253.0" width="10" height="16" rx="3" fill="#E8E8E8" stroke="#8C8C8C"/>
+<circle cx="21.0" cy="261.0" r="2.5" fill="#4A4A4A"/>
+<rect x="192.0" y="253.0" width="10" height="16" rx="3" fill="#E8E8E8" stroke="#8C8C8C"/>
+<circle cx="197.0" cy="261.0" r="2.5" fill="#4A4A4A"/>
+</g>
+<path d="M 197.0,261.0 C 213.0,246.0 309.0,246.0 325.0,259.0" stroke="#8a8a8a" stroke-width="1.3" fill="none"/>
+<path d="M 197.0,261.0 C 213.0,246.0 423.0,246.0 439.0,259.0" stroke="#8a8a8a" stroke-width="1.3" fill="none"/>
+<path d="M 197.0,261.0 C 213.0,246.0 583.0,246.0 599.0,259.0" stroke="#8a8a8a" stroke-width="1.3" fill="none"/>
+<text x="16" y="330" font-family="Segoe UI" font-size="11" fill="#666">Interpolate (1 cánh heart) → Offset Curve (gân kép) → theo Series vòng: Scale (to dần s_i) · Move (bán kính r_i) · Rotate (lệch nửa bước θ_i) → Polar Array (Count 16) → Graft/Flatten gộp mọi cánh → Boundary Surfaces (mặt gỗ có lỗ) → Extrude 2 lớp + lỗ tâm → Custom Preview. KHÔNG dùng Maelstrom (mandala đối xứng, không xoắn). Sơ đồ SUY LUẬN từ ảnh — chưa kiểm chứng bằng file.</text>
+</svg>
