@@ -10,22 +10,22 @@
 
 <rect x="0" y="0" width="1180" height="360" fill="#FAFAF7"/>
 <rect x="0" y="0" width="1180" height="360" fill="url(#dots)"/>
-<text x="16" y="24" font-size="14" font-weight="600" fill="#333">Sơ đồ luồng dựng — Đồng hồ lưới xoắn phyllotaxis (bản tái tạo)</text>
+<text x="16" y="24" font-size="14" font-weight="600" fill="#333">Sơ đồ luồng dựng — Đồng hồ lưới xoắn phyllotaxis (2 họ spiral — đã kiểm chứng)</text>
 <rect x="30" y="40" width="340" height="96" rx="9" fill="#EAF2FB" stroke="#4A78C8" stroke-width="1.6"/>
-<text x="200.0" y="64" text-anchor="middle" font-family="Segoe UI" font-size="13.5" font-weight="700" fill="#1f3a63">1 · Lưới điểm cực</text>
-<text x="200.0" y="84" text-anchor="middle" font-family="Segoe UI" font-size="11" fill="#456">Series (sectors) + Range (rings)</text>
-<text x="200.0" y="99" text-anchor="middle" font-family="Segoe UI" font-size="11" fill="#456">Point Polar + Cross Reference</text>
-<text x="200.0" y="114" text-anchor="middle" font-family="Segoe UI" font-size="11" fill="#456">→ lưới rings × sectors</text>
+<text x="200.0" y="64" text-anchor="middle" font-family="Segoe UI" font-size="13.5" font-weight="700" fill="#1f3a63">1 · Vẽ 1 spiral gốc</text>
+<text x="200.0" y="84" text-anchor="middle" font-family="Segoe UI" font-size="11" fill="#456">Range → Expression (r, θ)</text>
+<text x="200.0" y="99" text-anchor="middle" font-family="Segoe UI" font-size="11" fill="#456">→ Construct Point → Rotate</text>
+<text x="200.0" y="114" text-anchor="middle" font-family="Segoe UI" font-size="11" fill="#456">→ Interpolate = 1 spiral</text>
 <rect x="420" y="40" width="340" height="96" rx="9" fill="#EAF2FB" stroke="#4A78C8" stroke-width="1.6"/>
-<text x="590.0" y="64" text-anchor="middle" font-family="Segoe UI" font-size="13.5" font-weight="700" fill="#1f3a63">2 · Xoắn thành spiral</text>
-<text x="590.0" y="84" text-anchor="middle" font-family="Segoe UI" font-size="11" fill="#456">Maelstrom (hoặc Rotate mỗi</text>
-<text x="590.0" y="99" text-anchor="middle" font-family="Segoe UI" font-size="11" fill="#456">vòng 1 góc tăng dần)</text>
-<text x="590.0" y="114" text-anchor="middle" font-family="Segoe UI" font-size="11" fill="#456">→ lưới cong xoắn ốc</text>
+<text x="590.0" y="64" text-anchor="middle" font-family="Segoe UI" font-size="13.5" font-weight="700" fill="#1f3a63">2 · Polar Array → họ A</text>
+<text x="590.0" y="84" text-anchor="middle" font-family="Segoe UI" font-size="11" fill="#456">Polar Array S bản quanh tâm</text>
+<text x="590.0" y="99" text-anchor="middle" font-family="Segoe UI" font-size="11" fill="#456">(S = số họ, vd 30)</text>
+<text x="590.0" y="114" text-anchor="middle" font-family="Segoe UI" font-size="11" fill="#456">→ họ spiral thứ nhất</text>
 <rect x="810" y="40" width="340" height="96" rx="9" fill="#EAF2FB" stroke="#4A78C8" stroke-width="1.6"/>
-<text x="980.0" y="64" text-anchor="middle" font-family="Segoe UI" font-size="13.5" font-weight="700" fill="#1f3a63">3 · Nối 2 họ đường</text>
-<text x="980.0" y="84" text-anchor="middle" font-family="Segoe UI" font-size="11" fill="#456">Shift List + PolyLine (Closed)</text>
-<text x="980.0" y="99" text-anchor="middle" font-family="Segoe UI" font-size="11" fill="#456">nối chéo j+i và j−i</text>
-<text x="980.0" y="114" text-anchor="middle" font-family="Segoe UI" font-size="11" fill="#456">→ 2 họ spiral cắt nhau = lens</text>
+<text x="980.0" y="64" text-anchor="middle" font-family="Segoe UI" font-size="13.5" font-weight="700" fill="#1f3a63">3 · Mirror → họ B</text>
+<text x="980.0" y="84" text-anchor="middle" font-family="Segoe UI" font-size="11" fill="#456">Mirror họ A qua trục</text>
+<text x="980.0" y="99" text-anchor="middle" font-family="Segoe UI" font-size="11" fill="#456">→ họ spiral ngược chiều</text>
+<text x="980.0" y="114" text-anchor="middle" font-family="Segoe UI" font-size="11" fill="#456">→ 2 họ cắt nhau = ô lens</text>
 <rect x="810" y="210" width="340" height="96" rx="9" fill="#FDF3E3" stroke="#c98b3a" stroke-width="1.6"/>
 <text x="980.0" y="234" text-anchor="middle" font-family="Segoe UI" font-size="13.5" font-weight="700" fill="#1f3a63">4 · Offset ô vào trong</text>
 <text x="980.0" y="254" text-anchor="middle" font-family="Segoe UI" font-size="11" fill="#456">Clipper PolyOffset / Offset+Fillet</text>
