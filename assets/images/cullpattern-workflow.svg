@@ -1,0 +1,84 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="220" viewBox="0 0 1080 220" font-family="Segoe UI, sans-serif">
+<defs>
+<linearGradient id="ghBody" x1="0" y1="0" x2="0" y2="1">
+<stop offset="0%" stop-color="#F0F0F0"/><stop offset="100%" stop-color="#D8D8D8"/>
+</linearGradient>
+<pattern id="dots" width="18" height="18" patternUnits="userSpaceOnUse">
+<circle cx="1" cy="1" r="1" fill="#E0E0DA"/>
+</pattern>
+</defs>
+
+<rect x="0" y="0" width="1080" height="220" fill="#FAFAF7"/>
+<rect x="0" y="0" width="1080" height="220" fill="url(#dots)"/>
+<text x="16" y="24" font-size="14" font-weight="600" fill="#333">Workflow phổ biến — lọc ô theo điều kiện</text>
+<g>
+<rect x="30" y="80" width="90" height="44" rx="6" fill="url(#ghBody)" stroke="#8C8C8C" stroke-width="1"/>
+<text x="75.0" y="106.0" text-anchor="middle" font-family="Segoe UI, sans-serif" font-size="12" fill="#222">Cells (ô)</text>
+<rect x="22.0" y="94.0" width="10" height="16" rx="3" fill="#E8E8E8" stroke="#8C8C8C"/>
+<circle cx="27.0" cy="102.0" r="2.5" fill="#4A4A4A"/>
+<rect x="118.0" y="94.0" width="10" height="16" rx="3" fill="#E8E8E8" stroke="#8C8C8C"/>
+<circle cx="123.0" cy="102.0" r="2.5" fill="#4A4A4A"/>
+</g>
+<g>
+<rect x="168" y="80" width="76" height="48" rx="6" fill="url(#ghBody)" stroke="#8C8C8C" stroke-width="1"/>
+<text x="206.0" y="108.0" text-anchor="middle" font-family="Segoe UI, sans-serif" font-size="12" fill="#222">Area</text>
+<rect x="160.0" y="96.0" width="10" height="16" rx="3" fill="#E8E8E8" stroke="#8C8C8C"/>
+<circle cx="165.0" cy="104.0" r="2.5" fill="#4A4A4A"/>
+<rect x="242.0" y="90.5" width="10" height="16" rx="3" fill="#E8E8E8" stroke="#8C8C8C"/>
+<circle cx="247.0" cy="98.5" r="2.5" fill="#4A4A4A"/>
+<rect x="242.0" y="101.5" width="10" height="16" rx="3" fill="#E8E8E8" stroke="#8C8C8C"/>
+<circle cx="247.0" cy="109.5" r="2.5" fill="#4A4A4A"/>
+</g>
+<text x="153.0" y="107.0" text-anchor="end" font-family="Consolas, monospace" font-size="9.5" fill="#777">G</text>
+<text x="257.0" y="101.5" text-anchor="start" font-family="Consolas, monospace" font-size="9.5" fill="#777">A</text>
+<text x="257.0" y="112.5" text-anchor="start" font-family="Consolas, monospace" font-size="9.5" fill="#777">C</text>
+<path d="M 123.0,102.0 C 144.0,102.0 144.0,104.0 165.0,104.0" stroke="#4A4A4A" stroke-width="1.5" fill="none"/>
+<g>
+<rect x="292" y="80" width="108" height="48" rx="6" fill="url(#ghBody)" stroke="#8C8C8C" stroke-width="1"/>
+<text x="346.0" y="108.0" text-anchor="middle" font-family="Segoe UI, sans-serif" font-size="12" fill="#222">Larger Than</text>
+<rect x="284.0" y="90.5" width="10" height="16" rx="3" fill="#E8E8E8" stroke="#8C8C8C"/>
+<circle cx="289.0" cy="98.5" r="2.5" fill="#4A4A4A"/>
+<rect x="284.0" y="101.5" width="10" height="16" rx="3" fill="#E8E8E8" stroke="#8C8C8C"/>
+<circle cx="289.0" cy="109.5" r="2.5" fill="#4A4A4A"/>
+<rect x="398.0" y="96.0" width="10" height="16" rx="3" fill="#E8E8E8" stroke="#8C8C8C"/>
+<circle cx="403.0" cy="104.0" r="2.5" fill="#4A4A4A"/>
+</g>
+<text x="277.0" y="101.5" text-anchor="end" font-family="Consolas, monospace" font-size="9.5" fill="#777">A</text>
+<text x="277.0" y="112.5" text-anchor="end" font-family="Consolas, monospace" font-size="9.5" fill="#777">B</text>
+<text x="413.0" y="107.0" text-anchor="start" font-family="Consolas, monospace" font-size="9.5" fill="#777">></text>
+<path d="M 247.0,98.5 C 268.0,98.5 268.0,98.5 289.0,98.5" stroke="#4A4A4A" stroke-width="1.5" fill="none"/>
+<g>
+<rect x="448" y="80" width="114" height="48" rx="6" fill="url(#ghBody)" stroke="#8C8C8C" stroke-width="1"/>
+<text x="505.0" y="108.0" text-anchor="middle" font-family="Segoe UI, sans-serif" font-size="12" fill="#222">Cull Pattern</text>
+<rect x="440.0" y="90.5" width="10" height="16" rx="3" fill="#E8E8E8" stroke="#8C8C8C"/>
+<circle cx="445.0" cy="98.5" r="2.5" fill="#4A4A4A"/>
+<rect x="440.0" y="101.5" width="10" height="16" rx="3" fill="#E8E8E8" stroke="#8C8C8C"/>
+<circle cx="445.0" cy="109.5" r="2.5" fill="#4A4A4A"/>
+<rect x="560.0" y="96.0" width="10" height="16" rx="3" fill="#E8E8E8" stroke="#8C8C8C"/>
+<circle cx="565.0" cy="104.0" r="2.5" fill="#4A4A4A"/>
+</g>
+<text x="433.0" y="101.5" text-anchor="end" font-family="Consolas, monospace" font-size="9.5" fill="#777">L</text>
+<text x="433.0" y="112.5" text-anchor="end" font-family="Consolas, monospace" font-size="9.5" fill="#777">P</text>
+<text x="575.0" y="107.0" text-anchor="start" font-family="Consolas, monospace" font-size="9.5" fill="#777">L</text>
+<path d="M 403.0,104.0 C 424.0,104.0 424.0,109.5 445.0,109.5" stroke="#4A4A4A" stroke-width="1.5" fill="none"/>
+<path d="M 123.0,102.0 C 153.0,168.0 415.0,168.0 445.0,98.5" stroke="#4A4A4A" stroke-width="1.5" fill="none"/>
+<g>
+<rect x="610" y="80" width="96" height="40" rx="6" fill="url(#ghBody)" stroke="#8C8C8C" stroke-width="1"/>
+<text x="658.0" y="104.0" text-anchor="middle" font-family="Segoe UI, sans-serif" font-size="12" fill="#222">(ô giữ lại)</text>
+<rect x="602.0" y="92.0" width="10" height="16" rx="3" fill="#E8E8E8" stroke="#8C8C8C"/>
+<circle cx="607.0" cy="100.0" r="2.5" fill="#4A4A4A"/>
+<rect x="704.0" y="92.0" width="10" height="16" rx="3" fill="#E8E8E8" stroke="#8C8C8C"/>
+<circle cx="709.0" cy="100.0" r="2.5" fill="#4A4A4A"/>
+</g>
+<path d="M 565.0,104.0 C 586.0,104.0 586.0,100.0 607.0,100.0" stroke="#4A4A4A" stroke-width="1.5" fill="none"/>
+<g>
+<rect x="286" y="160" width="140" height="30" rx="6" fill="url(#ghBody)" stroke="#8C8C8C" stroke-width="1"/>
+<text x="356.0" y="179.0" text-anchor="middle" font-family="Segoe UI, sans-serif" font-size="10" fill="#222">Ngưỡng (dương)</text>
+<rect x="278.0" y="167.0" width="10" height="16" rx="3" fill="#E8E8E8" stroke="#8C8C8C"/>
+<circle cx="283.0" cy="175.0" r="2.5" fill="#4A4A4A"/>
+<rect x="424.0" y="167.0" width="10" height="16" rx="3" fill="#E8E8E8" stroke="#8C8C8C"/>
+<circle cx="429.0" cy="175.0" r="2.5" fill="#4A4A4A"/>
+</g>
+<path d="M 429.0,175.0 C 359.0,175.0 359.0,109.5 289.0,109.5" stroke="#4A4A4A" stroke-width="1.5" fill="none"/>
+<text x="16" y="200" font-family="Segoe UI" font-size="11" fill="#666">Cull Pattern nhận: L = danh sách ô (dây vòng dưới từ Cells), P = mẫu True/False từ Larger Than. Giữ ô True (đủ to), bỏ ô False (nhỏ).</text>
+</svg>

@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="260" viewBox="0 0 760 260" font-family="Segoe UI, sans-serif">
+<defs>
+<linearGradient id="ghBody" x1="0" y1="0" x2="0" y2="1">
+<stop offset="0%" stop-color="#F0F0F0"/><stop offset="100%" stop-color="#D8D8D8"/>
+</linearGradient>
+<pattern id="dots" width="18" height="18" patternUnits="userSpaceOnUse">
+<circle cx="1" cy="1" r="1" fill="#E0E0DA"/>
+</pattern>
+</defs>
+
+<rect x="0" y="0" width="760" height="260" fill="#FAFAF7"/>
+<rect x="0" y="0" width="760" height="260" fill="url(#dots)"/>
+<text x="16" y="24" font-size="14" font-weight="600" fill="#333">Cull Pattern — giữ vị trí True, bỏ False (mẫu lặp lại)</text>
+<rect x="30" y="54" width="150" height="50" rx="3" fill="#FFFFFF" stroke="#B0B0B0"/>
+<text x="38" y="69" font-family="Consolas, monospace" font-size="11" fill="">L (list)</text>
+<text x="38" y="84" font-family="Consolas, monospace" font-size="11" fill="#333">[0,1,2,3,4,5]</text>
+<rect x="30" y="136" width="150" height="50" rx="3" fill="#FFFFFF" stroke="#B0B0B0"/>
+<text x="38" y="151" font-family="Consolas, monospace" font-size="11" fill="">P (mẫu Bool)</text>
+<text x="38" y="166" font-family="Consolas, monospace" font-size="11" fill="#3E7A1E">[True, False]</text>
+<g>
+<rect x="240" y="110" width="120" height="58" rx="6" fill="url(#ghBody)" stroke="#8C8C8C" stroke-width="1"/>
+<text x="300.0" y="143.0" text-anchor="middle" font-family="Segoe UI, sans-serif" font-size="12" fill="#222">Cull Pattern</text>
+<rect x="232.0" y="123.0" width="10" height="16" rx="3" fill="#E8E8E8" stroke="#8C8C8C"/>
+<circle cx="237.0" cy="131.0" r="2.5" fill="#4A4A4A"/>
+<rect x="232.0" y="139.0" width="10" height="16" rx="3" fill="#E8E8E8" stroke="#8C8C8C"/>
+<circle cx="237.0" cy="147.0" r="2.5" fill="#4A4A4A"/>
+<rect x="358.0" y="131.0" width="10" height="16" rx="3" fill="#E8E8E8" stroke="#8C8C8C"/>
+<circle cx="363.0" cy="139.0" r="2.5" fill="#4A4A4A"/>
+</g>
+<text x="224.0" y="134.0" text-anchor="end" font-family="Consolas, monospace" font-size="9.5" fill="#777">L</text>
+<text x="224.0" y="150.0" text-anchor="end" font-family="Consolas, monospace" font-size="9.5" fill="#777">P</text>
+<text x="373.0" y="142.0" text-anchor="start" font-family="Consolas, monospace" font-size="9.5" fill="#777">L</text>
+<path d="M 30.0,79.0 C 133.5,79.0 133.5,131.0 237.0,131.0" stroke="#4A4A4A" stroke-width="1.5" fill="none"/>
+<path d="M 30.0,161.0 C 133.5,161.0 133.5,147.0 237.0,147.0" stroke="#4A4A4A" stroke-width="1.5" fill="none"/>
+<rect x="430" y="70" width="200" height="95" rx="3" fill="#FFFFFF" stroke="#B0B0B0"/>
+<text x="438" y="85" font-family="Consolas, monospace" font-size="11" fill="">Mẫu lặp: T F T F T F</text>
+<text x="438" y="100" font-family="Consolas, monospace" font-size="11" fill="">vị trí:  0 1 2 3 4 5</text>
+<text x="438" y="115" font-family="Consolas, monospace" font-size="11" fill="#3E7A1E">giữ T →  0   2   4</text>
+<text x="438" y="130" font-family="Consolas, monospace" font-size="11" fill=""></text>
+<text x="438" y="145" font-family="Consolas, monospace" font-size="11" fill="#8a5320">Output L = [0, 2, 4]</text>
+</svg>
