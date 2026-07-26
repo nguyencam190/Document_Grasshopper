@@ -10,7 +10,7 @@
 
 <rect x="0" y="0" width="970" height="308" fill="#FAFAF7"/>
 <rect x="0" y="0" width="970" height="308" fill="url(#dots)"/>
-<text x="16" y="24" font-size="14" font-weight="600" fill="#333">GRAPH THẬT · Bước 3 — Lọc ô nhỏ + Offset khung + mắt</text>
+<text x="16" y="24" font-size="14" font-weight="600" fill="#333">Bước 3 — Lọc ô nhỏ + Offset khung + mắt</text>
 <g>
 <rect x="20" y="110" width="70" height="52" rx="6" fill="url(#ghBody)" stroke="#8C8C8C" stroke-width="1"/>
 <text x="55.0" y="140.0" text-anchor="middle" font-family="Segoe UI, sans-serif" font-size="10.5" fill="#222">Join</text>

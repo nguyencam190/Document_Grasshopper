@@ -10,7 +10,7 @@
 
 <rect x="0" y="0" width="1120" height="470" fill="#FAFAF7"/>
 <rect x="0" y="0" width="1120" height="470" fill="url(#dots)"/>
-<text x="16" y="24" font-size="14" font-weight="600" fill="#333">VORONOI THẬT · Bước 2 — Cắt biên + khung + đùn 3D</text>
+<text x="16" y="24" font-size="14" font-weight="600" fill="#333">Bước 2 — Cắt biên + khung + đùn 3D</text>
 <g>
 <rect x="24" y="110" width="72" height="50" rx="6" fill="url(#ghBody)" stroke="#8C8C8C" stroke-width="1"/>
 <text x="60.0" y="139.0" text-anchor="middle" font-family="Segoe UI, sans-serif" font-size="10" fill="#222">Voronoi</text>
