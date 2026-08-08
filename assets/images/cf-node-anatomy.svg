@@ -1,0 +1,78 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="470" viewBox="0 0 880 470" font-family="Segoe UI, Arial, sans-serif">
+<defs>
+<pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse">
+<circle cx="1" cy="1" r="1" fill="#2E343B"/>
+</pattern>
+<marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+<path d="M0,0 L10,5 L0,10 z" fill="#FFB74D"/>
+</marker>
+</defs>
+
+<rect width="880" height="470" fill="#22262B"/>
+<rect width="880" height="470" fill="url(#grid)"/>
+<text x="20" y="28" font-size="15" font-weight="700" fill="#E8EAED">Giải phẫu 1 node ComfyUI — đọc trước khi kéo dây</text>
+
+<!-- NODE -->
+<g>
+  <rect x="300" y="110" width="270" height="190" rx="9" fill="#303030" stroke="#141414" stroke-width="2"/>
+  <path d="M300,119 a9,9 0 0 1 9,-9 h252 a9,9 0 0 1 9,9 v19 h-270 z" fill="#4A4A4A"/>
+  <text x="316" y="133" font-size="12.5" font-weight="600" fill="#F2F2F2">Depth Anything V3</text>
+
+  <!-- inputs -->
+  <circle cx="300" cy="163" r="5" fill="#B39DDB" stroke="#111" stroke-width="1.2"/>
+  <text x="313" y="167" font-size="11" fill="#CFCFCF">da3_model</text>
+  <circle cx="300" cy="189" r="5" fill="#64B5F6" stroke="#111" stroke-width="1.2"/>
+  <text x="313" y="193" font-size="11" fill="#CFCFCF">image</text>
+
+  <!-- output -->
+  <circle cx="570" cy="163" r="5" fill="#64B5F6" stroke="#111" stroke-width="1.2"/>
+  <text x="557" y="167" font-size="11" fill="#CFCFCF" text-anchor="end">IMAGE</text>
+
+  <!-- widgets -->
+  <rect x="312" y="215" width="246" height="20" rx="10" fill="#1C1C1C"/>
+  <text x="324" y="229" font-size="10.5" fill="#9AA0A6">resolution</text>
+  <text x="546" y="229" font-size="10.5" fill="#FFFFFF" text-anchor="end">1024</text>
+  <rect x="312" y="241" width="246" height="20" rx="10" fill="#1C1C1C"/>
+  <text x="324" y="255" font-size="10.5" fill="#9AA0A6">max_depth</text>
+  <text x="546" y="255" font-size="10.5" fill="#FFFFFF" text-anchor="end">1.00</text>
+  <rect x="312" y="267" width="246" height="20" rx="10" fill="#1C1C1C"/>
+  <text x="324" y="281" font-size="10.5" fill="#9AA0A6">device</text>
+  <text x="546" y="281" font-size="10.5" fill="#FFFFFF" text-anchor="end">cuda</text>
+</g>
+
+<!-- callouts -->
+<path d="M240,150 C265,150 275,160 292,163" fill="none" stroke="#FFB74D" stroke-width="1.6" marker-end="url(#ar)"/>
+<text x="30" y="140" font-size="12" font-weight="700" fill="#FFB74D">1 · CỔNG VÀO (input)</text>
+<text x="30" y="158" font-size="10.5" fill="#B9BFC6">Bên TRÁI. Nhận dữ liệu</text>
+<text x="30" y="173" font-size="10.5" fill="#B9BFC6">từ node phía trước.</text>
+
+<path d="M660,140 C630,140 605,152 580,161" fill="none" stroke="#FFB74D" stroke-width="1.6" marker-end="url(#ar)"/>
+<text x="650" y="122" font-size="12" font-weight="700" fill="#FFB74D">2 · CỔNG RA (output)</text>
+<text x="650" y="140" font-size="10.5" fill="#B9BFC6">Bên PHẢI. Bấm giữ vào</text>
+<text x="650" y="155" font-size="10.5" fill="#B9BFC6">chấm tròn rồi KÉO sang</text>
+<text x="650" y="170" font-size="10.5" fill="#B9BFC6">cổng vào của node sau.</text>
+
+<path d="M400,88 C400,100 410,110 420,118" fill="none" stroke="#FFB74D" stroke-width="1.6" marker-end="url(#ar)"/>
+<text x="300" y="72" font-size="12" font-weight="700" fill="#FFB74D">3 · TÊN NODE</text>
+<text x="300" y="86" font-size="10.5" fill="#B9BFC6">Double-click chỗ trống trên canvas rồi gõ đúng tên này.</text>
+
+<path d="M240,330 C270,330 300,300 330,270" fill="none" stroke="#FFB74D" stroke-width="1.6" marker-end="url(#ar)"/>
+<text x="30" y="335" font-size="12" font-weight="700" fill="#FFB74D">4 · WIDGET (thông số)</text>
+<text x="30" y="353" font-size="10.5" fill="#B9BFC6">Bấm vào ô rồi gõ. Ô số có</text>
+<text x="30" y="368" font-size="10.5" fill="#B9BFC6">thể kéo ngang để tăng/giảm.</text>
+
+<!-- legend -->
+<rect x="300" y="330" width="555" height="118" rx="10" fill="#191C20" stroke="#3A4149"/>
+<text x="316" y="352" font-size="12" font-weight="700" fill="#E8EAED">Màu chấm = KIỂU DỮ LIỆU — chỉ nối được cổng CÙNG MÀU</text>
+<g font-size="10.5" fill="#C7CCD1">
+  <circle cx="326" cy="374" r="5.5" fill="#64B5F6" stroke="#111"/><text x="338" y="378">IMAGE — ảnh</text>
+  <circle cx="326" cy="398" r="5.5" fill="#81C784" stroke="#111"/><text x="338" y="402">MASK — vùng chọn</text>
+  <circle cx="326" cy="422" r="5.5" fill="#B39DDB" stroke="#111"/><text x="338" y="426">MODEL — mô hình</text>
+  <circle cx="520" cy="374" r="5.5" fill="#FFD500" stroke="#111"/><text x="532" y="378">CLIP</text>
+  <circle cx="520" cy="398" r="5.5" fill="#FFA931" stroke="#111"/><text x="532" y="402">CONDITIONING — prompt</text>
+  <circle cx="520" cy="422" r="5.5" fill="#FF6E6E" stroke="#111"/><text x="532" y="426">VAE</text>
+  <circle cx="712" cy="374" r="5.5" fill="#FF9CF9" stroke="#111"/><text x="724" y="378">LATENT</text>
+  <circle cx="712" cy="398" r="5.5" fill="#00D78D" stroke="#111"/><text x="724" y="402">CONTROL_NET</text>
+</g>
+<text x="316" y="443" font-size="10" fill="#8B9299">Nối sai màu thì dây không bám — đó là cơ chế chống lỗi, không phải bug.</text>
+</svg>
