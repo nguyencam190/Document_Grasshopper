@@ -2986,7 +2986,7 @@ const STORE_KEY='projectdocs_v3';
 // Bump SEED_VERSION any time SEED_DOCS content changes (e.g. a new Grasshopper
 // command page is added) to re-sync all visitors automatically, even ones
 // with old data already saved locally.
-const SEED_VERSION=98;
+const SEED_VERSION=99;
 // Real image assets referenced by SEED_DOCS via data-cfimgid — every visitor's
 // browser needs these in its OWN IndexedDB (see init() below) so images both
 // (a) display correctly, and (b) get recognized by the app's own Optimized
@@ -6274,7 +6274,1046 @@ nhắc tới thiết kế vành xe/bánh xe/ô tô ở bất kỳ đâu — đã
 <p><em>Đây là 1 panel (nhóm lệnh con) trong tab Wb của Grasshopper. Các lệnh cụ thể thuộc panel này sẽ được thêm dần vào đây dưới dạng trang con khi được nghiên cứu.</em></p>`},
   {id:'seed-panel-wb-transform',title:'Transform',section:'default',parentId:'seed-tab-wb',images:[],textBoxes:[],createdAt:'2026-07-19T00:00:00.000Z',updatedAt:'2026-07-19T00:00:00.000Z',content:`<h1>Transform</h1>
 <div class="cf-panel info" contenteditable="false"><span class="cf-panel-icon">ℹ️</span><div class="cf-panel-content" contenteditable="true">Panel trong tab Wb (Weaverbird), chứa component biến đổi hình học áp dụng cho mesh.</div></div>
-<p><em>Đây là 1 panel (nhóm lệnh con) trong tab Wb của Grasshopper. Các lệnh cụ thể thuộc panel này sẽ được thêm dần vào đây dưới dạng trang con khi được nghiên cứu.</em></p>`}];
+<p><em>Đây là 1 panel (nhóm lệnh con) trong tab Wb của Grasshopper. Các lệnh cụ thể thuộc panel này sẽ được thêm dần vào đây dưới dạng trang con khi được nghiên cứu.</em></p>`}
+,
+  {id:'seed-comfyui',title:'ComfyUI — Depth Map cho CNC gỗ',section:'default',parentId:null,images:[],textBoxes:[],createdAt:'2026-08-08T00:00:00.000Z',updatedAt:'2026-08-08T00:00:00.000Z',content:`<h1>ComfyUI — Depth Map cho CNC gỗ</h1>
+<div class="cf-panel info" contenteditable="false"><span class="cf-panel-icon">ℹ️</span><div class="cf-panel-content" contenteditable="true"><strong>Mục tiêu của cả mục này:</strong> đưa <em>một ảnh bất kỳ</em> vào → ra <strong>depth map (ảnh xám cao độ)</strong> đủ chất lượng để phay phù điêu lên gỗ bằng máy CNC, mặt phay <strong>mượt</strong>, không bị vân bậc thang, không bị gợn sóng.</div></div>
+
+<h2>Toàn cảnh quy trình</h2>
+<pre>ẢNH BẤT KỲ
+    |
+    v
+[1] TIỀN XỬ LÝ      làm sạch, chỉnh trực diện,
+                    nâng 4K, chuẩn màu
+    |
+    v
+[2] TÁCH NỀN        nền về đen tuyệt đối
+    |
+    v
+[3] SINH DEPTH      A) model phù điêu (đẹp nhất)
+                    B) Depth Anything V3 (chạy ngay)
+    |
+    v
+[4] LỌC THEO DAO    Morphology CLOSE theo bán kính
+                    mũi dao thật  ← quyết định ĐỘ MƯỢT
+    |
+    v
+[5] XUẤT            EXR 32-bit  +  TIFF 16-bit
+    |
+    v
+[6] VECTRIC ASPIRE  Create Component From Bitmap
+    |
+    v
+PHAY GỖ</pre>
+
+<h2>Ba tầng quyết định độ mượt trên gỗ</h2>
+<table style="width:100%;border-collapse:collapse;font-size:14px"><thead><tr><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Tầng</th><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Nội dung</th><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Trọng số</th></tr></thead><tbody>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>1. Tần số</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Xoá mọi chi tiết nhỏ hơn bán kính dao (Morphology close)</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>70%</strong></td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>2. Biên độ</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Bit depth — 16-bit hoặc EXR 32-bit, không bao giờ 8-bit</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">20%</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>3. Cơ khí</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Stepover, độ sắc của dao, loại gỗ, độ cứng vững của máy</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">10%</td></tr>
+</tbody></table>
+
+<h2>Các trang con — đọc theo thứ tự</h2>
+<table style="width:100%;border-collapse:collapse;font-size:14px"><thead><tr><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Trang</th><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Nội dung</th></tr></thead><tbody>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>01 · Nguyên lý</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Depth map thật ra là gì, vì sao dễ làm sai</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>02 · Cài đặt</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Máy cần gì, cài ComfyUI, cài node, tải model</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>03 · Tiền xử lý</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Làm sạch, chỉnh trực diện, nâng 4K</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>04 · Chuẩn màu</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Màu nào thành cao độ nào, histogram, gamma</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>05 · Kéo graph</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>Hướng dẫn thao tác từng bước trên canvas</strong></td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>06 · 4 Preset</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Thông số theo từng loại ảnh đầu vào</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>07 · Lọc theo dao</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Công thức mượt — phần quan trọng nhất</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>08 · Xuất file</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">EXR, TIFF, đưa vào Vectric, đặt toolpath</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>09 · Hiệu chuẩn</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Tấm mẫu thử + bảng xử lý sự cố</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>10 · So sánh</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">ComfyUI vs Nano Banana vs SculptOK + nguồn</td></tr>
+</tbody></table>
+
+<div class="cf-panel warning" contenteditable="false"><span class="cf-panel-icon">⚠️</span><div class="cf-panel-content" contenteditable="true"><strong>Nếu chỉ đọc được 1 trang:</strong> đọc <strong>trang 07</strong>. Đó là chỗ quyết định mặt gỗ mượt hay gợn, và cũng là chỗ hầu hết hướng dẫn trên mạng làm sai.</div></div>`},
+
+  {id:'seed-cf-01',title:'01 · Nguyên lý — Depth map thật ra là gì',section:'default',parentId:'seed-comfyui',images:[],textBoxes:[],createdAt:'2026-08-08T00:00:00.000Z',updatedAt:'2026-08-08T00:00:00.000Z',content:`<h1>01 · Nguyên lý — Depth map thật ra là gì</h1>
+<div class="cf-panel info" contenteditable="false"><span class="cf-panel-icon">ℹ️</span><div class="cf-panel-content" contenteditable="true">Trang này giải thích <strong>vì sao</strong> quy trình được thiết kế như vậy. Đọc hiểu trang này thì các trang sau chỉ còn là thao tác.</div></div>
+
+<h2>1. Ba loại dữ liệu độ sâu — đừng nhầm lẫn</h2>
+<table style="width:100%;border-collapse:collapse;font-size:14px"><thead><tr><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Loại</th><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Ý nghĩa</th><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Dùng cho CNC?</th></tr></thead><tbody>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>Metric depth</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Khoảng cách thật, đơn vị mét</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Tốt nhất về tỉ lệ, nhưng ít model cho</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>Relative depth</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Đúng thứ tự gần–xa, sai scale và offset</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Dùng được, cần hiệu chuẩn</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>Disparity (1/z)</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Nghịch đảo khoảng cách</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>Không tuyến tính với chiều cao</strong></td></tr>
+</tbody></table>
+
+<div class="cf-panel warning" contenteditable="false"><span class="cf-panel-icon">⚠️</span><div class="cf-panel-content" contenteditable="true"><strong>Sự thật quan trọng nhất:</strong> Depth Anything (V1/V2/V3) và MiDaS <strong>không xuất ra chiều cao</strong>. Chúng xuất ra <em>affine-invariant inverse depth</em> — tức <strong>disparity</strong>, tỉ lệ với 1/z. Mức xám <strong>không</strong> tỉ lệ tuyến tính với chiều cao.</div></div>
+
+<p>Hệ quả trực tiếp lên khối gỗ:</p>
+<ul>
+<li>Nhân thẳng ảnh xám với "10mm" sẽ làm hình <strong>phồng phần gần, bẹp phần xa</strong>.</li>
+<li>Nhưng 1/z tự nó <strong>chính là một phép nén chiều sâu phi tuyến</strong> — đúng thứ bas-relief cần. Nói cách khác disparity đã vô tình làm hộ khoảng 70% việc nén.</li>
+<li>Nền xa bị disparity ép về gần 0 <strong>tự động</strong> → nền phẳng sẵn, rất tiện cho CNC.</li>
+</ul>
+
+<p><strong>Chốt thực hành:</strong> với phù điêu nổi thấp (5–15mm), <strong>cứ dùng thẳng disparity, đừng tuyến tính hoá</strong>. Chỉ khi cần tỉ lệ hình học đúng (bản đồ địa hình, mô hình kỹ thuật) mới chuyển ngược bằng z = 1 / (d + epsilon) rồi chuẩn hoá lại.</p>
+
+<p><strong>Chiều quy ước:</strong> disparity cho gần = sáng, trùng khớp quy ước CNC (<strong>trắng = nổi cao, đen = sâu nhất</strong>). Vẫn nên kiểm tra bằng mắt trước khi phay.</p>
+
+<h2>2. Depth map KHÁC Bas-relief</h2>
+<p>Đây là điều rất ít hướng dẫn nói tới.</p>
+<ul>
+<li><strong>Depth map</strong> giữ <em>toàn bộ dải sâu thật</em>.</li>
+<li><strong>Bas-relief</strong> cần <em>nén chiều sâu phi tuyến</em> — bóp phẳng xuống còn vài mm nhưng vẫn giữ được chi tiết.</li>
+</ul>
+<p>Nếu chỉ lấy depth map rồi nhân với một hệ số Z, bạn được <strong>cái bánh đa</strong>: khối lớn thì đúng, mọi chi tiết nhỏ bị nén mất sạch. Trong nghiên cứu học thuật đây là một bài toán riêng (nén ở miền gradient / miền normal). Trong thực tế bạn xử lý bằng: tách nền → nén Z phi tuyến bằng Curve/Levels → chỉnh lại từng vùng bằng Shape Editor trong Vectric.</p>
+
+<h2>3. Hai nhánh sinh depth map</h2>
+<table style="width:100%;border-collapse:collapse;font-size:14px"><thead><tr><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)"></th><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Nhánh A — Sinh phù điêu</th><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Nhánh B — Ước lượng độ sâu</th></tr></thead><tbody>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Công nghệ</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Diffusion fine-tune trên ảnh xám phù điêu</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Depth Anything V3 / Depth Pro</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Có thể <em>sáng tạo</em> khối?</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>Có</strong> — vẽ ra vảy, râu, khối tròn từ nét phẳng</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Không — chỉ đo cái đã có</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Chất lượng</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>Cao nhất</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Khá</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Trở ngại</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Cần LoRA ảnh xám (khó kiếm)</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Không có — chạy được ngay</td></tr>
+</tbody></table>
+
+<div class="cf-panel note" contenteditable="false"><span class="cf-panel-icon">📝</span><div class="cf-panel-content" contenteditable="true"><strong>Khuyên:</strong> dựng <strong>Nhánh B trước</strong> để có kết quả cầm tay, rồi nâng lên A khi kiếm được model. Hai nhánh dùng chung khoảng 70% node — nâng cấp chỉ là thay 1 khối.</div></div>
+
+<h2>4. Đầu vào tốt nhất: LINE ART, không phải ảnh chụp</h2>
+<p>Rút ra từ phân tích video phù điêu rồng của Trung Quốc — họ dùng <strong>bản vẽ nét</strong>, không dùng ảnh chụp. Lý do:</p>
+<ul>
+<li><strong>Không có ánh sáng để hiểu nhầm.</strong> Hết lo bóng đổ bị đọc thành chỗ lõm.</li>
+<li><strong>Người vẽ đã giải quyết hộ bài toán che khuất.</strong> Nét vẽ nói rõ cái gì trước, cái gì sau.</li>
+<li>Nền trắng sạch, tách nền cực dễ.</li>
+<li>Hoa văn truyền thống vốn đã tồn tại dưới dạng line art hàng trăm năm.</li>
+</ul>
+<p>Không có nghĩa là ảnh khác không dùng được — trang <strong>06</strong> có preset cho cả 4 loại ảnh. Chỉ là nếu bạn <em>được chọn</em> đầu vào thì chọn line art.</p>
+
+<h2>5. Nguyên tắc nền tảng cho độ mượt</h2>
+<div class="cf-panel warning" contenteditable="false"><span class="cf-panel-icon">⚠️</span><div class="cf-panel-content" contenteditable="true"><strong>Mũi dao là một bộ lọc thông thấp vật lý.</strong> Mũi ball nose bán kính R không thể tạo ra lõm nào có bán kính nhỏ hơn R. Đây là giới hạn hình học tuyệt đối, không phần mềm nào vượt được.<br><br>Nếu height map <em>chứa</em> chi tiết nhỏ hơn R: CAM vẫn sinh lệnh chạy theo nó → máy cố bám → <strong>rung, gợn sóng, vết dừng dao</strong>, thời gian phay tăng vọt mà kết quả xấu hơn.</div></div>
+<p>Vì vậy toàn bộ quy trình có một mục tiêu xuyên suốt: <strong>chủ động xoá mọi chi tiết nhỏ hơn bán kính dao TRƯỚC KHI đưa vào CAM</strong>. Chi tiết ở trang 07.</p>`},
+
+  {id:'seed-cf-02',title:'02 · Cài đặt ComfyUI, node và model',section:'default',parentId:'seed-comfyui',images:[],textBoxes:[],createdAt:'2026-08-08T00:00:00.000Z',updatedAt:'2026-08-08T00:00:00.000Z',content:`<h1>02 · Cài đặt ComfyUI, node và model</h1>
+
+<h2>1. Máy cần gì</h2>
+<table style="width:100%;border-collapse:collapse;font-size:14px"><thead><tr><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)"></th><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Tối thiểu</th><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Nên có</th></tr></thead><tbody>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)">GPU</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">NVIDIA 8GB VRAM</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">12–16GB</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)">RAM</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">16GB</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">32GB</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Ổ trống</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">30GB</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">60GB</td></tr>
+</tbody></table>
+<div class="cf-panel note" contenteditable="false"><span class="cf-panel-icon">📝</span><div class="cf-panel-content" contenteditable="true">Không có GPU NVIDIA thì không nên đi đường này — dùng dịch vụ web <strong>SculptOK</strong> thay thế (xem trang 10).</div></div>
+
+<h2>2. Cài ComfyUI</h2>
+<ol>
+<li>Tải <strong>ComfyUI Desktop</strong> (bản cài đặt chính thức, dễ nhất cho người mới) từ trang chủ ComfyUI.</li>
+<li>Chạy file cài, mở ứng dụng lên.</li>
+<li>Tìm nút <strong>Manager</strong> ở thanh bên. Từ giờ mọi thứ cài qua đây, <strong>không cần gõ lệnh</strong>.</li>
+</ol>
+
+<h2>3. Cài custom node</h2>
+<p>Vào <strong>Manager → Custom Nodes Manager</strong>, gõ tên, bấm <strong>Install</strong>. Cài xong tất cả rồi <strong>restart ComfyUI một lần</strong>.</p>
+<table style="width:100%;border-collapse:collapse;font-size:14px"><thead><tr><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Tên gói</th><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Để làm gì</th><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Bắt buộc?</th></tr></thead><tbody>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><code>ComfyUI-RMBG</code></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Tách nền (RMBG-2.0, BiRefNet, SAM…)</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>Có</strong></td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><code>ComfyUI-KJNodes</code></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">RemapImageRange (chuẩn hoá dải) + tiện ích</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>Có</strong></td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><code>ComfyUI-DepthAnythingV3</code></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Model ước lượng độ sâu (Nhánh B)</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>Có</strong></td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><code>ComfyUI-Marigold</code></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Có node <code>RemapDepth</code> rất tiện</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Nên có</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><code>comfyui_controlnet_aux</code></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Trích line art / canny (Nhánh A)</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Nhánh A</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><code>image-perspective-comfyui</code></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Chỉnh trực diện 4 điểm</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Nên có</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><code>ComfyUI-GeometryPack</code></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Depth map → mesh STL (xem trước 3D)</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Tuỳ chọn</td></tr>
+</tbody></table>
+
+<div class="cf-panel info" contenteditable="false"><span class="cf-panel-icon">ℹ️</span><div class="cf-panel-content" contenteditable="true">Hai node quan trọng nhất <strong>không cần cài gì</strong> vì đã có sẵn trong ComfyUI:<br>• <code>Morphology</code> — lọc theo cỡ dao (trang 07)<br>• <code>SaveImageAdvanced</code> — xuất EXR 32-bit float (trang 08)</div></div>
+
+<h2>4. Tải model</h2>
+<p>Đặt file vào đúng thư mục trong <code>ComfyUI/models/</code>:</p>
+<table style="width:100%;border-collapse:collapse;font-size:14px"><thead><tr><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Loại</th><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">File</th><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Thư mục</th></tr></thead><tbody>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Depth (Nhánh B)</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">DA3-Large</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Tự tải lần chạy đầu</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Tách nền</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">RMBG-2.0 / BiRefNet</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Tự tải lần chạy đầu</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Upscale</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">4x_NMKD-Siax_200k, 4x-AnimeSharp</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><code>upscale_models/</code></td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Checkpoint (A)</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Một model SDXL bất kỳ</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><code>checkpoints/</code></td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>LoRA ảnh xám (A)</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">LoRA phù điêu — xem cảnh báo dưới</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><code>loras/</code></td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)">ControlNet (A)</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">ControlNet lineart cho SDXL</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><code>controlnet/</code></td></tr>
+</tbody></table>
+
+<div class="cf-panel warning" contenteditable="false"><span class="cf-panel-icon">⚠️</span><div class="cf-panel-content" contenteditable="true"><strong>Mắt xích khó nhất — LoRA ảnh xám phù điêu.</strong><br>• <strong>Civitai (quốc tế): KHÔNG có model đúng.</strong> LoRA tên <code>artfully DEPTHMAP</code> chỉ là <em>LoRA phong cách</em> ("làm ảnh trông giống phù điêu"), không phải model sinh ảnh xám dùng cho máy phay — dùng cho CNC sẽ ra hình sai.<br>• <strong>LiblibAI (liblib.art, Trung Quốc): CÓ.</strong> Ví dụ <em>AI灰度图 1.5版</em> — SDXL LoRA huấn luyện trên chạm ngọc, <strong>chạm gỗ</strong>, bích họa, hoa văn; xuất theo chuẩn ảnh xám 精雕 (JDPaint). Cần đăng ký tài khoản.<br><br><strong>Chưa lấy được thì cứ làm Nhánh B</strong> — cấu trúc graph giữ nguyên, sau này chỉ thay 1 khối.</div></div>
+
+<h2>5. Kiểm tra cài đặt xong chưa</h2>
+<ol>
+<li>Restart ComfyUI.</li>
+<li>Double-click vào chỗ trống trên canvas → hộp tìm kiếm node hiện ra.</li>
+<li>Gõ thử lần lượt: <code>Morphology</code>, <code>SaveImageAdvanced</code>, <code>BiRefNetRMBG</code>, <code>RemapImageRange</code>, <code>Depth Anything V3</code>.</li>
+<li>Cả 5 đều tìm thấy → cài đặt xong.</li>
+</ol>
+<div class="cf-panel note" contenteditable="false"><span class="cf-panel-icon">📝</span><div class="cf-panel-content" contenteditable="true">Node nào không tìm thấy → gói đó chưa cài xong hoặc cài lỗi. Vào <strong>Manager → Custom Nodes Manager</strong>, tìm lại gói đó, bấm <strong>Try Fix</strong>.</div></div>`},
+
+  {id:'seed-cf-03',title:'03 · Tiền xử lý ảnh đầu vào (G1–G4)',section:'default',parentId:'seed-comfyui',images:[],textBoxes:[],createdAt:'2026-08-08T00:00:00.000Z',updatedAt:'2026-08-08T00:00:00.000Z',content:`<h1>03 · Tiền xử lý ảnh đầu vào (G1–G4)</h1>
+<div class="cf-panel info" contenteditable="false"><span class="cf-panel-icon">ℹ️</span><div class="cf-panel-content" contenteditable="true">Mục tiêu: ném <em>hình bất kỳ</em> vào → ra ảnh chuẩn sẵn sàng làm depth map.</div></div>
+
+<h2>Thứ tự 4 giai đoạn — và vì sao KHÔNG được đảo</h2>
+<pre>G1. LÀM SẠCH TẦN SỐ CAO   (descreen, denoise)
+        |
+        v
+G2. CHỈNH TRỰC DIỆN        (hình học / phối cảnh)
+        |
+        v
+G3. NÂNG LÊN 4K            (upscale)
+        |
+        v
+G4. CHUẨN MÀU              (levels, kênh màu)</pre>
+
+<table style="width:100%;border-collapse:collapse;font-size:14px"><thead><tr><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Thứ tự</th><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Lý do bắt buộc</th></tr></thead><tbody>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Sạch trước, warp sau</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Warp là phép <strong>resample</strong>. Resample lên ảnh còn chấm halftone sẽ sinh <strong>moiré</strong> — vân sóng giả, không cứu được nữa</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Warp trước, upscale sau</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Warp làm ảnh <strong>mềm đi</strong> do nội suy. Upscaler AI là bộ <em>phục hồi</em> — nó sửa được cái mềm đó. Nếu warp SAU khi upscale thì cái mềm là thứ cuối cùng, <strong>không gì sửa nữa</strong></td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Sạch trước, upscale sau</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Upscaler <strong>khuếch đại nhiễu</strong>. Hạt nhiễu 1px thành cục 4px. Chấm halftone thành mụn to</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Màu cuối cùng</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Upscaler làm lệch tương phản và có thể <strong>clip lại</strong> vùng sáng. Chỉnh levels trước thì công toi</td></tr>
+</tbody></table>
+
+<h2>G1 — Làm sạch tần số cao</h2>
+<table style="width:100%;border-collapse:collapse;font-size:14px"><thead><tr><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Vấn đề</th><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Phát hiện thế nào</th><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Xử lý</th></tr></thead><tbody>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>Chấm halftone / tram in</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Zoom 400%, thấy lưới chấm đều</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><code>ImageBlur</code> 1–2px rồi Median 3px</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Nhiễu ISO</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Vùng phẳng lấm tấm</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Denoise mạnh tay, đừng tiếc</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)">JPEG artifact</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Ô vuông 8×8 quanh cạnh</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Median filter; ảnh quá tệ thì bỏ</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>Sharpening halo</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Viền sáng ôm quanh cạnh tối</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><code>ImageBlur</code> 1px — halo sẽ thành <strong>gờ nổi giả</strong> trên gỗ</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Vignette (tối 4 góc)</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Nhìn nền trắng thấy 4 góc xám</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Lens correction ngoài ComfyUI</td></tr>
+</tbody></table>
+<div class="cf-panel note" contenteditable="false"><span class="cf-panel-icon">📝</span><div class="cf-panel-content" contenteditable="true">Đừng sợ làm mờ ở bước này. Bạn đang chuẩn bị cho máy phay, không phải để in ảnh. Chi tiết nhỏ hơn bán kính dao dù sao cũng bị vứt ở trang 07.</div></div>
+
+<h2>G2 — Chỉnh trực diện (phần khó nhất)</h2>
+<pre>              Chủ thể là gì?
+                    |
+      +-------------+-------------+
+  MẶT PHẲNG                   VẬT THỂ 3D
+ (tranh, bản vẽ,             (tượng, đồ vật,
+  hoa văn chụp                người, cây...)
+  nghiêng)                        |
+      |                  +--------+--------+
+  TRƯỜNG HỢP 1      Đã trực diện?    Chụp nghiêng
+  Homography             |                |
+  (chính xác        TRƯỜNG HỢP 2    TRƯỜNG HỢP 3
+   tuyệt đối)       Khử méo ống      Phải TÁI TẠO
+                    kính             góc nhìn</pre>
+
+<h3>TH1 — Mặt phẳng chụp nghiêng: Homography 4 điểm</h3>
+<p>Trường hợp <strong>giải được chính xác 100%</strong>, không cần AI, thuần toán học.</p>
+<ol>
+<li>Xác định <strong>4 góc</strong> của mặt phẳng trong ảnh.</li>
+<li>Ánh xạ 4 điểm đó về hình chữ nhật <strong>đúng tỉ lệ thật</strong> của vật.</li>
+<li>Node dùng được: <code>Image Perspective</code> (gói image-perspective-comfyui), <code>RemapFromQuadrilateral</code> (bmad nodes), hoặc <code>ImageMagick Distort</code> method=perspective.</li>
+</ol>
+<div class="cf-panel warning" contenteditable="false"><span class="cf-panel-icon">⚠️</span><div class="cf-panel-content" contenteditable="true"><strong>Phải biết tỉ lệ thật.</strong> Tấm gỗ thật 30×40cm thì đích phải là 3:4 — không được để phần mềm tự đoán. Sai tỉ lệ là phù điêu bị <strong>kéo dãn</strong>.</div></div>
+
+<h3>TH2 — Đã trực diện, chỉ khử méo ống kính</h3>
+<p><strong>(a) Méo ống kính</strong> — góc rộng làm đường thẳng thành cong. Sửa bằng Lightroom / RawTherapee / GIMP <em>trước</em> khi vào ComfyUI.</p>
+<p><strong>(b) Phối cảnh KHÁC trực giao</strong> — điểm ít ai để ý:</p>
+<pre>ẢNH CHỤP (phối cảnh)     CẦN CHO CNC (trực giao)
+    ╱------╲                  +--------+
+   | phần   |                 |        |
+   | giữa   |                 | đều    |
+   | PHỒNG  |                 | nhau   |
+    ╲------╱                  +--------+
+Phần gần ống kính TO       Mọi tia song song
+hơn thực tế                 = tỉ lệ thật</pre>
+<p>Với phù điêu, phối cảnh làm <strong>giữa tấm phồng lên, mép bị thu nhỏ</strong>. Cách giảm, tốt dần:</p>
+<ol>
+<li>Chụp lại bằng <strong>ống tele từ xa</strong> (85mm trở lên, đứng xa 3–5m) — gần trực giao nhất, rẻ nhất.</li>
+<li>Ảnh đã có sẵn: chấp nhận. Vật càng phẳng thì sai số càng nhỏ.</li>
+<li>Cần chính xác tuyệt đối: đi đường TH3 phương án (b).</li>
+</ol>
+
+<h3>TH3 — Vật thể 3D chụp nghiêng</h3>
+<div class="cf-panel warning" contenteditable="false"><span class="cf-panel-icon">⚠️</span><div class="cf-panel-content" contenteditable="true"><strong>Homography KHÔNG cứu được.</strong> Warp một vật thể 3D chỉ làm nó méo xiên — vì mặt bị che khuất phía sau <em>không tồn tại trong ảnh</em>. Phải <strong>tái tạo</strong> thông tin mới.</div></div>
+<p><strong>Phương án (a) — Đổi góc nhìn bằng AI (nhanh, khuyên dùng).</strong> <code>Qwen-Image-Edit 2511</code> + <strong>Multiple-Angles LoRA</strong>: tái chụp vật thể từ bất kỳ góc nào từ 1 ảnh, hỗ trợ 96 vị trí camera (4 độ cao × 8 phương vị × 3 khoảng cách), có sẵn preset <em>front view, eye-level</em>. Node <code>ComfyUI-qwenmultiangle</code> cho viewport 3D xoay chọn góc bằng chuột.</p>
+<p><strong>Phương án (b) — Qua mesh 3D (chính xác nhất).</strong> Ảnh → TRELLIS 2 / Hunyuan3D 2.1 → mesh → Blender camera <strong>orthographic</strong> nhìn thẳng → render. Đúng trực giao tuyệt đối, không có phối cảnh. Chậm hơn, mesh AI hay lỗi topology.</p>
+
+<h2>G3 — Nâng lên 4K</h2>
+<h3>Bạn có thật sự cần 4K không? Tính, đừng đoán</h3>
+<pre>Số pixel cần = Chiều dài phôi (mm) / Stepover (mm)</pre>
+<table style="width:100%;border-collapse:collapse;font-size:14px"><thead><tr><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Phôi gỗ</th><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Stepover</th><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Pixel cần</th><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">4K (4096px)</th></tr></thead><tbody>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)">200 mm</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">0.3 mm</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">~667 px</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Dư 6 lần</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)">400 mm</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">0.3 mm</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">~1.333 px</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Dư 3 lần</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)">600 mm</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">0.2 mm</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">~3.000 px</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Vừa đủ</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)">1200 mm</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">0.3 mm</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">~4.000 px</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>Vừa khít</strong></td></tr>
+</tbody></table>
+<p>4K phủ được phôi tới khoảng <strong>1.2m</strong> ở stepover 0.3mm. Với tấm 30–40cm thì 4K là <em>dư thừa</em> — nhưng dư vẫn hơn thiếu.</p>
+
+<h3>Chọn upscaler</h3>
+<table style="width:100%;border-collapse:collapse;font-size:14px"><thead><tr><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Loại ảnh</th><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Model</th></tr></thead><tbody>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Line art / bản vẽ nét</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><code>4x-AnimeSharp</code> hoặc <code>4x-UltraSharp</code></td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Ảnh chụp sạch</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><code>4x_NMKD-Siax_200k</code></td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Ảnh cần phục hồi mạnh</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><code>SUPIR</code></td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Chất lượng tối đa</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">2 tầng: SUPIR rồi SeedVR2</td></tr>
+</tbody></table>
+
+<div class="cf-panel warning" contenteditable="false"><span class="cf-panel-icon">⚠️</span><div class="cf-panel-content" contenteditable="true"><strong>Bẫy riêng của CNC: HALO.</strong> Upscaler kiểu "sharp" tạo viền sáng ôm quanh cạnh tương phản. Trên màn hình trông nét; trên gỗ nó thành <strong>gờ nổi giả bao quanh mọi đường viền</strong> — lỗi trông rất nghiệp dư.<br><br><strong>Kiểm tra:</strong> zoom 400% vào một cạnh đen–trắng rõ. Thấy dải sáng mỏng chạy dọc cạnh = có halo.<br><strong>Chữa:</strong> đổi sang Siax (nhẹ tay hơn UltraSharp); hoặc upscale ×2 rồi resize lên 4K bằng <strong>Lanczos</strong> thay vì ×4 thẳng.</div></div>
+
+<h2>G4 — Chuẩn màu</h2>
+<p>Xem chi tiết ở <strong>trang 04</strong>. Tóm tắt phần tự động hoá trong ComfyUI:</p>
+<ol>
+<li><code>Image Desaturate</code> nếu ảnh bão hoà cao — hoặc tách kênh R/G/B, chọn kênh rõ khối nhất.</li>
+<li>Chuyển xám bằng Rec.709, <strong>không</strong> dùng (R+G+B)/3.</li>
+<li><code>RemapImageRange</code> → trải dải về 5–250, <strong>không clip</strong>.</li>
+<li>Kiểm histogram: không cột dính ở 0 hay 255, không khe hở răng lược.</li>
+</ol>
+
+<h2>Bảng kiểm sau mỗi giai đoạn</h2>
+<table style="width:100%;border-collapse:collapse;font-size:14px"><thead><tr><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Sau</th><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Kiểm gì</th><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Đạt khi</th></tr></thead><tbody>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)">G1</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Zoom 400%</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Hết chấm halftone, hết lấm tấm, hết ô vuông JPEG</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)">G2</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Nhìn bằng mắt</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Cạnh thẳng thật sự thẳng; tỉ lệ khớp vật thật</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)">G3</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Zoom 400% vào cạnh</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>Không có halo</strong>; đủ px theo công thức</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)">G4</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Histogram</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Trải 5–250, không dính hai đầu, không khe hở</td></tr>
+</tbody></table>`},
+
+  {id:'seed-cf-04',title:'04 · Chuẩn màu & Histogram',section:'default',parentId:'seed-comfyui',images:[],textBoxes:[],createdAt:'2026-08-08T00:00:00.000Z',updatedAt:'2026-08-08T00:00:00.000Z',content:`<h1>04 · Chuẩn màu &amp; Histogram</h1>
+
+<h2>1. Hiểu nhầm chết người nhất: màu sắc KHÔNG mang thông tin chiều cao</h2>
+<p>Chỉ có <strong>độ sáng (luminance)</strong> mang thông tin chiều cao. Hai vùng khác màu nhưng <em>cùng độ sáng</em> thì máy hiểu là <em>cùng độ cao</em>.</p>
+<pre>Luma = 0.2126 x R  +  0.7152 x G  +  0.0722 x B    (Rec.709)</pre>
+<table style="width:100%;border-collapse:collapse;font-size:14px"><thead><tr><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Màu</th><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">RGB</th><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Luma</th><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Máy hiểu là</th></tr></thead><tbody>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Đỏ thuần</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">255, 0, 0</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>54</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Rất THẤP</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Xanh lá thuần</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">0, 255, 0</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>182</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Rất CAO</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Xanh dương thuần</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">0, 0, 255</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>18</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Thấp nhất</td></tr>
+</tbody></table>
+<div class="cf-panel warning" contenteditable="false"><span class="cf-panel-icon">⚠️</span><div class="cf-panel-content" contenteditable="true"><strong>Ví dụ thực tế:</strong> bức tranh <em>hoa đỏ trên nền lá xanh</em>. Mắt bạn thấy hoa nổi bật rực rỡ. Nhưng chuyển sang xám thì <strong>hoa thành hố sâu 54, lá thành gò cao 182</strong> — phay ra gỗ là ngược hẳn ý đồ.<br><br><strong>Quy tắc vàng: ảnh bão hoà càng cao thì càng nguy hiểm.</strong> Ảnh gần đơn sắc (monochrome, nâu đỏ, xám) là an toàn nhất.</div></div>
+<p><strong>Cách chữa:</strong> giảm bão hoà trước rồi nhìn ảnh xám xem còn phân biệt được hình không. Nếu các vùng bẹt vào nhau thì phải chỉnh sáng-tối theo từng vùng màu bằng tay (Photoshop: <em>Black &amp; White</em> adjustment layer, kéo từng thanh Reds/Greens/Blues cho tới khi tách bạch).</p>
+
+<h2>2. Chọn công thức chuyển sang xám</h2>
+<table style="width:100%;border-collapse:collapse;font-size:14px"><thead><tr><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Cách</th><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Đánh giá</th></tr></thead><tbody>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>Rec.709 Luminance</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>Mặc định nên dùng.</strong> Khớp cảm nhận mắt người, giữ tương phản và chi tiết tốt nhất</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Average (R+G+B)/3</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>Tránh.</strong> Làm bẹt các màu khác nhau về cùng mức xám</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Kênh XANH LÁ</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Gần luminance nhất, <strong>ít nhiễu nhất</strong>. Lựa chọn phụ rất tốt</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Kênh ĐỎ</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>Tốt nhất cho: da người, gỗ, đất, đá nâu.</strong> Mịn, ít nhiễu</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Kênh XANH DƯƠNG</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>Tránh</strong> — luôn nhiễu nhất</td></tr>
+</tbody></table>
+<div class="cf-panel note" contenteditable="false"><span class="cf-panel-icon">📝</span><div class="cf-panel-content" contenteditable="true"><strong>Mẹo 30 giây, đáng làm mỗi lần:</strong> mở ảnh, xem <strong>từng kênh R, G, B riêng lẻ</strong>, chọn kênh nào nhìn ra khối 3D rõ nhất. Nhiều khi 1 kênh đơn cho chi tiết hơn hẳn công thức luminance chuẩn. Tinh hơn nữa thì dùng <em>Channel Mixer → Monochrome</em>, tự kéo tỉ lệ 3 kênh.</div></div>
+
+<h2>3. Histogram — quy tắc quan trọng nhất trên thực tế</h2>
+<pre>ĐÚNG                        SAI (bị clip)
+|     ..:::||||:::..        ||   ..:|||:..   ||
+|   ..:::||||||||:::.       ||  .:|||||||:.  ||
++---+------------+----      +---+---------+---+
+0   5        250  255       0                255
+    ^         ^             ^                 ^
+không dính  không dính   DÍNH = mất      DÍNH = mất
+đáy         đỉnh         vĩnh viễn       vĩnh viễn</pre>
+<table style="width:100%;border-collapse:collapse;font-size:14px"><thead><tr><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Lỗi</th><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Dấu hiệu</th><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Hậu quả trên gỗ</th></tr></thead><tbody>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Crushed blacks</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Cột dựng đứng dính ở 0</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Chi tiết chỗ sâu <strong>biến mất</strong>, thành mặt phẳng</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Blown highlights</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Cột dựng đứng dính ở 255</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Chi tiết chỗ cao <strong>biến mất</strong></td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Posterization</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Khe hở răng lược giữa histogram</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Vân bậc thang</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Dải quá hẹp</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Histogram dồn cục ở giữa</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Phù điêu bẹt, thiếu chiều sâu</td></tr>
+</tbody></table>
+<p><strong>Mục tiêu: dữ liệu nằm trong khoảng 5–250, trải đều, không khe hở.</strong></p>
+<div class="cf-panel warning" contenteditable="false"><span class="cf-panel-icon">⚠️</span><div class="cf-panel-content" contenteditable="true"><strong>Không sửa được bằng cách kéo Levels sau.</strong> Vùng đã clip là mất vĩnh viễn — kéo ra chỉ được mặt phẳng xám. Phải sửa từ ảnh gốc.<br><br><em>Ngoại lệ:</em> nền đã tách thì cứ để dính 0 — đó là chủ ý.</div></div>
+
+<h2>4. Không gian màu &amp; Gamma</h2>
+<h3>Đầu vào: sRGB, bắt buộc</h3>
+<p>Mọi model (SDXL, Depth Anything V3, RMBG, ControlNet) đều huấn luyện trên <strong>sRGB</strong>. Đưa Adobe RGB / ProPhoto / Display P3 vào mà không convert thì toàn bộ luminance bị lệch, độ cao sai hệ thống.</p>
+<p>Photoshop: <code>Edit → Convert to Profile → sRGB IEC61966-2.1</code>.</p>
+<div class="cf-panel warning" contenteditable="false"><span class="cf-panel-icon">⚠️</span><div class="cf-panel-content" contenteditable="true">Phải là <strong>Convert</strong> (chuyển đổi, có tính toán lại), <strong>không phải Assign</strong> (gán, chỉ đổi nhãn — sẽ làm hỏng màu).</div></div>
+
+<h3>Đầu ra: Linear, không gamma</h3>
+<ul>
+<li>Ảnh thông thường lưu ở <strong>gamma ~2.2</strong> (phi tuyến, dành cho mắt người).</li>
+<li><strong>Chiều cao thì tuyến tính.</strong> Máy phay không biết gamma là gì — nó đọc số và nhân với mm.</li>
+<li>Nếu height map còn gamma 2.2 thì vùng tối bị kéo giãn quá mức, vùng sáng bị nén lại → chi tiết ở phần nổi cao bị mất.</li>
+</ul>
+<p>Nguyên tắc chuẩn ngành: <em>giá trị displacement gần như chắc chắn đã là tuyến tính rồi, đừng hiệu chỉnh gamma thêm lần nữa</em>.</p>
+<pre>[SaveImageAdvanced]
+    format       EXR
+    bit_depth    32-bit float
+    color_space  linear     &lt;-- QUAN TRỌNG</pre>
+<div class="cf-panel note" contenteditable="false"><span class="cf-panel-icon">📝</span><div class="cf-panel-content" contenteditable="true"><strong>Đừng hoảng khi thấy file trông tối.</strong> Xuất PNG/TIFF (định dạng vốn mặc định sRGB) nhưng dữ liệu là linear thì trình xem ảnh sẽ hiển thị <em>tối hơn bình thường</em>. Đó là bình thường — Aspire đọc số thô nên vẫn đúng. Đừng "sửa" bằng cách tăng sáng.</div></div>
+
+<h2>5. Bảng chuẩn đầu vào lý tưởng</h2>
+<table style="width:100%;border-collapse:collapse;font-size:14px"><thead><tr><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Thuộc tính</th><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Chuẩn</th></tr></thead><tbody>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Không gian màu</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>sRGB IEC61966-2.1</strong> (Convert, không Assign)</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Bit depth</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">16-bit nếu có; 8-bit chấp nhận được</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Định dạng</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>PNG 16-bit</strong> hoặc <strong>TIFF</strong>. Tránh JPEG</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Độ phân giải</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">2048 px trở lên ở cạnh dài</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Histogram</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Trải 5–250, không clip, không khe hở</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Bão hoà</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Thấp / trung bình. Cao thì bắt buộc desaturate trước</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Ánh sáng</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Đều, khuếch tán, không bóng đổ mạnh</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Nền</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Trắng thuần, hoặc đã tách sẵn (alpha)</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Chống răng cưa</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>Có</strong> — viền mượt là tốt, nhưng không được lem xám</td></tr>
+</tbody></table>
+
+<h2>6. Quy trình chuẩn hoá màu — 7 bước</h2>
+<ol>
+<li>Convert to Profile → sRGB IEC61966-2.1</li>
+<li>Sửa lỗi vật lý: lens correction (vignette), cân bằng trắng</li>
+<li>Denoise + Descreen (nếu có nhiễu hoặc chấm halftone)</li>
+<li>Xoá watermark / chữ / khung</li>
+<li><strong>Xử lý màu:</strong> xem thử 3 kênh R/G/B, chọn kênh tốt nhất; hoặc Black &amp; White adjustment kéo từng thanh màu cho tới khi các vùng tách bạch rõ nhất</li>
+<li><strong>Levels:</strong> kéo dải về 5–250, kiểm tra không clip (giữ Alt khi kéo để thấy chỗ nào cháy)</li>
+<li>Lưu PNG 16-bit</li>
+</ol>
+<p>Bước 5 và 6 là hai bước quyết định. Năm bước còn lại chỉ là dọn rác.</p>
+
+<h2>7. Mẹo tự kiểm chuẩn: thang xám thử</h2>
+<p>Cách thợ chuyên nghiệp kiểm tra cả chuỗi có bị lệch gamma không:</p>
+<ol>
+<li>Tạo dải <strong>10 ô xám đều nhau</strong> từ đen tới trắng (0, 28, 56, 85, ... 255).</li>
+<li>Ghép nó vào cạnh ảnh của bạn.</li>
+<li>Chạy toàn bộ pipeline như bình thường.</li>
+<li>Đo pixel của thang xám trong file kết quả.</li>
+</ol>
+<table style="width:100%;border-collapse:collapse;font-size:14px"><thead><tr><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Kết quả</th><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Chẩn đoán</th></tr></thead><tbody>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)">10 ô vẫn cách đều nhau</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Chuỗi tuyến tính, chuẩn</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Ô tối giãn ra, ô sáng dồn lại</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Còn dính gamma 2.2 — chưa set linear</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Ô tối dồn, ô sáng giãn</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Bị áp gamma ngược (1/2.2)</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Mất vài ô ở hai đầu</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Đang bị clip</td></tr>
+</tbody></table>
+<p>Xem thêm cách phay tấm mẫu này lên gỗ ở <strong>trang 09</strong>.</p>`},
+
+  {id:'seed-cf-05',title:'05 · Kéo graph trong ComfyUI — từng bước',section:'default',parentId:'seed-comfyui',images:[],textBoxes:[],createdAt:'2026-08-08T00:00:00.000Z',updatedAt:'2026-08-08T00:00:00.000Z',content:`<h1>05 · Kéo graph trong ComfyUI — từng bước</h1>
+<div class="cf-panel info" contenteditable="false"><span class="cf-panel-icon">ℹ️</span><div class="cf-panel-content" contenteditable="true">Trang này hướng dẫn <strong>thao tác thật trên canvas</strong>. Nếu bạn đã quen Grasshopper thì ComfyUI rất dễ — cùng tư duy node, kéo dây nối cổng.</div></div>
+
+<h2>Phần A — Làm quen giao diện (5 phút)</h2>
+
+<h3>A1. Di chuyển canvas</h3>
+<table style="width:100%;border-collapse:collapse;font-size:14px"><thead><tr><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Thao tác</th><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Cách làm</th></tr></thead><tbody>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Kéo canvas</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Giữ chuột trái ở chỗ trống rồi kéo (hoặc giữ Space + kéo)</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Phóng to / thu nhỏ</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Lăn chuột giữa</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Chọn nhiều node</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Giữ <strong>Ctrl</strong> rồi kéo khung bao</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Copy / dán node</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Ctrl+C rồi Ctrl+V (Ctrl+Shift+V để dán <em>giữ nguyên dây nối</em>)</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Xoá node</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Chọn rồi bấm Delete</td></tr>
+</tbody></table>
+
+<h3>A2. Thêm node — 3 cách</h3>
+<ol>
+<li><strong>Double-click vào chỗ trống</strong> trên canvas → hộp tìm kiếm hiện ra → gõ tên node → Enter. <em>Đây là cách nhanh nhất, dùng cách này.</em></li>
+<li><strong>Chuột phải vào chỗ trống</strong> → <code>Add Node</code> → duyệt theo nhóm.</li>
+<li><strong>Kéo dây từ một cổng ra chỗ trống</strong> rồi thả → ComfyUI tự lọc ra <em>chỉ những node nhận được kiểu dữ liệu đó</em>. Rất tiện khi chưa nhớ tên.</li>
+</ol>
+
+<h3>A3. Nối dây</h3>
+<p>Mỗi node có <strong>cổng vào bên trái</strong>, <strong>cổng ra bên phải</strong>. Bấm giữ chấm tròn ở cổng ra rồi kéo sang chấm tròn ở cổng vào.</p>
+<div class="cf-panel warning" contenteditable="false"><span class="cf-panel-icon">⚠️</span><div class="cf-panel-content" contenteditable="true"><strong>Cổng phải cùng màu mới nối được.</strong> Màu = kiểu dữ liệu:<br>• <strong>Xanh dương</strong> = IMAGE (ảnh)<br>• <strong>Trắng</strong> = MASK<br>• <strong>Hồng/tím</strong> = MODEL<br>• <strong>Vàng</strong> = CLIP<br>• <strong>Cam</strong> = CONDITIONING<br>• <strong>Đỏ</strong> = VAE<br>• <strong>Hồng nhạt</strong> = LATENT<br><br>Nối sai màu thì dây không bám vào. Đây là cơ chế chống lỗi, không phải bug.</div></div>
+
+<h3>A4. Sửa thông số</h3>
+<p>Các ô số/chữ nằm ngay trong thân node gọi là <em>widget</em>. Bấm vào rồi gõ. Với ô số có thể kéo ngang để tăng giảm nhanh.</p>
+
+<h3>A5. Chạy và lưu</h3>
+<ul>
+<li><strong>Chạy:</strong> bấm nút <code>Queue Prompt</code> (hoặc Ctrl+Enter).</li>
+<li><strong>Lưu workflow:</strong> Ctrl+S → file .json. Lưu ngay sau khi dựng xong, và lưu lại sau mỗi lần chỉnh được thông số ưng ý.</li>
+<li><strong>Mở lại:</strong> kéo thả file .json vào canvas.</li>
+</ul>
+
+<hr>
+
+<h2>Phần B — Dựng graph Nhánh B (chạy được ngay)</h2>
+<p>Làm theo đúng thứ tự. Mỗi bước: thả node → chỉnh widget → nối dây.</p>
+
+<h3>Bước 1 — Nạp ảnh</h3>
+<ul>
+<li>Double-click canvas → gõ <code>Load Image</code> → Enter.</li>
+<li>Bấm <strong>choose file to upload</strong>, chọn ảnh của bạn.</li>
+</ul>
+<p><em>Node này có 2 cổng ra: IMAGE (xanh dương) và MASK (trắng). Ta dùng IMAGE.</em></p>
+
+<h3>Bước 2 — Làm sạch (G1)</h3>
+<ul>
+<li>Thêm <code>ImageBlur</code>. Đặt <code>blur_radius = 1</code>, <code>sigma = 1.0</code>.</li>
+<li>Nối: <code>Load Image · IMAGE</code> → <code>ImageBlur · image</code>.</li>
+</ul>
+<div class="cf-panel note" contenteditable="false"><span class="cf-panel-icon">📝</span><div class="cf-panel-content" contenteditable="true">Ảnh sạch sẵn (line art vector, render) thì bỏ qua bước này. Ảnh scan từ sách báo có chấm halftone thì <strong>bắt buộc</strong> làm.</div></div>
+
+<h3>Bước 3 — Nâng lên 4K (G3)</h3>
+<ul>
+<li>Thêm <code>Load Upscale Model</code>. Chọn model theo trang 03 (line art → 4x-AnimeSharp; ảnh chụp → 4x_NMKD-Siax_200k).</li>
+<li>Thêm <code>Upscale Image (using Model)</code>.</li>
+<li>Nối: <code>Load Upscale Model · UPSCALE_MODEL</code> → <code>Upscale Image (using Model) · upscale_model</code>.</li>
+<li>Nối: <code>ImageBlur · IMAGE</code> → <code>Upscale Image (using Model) · image</code>.</li>
+<li>Thêm <code>Upscale Image</code> (loại không dùng model). Đặt <code>upscale_method = lanczos</code>, <code>width = 4096</code>, <code>height = 4096</code>, <code>crop = disabled</code>.</li>
+<li>Nối tiếp vào nó.</li>
+</ul>
+<p><em>Vì sao 2 tầng: model upscale ×4 hay tạo halo. Cho nó ×4 rồi hạ về đúng 4096 bằng Lanczos sẽ ít halo hơn hẳn.</em></p>
+
+<h3>Bước 4 — Tách nền</h3>
+<ul>
+<li>Thêm <code>BiRefNetRMBG</code> (gói ComfyUI-RMBG).</li>
+<li>Chọn model: <strong>BiRefNet-Lucida</strong> nếu đầu vào là tranh vẽ / line art; <strong>RMBG-2.0</strong> nếu là ảnh chụp thật.</li>
+<li>Nối ảnh đã upscale vào.</li>
+<li>Thêm <code>ImageCompositeMasked</code> để đặt chủ thể lên <strong>nền đen thuần</strong> (dùng <code>EmptyImage</code> màu 0 làm nền).</li>
+</ul>
+<div class="cf-panel warning" contenteditable="false"><span class="cf-panel-icon">⚠️</span><div class="cf-panel-content" contenteditable="true">Tách nền <strong>trước</strong> khi chạy depth, không phải sau. Thuật toán có tự do hơn hẳn và ít artifact hơn hẳn khi nền đã sạch.</div></div>
+
+<h3>Bước 5 — Sinh depth map</h3>
+<ul>
+<li>Thêm <code>Download And Load Depth Anything V3 Model</code>. Chọn <strong>DA3-Large</strong>.</li>
+<li>Thêm <code>Depth Anything V3</code>.</li>
+<li>Nối model vào, nối ảnh vào.</li>
+<li>Ảnh trên 2K thì thêm <code>DA3 Enable Tiled Processing</code> giữa hai node trên để khỏi hết VRAM.</li>
+</ul>
+
+<h3>Bước 6 — CHUẨN HOÁ (tuyệt đối không bỏ)</h3>
+<ul>
+<li>Thêm <code>RemapDepth</code> (gói ComfyUI-Marigold) hoặc <code>RemapImageRange</code> (gói KJNodes).</li>
+<li>Đặt <code>min = 0.0</code>, <code>max = 1.0</code>, <code>clamp = ON</code>.</li>
+</ul>
+<div class="cf-panel warning" contenteditable="false"><span class="cf-panel-icon">⚠️</span><div class="cf-panel-content" contenteditable="true"><strong>Đây là bước 90% hướng dẫn trên mạng bỏ sót — và là lý do người ta than "lưu 16-bit mà vẫn bị banding".</strong><br><br>Giá trị raw từ model <em>chưa được chuẩn hoá</em>, nằm gọn trong dải hẹp (vd 0.0–0.3). Ghi ra 16-bit thì byte cao của mỗi pixel gần như bằng 0 → số mức thực tế chỉ cỡ vài trăm. Bạn tưởng có 65.536 mức, thật ra có ~250.<br><br><strong>Kiểm tra:</strong> mở file 16-bit trong GIMP, xem histogram. Dữ liệu dồn cục ở một góc = đang dính bẫy này.</div></div>
+
+<h3>Bước 7 — LỌC THEO CỠ DAO (quyết định độ mượt)</h3>
+<ul>
+<li>Thêm <code>Morphology</code> (<strong>có sẵn trong ComfyUI</strong>, không cần cài).</li>
+<li>Đặt <code>operation = close</code>.</li>
+<li>Đặt <code>kernel_size</code> = tra bảng ở <strong>trang 07</strong>. Ví dụ phôi 400mm + mũi ball 1/8" ở 4K → <strong>33</strong>.</li>
+<li>Thêm <code>ImageBlur</code> nữa, <code>blur_radius = 2</code> — chỉ để dọn vi nhiễu còn sót.</li>
+</ul>
+
+<h3>Bước 8 — Ép nền phẳng tuyệt đối</h3>
+<ul>
+<li>Thêm node chỉnh Levels/Curve (vd <code>Image Levels Adjustment</code> hoặc <code>ImageAdjustment</code> tuỳ gói bạn có).</li>
+<li>Kéo điểm đen lên tới khi nền về <strong>0 tuyệt đối</strong>.</li>
+<li>Nén dải sáng phi tuyến cho hợp bas-relief.</li>
+</ul>
+
+<h3>Bước 9 — Xuất file</h3>
+<ul>
+<li>Thêm <code>SaveImageAdvanced</code> (có sẵn). Đặt: <code>format = EXR</code>, <code>bit_depth = 32-bit float</code>, <code>color_space = linear</code>.</li>
+<li>Thêm <strong>một</strong> <code>SaveImageAdvanced</code> nữa: <code>format = TIFF</code>, <code>bit_depth = 16</code> — bản này để nạp vào Vectric.</li>
+<li>Nối cả hai vào cùng một nguồn.</li>
+</ul>
+
+<h3>Bước 10 — Xem trước</h3>
+<ul>
+<li>Thêm <code>Preview Image</code> nối vào vài chỗ then chốt: sau tách nền, sau depth, sau Morphology. Nhìn được từng khâu thì mới biết khâu nào sai.</li>
+</ul>
+
+<h2>Sơ đồ toàn graph (Nhánh B)</h2>
+<pre>[Load Image]
+     |
+     v
+[ImageBlur] r=1                        G1 làm sạch
+     |
+     v
+[Load Upscale Model]--+
+                      v
+[Upscale Image (using Model)]          G3 nâng 4K
+     |
+     v
+[Upscale Image] lanczos 4096
+     |
+     v
+[BiRefNetRMBG]  ------> [ImageCompositeMasked]
+                              ^   nền đen
+                        [EmptyImage] 0,0,0
+     |
+     v
+[Download+Load DA3 Model] --+
+                            v
+[Depth Anything V3]  DA3-Large
+     |
+     v
+[RemapDepth]  min0 max1 clamp=ON       *** BẮT BUỘC ***
+     |
+     v
+[Morphology]  close, kernel_size=33    *** ĐỘ MƯỢT ***
+     |
+     v
+[ImageBlur]  r=2
+     |
+     v
+[Levels]  ép nền về 0
+     |
+     +--> [SaveImageAdvanced] EXR 32f linear
+     |
+     +--> [SaveImageAdvanced] TIFF 16-bit
+     |
+     +--> [Preview Image]</pre>
+
+<hr>
+
+<h2>Phần C — Nâng cấp lên Nhánh A</h2>
+<p>Chỉ thay <strong>khối bước 5</strong>, mọi thứ khác giữ nguyên.</p>
+<pre>Thay [Depth Anything V3] bằng cụm sau:
+
+[LineArt Preprocessor]  (hoặc Canny nếu ảnh chụp)
+     |
+     v
+[Load ControlNet Model]  lineart SDXL
+     |
+     v
+[Apply ControlNet]  strength theo preset
+                    start 0.0  end 0.80
+     |
+[Load Checkpoint SDXL]
+     |
+     v
+[Load LoRA]  LoRA ảnh xám, strength 0.85
+     |
+     v
+[CLIPTextEncode] +  "grayscale relief depth map,
+   bas-relief, smooth rounded volume,
+   pure black background, no texture noise, no color"
+[CLIPTextEncode] -  "color, noise, grain,
+   harsh shadow, text, watermark, flat, outline lines"
+     |
+     v
+[VAE Encode]  &lt;- ảnh dẫn hướng (img2img)
+     |
+     v
+[KSampler]  steps 30 · cfg 6.0
+            dpmpp_2m · karras
+            denoise theo preset
+            batch_size 4
+     |
+     v
+[VAE Decode]  --> nối vào [RemapDepth] như cũ</pre>
+
+<h2>Lỗi hay gặp khi nối dây</h2>
+<table style="width:100%;border-collapse:collapse;font-size:14px"><thead><tr><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Triệu chứng</th><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Nguyên nhân</th></tr></thead><tbody>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Dây không bám vào cổng</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Sai kiểu dữ liệu (khác màu). Kiểm lại IMAGE vs MASK vs LATENT</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Node viền đỏ khi chạy</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Thiếu input bắt buộc, hoặc model chưa tải</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Chạy xong không thấy gì</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Chưa có node Save hoặc Preview ở cuối chuỗi</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Hết VRAM (out of memory)</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Bật <code>DA3 Enable Tiled Processing</code>; hoặc hạ độ phân giải rồi upscale sau</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Node không tìm thấy khi gõ</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Chưa cài gói đó, hoặc chưa restart sau khi cài</td></tr>
+</tbody></table>
+
+<h2>Mẹo làm việc</h2>
+<ul>
+<li><strong>Gom nhóm:</strong> chọn nhiều node → chuột phải → <code>Convert to Group Node</code> hoặc thêm Group khung màu. Graph này khá dài, gom theo G1/G2/G3/G4 sẽ dễ nhìn hơn nhiều.</li>
+<li><strong>Ghi chú:</strong> thêm node <code>Note</code> cạnh chỗ quan trọng (vd ghi công thức kernel_size) để lần sau khỏi tra lại.</li>
+<li><strong>Bypass tạm:</strong> chọn node rồi Ctrl+B để tắt tạm mà không phải xoá — rất tiện khi muốn so sánh có/không Morphology.</li>
+<li><strong>Lưu nhiều bản:</strong> lưu riêng file .json cho từng preset ở trang 06, đỡ phải chỉnh lại mỗi lần.</li>
+</ul>`},
+
+  {id:'seed-cf-06',title:'06 · Bốn preset theo loại ảnh đầu vào',section:'default',parentId:'seed-comfyui',images:[],textBoxes:[],createdAt:'2026-08-08T00:00:00.000Z',updatedAt:'2026-08-08T00:00:00.000Z',content:`<h1>06 · Bốn preset theo loại ảnh đầu vào</h1>
+<div class="cf-panel info" contenteditable="false"><span class="cf-panel-icon">ℹ️</span><div class="cf-panel-content" contenteditable="true">Không có bộ thông số nào đúng cho mọi ảnh. Nhìn ảnh, xác định nhóm, nạp preset tương ứng.</div></div>
+
+<h2>Cây phân loại — chỉ 2 câu hỏi</h2>
+<pre>        Ảnh có SẮC ĐỘ (vùng sáng-tối) không?
+                    |
+        +-----------+-----------+
+       KHÔNG                   CÓ
+        |                       |
+    NHÓM 1            Sắc độ là ÁNH SÁNG THẬT
+    Line art          hay BÓNG VẼ TAY?
+                              |
+                    +---------+---------+
+                 BÓNG VẼ            ÁNH SÁNG THẬT
+                    |                   |
+                 NHÓM 2         +-------+-------+
+                 Tranh /     Nền sạch,      Nền lộn xộn,
+                 minh hoạ    1 vật thể      nhiều vật thể
+                                |               |
+                             NHÓM 4         NHÓM 3
+                             Render /       Ảnh chụp
+                             sản phẩm       đời</pre>
+
+<table style="width:100%;border-collapse:collapse;font-size:14px"><thead><tr><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Nhóm</th><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Ví dụ</th><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Khó khăn chính</th></tr></thead><tbody>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>1 — Line art</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Bản vẽ nét, hoa văn, tattoo design</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Không có thông tin khối, phải <em>sinh ra</em></td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>2 — Tranh / minh hoạ</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Tranh màu, anime, digital art, tranh dân gian</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Bóng vẽ tay không nhất quán với hình học</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>3 — Ảnh chụp đời</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Chân dung, phong cảnh, con vật ngoài trời</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>Ánh sáng thật bị nướng vào ảnh</strong> — khó nhất</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>4 — Render / sản phẩm</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Render 3D, ảnh sản phẩm nền trắng, tượng chụp studio</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Ít vấn đề, có khối thật</td></tr>
+</tbody></table>
+
+<h2>Kiến trúc: 3 tín hiệu song song, trộn theo nhóm</h2>
+<table style="width:100%;border-collapse:collapse;font-size:14px"><thead><tr><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Tín hiệu</th><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Lấy từ</th><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Cho ta</th></tr></thead><tbody>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>S1 — Cấu trúc</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">LineArt / AnyLine / Canny</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Đường viền, nét, ranh giới sắc</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>S2 — Khối lớn</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Depth Anything V3</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Hình khối tổng thể, thứ tự trước–sau</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>S3 — Sắc độ sạch</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Luminance sau khi khử ánh sáng</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Chi tiết bề mặt, nông sâu tinh vi</td></tr>
+</tbody></table>
+
+<h2>BẢNG PRESET — phần dùng hằng ngày</h2>
+<table style="width:100%;border-collapse:collapse;font-size:14px"><thead><tr><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Tham số</th><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">N1 Line art</th><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">N2 Tranh</th><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">N3 Ảnh chụp</th><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">N4 Render</th></tr></thead><tbody>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Khử ánh sáng (IC-Light)</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Bỏ</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Bỏ</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>Bắt buộc</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Nên có</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Model tách nền</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">BiRefNet-Lucida</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">BiRefNet-Lucida</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">RMBG-2.0</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">RMBG-2.0</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Preprocessor cho S1</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">(dùng ảnh gốc)</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">AnyLineArt</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>Canny</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Canny</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)">ControlNet strength</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>0.90</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">0.75</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">0.55</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">0.65</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Trọng số S2 (khối)</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">0.2</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">0.5</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>0.8</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">0.7</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Trọng số S3 (sắc độ)</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">0.0</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">0.5</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">0.2</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">0.3</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>denoise (KSampler)</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>0.95</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">0.75</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">0.55</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">0.60</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Blur sau Morphology</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">2 px</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">2–3 px</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>3–4 px</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">2–3 px</td></tr>
+</tbody></table>
+
+<h2>Đọc bảng này thế nào</h2>
+<ul>
+<li><strong>Line art:</strong> không có khối sẵn → <code>denoise</code> cao (0.95) để model <em>tự sáng tác</em> khối; ControlNet cao (0.90) để khoá chặt nét không cho vẽ sai.</li>
+<li><strong>Ảnh chụp:</strong> đã có khối thật → <code>denoise</code> thấp (0.55) để <em>giữ lại</em>, không cho model bịa; ControlNet thấp để nó được phép làm mượt.</li>
+<li><strong>Tranh / minh hoạ:</strong> nằm giữa, cân bằng S2/S3 vì bóng vẽ tay vừa có ích vừa gây nhiễu.</li>
+</ul>
+
+<h2>Vì sao Nhóm 3 bắt buộc khử ánh sáng</h2>
+<div class="cf-panel warning" contenteditable="false"><span class="cf-panel-icon">⚠️</span><div class="cf-panel-content" contenteditable="true">Ảnh chụp có ánh sáng xiên → <strong>vùng tối bị model hiểu thành CHỖ LÕM</strong>. Đây là lỗi số 1 khiến phù điêu từ ảnh chụp bị méo.<br><br>Dùng <code>IC-Light</code> để chiếu sáng lại thành ánh sáng đều, phẳng; rồi <code>DetailTransfer</code> để giữ lại chi tiết tần số cao từ ảnh gốc. Nhóm 1 và 2 <strong>bỏ qua</strong> khối này.</div></div>
+
+<h2>Chế độ "một nút bấm" thật sự</h2>
+<p>Nếu không muốn phân loại thủ công mỗi lần — làm đúng cách SculptOK làm:</p>
+<div class="cf-panel info" contenteditable="false"><span class="cf-panel-icon">ℹ️</span><div class="cf-panel-content" contenteditable="true"><strong>Chạy cả 4 preset cùng lúc, mỗi preset 2 seed → 8 kết quả → chọn cái đẹp nhất bằng mắt.</strong><br><br>Dựng bằng cách nhân 4 nhánh KSampler song song, gom lại bằng <code>Image Batch</code> rồi <code>Preview Image</code> xem lưới. GPU 12GB chạy hết khoảng 2–3 phút.<br><br>Đây không phải giải pháp lười — đó là lý do SculptOK cũng trả về 4 phương án: <em>ngay cả model thương mại cũng không dám chắc ảnh của bạn thuộc nhóm nào</em>. Cho máy chạy hết rồi mắt người chọn, vừa nhanh vừa chắc hơn đoán.</div></div>
+
+<h2>Năm trường hợp đặc biệt</h2>
+<table style="width:100%;border-collapse:collapse;font-size:14px"><thead><tr><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Tình huống</th><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Cách xử lý</th></tr></thead><tbody>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Nhiều vật thể</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Thêm <code>GroundingDINO</code> + <code>SAM</code>, gõ tên vật cần giữ. Hoặc tách từng vật, làm riêng, ghép height map sau bằng Image Blend chế độ Lighten</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Ảnh mờ / phân giải thấp</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Bắt buộc qua upscale trước. Dưới 512px thì nên bỏ, kết quả sẽ nhoè</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Ảnh có chữ / logo</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Chữ là mặt <em>phẳng nổi đều</em>, không phải khối tròn. Tách riêng, tự tạo height map phẳng (1 mức xám) rồi ghép vào</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Ảnh phong cảnh sâu</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Disparity sẽ ép hậu cảnh về gần 0, thường là điều tốt. Muốn giữ lớp xa thì chỉnh Curve kéo vùng tối lên</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)">PNG có alpha sẵn</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Bỏ qua khối tách nền, dùng thẳng alpha channel làm mask</td></tr>
+</tbody></table>
+
+<h2>Checklist chạy mỗi lần</h2>
+<ol>
+<li>Nhìn ảnh, xác định NHÓM (1/2/3/4)</li>
+<li>Nạp preset tương ứng</li>
+<li>Nhóm 3, 4: kiểm tra IC-Light đã bật chưa</li>
+<li>Xem preview sau khối tách nền — nền đã đen sạch chưa?</li>
+<li>Chạy batch 4</li>
+<li>Chọn bản tốt nhất</li>
+<li>Kiểm 5 điểm chất lượng (trang 09)</li>
+<li>Xuất EXR 32-bit + TIFF 16-bit</li>
+<li>Vào Aspire → Create Component From Bitmap</li>
+</ol>
+
+<div class="cf-panel note" contenteditable="false"><span class="cf-panel-icon">📝</span><div class="cf-panel-content" contenteditable="true"><strong>Nói thẳng về giới hạn:</strong> Nhóm 3 (ảnh chụp đời) sẽ <em>luôn</em> là nhóm khó nhất, kể cả với SculptOK hay workflow thương mại. Ánh sáng nướng vào ảnh là bài toán chưa ai giải triệt để. Chuẩn bị tinh thần phải chỉnh tay trong Shape Editor của Aspire.<br><br>Preset trên là <strong>điểm khởi đầu</strong>. Sau 10–20 lần chạy bạn sẽ có bộ số riêng — lúc đó ghi đè bảng này.</div></div>`},
+
+  {id:'seed-cf-07',title:'07 · Lọc theo cỡ dao — bí quyết mặt gỗ mượt',section:'default',parentId:'seed-comfyui',images:[],textBoxes:[],createdAt:'2026-08-08T00:00:00.000Z',updatedAt:'2026-08-08T00:00:00.000Z',content:`<h1>07 · Lọc theo cỡ dao — bí quyết mặt gỗ mượt</h1>
+<div class="cf-panel warning" contenteditable="false"><span class="cf-panel-icon">⚠️</span><div class="cf-panel-content" contenteditable="true"><strong>Nếu chỉ đọc được 1 trang trong cả mục này, đọc trang này.</strong> Đây là chỗ quyết định mặt gỗ mượt hay gợn, và là chỗ hầu hết hướng dẫn trên mạng làm sai.</div></div>
+
+<h2>1. Scale 4K KHÔNG làm mượt — nó làm xấu hơn</h2>
+<ol>
+<li><strong>Upscale khuếch đại nhiễu.</strong> Hạt nhiễu 1px thành cục 4px, to hơn cỡ dao → dao <em>cắt được</em> nó → mặt gỗ sần.</li>
+<li><strong>Upscale sinh halo.</strong> Viền sáng quanh cạnh → gờ nổi giả.</li>
+<li><strong>Upscale KHÔNG thêm bit depth.</strong> Ảnh 8-bit phóng lên 4K vẫn là 256 mức. Banding không mất, chỉ trải rộng thành dải to hơn, <em>dễ thấy hơn</em>.</li>
+</ol>
+
+<h2>2. Công cụ đúng: Morphological CLOSE, không phải Blur</h2>
+<table style="width:100%;border-collapse:collapse;font-size:14px"><thead><tr><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)"></th><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Gaussian Blur</th><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Morphological Close</th></tr></thead><tbody>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Làm gì</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Làm mờ <strong>mọi thứ</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Chỉ lấp <strong>chỗ lõm</strong> quá nhỏ</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Đỉnh nhọn (lồi)</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Bị bào mòn</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>Giữ nguyên</strong></td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Khe hẹp (lõm)</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Mờ nhưng vẫn còn</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>Lấp đầy đúng như dao làm</strong></td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Kết quả</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Nhũn, mất nét</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Sắc nét chỗ cần, mượt chỗ dao không tới</td></tr>
+</tbody></table>
+
+<h3>Nhìn bằng mặt cắt ngang</h3>
+<pre>BỀ MẶT GỐC
+  __╱╲__ ___||___ ____----____
+     ^      ^          ^
+   đỉnh  khe hẹp    khối lớn
+   nhọn  (0.5mm)
+
+GAUSSIAN BLUR   (xấu)
+  _╱~~╲_ __╲_╱__ ____----____
+     ^        ^         ^
+   đỉnh    khe mờ    khối cũng
+   BỊ MÒN  nhưng còn  bị nhũn
+
+MORPHOLOGICAL CLOSE   (tốt)
+  __╱╲__ ________ ____----____
+     ^      ^          ^
+   đỉnh   khe BỊ     khối
+   NGUYÊN LẤP HẲN   NGUYÊN</pre>
+
+<h3>Vì sao Close giữ được nét — cơ chế</h3>
+<p>Close = <strong>giãn (dilate) rồi co (erode)</strong>, cùng một nhân. Hình dung như <em>lăn một quả bóng bán kính R trên bề mặt, từ phía trên</em>:</p>
+<ul>
+<li>Quả bóng <strong>chạm được</strong> vào đỉnh nhọn → đỉnh giữ nguyên</li>
+<li>Quả bóng <strong>chạm được</strong> vào cạnh, mặt phẳng → giữ nguyên</li>
+<li>Quả bóng <strong>không chui được</strong> vào khe hẹp hơn nó → khe bị lấp</li>
+</ul>
+<p>Đây <strong>đúng là mô hình vật lý của mũi dao cầu</strong>. Close không phải phép lọc gần đúng — nó là mô phỏng chính xác thứ mũi dao làm được. Đây cũng chính là phép toán mà phần mềm CAM chạy bên trong; làm trước ở khâu ảnh thì <em>bạn</em> kiểm soát được.</p>
+
+<h2>3. Công thức tính kernel_size</h2>
+<pre>mm mỗi pixel = Chiều dài phôi (mm) / Số pixel
+
+kernel_size  = (2 x Bán kính dao) / mm mỗi pixel
+               làm tròn lên số LẺ gần nhất</pre>
+
+<h3>Bảng tra sẵn (ảnh 4096 px)</h3>
+<table style="width:100%;border-collapse:collapse;font-size:14px"><thead><tr><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Phôi</th><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">mm/px</th><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">1/16" ball<br>(R 0.79mm)</th><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">1/8" ball<br>(R 1.59mm)</th><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">1/4" ball<br>(R 3.18mm)</th></tr></thead><tbody>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)">200 mm</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">0.049</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">33</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>65</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">129</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)">300 mm</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">0.073</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">21</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>43</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">87</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>400 mm</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">0.098</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">17</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>33</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">65</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)">600 mm</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">0.147</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">11</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>21</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">43</td></tr>
+</tbody></table>
+
+<div class="cf-panel warning" contenteditable="false"><span class="cf-panel-icon">⚠️</span><div class="cf-panel-content" contenteditable="true"><strong>Con số thường bị đưa sai.</strong> Nhiều hướng dẫn ghi "blur 3–8px". Với phôi 400mm ở 4K và mũi 1/8", giá trị đúng là <strong>kernel 33</strong> (tương đương bán kính ~16px). Dùng 5px thì gần như không lọc được gì — và đó chính là nguyên nhân điển hình của mặt gỗ bị gợn.</div></div>
+
+<h3>Chuỗi lọc đầy đủ</h3>
+<pre>[Morphology]  operation=close, kernel_size=33   &lt;- lọc chính
+      |
+      v
+[ImageBlur]   blur_radius=2-3px                 &lt;- dọn vi nhiễu</pre>
+<p>Blur đặt <strong>sau</strong> close và chỉ 2–3px. Nó chỉ để dọn nhiễu vụn, không phải để làm mượt hình.</p>
+
+<h2>4. Close có mất nét không?</h2>
+<p><strong>Có — nhưng chỉ mất thứ dao dù sao cũng không cắt được.</strong> Cụ thể nó lấp mất các <em>đường khe phân cách</em>: rãnh giữa từng vảy rồng, nét tách sợi tóc, khe giữa hai cánh hoa chồng nhau.</p>
+<div class="cf-panel info" contenteditable="false"><span class="cf-panel-icon">ℹ️</span><div class="cf-panel-content" contenteditable="true"><strong>Điểm quan trọng nhất cần hiểu:</strong><br>Chi tiết nhỏ hơn bán kính dao <em>dù sao cũng không xuất hiện trên gỗ</em>. Giữ nó trong ảnh không làm nó hiện ra — chỉ làm đường chạy dao rối và máy rung.<br><br>Cái "mất nét" đó là <strong>mất trên màn hình, không phải mất trên gỗ</strong>. Bạn không mất gì thật cả. Chỉ khi đóng <em>quá</em> bán kính dao thì mới là mất mát thật sự.</div></div>
+
+<h3>Nghịch lý: Blur còn làm phù điêu trông KÉM sắc hơn</h3>
+<p>Cảm giác "sắc nét" của phù điêu <strong>không đến từ chi tiết li ti</strong> — mà từ <em>chênh lệch độ cao lớn và dứt khoát</em> giữa các mảng (macro-contrast). Blur phá luôn cả macro-contrast → nhìn nhoè, mềm oặt. Close giữ nguyên macro-contrast → nhìn <strong>sắc và có lực hơn</strong>, dù đã lọc chi tiết nhỏ.</p>
+
+<h2>5. Ba cách giữ nét mà vẫn mượt</h2>
+<h3>Cách 1 — Dùng dao nhỏ hơn cho bước tinh</h3>
+<table style="width:100%;border-collapse:collapse;font-size:14px"><thead><tr><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Mũi ball</th><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Bán kính</th><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">kernel (phôi 400mm)</th><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Khe nhỏ nhất giữ được</th></tr></thead><tbody>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)">1/4"</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">3.18 mm</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">65</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">~6.4 mm</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)">1/8"</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">1.59 mm</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">33</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">~3.2 mm</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)">1/16"</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">0.79 mm</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">17</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">~1.6 mm</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)">1/32"</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">0.40 mm</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">9</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">~0.8 mm</td></tr>
+</tbody></table>
+<p>Đổi từ 1/8" xuống 1/16" giữ được chi tiết mịn gấp đôi. Đổi lại: thời gian phay tăng khoảng 4 lần, dao dễ gãy hơn.</p>
+
+<h3>Cách 2 — Phay 2 pha (câu trả lời chuyên nghiệp)</h3>
+<pre>PHA 1 - Khối:  Ball nose 1/8"
+               height map ĐÃ CLOSE kernel 33
+               => mặt mượt, khối đúng, không rung
+
+PHA 2 - Nét:   V-bit 60 hoặc 90 độ
+               chạy V-carve theo VECTOR
+               (đường nét lấy từ chính bản line art gốc)
+               => khắc lại khe phân cách, sắc như dao khắc tay</pre>
+<div class="cf-panel info" contenteditable="false"><span class="cf-panel-icon">ℹ️</span><div class="cf-panel-content" contenteditable="true"><strong>Được cả hai: mặt mượt như lụa VÀ nét sắc như khắc tay.</strong> Vectric Aspire hỗ trợ chồng V-carve lên trên toolpath 3D — đây đúng là lý do phần mềm đó tồn tại.<br><br>Điểm hay: đường nét ở pha 2 lấy từ <strong>vector</strong>, không phải từ height map → <em>không có khái niệm mất nét</em>, sắc tuyệt đối bất kể độ phân giải ảnh.</div></div>
+
+<h3>Cách 3 — Đóng nhẹ hơn, để CAM lo phần còn lại</h3>
+<p>Giảm kernel xuống 60–70% giá trị bảng. Đổi lại toolpath tính chậm hơn và có thể còn vài chỗ rung nhẹ.</p>
+
+<h2>6. Cách đo xem mình mất bao nhiêu</h2>
+<pre>   ảnh gốc ---+----------------------+
+              |                      |
+              v                      v
+      [Morphology close]      [ImageBlend]
+              |                mode: difference
+              +--------------------&gt; |
+                                     v
+                              [Preview Image]</pre>
+<table style="width:100%;border-collapse:collapse;font-size:14px"><thead><tr><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Ảnh hiệu cho thấy</th><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Chẩn đoán</th></tr></thead><tbody>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Chỉ lấm tấm nhiễu</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">kernel đúng, không mất gì có giá trị</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Thấy rõ đường nét thiết kế</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">kernel quá to, giảm xuống</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Gần như đen thui</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">kernel quá nhỏ, chưa lọc được gì</td></tr>
+</tbody></table>
+<p>Đây là cách duy nhất <strong>nhìn thấy</strong> cái mình đang vứt đi, thay vì đoán.</p>`},
+
+  {id:'seed-cf-08',title:'08 · Xuất file EXR/TIFF và đưa vào Vectric',section:'default',parentId:'seed-comfyui',images:[],textBoxes:[],createdAt:'2026-08-08T00:00:00.000Z',updatedAt:'2026-08-08T00:00:00.000Z',content:`<h1>08 · Xuất file EXR/TIFF và đưa vào Vectric</h1>
+
+<h2>1. Vì sao 8-bit là không đủ — phép so sánh quyết định</h2>
+<p>Phù điêu sâu <strong>12mm</strong>, mũi ball 1/8", stepover 0.3mm (vết dao còn lại 7 micromet):</p>
+<table style="width:100%;border-collapse:collapse;font-size:14px"><thead><tr><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Bit depth</th><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Bước lượng tử</th><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">So với vết dao (7µm)</th></tr></thead><tbody>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>8-bit</strong> (256 mức)</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">12 / 255 = <strong>47 µm</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>Thô gấp 7 lần</strong> — bậc thang át hết, thấy rõ bằng mắt</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>16-bit</strong> (65.536 mức)</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">12 / 65535 = <strong>0.18 µm</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Mịn hơn 40 lần — hoàn toàn vô hình</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>32-bit float (EXR)</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">gần như liên tục</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Không tồn tại khái niệm bậc</td></tr>
+</tbody></table>
+<div class="cf-panel warning" contenteditable="false"><span class="cf-panel-icon">⚠️</span><div class="cf-panel-content" contenteditable="true"><strong>8-bit không phải "hơi kém" — nó thô hơn cả vết dao 7 lần.</strong> Banding trở thành khuyết tật lớn nhất trên bề mặt, lấn át mọi thứ khác. Đây là lý do định dạng BMP / JPG / GIF <strong>không dùng được</strong> cho height map (chúng chỉ hỗ trợ 8-bit greyscale).</div></div>
+
+<h2>2. Mẹo "hồi sinh" bit depth cho ảnh gốc 8-bit</h2>
+<pre>Ảnh 8-bit -&gt; upscale 4K -&gt; CHUYỂN SANG FLOAT32
+          -&gt; [Morphology close] + [ImageBlur]
+             (phép lọc trên float SINH RA giá trị
+              giữa các mức 8-bit cũ)
+          -&gt; [SaveImageAdvanced] EXR 32f / TIFF 16-bit</pre>
+<p>Close và blur chạy ở dấu phẩy động <strong>nội suy ra giá trị giữa 2 mức 8-bit cũ</strong> → banding bị phá vỡ thật sự, không phải giả vờ. Đây là lý do kỹ thuật khiến lọc theo cỡ dao và xuất bit-depth cao <strong>phải làm cùng nhau</strong>.</p>
+
+<h2>3. Thiết lập node xuất</h2>
+<pre>[SaveImageAdvanced]  -- bản gốc để lưu trữ / chỉnh sửa
+    format       EXR
+    bit_depth    32-bit float
+    color_space  linear
+
+[SaveImageAdvanced]  -- bản để nạp vào Vectric
+    format       TIFF
+    bit_depth    16</pre>
+<p><code>SaveImageAdvanced</code> là node <strong>có sẵn trong ComfyUI</strong>, không cần cài gói nào. Muốn nhiều tuỳ chọn hơn thì dùng <code>ComfyUI-HQ-Image-Save</code> (node <code>SaveEXR</code>).</p>
+
+<div class="cf-panel info" contenteditable="false"><span class="cf-panel-icon">ℹ️</span><div class="cf-panel-content" contenteditable="true"><strong>Chiến lược đúng khi dùng EXR:</strong> sinh ở EXR 32-bit (không mất mát) → chỉnh sửa ở 32-bit → <strong>chỉ quantize xuống 16-bit TIFF ở bước cuối cùng</strong>. Đừng làm việc ở 16-bit từ đầu.</div></div>
+
+<h2>4. Vectric Aspire không đọc EXR</h2>
+<p>Aspire nhận BMP / JPG / GIF / TIF / PNG — <strong>không có EXR</strong>. Vì vậy luôn xuất kèm bản TIFF 16-bit. Nếu chỉ có EXR thì convert bằng GIMP / Photoshop / Affinity Photo.</p>
+
+<h2>5. Nạp vào Aspire — bước dễ sai nhất</h2>
+<ol>
+<li>Mở Aspire, tạo job đúng kích thước phôi gỗ thật.</li>
+<li>Sang tab <strong>Modeling</strong>.</li>
+<li><strong>Bỏ chọn mọi thứ trong 2D View</strong> (bấm vào chỗ trống).</li>
+<li>Bấm icon <strong>Create Component From Bitmap</strong> (icon thứ 6 trên hàng đầu của bộ công cụ modeling).</li>
+<li>Hộp thoại chọn file hiện ra → chọn file TIFF 16-bit.</li>
+</ol>
+<div class="cf-panel warning" contenteditable="false"><span class="cf-panel-icon">⚠️</span><div class="cf-panel-content" contenteditable="true"><strong>TUYỆT ĐỐI KHÔNG</strong> import ảnh vào 2D View rồi convert thành component. Ảnh 16-bit khi import để trace sẽ <strong>tự động bị hạ xuống bitmap thường</strong> và <em>toàn bộ dữ liệu cao độ bị mất</em> — <strong>không có cảnh báo nào</strong>.<br><br>Phải bấm icon khi <strong>không có ảnh nào đang được chọn</strong> để nó import <em>trực tiếp thành component</em>.</div></div>
+
+<h2>6. Đặt chiều cao Z</h2>
+<ul>
+<li>Bắt đầu với <strong>8–12mm</strong> cho phù điêu thông thường.</li>
+<li>Nhớ chừa đủ chiều dày phôi: chiều cao phù điêu + tối thiểu 5mm gỗ nền.</li>
+<li>Dùng <strong>Shape Editor</strong> để chỉnh lại từng vùng nếu chỗ nào quá nông/quá sâu.</li>
+</ul>
+
+<h2>7. Đặt toolpath</h2>
+<h3>Hai bước bắt buộc</h3>
+<table style="width:100%;border-collapse:collapse;font-size:14px"><thead><tr><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Bước</th><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Dao</th><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Thông số</th></tr></thead><tbody>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>Thô (Roughing)</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">End mill phẳng</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Chừa lại 0.5mm cho bước tinh</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>Tinh (Finishing)</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Ball nose 1/8"</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Stepover 0.3mm (10% đường kính)</td></tr>
+</tbody></table>
+<div class="cf-panel note" contenteditable="false"><span class="cf-panel-icon">📝</span><div class="cf-panel-content" contenteditable="true">Bỏ bước thô = dao tinh ăn quá sâu = rung, gãy dao, mặt xấu. Không bao giờ bỏ.</div></div>
+
+<h3>Công thức vết dao (scallop)</h3>
+<pre>h = R - can_bac_hai( R^2 - (s/2)^2 )
+
+h = chiều cao vết gợn còn lại
+R = bán kính dao
+s = stepover</pre>
+<p><strong>Mũi 1/8" (R = 1.5875mm):</strong></p>
+<table style="width:100%;border-collapse:collapse;font-size:14px"><thead><tr><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Stepover</th><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Vết gợn</th><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Đánh giá</th><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Thời gian</th></tr></thead><tbody>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)">0.1 mm</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">0.8 µm</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Như gương, thừa thãi</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">x3</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)">0.2 mm</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">3 µm</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Rất mượt</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">x1.5</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>0.3 mm</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>7 µm</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>Điểm ngọt — gần như không cần chà</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">x1</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)">0.5 mm</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">20 µm</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Chà nhẹ giấy nhám 220 là xong</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">x0.6</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)">0.8 mm</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">51 µm</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Sờ thấy gợn rõ</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">x0.4</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)">1.0 mm</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">81 µm</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Phải chà nhiều</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">x0.3</td></tr>
+</tbody></table>
+<p><strong>Quy tắc: stepover = 10% đường kính dao.</strong> Nhỏ hơn nữa chỉ tốn thời gian, không cải thiện gì đáng kể vì các yếu tố khác đã át.</p>
+
+<h2>8. Chọn gỗ</h2>
+<table style="width:100%;border-collapse:collapse;font-size:14px"><thead><tr><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Loại</th><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Độ mượt</th><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Ghi chú</th></tr></thead><tbody>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>MDF</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Tốt nhất</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Đồng nhất tuyệt đối, không thớ. <strong>Luôn phay thử trên đây trước</strong></td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>Bồ đề (basswood)</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Tốt nhất</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Gỗ thật tốt nhất cho phù điêu, thớ mịn đều</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Anh đào, phong cứng</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Khá</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Đẹp, cần dao thật sắc</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Óc chó</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Trung bình</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Đẹp nhưng thớ rõ hơn</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>Thông, gỗ mềm có vân</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Kém</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Vòng năm cứng-mềm xen kẽ → <strong>mặt lượn sóng dù map hoàn hảo</strong></td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Gỗ vân xoắn, gỗ nu</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Rất kém</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Sẽ bị tearout (xé thớ). Tránh</td></tr>
+</tbody></table>
+<div class="cf-panel warning" contenteditable="false"><span class="cf-panel-icon">⚠️</span><div class="cf-panel-content" contenteditable="true"><strong>Giới hạn cứng:</strong> thớ gỗ có thể phá hỏng bề mặt dù chuỗi số của bạn hoàn hảo. Nếu đã làm đúng hết mà vẫn gợn, hãy phay thử lên MDF — nếu MDF mượt thì lỗi là ở gỗ, không phải ở map.</div></div>`},
+
+  {id:'seed-cf-09',title:'09 · Tấm mẫu hiệu chuẩn & Xử lý sự cố',section:'default',parentId:'seed-comfyui',images:[],textBoxes:[],createdAt:'2026-08-08T00:00:00.000Z',updatedAt:'2026-08-08T00:00:00.000Z',content:`<h1>09 · Tấm mẫu hiệu chuẩn &amp; Xử lý sự cố</h1>
+
+<h2>1. Năm điểm kiểm tra trước khi phay</h2>
+<table style="width:100%;border-collapse:collapse;font-size:14px"><thead><tr><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">#</th><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Kiểm tra</th><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Cách xem</th></tr></thead><tbody>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)">1</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>Chiều đúng chưa?</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Trắng = nổi cao, đen = sâu nhất</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)">2</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>Nền phẳng tuyệt đối?</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Histogram — nền phải là 1 cột dính ở 0</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)">3</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>Dùng hết dải?</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Histogram trải rộng, không dồn cục 1 góc</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)">4</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>Không nhiễu lấm tấm?</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Zoom 300% vào vùng phẳng</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)">5</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>Thứ tự che khuất đúng?</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Chi tiết phía trước phải sáng hơn phía sau</td></tr>
+</tbody></table>
+
+<h2>2. Tấm mẫu hiệu chuẩn — làm một lần, dùng mãi</h2>
+<p>Đừng đoán. Phay một tấm mẫu trên <strong>MDF vụn</strong>, kích thước khoảng 100×150mm:</p>
+<pre>+-----------------------------------+
+| (1) Thang xám 10 bậc              |  đo bằng thước cặp:
+|     ###|###|///|:::|...|          |  10 bậc PHẢI cách đều
++-----------------------------------+
+| (2) Vùng phẳng lớn (xám 50%)      |  SỜ TAY. Phải nhẵn.
+|                                   |  Có gợn = tầng 1 sai
++-----------------------------------+
+| (3) Dốc thoải 0 -&gt; 100%           |  soi đèn chiếu ngang:
+|                                   |  thấy vân đồng mức
+|                                   |  = bit depth sai
++-----------------------------------+
+| (4) Bán cầu R = bán kính dao      |  test giới hạn phân giải
++-----------------------------------+
+| (5) Rãnh hẹp dần: 3/2/1/0.5mm     |  rãnh nào bắt đầu mất
++-----------------------------------+  = ngưỡng thật của bạn</pre>
+
+<h3>Đọc kết quả tấm mẫu</h3>
+<table style="width:100%;border-collapse:collapse;font-size:14px"><thead><tr><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Triệu chứng</th><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Tầng hỏng</th><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Sửa gì</th></tr></thead><tbody>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)">(2) vùng phẳng <strong>sần / gợn lăn tăn</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Tầng 1</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Tăng <code>kernel_size</code> — đang quá nhỏ</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)">(3) dốc có <strong>vân đồng mức</strong> như bản đồ</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Tầng 2</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Đang là 8-bit — xuất lại EXR/16-bit</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)">(1) thang xám <strong>bậc không đều</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Gamma</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Đặt <code>color_space = linear</code></td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Mặt có <strong>vệt song song đều</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Tầng 3</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Giảm stepover</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Mặt <strong>xơ, lông</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Tầng 3</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Dao cùn, hoặc sai chiều thớ</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)">(4) bán cầu <strong>méo</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Tầng 1 quá tay</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Giảm <code>kernel_size</code></td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)">(5) rãnh 2mm đã mất</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Bình thường</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Đó là giới hạn dao — biết để thiết kế</td></tr>
+</tbody></table>
+<div class="cf-panel info" contenteditable="false"><span class="cf-panel-icon">ℹ️</span><div class="cf-panel-content" contenteditable="true">Làm <strong>một lần</strong>, ghi lại con số, dùng mãi mãi cho mọi tác phẩm sau. Đây là khoản đầu tư 1 giờ tiết kiệm hàng chục phôi gỗ hỏng.</div></div>
+
+<h2>3. Bảng xử lý sự cố đầy đủ</h2>
+<table style="width:100%;border-collapse:collapse;font-size:14px"><thead><tr><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Triệu chứng</th><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Nguyên nhân</th><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Cách sửa</th></tr></thead><tbody>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Gỗ có <strong>vân bậc thang</strong> như đường đồng mức</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Bẫy "16-bit giả"</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Kiểm node <code>RemapDepth</code> có bật không; histogram có trải hết không</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Bề mặt <strong>sần sùi lấm tấm</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Nhiễu từ model</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Tăng <code>kernel_size</code>; nếu dùng Marigold thì đổi sang DA3</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Hình <strong>bẹp như bánh đa</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Nén Z quá tay / thiếu khối</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Chỉnh Curve dốc hơn; Nhánh A hạ ControlNet strength xuống ~0.6</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>Nền lượn sóng</strong> thay vì phẳng</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Chưa tách nền, hoặc điểm đen chưa về 0</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Kiểm khối tách nền; ép điểm đen ở Levels</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Model <strong>vẽ lại khác bản gốc</strong> (Nhánh A)</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">ControlNet quá yếu</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Tăng strength lên 0.85–0.95, <code>end_percent</code> lên 0.9</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>Lớp trước/sau lộn ngược</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Model đọc sai che khuất</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Đổi seed; vẫn sai thì line art chưa rõ lớp, phải sửa bản vẽ</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>Hết VRAM</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Ảnh quá lớn</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Bật <code>DA3 Enable Tiled Processing</code>; hoặc sinh ở 1024 rồi upscale sau</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Dao <strong>chạy rất lâu, rung</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Chi tiết nhỏ hơn cỡ dao</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Tăng <code>kernel_size</code>; hoặc đổi mũi dao nhỏ hơn</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>Gờ nổi giả</strong> quanh mọi đường viền</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Halo từ upscaler</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Đổi sang Siax; hoặc upscale ×2 rồi Lanczos về 4K</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>Ô vuông nổi</strong> đều đặn</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">JPEG artifact 8×8 bị upscale</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Dùng ảnh gốc PNG/TIFF; denoise trước khi upscale</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>Mụn nổi</strong> đều như lưới</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Chấm halftone không descreen</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Blur 1–2px + Median <em>trước</em> mọi phép resample</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Hoa/vật <strong>lõm xuống thay vì nổi lên</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Màu bão hoà — luminance đảo ngược</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Xem trang 04: desaturate hoặc chỉnh Black &amp; White theo từng vùng màu</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Ảnh nạp vào Aspire <strong>mất chi tiết cao độ</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Import qua 2D View</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Bỏ chọn hết rồi bấm Create Component From Bitmap (trang 08)</td></tr>
+</tbody></table>
+
+<h2>4. Chín quy tắc bất di bất dịch</h2>
+<ol>
+<li><strong>Line art tốt hơn ảnh chụp.</strong> Đầu vào phẳng, không bóng đổ.</li>
+<li><strong>Tách nền TRƯỚC</strong>, không phải sau.</li>
+<li><strong>Luôn có node chuẩn hoá</strong> trước khi lưu — bẫy "16-bit giả".</li>
+<li><strong>Dùng Morphology close, không dùng blur</strong> để lọc theo cỡ dao.</li>
+<li><strong>kernel_size = 2 x bán kính dao / mm-mỗi-pixel.</strong> Phôi 400mm + mũi 1/8" ở 4K = 33.</li>
+<li><strong>Xuất EXR 32-bit</strong>, chỉ hạ xuống 16-bit TIFF ở bước cuối cùng.</li>
+<li><strong>Aspire: import trực tiếp thành component</strong>, không qua 2D View.</li>
+<li><strong>Nền phải phẳng tuyệt đối</strong> — kiểm bằng histogram, không bằng mắt.</li>
+<li><strong>Chạy thử trên MDF vụn</strong> trước khi phay lên gỗ tốt.</li>
+</ol>`},
+
+  {id:'seed-cf-10',title:'10 · So sánh công cụ & Nguồn tham khảo',section:'default',parentId:'seed-comfyui',images:[],textBoxes:[],createdAt:'2026-08-08T00:00:00.000Z',updatedAt:'2026-08-08T00:00:00.000Z',content:`<h1>10 · So sánh công cụ &amp; Nguồn tham khảo</h1>
+
+<h2>1. ComfyUI vs Nano Banana vs SculptOK</h2>
+<table style="width:100%;border-collapse:collapse;font-size:14px"><thead><tr><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Tiêu chí</th><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">ComfyUI</th><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Nano Banana Pro</th><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">SculptOK</th></tr></thead><tbody>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Sinh ảnh gốc để khắc</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Khá</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>Tốt nhất</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Không có</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Ra height map dùng được</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>Có</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>Không</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Có</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Xuất 16-bit / EXR 32-bit</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>Có</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Không (8-bit)</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Chưa rõ</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Khoá cấu trúc bản vẽ (ControlNet)</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>Có</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Không</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Không</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Lọc theo cỡ dao (Morphology)</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>Có</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Không</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Không</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Có sẵn model tốt</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Phải tự tìm</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">—</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>Đã có sẵn</strong></td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Thời gian chạy được lần đầu</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Nửa ngày</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">5 phút</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>5 phút</strong></td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Chi phí</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>Miễn phí</strong> (cần GPU)</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Theo ảnh</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">~16 USD/tháng</td></tr>
+</tbody></table>
+
+<div class="cf-panel info" contenteditable="false"><span class="cf-panel-icon">ℹ️</span><div class="cf-panel-content" contenteditable="true"><strong>Kết luận:</strong> <em>Nano Banana một mình KHÔNG dùng được cho CNC</em> vì chỉ ra 8-bit. Vai trò đúng của nó là <strong>sinh line art gốc</strong> để đem đi chuyển thành depth map.<br><br>SculptOK là con đường ăn liền tốt. ComfyUI là con đường có trần chất lượng cao nhất — đặc biệt nhờ EXR 32-bit, ControlNet, và <strong>Morphology close</strong> (thứ mà không dịch vụ web nào cho bạn).</div></div>
+
+<h2>2. Vì sao SculptOK có thể tái tạo bằng ComfyUI</h2>
+<p>Trong diễn đàn chính thức của SculptOK có bình luận: <em>"prompt của bạn rất quan trọng với kết quả cuối"</em>. <strong>Depth estimation không có prompt.</strong> Việc SculptOK ăn prompt chứng minh nó là <strong>model sinh ảnh (diffusion)</strong> — cùng họ với Nhánh A.</p>
+<p>Dấu vết khác: nó <em>tự tách nền + phục hồi độ nét</em> trước khi xử lý (= tiền xử lý), và trả về <em>4 phương án</em> mỗi lần chạy (= batch_size 4, 4 seed khác nhau — đặc trưng kinh điển của diffusion).</p>
+<table style="width:100%;border-collapse:collapse;font-size:14px"><thead><tr><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">SculptOK làm gì</th><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Node ComfyUI tương đương</th></tr></thead><tbody>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Tự tách nền</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><code>ComfyUI-RMBG</code> — <strong>mạnh hơn</strong>, nhiều model để chọn</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Phục hồi độ nét</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Upscale model — ngang hoặc hơn</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Nhập prompt</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><code>CLIPTextEncode</code> — ngang</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Sinh depth map</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Checkpoint + LoRA — <strong>đây là mắt xích khó</strong></td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Ra 4 phương án</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><code>batch_size = 4</code> — ngang, và không tốn credit</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Convert sang STL</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><code>ComfyUI-GeometryPack</code> — ngang</td></tr>
+</tbody></table>
+<p><strong>8/9 bước ComfyUI làm được ngay, phần lớn còn tốt hơn.</strong> Chỉ mắc ở trọng số model.</p>
+
+<h2>3. Phân tích video phù điêu rồng (tham chiếu)</h2>
+<p>Video quảng cáo tiếng Trung <em>"Ảnh → ảnh xám một nút bấm — EXR 32-bit — Workflow ComfyUI"</em> (32 giây). Đã trích toàn bộ khung hình phân tích. Kết luận:</p>
+<ul>
+<li><strong>Không có khung hình nào hiện canvas ComfyUI</strong> — đây là clip quảng cáo bán workflow, không phải tutorial.</li>
+<li><strong>Đầu vào là line art thuần</strong> (nét mực + chấm halftone), không phải ảnh chụp.</li>
+<li>Đầu ra: nền đen tuyệt đối cắt sạch; chuyển sắc mượt không hạt; <strong>thứ tự che khuất đúng</strong>; vảy rồng thành từng bướu tròn riêng lẻ; <strong>chấm halftone KHÔNG biến thành mụn</strong> (model hiểu đó là sắc độ, không phải hình khối).</li>
+<li><strong>Chắc chắn không phải Depth Anything / MiDaS / Marigold</strong> — những model đó không cho nền đen sạch và không <em>sáng tạo</em> ra khối từ nét phẳng.</li>
+<li>Đó là <strong>model diffusion fine-tune trên bộ dữ liệu ảnh xám phù điêu</strong> — một ngách sản phẩm đã rất phát triển trong ngành CNC Trung Quốc.</li>
+</ul>
+
+<h2>4. Về chiêu "EXR 32-bit" — phần thật và phần quảng cáo</h2>
+<p><strong>Phần thật:</strong> EXR float32 không quantize — triệt tiêu hoàn toàn banding, tránh luôn bẫy "16-bit giả".</p>
+<p><strong>Phần quảng cáo:</strong> EXR chỉ <em>bảo toàn</em> thông tin model sinh ra, nó <strong>không tạo thêm</strong> chi tiết. Model cho ra khối thô thì lưu EXR vẫn là khối thô, chỉ mượt hơn.</p>
+
+<h2>5. Nguồn tham khảo</h2>
+<h3>Model &amp; nghiên cứu</h3>
+<ul>
+<li>Depth Anything 3 — github.com/ByteDance-Seed/depth-anything-3</li>
+<li>Depth Anything V2 — arxiv.org/html/2406.09414v1</li>
+<li>Depth Pro (Apple) — arxiv.org/html/2410.02073v1</li>
+<li>Lotus-2 — arxiv.org/pdf/2512.01030</li>
+<li>Metric vs Relative Monocular Depth — huggingface.co/blog/Isayoften/monocular-depth-estimation-guide</li>
+<li>Bas-relief Generation from Point Clouds (nén chiều sâu) — arxiv.org/pdf/1912.13140</li>
+<li>16-bit raw depth map is practically 8-bit — huggingface.co/spaces/LiheYoung/Depth-Anything/discussions/8</li>
+</ul>
+<h3>Node ComfyUI</h3>
+<ul>
+<li>Morphology (built-in) — docs.comfy.org/built-in-nodes/Morphology</li>
+<li>SaveImageAdvanced (built-in, EXR 32f) — docs.comfy.org/built-in-nodes/SaveImageAdvanced</li>
+<li>ComfyUI-RMBG — github.com/1038lab/ComfyUI-RMBG</li>
+<li>ComfyUI-DepthAnythingV3 — github.com/PozzettiAndrea/ComfyUI-DepthAnythingV3</li>
+<li>RemapDepth (Marigold) / RemapImageRange (KJNodes)</li>
+<li>ComfyUI-HQ-Image-Save — github.com/spacepxl/ComfyUI-HQ-Image-Save</li>
+<li>ComfyUI-seamless-tiling — deepwiki.com/spinagon/ComfyUI-seamless-tiling</li>
+<li>Nano Banana qua ComfyUI API Nodes — blog.comfy.org/p/nano-banana-via-comfyui-api-nodes</li>
+</ul>
+<h3>CNC &amp; Vectric</h3>
+<ul>
+<li>Create Component from Bitmap — docs.vectric.com (Aspire manual)</li>
+<li>Importing Depth or Height Map into Aspire — forum.vectric.com</li>
+<li>Greyscale bitmap in Aspire (16-bit TIFF, banding) — forum.vectric.com</li>
+<li>How to Turn Any Photo into a 3D Relief for CNC Carving — craftgineer.com</li>
+<li>Height vs Displacement vs Normal Map — normalmap.ai/learn/height-map</li>
+</ul>
+<h3>Công cụ khác</h3>
+<ul>
+<li>SculptOK — sculptok.com (và community.sculptok.com)</li>
+<li>Fiddling about with SculptOK — community.carbide3d.com</li>
+<li>blender-bas-relief — github.com/GuillaumeBissieres/blender-bas-relief</li>
+<li>DepthMap Gen (Blender add-on) — bissieres.gumroad.com/l/DepthMapGen</li>
+<li>LiblibAI (liblib.art) — nơi có LoRA ảnh xám phù điêu tiếng Trung</li>
+</ul>
+
+<div class="cf-panel note" contenteditable="false"><span class="cf-panel-icon">📝</span><div class="cf-panel-content" contenteditable="true"><strong>Cảnh báo về Civitai:</strong> LoRA tên <code>artfully DEPTHMAP</code> trên Civitai đã được kiểm tra — đó là <strong>LoRA phong cách</strong> (làm ảnh <em>trông giống</em> phù điêu), không phải model sinh ảnh xám cho máy phay. Dùng cho CNC sẽ ra hình sai.</div></div>`}];
 let state={projectName:'My Project',username:'User',sections:['default'],docs:[],currentDocId:null};
 let saveTimer,dirty=false,ctxImgIdx=null,docCtxId=null,_savedRange=null,_bubbleHideTimer=null;
 
