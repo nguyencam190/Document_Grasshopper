@@ -1,0 +1,184 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1140" height="810" viewBox="0 0 1140 810" font-family="Segoe UI, Arial, sans-serif">
+<defs>
+<pattern id="g2" width="22" height="22" patternUnits="userSpaceOnUse"><circle cx="1" cy="1" r="1" fill="#2E343B"/></pattern>
+<marker id="a2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#64B5F6"/></marker>
+</defs>
+<rect width="1140" height="810" fill="#22262B"/><rect width="1140" height="810" fill="url(#g2)"/>
+<text x="24" y="32" font-size="16" font-weight="700" fill="#E8EAED">Sơ đồ kéo graph — Nhánh B (Depth Anything V3)</text>
+<text x="24" y="52" font-size="11.5" fill="#8FA3B8">Node viền cam = 3 node quyết định chất lượng. Đọc chú thích góc dưới phải.</text>
+
+<!-- ================= FRAME A ================= -->
+<rect x="24" y="76" width="1092" height="250" rx="12" fill="#3B82F6" fill-opacity="0.055" stroke="#3B82F6" stroke-opacity="0.45" stroke-dasharray="6 5"/>
+<text x="40" y="96" font-size="11.5" font-weight="700" fill="#7FB0F5">HÀNG 1 · TIỀN XỬ LÝ — đưa về 1024px (KHÔNG phải 4K)</text>
+
+<!-- A1 Load Image -->
+<g><rect x="40" y="110" width="190" height="94" rx="8" fill="#303030" stroke="#141414" stroke-width="1.8"/>
+<path d="M40,118 a8,8 0 0 1 8,-8 h174 a8,8 0 0 1 8,8 v16 h-190 z" fill="#4A4A4A"/>
+<text x="52" y="128" font-size="11.5" font-weight="600" fill="#F2F2F2">Load Image</text>
+<circle cx="230" cy="152" r="4.5" fill="#64B5F6" stroke="#111"/><text x="217" y="156" font-size="9.5" fill="#B7BCC2" text-anchor="end">IMAGE</text>
+<circle cx="230" cy="170" r="4.5" fill="#81C784" stroke="#111"/><text x="217" y="174" font-size="9.5" fill="#B7BCC2" text-anchor="end">MASK</text>
+<rect x="50" y="180" width="170" height="16" rx="8" fill="#1C1C1C"/><text x="60" y="192" font-size="9.5" fill="#9AA0A6">image</text><text x="210" y="192" font-size="9.5" fill="#FFF" text-anchor="end">rong.png</text></g>
+
+<!-- A2 ImageBlur -->
+<g><rect x="256" y="110" width="190" height="94" rx="8" fill="#303030" stroke="#141414" stroke-width="1.8"/>
+<path d="M256,118 a8,8 0 0 1 8,-8 h174 a8,8 0 0 1 8,8 v16 h-190 z" fill="#4A4A4A"/>
+<text x="268" y="128" font-size="11.5" font-weight="600" fill="#F2F2F2">ImageBlur</text>
+<circle cx="256" cy="152" r="4.5" fill="#64B5F6" stroke="#111"/><text x="269" y="156" font-size="9.5" fill="#B7BCC2">image</text>
+<circle cx="446" cy="152" r="4.5" fill="#64B5F6" stroke="#111"/>
+<rect x="266" y="164" width="170" height="16" rx="8" fill="#1C1C1C"/><text x="276" y="176" font-size="9.5" fill="#9AA0A6">blur_radius</text><text x="426" y="176" font-size="9.5" fill="#FFF" text-anchor="end">1</text>
+<rect x="266" y="182" width="170" height="16" rx="8" fill="#1C1C1C"/><text x="276" y="194" font-size="9.5" fill="#9AA0A6">sigma</text><text x="426" y="194" font-size="9.5" fill="#FFF" text-anchor="end">1.0</text></g>
+
+<!-- A3 Image Scale 1024  (HIGHLIGHT) -->
+<g><rect x="472" y="110" width="190" height="112" rx="8" fill="#332B1C" stroke="#FFB74D" stroke-width="2.2"/>
+<path d="M472,118 a8,8 0 0 1 8,-8 h174 a8,8 0 0 1 8,8 v16 h-190 z" fill="#7A5A1A"/>
+<text x="484" y="128" font-size="11.5" font-weight="600" fill="#FFE3B3">Image Scale</text>
+<circle cx="472" cy="152" r="4.5" fill="#64B5F6" stroke="#111"/><text x="485" y="156" font-size="9.5" fill="#B7BCC2">image</text>
+<circle cx="662" cy="152" r="4.5" fill="#64B5F6" stroke="#111"/>
+<rect x="482" y="164" width="170" height="16" rx="8" fill="#1C1C1C"/><text x="492" y="176" font-size="9.5" fill="#9AA0A6">upscale_method</text><text x="642" y="176" font-size="9.5" fill="#FFD08A" text-anchor="end">lanczos</text>
+<rect x="482" y="182" width="170" height="16" rx="8" fill="#1C1C1C"/><text x="492" y="194" font-size="9.5" fill="#9AA0A6">width</text><text x="642" y="194" font-size="9.5" fill="#FFD08A" text-anchor="end">1024</text>
+<rect x="482" y="200" width="170" height="16" rx="8" fill="#1C1C1C"/><text x="492" y="212" font-size="9.5" fill="#9AA0A6">height</text><text x="642" y="212" font-size="9.5" fill="#FFD08A" text-anchor="end">1024</text></g>
+
+<!-- A4 BiRefNetRMBG -->
+<g><rect x="688" y="110" width="190" height="94" rx="8" fill="#303030" stroke="#141414" stroke-width="1.8"/>
+<path d="M688,118 a8,8 0 0 1 8,-8 h174 a8,8 0 0 1 8,8 v16 h-190 z" fill="#4A4A4A"/>
+<text x="700" y="128" font-size="11.5" font-weight="600" fill="#F2F2F2">BiRefNetRMBG</text>
+<circle cx="688" cy="152" r="4.5" fill="#64B5F6" stroke="#111"/><text x="701" y="156" font-size="9.5" fill="#B7BCC2">image</text>
+<circle cx="878" cy="152" r="4.5" fill="#64B5F6" stroke="#111"/><text x="865" y="156" font-size="9.5" fill="#B7BCC2" text-anchor="end">IMAGE</text>
+<circle cx="878" cy="170" r="4.5" fill="#81C784" stroke="#111"/><text x="865" y="174" font-size="9.5" fill="#B7BCC2" text-anchor="end">MASK</text>
+<rect x="698" y="180" width="170" height="16" rx="8" fill="#1C1C1C"/><text x="708" y="192" font-size="9.5" fill="#9AA0A6">model</text><text x="858" y="192" font-size="9.5" fill="#FFF" text-anchor="end">BiRefNet-Lucida</text></g>
+
+<!-- A5 ImageCompositeMasked -->
+<g><rect x="904" y="110" width="190" height="76" rx="8" fill="#303030" stroke="#141414" stroke-width="1.8"/>
+<path d="M904,118 a8,8 0 0 1 8,-8 h174 a8,8 0 0 1 8,8 v16 h-190 z" fill="#4A4A4A"/>
+<text x="916" y="128" font-size="10.5" font-weight="600" fill="#F2F2F2">ImageCompositeMasked</text>
+<circle cx="904" cy="150" r="4.5" fill="#64B5F6" stroke="#111"/><text x="917" y="154" font-size="9.5" fill="#B7BCC2">destination</text>
+<circle cx="904" cy="168" r="4.5" fill="#64B5F6" stroke="#111"/><text x="917" y="172" font-size="9.5" fill="#B7BCC2">source</text>
+<circle cx="1094" cy="150" r="4.5" fill="#64B5F6" stroke="#111"/></g>
+
+<!-- EmptyImage -->
+<g><rect x="688" y="228" width="190" height="76" rx="8" fill="#303030" stroke="#141414" stroke-width="1.8"/>
+<path d="M688,236 a8,8 0 0 1 8,-8 h174 a8,8 0 0 1 8,8 v16 h-190 z" fill="#4A4A4A"/>
+<text x="700" y="246" font-size="11.5" font-weight="600" fill="#F2F2F2">EmptyImage</text>
+<circle cx="878" cy="268" r="4.5" fill="#64B5F6" stroke="#111"/>
+<rect x="698" y="280" width="170" height="16" rx="8" fill="#1C1C1C"/><text x="708" y="292" font-size="9.5" fill="#9AA0A6">color</text><text x="858" y="292" font-size="9.5" fill="#FFF" text-anchor="end">0 (đen thuần)</text></g>
+
+<!-- wires row A -->
+<path d="M230,152 C244,152 244,152 256,152" fill="none" stroke="#64B5F6" stroke-width="2.4"/>
+<path d="M446,152 C460,152 460,152 472,152" fill="none" stroke="#64B5F6" stroke-width="2.4"/>
+<path d="M662,152 C676,152 676,152 688,152" fill="none" stroke="#64B5F6" stroke-width="2.4"/>
+<path d="M878,152 C892,152 892,150 904,150" fill="none" stroke="#64B5F6" stroke-width="2.4"/>
+<path d="M878,268 C892,268 892,168 904,168" fill="none" stroke="#64B5F6" stroke-width="2.4"/>
+
+<!-- A -> B connector -->
+<path d="M1094,150 C1122,150 1124,150 1124,180 L1124,332 C1124,350 1114,350 1100,350 L266,350 C250,350 243,352 243,368 L243,420 C243,434 250,438 256,438" fill="none" stroke="#64B5F6" stroke-width="2.4" stroke-opacity="0.85" marker-end="url(#a2)"/>
+<text x="640" y="344" font-size="10" fill="#7FB0F5">ảnh đã tách nền, 1024px  →  đưa vào Depth</text>
+
+<!-- ================= FRAME B ================= -->
+<rect x="24" y="372" width="1092" height="168" rx="12" fill="#22C55E" fill-opacity="0.05" stroke="#22C55E" stroke-opacity="0.42" stroke-dasharray="6 5"/>
+<text x="40" y="392" font-size="11.5" font-weight="700" fill="#6EDD9B">HÀNG 2 · SINH DEPTH → CHUẨN HOÁ → PHÓNG 4K → LỌC THEO CỠ DAO</text>
+
+<!-- B1 Load DA3 -->
+<g><rect x="40" y="396" width="190" height="94" rx="8" fill="#303030" stroke="#141414" stroke-width="1.8"/>
+<path d="M40,404 a8,8 0 0 1 8,-8 h174 a8,8 0 0 1 8,8 v16 h-190 z" fill="#4A4A4A"/>
+<text x="52" y="414" font-size="10.5" font-weight="600" fill="#F2F2F2">Download+Load DA3 Model</text>
+<circle cx="230" cy="438" r="4.5" fill="#B39DDB" stroke="#111"/><text x="217" y="442" font-size="9.5" fill="#B7BCC2" text-anchor="end">DA3_MODEL</text>
+<rect x="50" y="466" width="170" height="16" rx="8" fill="#1C1C1C"/><text x="60" y="478" font-size="9.5" fill="#9AA0A6">model</text><text x="210" y="478" font-size="9.5" fill="#FFF" text-anchor="end">DA3-Large</text></g>
+
+<!-- B2 Depth Anything V3 -->
+<g><rect x="256" y="396" width="190" height="94" rx="8" fill="#303030" stroke="#141414" stroke-width="1.8"/>
+<path d="M256,404 a8,8 0 0 1 8,-8 h174 a8,8 0 0 1 8,8 v16 h-190 z" fill="#4A4A4A"/>
+<text x="268" y="414" font-size="11.5" font-weight="600" fill="#F2F2F2">Depth Anything V3</text>
+<circle cx="256" cy="420" r="4.5" fill="#B39DDB" stroke="#111"/><text x="269" y="424" font-size="9.5" fill="#B7BCC2">da3_model</text>
+<circle cx="256" cy="438" r="4.5" fill="#64B5F6" stroke="#111"/><text x="269" y="442" font-size="9.5" fill="#B7BCC2">image</text>
+<circle cx="446" cy="438" r="4.5" fill="#64B5F6" stroke="#111"/>
+<rect x="266" y="466" width="170" height="16" rx="8" fill="#1C1C1C"/><text x="276" y="478" font-size="9.5" fill="#9AA0A6">resolution</text><text x="426" y="478" font-size="9.5" fill="#FFF" text-anchor="end">1024</text></g>
+
+<!-- B3 RemapDepth HIGHLIGHT -->
+<g><rect x="472" y="396" width="190" height="112" rx="8" fill="#332B1C" stroke="#FFB74D" stroke-width="2.2"/>
+<path d="M472,404 a8,8 0 0 1 8,-8 h174 a8,8 0 0 1 8,8 v16 h-190 z" fill="#7A5A1A"/>
+<text x="484" y="414" font-size="11.5" font-weight="600" fill="#FFE3B3">RemapDepth</text>
+<circle cx="472" cy="438" r="4.5" fill="#64B5F6" stroke="#111"/><text x="485" y="442" font-size="9.5" fill="#B7BCC2">image</text>
+<circle cx="662" cy="438" r="4.5" fill="#64B5F6" stroke="#111"/>
+<rect x="482" y="450" width="170" height="16" rx="8" fill="#1C1C1C"/><text x="492" y="462" font-size="9.5" fill="#9AA0A6">min</text><text x="642" y="462" font-size="9.5" fill="#FFD08A" text-anchor="end">0.0</text>
+<rect x="482" y="468" width="170" height="16" rx="8" fill="#1C1C1C"/><text x="492" y="480" font-size="9.5" fill="#9AA0A6">max</text><text x="642" y="480" font-size="9.5" fill="#FFD08A" text-anchor="end">1.0</text>
+<rect x="482" y="486" width="170" height="16" rx="8" fill="#1C1C1C"/><text x="492" y="498" font-size="9.5" fill="#9AA0A6">clamp</text><text x="642" y="498" font-size="9.5" fill="#FFD08A" text-anchor="end">ON</text></g>
+
+<!-- B4 Image Scale 4096 HIGHLIGHT -->
+<g><rect x="688" y="396" width="190" height="112" rx="8" fill="#332B1C" stroke="#FFB74D" stroke-width="2.2"/>
+<path d="M688,404 a8,8 0 0 1 8,-8 h174 a8,8 0 0 1 8,8 v16 h-190 z" fill="#7A5A1A"/>
+<text x="700" y="414" font-size="11.5" font-weight="600" fill="#FFE3B3">Image Scale</text>
+<circle cx="688" cy="438" r="4.5" fill="#64B5F6" stroke="#111"/><text x="701" y="442" font-size="9.5" fill="#B7BCC2">image</text>
+<circle cx="878" cy="438" r="4.5" fill="#64B5F6" stroke="#111"/>
+<rect x="698" y="450" width="170" height="16" rx="8" fill="#1C1C1C"/><text x="708" y="462" font-size="9.5" fill="#9AA0A6">upscale_method</text><text x="858" y="462" font-size="9.5" fill="#FFD08A" text-anchor="end">lanczos</text>
+<rect x="698" y="468" width="170" height="16" rx="8" fill="#1C1C1C"/><text x="708" y="480" font-size="9.5" fill="#9AA0A6">width</text><text x="858" y="480" font-size="9.5" fill="#FFD08A" text-anchor="end">4096</text>
+<rect x="698" y="486" width="170" height="16" rx="8" fill="#1C1C1C"/><text x="708" y="498" font-size="9.5" fill="#9AA0A6">height</text><text x="858" y="498" font-size="9.5" fill="#FFD08A" text-anchor="end">4096</text></g>
+
+<!-- B5 Morphology HIGHLIGHT -->
+<g><rect x="904" y="396" width="190" height="94" rx="8" fill="#332B1C" stroke="#FFB74D" stroke-width="2.2"/>
+<path d="M904,404 a8,8 0 0 1 8,-8 h174 a8,8 0 0 1 8,8 v16 h-190 z" fill="#7A5A1A"/>
+<text x="916" y="414" font-size="11.5" font-weight="600" fill="#FFE3B3">Morphology</text>
+<circle cx="904" cy="438" r="4.5" fill="#64B5F6" stroke="#111"/><text x="917" y="442" font-size="9.5" fill="#B7BCC2">image</text>
+<circle cx="1094" cy="438" r="4.5" fill="#64B5F6" stroke="#111"/>
+<rect x="914" y="450" width="170" height="16" rx="8" fill="#1C1C1C"/><text x="924" y="462" font-size="9.5" fill="#9AA0A6">operation</text><text x="1074" y="462" font-size="9.5" fill="#FFD08A" text-anchor="end">close</text>
+<rect x="914" y="468" width="170" height="16" rx="8" fill="#1C1C1C"/><text x="924" y="480" font-size="9.5" fill="#9AA0A6">kernel_size</text><text x="1074" y="480" font-size="9.5" fill="#FFD08A" text-anchor="end">33</text></g>
+
+<!-- wires row B -->
+<path d="M230,438 C242,438 244,420 256,420" fill="none" stroke="#B39DDB" stroke-width="2.4"/>
+<path d="M446,438 C460,438 460,438 472,438" fill="none" stroke="#64B5F6" stroke-width="2.4"/>
+<path d="M662,438 C676,438 676,438 688,438" fill="none" stroke="#64B5F6" stroke-width="2.4"/>
+<path d="M878,438 C892,438 892,438 904,438" fill="none" stroke="#64B5F6" stroke-width="2.4"/>
+
+<!-- B -> C connector -->
+<path d="M1094,438 C1122,438 1124,438 1124,466 L1124,548 C1124,562 1114,562 1100,562 L46,562 C30,562 16,566 16,584 L16,634 C16,648 26,652 40,652" fill="none" stroke="#64B5F6" stroke-width="2.4" stroke-opacity="0.85" marker-end="url(#a2)"/>
+<text x="600" y="556" font-size="10" fill="#7FB0F5">depth map 4096px đã lọc theo cỡ dao  →  hoàn thiện &amp; xuất</text>
+
+<!-- ================= ROW C ================= -->
+<text x="40" y="600" font-size="11.5" font-weight="700" fill="#C4A6F0">HÀNG 3 · HOÀN THIỆN &amp; XUẤT FILE</text>
+
+<g><rect x="40" y="610" width="190" height="94" rx="8" fill="#303030" stroke="#141414" stroke-width="1.8"/>
+<path d="M40,618 a8,8 0 0 1 8,-8 h174 a8,8 0 0 1 8,8 v16 h-190 z" fill="#4A4A4A"/>
+<text x="52" y="628" font-size="11.5" font-weight="600" fill="#F2F2F2">ImageBlur</text>
+<circle cx="40" cy="652" r="4.5" fill="#64B5F6" stroke="#111"/><text x="53" y="656" font-size="9.5" fill="#B7BCC2">image</text>
+<circle cx="230" cy="652" r="4.5" fill="#64B5F6" stroke="#111"/>
+<rect x="50" y="680" width="170" height="16" rx="8" fill="#1C1C1C"/><text x="60" y="692" font-size="9.5" fill="#9AA0A6">blur_radius</text><text x="210" y="692" font-size="9.5" fill="#FFF" text-anchor="end">2</text></g>
+
+<g><rect x="256" y="610" width="190" height="94" rx="8" fill="#303030" stroke="#141414" stroke-width="1.8"/>
+<path d="M256,618 a8,8 0 0 1 8,-8 h174 a8,8 0 0 1 8,8 v16 h-190 z" fill="#4A4A4A"/>
+<text x="268" y="628" font-size="11.5" font-weight="600" fill="#F2F2F2">Levels / Curve</text>
+<circle cx="256" cy="652" r="4.5" fill="#64B5F6" stroke="#111"/><text x="269" y="656" font-size="9.5" fill="#B7BCC2">image</text>
+<circle cx="446" cy="652" r="4.5" fill="#64B5F6" stroke="#111"/>
+<rect x="266" y="680" width="170" height="16" rx="8" fill="#1C1C1C"/><text x="276" y="692" font-size="9.5" fill="#9AA0A6">black_point</text><text x="426" y="692" font-size="9.5" fill="#FFF" text-anchor="end">0 (nền phẳng)</text></g>
+
+<g><rect x="472" y="556" width="200" height="112" rx="8" fill="#303030" stroke="#141414" stroke-width="1.8"/>
+<path d="M472,564 a8,8 0 0 1 8,-8 h184 a8,8 0 0 1 8,8 v16 h-200 z" fill="#4A4A4A"/>
+<text x="484" y="574" font-size="11" font-weight="600" fill="#F2F2F2">SaveImageAdvanced</text>
+<circle cx="472" cy="598" r="4.5" fill="#64B5F6" stroke="#111"/><text x="485" y="602" font-size="9.5" fill="#B7BCC2">images</text>
+<rect x="482" y="610" width="180" height="16" rx="8" fill="#1C1C1C"/><text x="492" y="622" font-size="9.5" fill="#9AA0A6">format</text><text x="652" y="622" font-size="9.5" fill="#8FE3B0" text-anchor="end">EXR</text>
+<rect x="482" y="628" width="180" height="16" rx="8" fill="#1C1C1C"/><text x="492" y="640" font-size="9.5" fill="#9AA0A6">bit_depth</text><text x="652" y="640" font-size="9.5" fill="#8FE3B0" text-anchor="end">32-bit float</text>
+<rect x="482" y="646" width="180" height="16" rx="8" fill="#1C1C1C"/><text x="492" y="658" font-size="9.5" fill="#9AA0A6">color_space</text><text x="652" y="658" font-size="9.5" fill="#8FE3B0" text-anchor="end">linear</text></g>
+
+<g><rect x="472" y="684" width="200" height="94" rx="8" fill="#303030" stroke="#141414" stroke-width="1.8"/>
+<path d="M472,692 a8,8 0 0 1 8,-8 h184 a8,8 0 0 1 8,8 v16 h-200 z" fill="#4A4A4A"/>
+<text x="484" y="702" font-size="11" font-weight="600" fill="#F2F2F2">SaveImageAdvanced</text>
+<circle cx="472" cy="726" r="4.5" fill="#64B5F6" stroke="#111"/><text x="485" y="730" font-size="9.5" fill="#B7BCC2">images</text>
+<rect x="482" y="738" width="180" height="16" rx="8" fill="#1C1C1C"/><text x="492" y="750" font-size="9.5" fill="#9AA0A6">format</text><text x="652" y="750" font-size="9.5" fill="#8FE3B0" text-anchor="end">TIFF</text>
+<rect x="482" y="756" width="180" height="16" rx="8" fill="#1C1C1C"/><text x="492" y="768" font-size="9.5" fill="#9AA0A6">bit_depth</text><text x="652" y="768" font-size="9.5" fill="#8FE3B0" text-anchor="end">16  → cho Aspire</text></g>
+
+<path d="M230,652 C244,652 244,652 256,652" fill="none" stroke="#64B5F6" stroke-width="2.4"/>
+<path d="M446,652 C459,652 459,598 472,598" fill="none" stroke="#64B5F6" stroke-width="2.4"/>
+<path d="M446,652 C459,652 459,726 472,726" fill="none" stroke="#64B5F6" stroke-width="2.4"/>
+
+<!-- NOTE PANEL -->
+<rect x="700" y="556" width="416" height="222" rx="10" fill="#191C20" stroke="#3A4149"/>
+<text x="716" y="580" font-size="12" font-weight="700" fill="#FFB74D">3 node viền cam — bỏ 1 cái là hỏng</text>
+<text x="716" y="606" font-size="11" font-weight="600" fill="#FFE3B3">Image Scale · 1024 (hàng 1)</text>
+<text x="716" y="622" font-size="10" fill="#B9BFC6">Hạ ảnh về 1024 TRƯỚC khi vào depth. Chạy ở 4K</text>
+<text x="716" y="636" font-size="10" fill="#B9BFC6">sẽ bị chia tile → bậc thang chạy ngang tác phẩm.</text>
+<text x="716" y="662" font-size="11" font-weight="600" fill="#FFE3B3">RemapDepth · min 0 max 1 clamp ON</text>
+<text x="716" y="678" font-size="10" fill="#B9BFC6">Trải dữ liệu ra hết dải. Bỏ bước này = bẫy</text>
+<text x="716" y="692" font-size="10" fill="#B9BFC6">&quot;16-bit giả&quot;, gỗ vẫn bị vân bậc thang.</text>
+<text x="716" y="718" font-size="11" font-weight="600" fill="#FFE3B3">Morphology · close · kernel_size</text>
+<text x="716" y="734" font-size="10" fill="#B9BFC6">kernel = 2 × bán kính dao ÷ mm-mỗi-pixel.</text>
+<text x="716" y="748" font-size="10" fill="#B9BFC6">Phôi 400mm + ball 1/8&quot; ở 4K → 33. Đây là thứ</text>
+<text x="716" y="762" font-size="10" fill="#B9BFC6">quyết định mặt gỗ MƯỢT hay GỢN.</text>
+</svg>
