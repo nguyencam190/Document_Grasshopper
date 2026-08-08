@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="510" viewBox="0 0 900 510" font-family="Segoe UI, Arial, sans-serif">
+<defs>
+<linearGradient id="wood" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#D8BC93"/><stop offset="100%" stop-color="#9C7C4F"/></linearGradient>
+<marker id="a3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#9AA6B2"/></marker>
+</defs>
+<rect width="900" height="510" fill="#22262B"/>
+<text x="24" y="30" font-size="16" font-weight="700" fill="#E8EAED">Mặt cắt ngang — vì sao dùng CLOSE chứ không dùng BLUR</text>
+
+<!-- ===== LANE 1: GỐC ===== -->
+<text x="24" y="76" font-size="12" font-weight="700" fill="#8FA3B8">1 · BỀ MẶT GỐC (depth map thô)</text>
+<path d="M80,150 L160,150 L200,88 L240,150 L340,150 L348,196 L372,196 L380,150 L480,150 Q590,78 700,150 L820,150 L820,214 L80,214 Z" fill="url(#wood)" stroke="#6E5836" stroke-width="1.5"/>
+<path d="M200,88 L200,68" stroke="#9AA6B2" stroke-width="1.2" marker-end="url(#a3)"/><text x="200" y="62" font-size="10" fill="#C7CCD1" text-anchor="middle">đỉnh nhọn</text>
+<path d="M360,196 L360,232" stroke="#9AA6B2" stroke-width="1.2" marker-end="url(#a3)"/><text x="360" y="246" font-size="10" fill="#C7CCD1" text-anchor="middle">khe hẹp 0.5mm</text>
+<path d="M590,78 L590,60" stroke="#9AA6B2" stroke-width="1.2" marker-end="url(#a3)"/><text x="590" y="54" font-size="10" fill="#C7CCD1" text-anchor="middle">khối lớn</text>
+<circle cx="360" cy="126" r="30" fill="none" stroke="#FF6E6E" stroke-width="2" stroke-dasharray="4 3"/>
+<text x="404" y="122" font-size="10" fill="#FF9A9A">mũi ball nose R = 1.59mm</text>
+<text x="404" y="136" font-size="10" fill="#FF9A9A">KHÔNG chui được vào khe này</text>
+
+<!-- ===== LANE 2: BLUR ===== -->
+<text x="24" y="286" font-size="12" font-weight="700" fill="#FF8A8A">2 · GAUSSIAN BLUR   ✕  làm nhũn MỌI THỨ</text>
+<path d="M80,320 L150,320 Q200,272 250,320 L330,320 Q360,344 390,320 L470,320 Q590,258 710,320 L820,320 L820,376 L80,376 Z" fill="url(#wood)" stroke="#6E5836" stroke-width="1.5" opacity="0.82"/>
+<path d="M200,276 L200,254" stroke="#FF6E6E" stroke-width="1.2" marker-end="url(#a3)"/><text x="200" y="248" font-size="10" fill="#FF9A9A" text-anchor="middle">đỉnh BỊ MÒN</text>
+<path d="M360,344 L360,362" stroke="#FF6E6E" stroke-width="1.2"/><text x="392" y="356" font-size="10" fill="#FF9A9A">khe vẫn còn, chỉ mờ đi</text>
+<path d="M590,258 L590,240" stroke="#FF6E6E" stroke-width="1.2" marker-end="url(#a3)"/><text x="590" y="234" font-size="10" fill="#FF9A9A" text-anchor="middle">khối cũng bị nhũn</text>
+
+<!-- ===== LANE 3: CLOSE ===== -->
+<text x="24" y="426" font-size="12" font-weight="700" fill="#7FDCA4">3 · MORPHOLOGY CLOSE   ✓  chỉ lấp chỗ dao không tới</text>
+<path d="M80,460 L160,460 L200,398 L240,460 L480,460 Q590,388 700,460 L820,460 L820,500 L80,500 Z" fill="url(#wood)" stroke="#6E5836" stroke-width="1.5"/>
+<path d="M200,398 L200,378" stroke="#4ADE80" stroke-width="1.2" marker-end="url(#a3)"/><text x="200" y="372" font-size="10" fill="#7FDCA4" text-anchor="middle">đỉnh NGUYÊN VẸN</text>
+<rect x="340" y="440" width="46" height="22" rx="4" fill="none" stroke="#4ADE80" stroke-width="1.6" stroke-dasharray="4 3"/>
+<path d="M363,440 L363,412" stroke="#4ADE80" stroke-width="1.2" marker-end="url(#a3)"/><text x="363" y="406" font-size="10" fill="#7FDCA4" text-anchor="middle">khe BỊ LẤP</text>
+<path d="M590,388 L590,370" stroke="#4ADE80" stroke-width="1.2" marker-end="url(#a3)"/><text x="590" y="364" font-size="10" fill="#7FDCA4" text-anchor="middle">khối NGUYÊN</text>
+<circle cx="600" cy="404" r="30" fill="none" stroke="#4ADE80" stroke-width="1.6" stroke-dasharray="4 3"/>
+
+<!-- explanation box -->
+<rect x="600" y="252" width="280" height="120" rx="10" fill="#191C20" stroke="#3A4149"/>
+<text x="614" y="274" font-size="11.5" font-weight="700" fill="#E8EAED">Close = lăn quả bóng bán kính R</text>
+<text x="614" y="294" font-size="10" fill="#B9BFC6">Bóng chạm được đỉnh nhọn → giữ nguyên</text>
+<text x="614" y="310" font-size="10" fill="#B9BFC6">Bóng chạm được mặt phẳng → giữ nguyên</text>
+<text x="614" y="326" font-size="10" fill="#B9BFC6">Bóng KHÔNG chui vào khe hẹp → khe bị lấp</text>
+<text x="614" y="348" font-size="10" fill="#FFD08A">Đây đúng là mô hình vật lý của mũi dao cầu —</text>
+<text x="614" y="362" font-size="10" fill="#FFD08A">không phải phép lọc gần đúng.</text>
+</svg>
