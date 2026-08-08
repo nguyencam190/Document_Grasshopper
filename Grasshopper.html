@@ -2986,7 +2986,7 @@ const STORE_KEY='projectdocs_v3';
 // Bump SEED_VERSION any time SEED_DOCS content changes (e.g. a new Grasshopper
 // command page is added) to re-sync all visitors automatically, even ones
 // with old data already saved locally.
-const SEED_VERSION=99;
+const SEED_VERSION=100;
 // Real image assets referenced by SEED_DOCS via data-cfimgid — every visitor's
 // browser needs these in its OWN IndexedDB (see init() below) so images both
 // (a) display correctly, and (b) get recognized by the app's own Optimized
@@ -6284,7 +6284,7 @@ nhắc tới thiết kế vành xe/bánh xe/ô tô ở bất kỳ đâu — đã
     |
     v
 [1] TIỀN XỬ LÝ      làm sạch, chỉnh trực diện,
-                    nâng 4K, chuẩn màu
+                    đưa về ~1024px, chuẩn màu
     |
     v
 [2] TÁCH NỀN        nền về đen tuyệt đối
@@ -6292,19 +6292,25 @@ nhắc tới thiết kế vành xe/bánh xe/ô tô ở bất kỳ đâu — đã
     v
 [3] SINH DEPTH      A) model phù điêu (đẹp nhất)
                     B) Depth Anything V3 (chạy ngay)
+                    Ở ~1024px, KHÔNG ở 4K
     |
     v
-[4] LỌC THEO DAO    Morphology CLOSE theo bán kính
+[4] PHÓNG LÊN 4K    phóng to bản DEPTH MAP
+                    CHỈ Lanczos — không dùng AI
+    |
+    v
+[5] LỌC THEO DAO    Morphology CLOSE theo bán kính
                     mũi dao thật  ← quyết định ĐỘ MƯỢT
     |
     v
-[5] XUẤT            EXR 32-bit  +  TIFF 16-bit
+[6] XUẤT            EXR 32-bit  +  TIFF 16-bit
     |
     v
-[6] VECTRIC ASPIRE  Create Component From Bitmap
+[7] VECTRIC ASPIRE  Create Component From Bitmap
     |
     v
 PHAY GỖ</pre>
+<div class="cf-panel warning" contenteditable="false"><span class="cf-panel-icon">⚠️</span><div class="cf-panel-content" contenteditable="true"><strong>Chú ý thứ tự bước [3] và [4]:</strong> phóng to <em>sau</em> khi có depth map, <strong>không</strong> phóng ảnh gốc lên 4K rồi mới làm depth. Làm ngược lại sẽ gây <strong>vết nối tile</strong> chạy ngang tác phẩm, thêm chi tiết bịa và halo — mà vẫn không được thêm chi tiết thật nào. Giải thích đầy đủ ở <strong>trang 03</strong>.</div></div>
 
 <h2>Ba tầng quyết định độ mượt trên gỗ</h2>
 <table style="width:100%;border-collapse:collapse;font-size:14px"><thead><tr><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Tầng</th><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Nội dung</th><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Trọng số</th></tr></thead><tbody>
@@ -6317,7 +6323,7 @@ PHAY GỖ</pre>
 <table style="width:100%;border-collapse:collapse;font-size:14px"><thead><tr><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Trang</th><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Nội dung</th></tr></thead><tbody>
 <tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>01 · Nguyên lý</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Depth map thật ra là gì, vì sao dễ làm sai</td></tr>
 <tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>02 · Cài đặt</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Máy cần gì, cài ComfyUI, cài node, tải model</td></tr>
-<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>03 · Tiền xử lý</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Làm sạch, chỉnh trực diện, nâng 4K</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>03 · Tiền xử lý</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Làm sạch, chỉnh trực diện, đổi cỡ ảnh</td></tr>
 <tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>04 · Chuẩn màu</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Màu nào thành cao độ nào, histogram, gamma</td></tr>
 <tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>05 · Kéo graph</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>Hướng dẫn thao tác từng bước trên canvas</strong></td></tr>
 <tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>06 · 4 Preset</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Thông số theo từng loại ảnh đầu vào</td></tr>
@@ -6437,7 +6443,7 @@ PHAY GỖ</pre>
 </ol>
 <div class="cf-panel note" contenteditable="false"><span class="cf-panel-icon">📝</span><div class="cf-panel-content" contenteditable="true">Node nào không tìm thấy → gói đó chưa cài xong hoặc cài lỗi. Vào <strong>Manager → Custom Nodes Manager</strong>, tìm lại gói đó, bấm <strong>Try Fix</strong>.</div></div>`},
 
-  {id:'seed-cf-03',title:'03 · Tiền xử lý ảnh đầu vào (G1–G4)',section:'default',parentId:'seed-comfyui',images:[],textBoxes:[],createdAt:'2026-08-08T00:00:00.000Z',updatedAt:'2026-08-08T00:00:00.000Z',content:`<h1>03 · Tiền xử lý ảnh đầu vào (G1–G4)</h1>
+  {id:'seed-cf-03',title:'03 · Tiền xử lý & đổi cỡ ảnh (G1–G5)',section:'default',parentId:'seed-comfyui',images:[],textBoxes:[],createdAt:'2026-08-08T00:00:00.000Z',updatedAt:'2026-08-08T00:00:00.000Z',content:`<h1>03 · Tiền xử lý &amp; đổi cỡ ảnh (G1–G5)</h1>
 <div class="cf-panel info" contenteditable="false"><span class="cf-panel-icon">ℹ️</span><div class="cf-panel-content" contenteditable="true">Mục tiêu: ném <em>hình bất kỳ</em> vào → ra ảnh chuẩn sẵn sàng làm depth map.</div></div>
 
 <h2>Thứ tự 4 giai đoạn — và vì sao KHÔNG được đảo</h2>
@@ -6447,16 +6453,24 @@ PHAY GỖ</pre>
 G2. CHỈNH TRỰC DIỆN        (hình học / phối cảnh)
         |
         v
-G3. NÂNG LÊN 4K            (upscale)
+G3. ĐƯA VỀ ~1024 px        (KHÔNG phải 4K!)
         |
         v
-G4. CHUẨN MÀU              (levels, kênh màu)</pre>
+G4. CHUẨN MÀU              (levels, kênh màu)
+        |
+        v
+    ... tách nền -&gt; DEPTH MAP ...
+        |
+        v
+G5. PHÓNG DEPTH MAP -&gt; 4K  (chỉ Lanczos, sau depth)</pre>
+<div class="cf-panel warning" contenteditable="false"><span class="cf-panel-icon">⚠️</span><div class="cf-panel-content" contenteditable="true"><strong>Đã sửa so với bản đầu:</strong> việc phóng lên 4K <strong>chuyển xuống SAU khi có depth map</strong> (thành G5), không còn nằm ở khâu tiền xử lý nữa. Lý do đầy đủ ở mục G3 và G5 bên dưới.</div></div>
 
 <table style="width:100%;border-collapse:collapse;font-size:14px"><thead><tr><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Thứ tự</th><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Lý do bắt buộc</th></tr></thead><tbody>
 <tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Sạch trước, warp sau</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Warp là phép <strong>resample</strong>. Resample lên ảnh còn chấm halftone sẽ sinh <strong>moiré</strong> — vân sóng giả, không cứu được nữa</td></tr>
 <tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Warp trước, upscale sau</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Warp làm ảnh <strong>mềm đi</strong> do nội suy. Upscaler AI là bộ <em>phục hồi</em> — nó sửa được cái mềm đó. Nếu warp SAU khi upscale thì cái mềm là thứ cuối cùng, <strong>không gì sửa nữa</strong></td></tr>
-<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Sạch trước, upscale sau</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Upscaler <strong>khuếch đại nhiễu</strong>. Hạt nhiễu 1px thành cục 4px. Chấm halftone thành mụn to</td></tr>
-<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Màu cuối cùng</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Upscaler làm lệch tương phản và có thể <strong>clip lại</strong> vùng sáng. Chỉnh levels trước thì công toi</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Sạch trước, đổi cỡ sau</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Mọi phép đổi cỡ <strong>khuếch đại nhiễu</strong>. Hạt nhiễu 1px thành cục 4px. Chấm halftone thành mụn to</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Màu cuối cùng</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Đổi cỡ làm lệch tương phản và có thể <strong>clip lại</strong> vùng sáng. Chỉnh levels trước thì công toi</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>Depth trước, phóng 4K sau</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Model depth chạy ở 4K phải <strong>chia tile</strong>, mỗi tile chuẩn hoá độ sâu riêng → <strong>bậc thang ở ranh giới tile</strong> chạy ngang tác phẩm. Xem G3</td></tr>
 </tbody></table>
 
 <h2>G1 — Làm sạch tần số cao</h2>
@@ -6516,8 +6530,29 @@ hơn thực tế                 = tỉ lệ thật</pre>
 <p><strong>Phương án (a) — Đổi góc nhìn bằng AI (nhanh, khuyên dùng).</strong> <code>Qwen-Image-Edit 2511</code> + <strong>Multiple-Angles LoRA</strong>: tái chụp vật thể từ bất kỳ góc nào từ 1 ảnh, hỗ trợ 96 vị trí camera (4 độ cao × 8 phương vị × 3 khoảng cách), có sẵn preset <em>front view, eye-level</em>. Node <code>ComfyUI-qwenmultiangle</code> cho viewport 3D xoay chọn góc bằng chuột.</p>
 <p><strong>Phương án (b) — Qua mesh 3D (chính xác nhất).</strong> Ảnh → TRELLIS 2 / Hunyuan3D 2.1 → mesh → Blender camera <strong>orthographic</strong> nhìn thẳng → render. Đúng trực giao tuyệt đối, không có phối cảnh. Chậm hơn, mesh AI hay lỗi topology.</p>
 
-<h2>G3 — Nâng lên 4K</h2>
-<h3>Bạn có thật sự cần 4K không? Tính, đừng đoán</h3>
+<h2>G3 — Đưa về ~1024 px (KHÔNG phải 4K)</h2>
+<div class="cf-panel warning" contenteditable="false"><span class="cf-panel-icon">⚠️</span><div class="cf-panel-content" contenteditable="true"><strong>Quy tắc:</strong> ở khâu tiền xử lý, đưa ảnh về khoảng <strong>1024–1536 px</strong>. Ảnh nhỏ hơn thì upscale nhẹ lên; ảnh lớn hơn (kể cả 4K sẵn) thì <strong>hạ xuống</strong>. Việc phóng lên 4K để dành cho <strong>G5</strong>, sau khi đã có depth map.</div></div>
+
+<h3>Vì sao 1024 là đủ — chứng minh bằng con số</h3>
+<pre>Phôi 400mm, mũi ball 1/8" (bán kính 1.5875mm)
+
+Chi tiết nhỏ nhất dao cắt được  =  1.5875 mm
+Số chi tiết phân biệt được      =  400 / 1.5875  =  252 trên tấm
+Theo Nyquist, cần               =  ~504 pixel là ĐỦ</pre>
+<p>Depth map sinh ở <strong>1024 px đã dư gấp đôi</strong> so với giới hạn vật lý của mũi dao. Nếu phóng ảnh gốc lên 4096 rồi mới làm depth, bạn tạo ra chi tiết ở mức 0.098mm — <strong>nhỏ hơn bán kính dao 16 lần</strong>. Toàn bộ chỗ đó bị <code>Morphology close</code> xoá sạch ở trang 07. Bạn trả bằng VRAM và thời gian để mua thứ mình sẽ tự tay vứt đi.</p>
+
+<h3>Ba lý do KHÔNG làm depth ở 4K</h3>
+<ol>
+<li><strong>Vết nối tile — nghiêm trọng nhất.</strong> Depth Anything V3 huấn luyện ở độ phân giải cố định; đưa ảnh 4K vào thì nó <strong>phải chia tile</strong>. Mỗi tile được <em>chuẩn hoá độ sâu riêng</em> (đây là relative depth, không có thang tuyệt đối — xem trang 01). Hai tile cạnh nhau lệch thang → <strong>bậc thang chạy ngang giữa tác phẩm</strong>, trên gỗ thấy rõ như vết nứt. Node <code>DA3 Enable Tiled Processing</code> tồn tại để cứu nguy khi hết VRAM, không phải cách làm chuẩn.</li>
+<li><strong>Upscaler AI bịa ra chi tiết.</strong> 4x-UltraSharp, SUPIR, SeedVR2 đều là model <em>sinh ảnh</em> — chúng tưởng tượng ra kết cấu. Trên ảnh màu thì đẹp; nhưng qua depth model, <strong>kết cấu tưởng tượng biến thành gồ ghề thật trên gỗ</strong>. Cộng thêm halo → gờ nổi giả quanh mọi đường viền.</li>
+<li><strong>VRAM.</strong> Chạy depth ở 4K rất dễ tràn bộ nhớ trên card 6–8GB. Ở 1024 thì thoải mái.</li>
+</ol>
+
+<h3>Nếu ảnh gốc quá nhỏ (dưới 768 px)</h3>
+<p>Đây là trường hợp duy nhất dùng upscaler AI ở khâu này — và <strong>chỉ upscale tới ~1024, không hơn</strong>. Ở đây upscaler đúng vai phục hồi.</p>
+
+<h2>G5 — Phóng DEPTH MAP lên 4K (sau khi có depth)</h2>
+<h3>Kích thước file cuối cùng cần bao nhiêu? Tính, đừng đoán</h3>
 <pre>Số pixel cần = Chiều dài phôi (mm) / Stepover (mm)</pre>
 <table style="width:100%;border-collapse:collapse;font-size:14px"><thead><tr><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Phôi gỗ</th><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Stepover</th><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Pixel cần</th><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">4K (4096px)</th></tr></thead><tbody>
 <tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)">200 mm</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">0.3 mm</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">~667 px</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Dư 6 lần</td></tr>
@@ -6525,17 +6560,25 @@ hơn thực tế                 = tỉ lệ thật</pre>
 <tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)">600 mm</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">0.2 mm</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">~3.000 px</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Vừa đủ</td></tr>
 <tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)">1200 mm</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">0.3 mm</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">~4.000 px</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>Vừa khít</strong></td></tr>
 </tbody></table>
-<p>4K phủ được phôi tới khoảng <strong>1.2m</strong> ở stepover 0.3mm. Với tấm 30–40cm thì 4K là <em>dư thừa</em> — nhưng dư vẫn hơn thiếu.</p>
+<p>4K phủ được phôi tới khoảng <strong>1.2m</strong> ở stepover 0.3mm. Với tấm 30–40cm thì 4K là <em>dư thừa</em> — nhưng dư vẫn hơn thiếu, và phóng depth map thì gần như không tốn gì.</p>
+<p><strong>Vì sao vẫn phải phóng lên 4K?</strong> Không phải để thêm chi tiết — mà để CAM có đủ điểm lấy mẫu khi tính toolpath, tránh bậc thang do lưới quá thưa.</p>
 
-<h3>Chọn upscaler</h3>
+<h3>★ Phóng depth map: CHỈ dùng Lanczos ★</h3>
+<table style="width:100%;border-collapse:collapse;font-size:14px"><thead><tr><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Node</th><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Dùng cho depth map?</th></tr></thead><tbody>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><code>Image Scale</code> · upscale_method = <strong>lanczos</strong> (hoặc bicubic)</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>ĐÚNG</strong></td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><code>Upscale Image (using Model)</code> + 4x-UltraSharp / SUPIR / SeedVR2</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>SAI — sẽ bịa ra bướu giả</strong></td></tr>
+</tbody></table>
+<div class="cf-panel info" contenteditable="false"><span class="cf-panel-icon">ℹ️</span><div class="cf-panel-content" contenteditable="true">Depth map là dữ liệu <strong>tần số thấp, mượt tự nhiên</strong>. Nội suy toán học đơn thuần (Lanczos) phóng to nó hoàn hảo, <strong>không cần AI</strong>. Đưa AI vào đây chỉ thêm rác — nó sẽ "thêm chi tiết" vào một thứ vốn không có chi tiết, và mọi chi tiết bịa đó đều thành gồ ghề thật trên gỗ.</div></div>
+
+<h3>Bảng chọn upscaler — chỉ dùng khi ảnh GỐC quá nhỏ (bước G3)</h3>
 <table style="width:100%;border-collapse:collapse;font-size:14px"><thead><tr><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Loại ảnh</th><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Model</th></tr></thead><tbody>
 <tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Line art / bản vẽ nét</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><code>4x-AnimeSharp</code> hoặc <code>4x-UltraSharp</code></td></tr>
 <tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Ảnh chụp sạch</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><code>4x_NMKD-Siax_200k</code></td></tr>
 <tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Ảnh cần phục hồi mạnh</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><code>SUPIR</code></td></tr>
-<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Chất lượng tối đa</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">2 tầng: SUPIR rồi SeedVR2</td></tr>
 </tbody></table>
+<p><em>Sau khi upscale, nhớ hạ về ~1024 bằng Lanczos rồi mới đưa vào depth.</em></p>
 
-<div class="cf-panel warning" contenteditable="false"><span class="cf-panel-icon">⚠️</span><div class="cf-panel-content" contenteditable="true"><strong>Bẫy riêng của CNC: HALO.</strong> Upscaler kiểu "sharp" tạo viền sáng ôm quanh cạnh tương phản. Trên màn hình trông nét; trên gỗ nó thành <strong>gờ nổi giả bao quanh mọi đường viền</strong> — lỗi trông rất nghiệp dư.<br><br><strong>Kiểm tra:</strong> zoom 400% vào một cạnh đen–trắng rõ. Thấy dải sáng mỏng chạy dọc cạnh = có halo.<br><strong>Chữa:</strong> đổi sang Siax (nhẹ tay hơn UltraSharp); hoặc upscale ×2 rồi resize lên 4K bằng <strong>Lanczos</strong> thay vì ×4 thẳng.</div></div>
+<div class="cf-panel warning" contenteditable="false"><span class="cf-panel-icon">⚠️</span><div class="cf-panel-content" contenteditable="true"><strong>Bẫy riêng của CNC: HALO.</strong> Upscaler kiểu "sharp" tạo viền sáng ôm quanh cạnh tương phản. Trên màn hình trông nét; trên gỗ nó thành <strong>gờ nổi giả bao quanh mọi đường viền</strong> — lỗi trông rất nghiệp dư.<br><br><strong>Kiểm tra:</strong> zoom 400% vào một cạnh đen–trắng rõ. Thấy dải sáng mỏng chạy dọc cạnh = có halo.<br><strong>Chữa:</strong> đổi sang Siax (nhẹ tay hơn UltraSharp); hoặc đơn giản là <strong>đừng dùng upscaler AI</strong> — chỉ Lanczos, như quy tắc ở trên.</div></div>
 
 <h2>G4 — Chuẩn màu</h2>
 <p>Xem chi tiết ở <strong>trang 04</strong>. Tóm tắt phần tự động hoá trong ComfyUI:</p>
@@ -6550,8 +6593,9 @@ hơn thực tế                 = tỉ lệ thật</pre>
 <table style="width:100%;border-collapse:collapse;font-size:14px"><thead><tr><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Sau</th><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Kiểm gì</th><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Đạt khi</th></tr></thead><tbody>
 <tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)">G1</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Zoom 400%</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Hết chấm halftone, hết lấm tấm, hết ô vuông JPEG</td></tr>
 <tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)">G2</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Nhìn bằng mắt</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Cạnh thẳng thật sự thẳng; tỉ lệ khớp vật thật</td></tr>
-<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)">G3</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Zoom 400% vào cạnh</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>Không có halo</strong>; đủ px theo công thức</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)">G3</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Xem kích thước ảnh</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Nằm trong khoảng <strong>1024–1536 px</strong>; zoom 400% vào cạnh — <strong>không có halo</strong></td></tr>
 <tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)">G4</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Histogram</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Trải 5–250, không dính hai đầu, không khe hở</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>G5</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Sau khi phóng depth map</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Đủ px theo công thức; <strong>không có vết nối tile</strong> chạy ngang ảnh; đã dùng Lanczos chứ không dùng model AI</td></tr>
 </tbody></table>`},
 
   {id:'seed-cf-04',title:'04 · Chuẩn màu & Histogram',section:'default',parentId:'seed-comfyui',images:[],textBoxes:[],createdAt:'2026-08-08T00:00:00.000Z',updatedAt:'2026-08-08T00:00:00.000Z',content:`<h1>04 · Chuẩn màu &amp; Histogram</h1>
@@ -6709,16 +6753,13 @@ không dính  không dính   DÍNH = mất      DÍNH = mất
 </ul>
 <div class="cf-panel note" contenteditable="false"><span class="cf-panel-icon">📝</span><div class="cf-panel-content" contenteditable="true">Ảnh sạch sẵn (line art vector, render) thì bỏ qua bước này. Ảnh scan từ sách báo có chấm halftone thì <strong>bắt buộc</strong> làm.</div></div>
 
-<h3>Bước 3 — Nâng lên 4K (G3)</h3>
+<h3>Bước 3 — Đưa về ~1024 px (G3)</h3>
 <ul>
-<li>Thêm <code>Load Upscale Model</code>. Chọn model theo trang 03 (line art → 4x-AnimeSharp; ảnh chụp → 4x_NMKD-Siax_200k).</li>
-<li>Thêm <code>Upscale Image (using Model)</code>.</li>
-<li>Nối: <code>Load Upscale Model · UPSCALE_MODEL</code> → <code>Upscale Image (using Model) · upscale_model</code>.</li>
-<li>Nối: <code>ImageBlur · IMAGE</code> → <code>Upscale Image (using Model) · image</code>.</li>
-<li>Thêm <code>Upscale Image</code> (loại không dùng model). Đặt <code>upscale_method = lanczos</code>, <code>width = 4096</code>, <code>height = 4096</code>, <code>crop = disabled</code>.</li>
-<li>Nối tiếp vào nó.</li>
+<li>Thêm <code>Image Scale</code>. Đặt <code>upscale_method = lanczos</code>, <code>width = 1024</code>, <code>height = 1024</code>, <code>crop = disabled</code>.</li>
+<li>Nối: <code>ImageBlur · IMAGE</code> → <code>Image Scale · image</code>.</li>
+<li><strong>Chỉ khi ảnh gốc dưới 768 px:</strong> chèn thêm <code>Load Upscale Model</code> + <code>Upscale Image (using Model)</code> vào TRƯỚC <code>Image Scale</code> để phục hồi, rồi vẫn hạ về 1024.</li>
 </ul>
-<p><em>Vì sao 2 tầng: model upscale ×4 hay tạo halo. Cho nó ×4 rồi hạ về đúng 4096 bằng Lanczos sẽ ít halo hơn hẳn.</em></p>
+<div class="cf-panel warning" contenteditable="false"><span class="cf-panel-icon">⚠️</span><div class="cf-panel-content" contenteditable="true"><strong>KHÔNG phóng lên 4K ở đây.</strong> Việc đó để dành cho <strong>bước 7</strong>, sau khi đã có depth map. Làm ở đây sẽ gây vết nối tile trong depth map, thêm chi tiết bịa và halo — mà không được thêm chi tiết thật nào (xem trang 03, mục G3).</div></div>
 
 <h3>Bước 4 — Tách nền</h3>
 <ul>
@@ -6744,7 +6785,14 @@ không dính  không dính   DÍNH = mất      DÍNH = mất
 </ul>
 <div class="cf-panel warning" contenteditable="false"><span class="cf-panel-icon">⚠️</span><div class="cf-panel-content" contenteditable="true"><strong>Đây là bước 90% hướng dẫn trên mạng bỏ sót — và là lý do người ta than "lưu 16-bit mà vẫn bị banding".</strong><br><br>Giá trị raw từ model <em>chưa được chuẩn hoá</em>, nằm gọn trong dải hẹp (vd 0.0–0.3). Ghi ra 16-bit thì byte cao của mỗi pixel gần như bằng 0 → số mức thực tế chỉ cỡ vài trăm. Bạn tưởng có 65.536 mức, thật ra có ~250.<br><br><strong>Kiểm tra:</strong> mở file 16-bit trong GIMP, xem histogram. Dữ liệu dồn cục ở một góc = đang dính bẫy này.</div></div>
 
-<h3>Bước 7 — LỌC THEO CỠ DAO (quyết định độ mượt)</h3>
+<h3>Bước 7 — PHÓNG DEPTH MAP LÊN 4K</h3>
+<ul>
+<li>Thêm <code>Image Scale</code>. Đặt <code>upscale_method = <strong>lanczos</strong></code>, <code>width = 4096</code>, <code>height = 4096</code>, <code>crop = disabled</code>.</li>
+<li>Nối: <code>RemapDepth · IMAGE</code> → <code>Image Scale · image</code>.</li>
+</ul>
+<div class="cf-panel warning" contenteditable="false"><span class="cf-panel-icon">⚠️</span><div class="cf-panel-content" contenteditable="true"><strong>CHỈ dùng <code>Image Scale</code> với lanczos/bicubic.</strong> TUYỆT ĐỐI không dùng <code>Upscale Image (using Model)</code> ở đây — model AI sẽ <em>bịa</em> thêm kết cấu vào depth map, và mọi chi tiết bịa đó thành <strong>bướu giả thật trên gỗ</strong>. Depth map vốn là dữ liệu tần số thấp, nội suy toán học phóng to nó hoàn hảo.</div></div>
+
+<h3>Bước 8 — LỌC THEO CỠ DAO (quyết định độ mượt)</h3>
 <ul>
 <li>Thêm <code>Morphology</code> (<strong>có sẵn trong ComfyUI</strong>, không cần cài).</li>
 <li>Đặt <code>operation = close</code>.</li>
@@ -6752,21 +6800,21 @@ không dính  không dính   DÍNH = mất      DÍNH = mất
 <li>Thêm <code>ImageBlur</code> nữa, <code>blur_radius = 2</code> — chỉ để dọn vi nhiễu còn sót.</li>
 </ul>
 
-<h3>Bước 8 — Ép nền phẳng tuyệt đối</h3>
+<h3>Bước 9 — Ép nền phẳng tuyệt đối</h3>
 <ul>
 <li>Thêm node chỉnh Levels/Curve (vd <code>Image Levels Adjustment</code> hoặc <code>ImageAdjustment</code> tuỳ gói bạn có).</li>
 <li>Kéo điểm đen lên tới khi nền về <strong>0 tuyệt đối</strong>.</li>
 <li>Nén dải sáng phi tuyến cho hợp bas-relief.</li>
 </ul>
 
-<h3>Bước 9 — Xuất file</h3>
+<h3>Bước 10 — Xuất file</h3>
 <ul>
 <li>Thêm <code>SaveImageAdvanced</code> (có sẵn). Đặt: <code>format = EXR</code>, <code>bit_depth = 32-bit float</code>, <code>color_space = linear</code>.</li>
 <li>Thêm <strong>một</strong> <code>SaveImageAdvanced</code> nữa: <code>format = TIFF</code>, <code>bit_depth = 16</code> — bản này để nạp vào Vectric.</li>
 <li>Nối cả hai vào cùng một nguồn.</li>
 </ul>
 
-<h3>Bước 10 — Xem trước</h3>
+<h3>Bước 11 — Xem trước</h3>
 <ul>
 <li>Thêm <code>Preview Image</code> nối vào vài chỗ then chốt: sau tách nền, sau depth, sau Morphology. Nhìn được từng khâu thì mới biết khâu nào sai.</li>
 </ul>
@@ -6778,13 +6826,8 @@ không dính  không dính   DÍNH = mất      DÍNH = mất
 [ImageBlur] r=1                        G1 làm sạch
      |
      v
-[Load Upscale Model]--+
-                      v
-[Upscale Image (using Model)]          G3 nâng 4K
-     |
-     v
-[Upscale Image] lanczos 4096
-     |
+[Image Scale] lanczos 1024             G3 đưa về 1024
+     |                                 (KHÔNG phải 4K)
      v
 [BiRefNetRMBG]  ------> [ImageCompositeMasked]
                               ^   nền đen
@@ -6793,11 +6836,14 @@ không dính  không dính   DÍNH = mất      DÍNH = mất
      v
 [Download+Load DA3 Model] --+
                             v
-[Depth Anything V3]  DA3-Large
-     |
-     v
+[Depth Anything V3]  DA3-Large         chạy ở 1024
+     |                                 -> không chia tile
+     v                                 -> không vết nối
 [RemapDepth]  min0 max1 clamp=ON       *** BẮT BUỘC ***
      |
+     v
+[Image Scale] LANCZOS 4096             *** phóng SAU ***
+     |                                 KHÔNG dùng model AI
      v
 [Morphology]  close, kernel_size=33    *** ĐỘ MƯỢT ***
      |
@@ -6812,6 +6858,7 @@ không dính  không dính   DÍNH = mất      DÍNH = mất
      +--> [SaveImageAdvanced] TIFF 16-bit
      |
      +--> [Preview Image]</pre>
+<div class="cf-panel info" contenteditable="false"><span class="cf-panel-icon">ℹ️</span><div class="cf-panel-content" contenteditable="true"><strong>Hai node <code>Image Scale</code>, hai vai trò khác nhau:</strong> cái đầu <em>hạ</em> ảnh gốc về 1024 để depth model chạy đúng cỡ nó được huấn luyện; cái sau <em>phóng</em> depth map lên 4096 để CAM có đủ điểm lấy mẫu khi tính toolpath. Cả hai đều dùng <strong>lanczos</strong>, không dùng model AI.</div></div>
 
 <hr>
 
@@ -6965,6 +7012,7 @@ không dính  không dính   DÍNH = mất      DÍNH = mất
 <li><strong>Upscale sinh halo.</strong> Viền sáng quanh cạnh → gờ nổi giả.</li>
 <li><strong>Upscale KHÔNG thêm bit depth.</strong> Ảnh 8-bit phóng lên 4K vẫn là 256 mức. Banding không mất, chỉ trải rộng thành dải to hơn, <em>dễ thấy hơn</em>.</li>
 </ol>
+<div class="cf-panel note" contenteditable="false"><span class="cf-panel-icon">📝</span><div class="cf-panel-content" contenteditable="true"><strong>Phân biệt hai việc khác hẳn nhau:</strong><br>• <strong>Phóng ẢNH GỐC lên 4K rồi mới làm depth</strong> — cả 3 tác hại trên đều xảy ra, cộng thêm <em>vết nối tile</em>. <strong>Đừng làm.</strong><br>• <strong>Phóng DEPTH MAP lên 4K bằng Lanczos sau khi đã có depth</strong> — an toàn và cần thiết, để CAM đủ điểm lấy mẫu. Nhưng nó cũng <em>không</em> làm mượt gì cả — độ mượt đến từ <code>Morphology close</code> ở mục dưới.</div></div>
 
 <h2>2. Công cụ đúng: Morphological CLOSE, không phải Blur</h2>
 <table style="width:100%;border-collapse:collapse;font-size:14px"><thead><tr><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)"></th><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Gaussian Blur</th><th style="text-align:left;padding:8px 10px;border-bottom:2px solid var(--border)">Morphological Close</th></tr></thead><tbody>
@@ -7211,17 +7259,21 @@ s = stepover</pre>
 <tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>Lớp trước/sau lộn ngược</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Model đọc sai che khuất</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Đổi seed; vẫn sai thì line art chưa rõ lớp, phải sửa bản vẽ</td></tr>
 <tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>Hết VRAM</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Ảnh quá lớn</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Bật <code>DA3 Enable Tiled Processing</code>; hoặc sinh ở 1024 rồi upscale sau</td></tr>
 <tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Dao <strong>chạy rất lâu, rung</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Chi tiết nhỏ hơn cỡ dao</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Tăng <code>kernel_size</code>; hoặc đổi mũi dao nhỏ hơn</td></tr>
-<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>Gờ nổi giả</strong> quanh mọi đường viền</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Halo từ upscaler</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Đổi sang Siax; hoặc upscale ×2 rồi Lanczos về 4K</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>Gờ nổi giả</strong> quanh mọi đường viền</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Halo từ upscaler AI</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Bỏ upscaler AI, chỉ dùng <code>Image Scale</code> lanczos (trang 03, G5)</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>Bậc thang thẳng tắp</strong> chạy ngang/dọc qua giữa tác phẩm</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>Vết nối tile</strong> — depth chạy ở 4K nên bị chia tile, mỗi tile chuẩn hoá độ sâu riêng</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Hạ ảnh về <strong>1024</strong> TRƯỚC khi vào depth, phóng lên 4K SAU (trang 03, G3+G5)</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>Bướu tròn nhỏ</strong> rải rác không có trong bản gốc</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Dùng upscaler AI lên <em>depth map</em> — nó bịa ra kết cấu</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Thay <code>Upscale Image (using Model)</code> bằng <code>Image Scale</code> lanczos</td></tr>
 <tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>Ô vuông nổi</strong> đều đặn</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">JPEG artifact 8×8 bị upscale</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Dùng ảnh gốc PNG/TIFF; denoise trước khi upscale</td></tr>
 <tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)"><strong>Mụn nổi</strong> đều như lưới</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Chấm halftone không descreen</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Blur 1–2px + Median <em>trước</em> mọi phép resample</td></tr>
 <tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Hoa/vật <strong>lõm xuống thay vì nổi lên</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Màu bão hoà — luminance đảo ngược</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Xem trang 04: desaturate hoặc chỉnh Black &amp; White theo từng vùng màu</td></tr>
 <tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Ảnh nạp vào Aspire <strong>mất chi tiết cao độ</strong></td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Import qua 2D View</td><td style="padding:6px 10px;border-bottom:1px solid var(--border)">Bỏ chọn hết rồi bấm Create Component From Bitmap (trang 08)</td></tr>
 </tbody></table>
 
-<h2>4. Chín quy tắc bất di bất dịch</h2>
+<h2>4. Mười một quy tắc bất di bất dịch</h2>
 <ol>
 <li><strong>Line art tốt hơn ảnh chụp.</strong> Đầu vào phẳng, không bóng đổ.</li>
 <li><strong>Tách nền TRƯỚC</strong>, không phải sau.</li>
+<li><strong>Làm depth ở ~1024, KHÔNG ở 4K.</strong> Chạy ở 4K sẽ bị chia tile → bậc thang chạy ngang tác phẩm.</li>
+<li><strong>Phóng lên 4K SAU khi có depth map, và CHỈ bằng Lanczos.</strong> Không bao giờ dùng upscaler AI lên depth map.</li>
 <li><strong>Luôn có node chuẩn hoá</strong> trước khi lưu — bẫy "16-bit giả".</li>
 <li><strong>Dùng Morphology close, không dùng blur</strong> để lọc theo cỡ dao.</li>
 <li><strong>kernel_size = 2 x bán kính dao / mm-mỗi-pixel.</strong> Phôi 400mm + mũi 1/8" ở 4K = 33.</li>
