@@ -1,0 +1,33 @@
+id: VEH-NAM-001
+title: "Quy ước đặt tên mesh xe"
+asset_class: vehicle_exterior
+category: naming
+tier: A
+severity: fail
+stage: G1
+
+check:
+  type: regex
+  applies_to: { collection: meshes }
+  metric: name
+  # ⚠️ PATTERN VÍ DỤ — thay bằng convention thật
+  pattern: "^SM_[A-Z][A-Za-z0-9]*_[A-Z][A-Za-z0-9]*_LOD[0-3]$"
+  example_ok: ["SM_SuvA_Body_LOD0", "SM_SuvA_Glass_LOD1"]
+  example_bad: ["pCube127", "suv_body", "SM_SuvA_Body"]
+
+why: >
+  Script import tự động vào UE5 tách asset theo tên. Sai tên thì asset rơi sai
+  thư mục và không tự gán được material.
+how_to_check: "Outliner > đọc tên từng mesh trong nhóm export."
+how_to_fix:
+  - "Đổi tên theo mẫu SM_<Xe>_<BộPhận>_LOD<n>"
+  - "Dùng Rename tool của Maya cho cả nhóm, đừng sửa từng cái"
+common_mistakes:
+  - "Quên hậu tố _LOD0 cho LOD gốc"
+  - "Còn sót tên mặc định pCube / pSphere sau khi merge"
+  - "Dùng gạch dưới trong tên bộ phận (SM_SuvA_Front_Bumper_LOD0 sai — phải là FrontBumper)"
+source: { system: confluence, url: "<điền link techspec>", section: "2.1 Naming Convention" }
+
+version: 1
+effective_from: 2026-08-01
+status: active

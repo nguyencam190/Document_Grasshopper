@@ -1,0 +1,36 @@
+id: VEH-RIG-004
+title: "Bố trí bone bánh xe theo chuẩn Chaos Vehicle"
+asset_class: vehicle_exterior
+category: rig
+tier: B
+severity: fail
+stage: G3
+
+check:
+  type: custom
+  function: "vehicle.wheel_bone_layout"
+  params:
+    # ⚠️ TÊN VÍ DỤ — thay bằng convention thật của dự án
+    required_bones: [WHL_FL, WHL_FR, WHL_RL, WHL_RR]
+    mirror_tolerance_cm: 0.5
+    height_tolerance_cm: 0.5
+    forbid_pattern: "^(joint|bone)\\d+$"
+
+why: >
+  Vehicle blueprint của UE5 tìm bánh xe theo đúng 4 tên này. Sai tên thì xe
+  không gắn được vào blueprint và phải rig lại từ đầu — không sửa được ở phía engine.
+how_to_check: "Outliner > mở nhóm skeleton, đối chiếu 4 tên và vị trí bánh."
+how_to_fix:
+  - "Đổi tên bone bánh về đúng WHL_FL / WHL_FR / WHL_RL / WHL_RR"
+  - "Snap pivot bánh về tâm trục (script Rig > Snap Wheel Pivot)"
+  - "Bánh trái và phải phải đối xứng qua trục giữa xe, cùng độ cao"
+common_mistakes:
+  - "Copy rig từ xe khác nhưng quên đổi tên bánh sau khi mirror"
+  - "Bánh sau đặt lệch độ cao so với bánh trước do snap bằng tay"
+  - "Còn sót bone tên mặc định joint1, joint2 trong hierarchy"
+reference:
+  golden_asset: SUV_Base
+  note: "Mở file rig bước 5 của SUV_Base để xem hierarchy chuẩn"
+version: 2
+effective_from: 2026-08-15
+status: active

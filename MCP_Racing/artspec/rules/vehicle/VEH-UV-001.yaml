@@ -1,0 +1,33 @@
+id: VEH-UV-001
+title: "Texel density đồng nhất"
+asset_class: vehicle_exterior
+category: uv
+tier: A
+severity: fail
+stage: G2
+
+check:
+  type: threshold_table
+  applies_to: { collection: meshes }
+  metric: texel_density_px_cm
+  op: "within"
+  # ⚠️ SỐ VÍ DỤ — thay bằng chuẩn texel density thật của dự án
+  table:
+    - { lod: 0, value: 10.24, tolerance: 0.5 }
+    - { lod: 1, value: 10.24, tolerance: 1.0 }
+    - { lod: 2, value: 5.12,  tolerance: 1.0 }
+
+why: >
+  Xe đứng cạnh nhau trong garage và trên đường đua. Texel density lệch làm một
+  xe nhìn nét, xe kia nhìn mờ — người chơi nhận ra ngay dù không biết gọi tên.
+how_to_check: "Dùng checker map của dự án; ô vuông trên mọi bộ phận phải bằng nhau."
+how_to_fix:
+  - "Chọn UV shell lệch > UV Editor > Tools > Set Texel Density, nhập giá trị chuẩn"
+  - "Làm lại layout sau khi set, vì shell sẽ đổi kích thước"
+  - "Nếu không đủ chỗ trong 0-1: tăng resolution texture hoặc tách thêm material"
+common_mistakes:
+  - "Set texel density theo texture 2K rồi sau đó đổi sang 4K mà không set lại"
+  - "Bỏ sót các mesh nhỏ (gương, tay nắm) vì nghĩ không ai nhìn"
+version: 1
+effective_from: 2026-08-15
+status: active

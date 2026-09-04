@@ -1,0 +1,43 @@
+{
+  "asset": "SUV_A",
+  "asset_class": "vehicle_exterior",
+  "source_file": "SUV_A.mb",
+  "dcc": "maya-2026",
+  "unit": "cm",
+  "platform": "pc",
+  "meshes": [
+    {
+      "name": "SM_SuvA_Body_LOD0", "lod": 0, "triangle_count": 132450,
+      "scale": [1, 1, 1], "rotation": [0, 0, 0],
+      "uv_sets": ["map1"], "texel_density_px_cm": 10.2, "material_slots": 6,
+      "hard_edges": [12, 44, 45, 190, 233], "uv_seam_edges": [12, 44, 190]
+    },
+    {
+      "name": "SM_SuvA_Glass_LOD0", "lod": 0, "triangle_count": 4200,
+      "scale": [1, 1, -1], "rotation": [0, 0, 0],
+      "uv_sets": ["map1"], "texel_density_px_cm": 10.4, "material_slots": 1,
+      "hard_edges": [3, 8], "uv_seam_edges": [3, 8]
+    },
+    {
+      "name": "pCube127", "lod": 1, "triangle_count": 38000,
+      "scale": [1, 1, 1], "rotation": [0, 90, 0],
+      "uv_sets": ["map1"], "texel_density_px_cm": 6.1, "material_slots": 2,
+      "hard_edges": [1], "uv_seam_edges": [1]
+    }
+  ],
+  "textures": [
+    {"name": "T_SuvA_BC",  "width": 4096, "height": 4096, "color_space": "sRGB"},
+    {"name": "T_SuvA_N",   "width": 4096, "height": 4096, "color_space": "sRGB"},
+    {"name": "T_SuvA_ORM", "width": 1500, "height": 1500, "color_space": "Linear"}
+  ],
+  "skeleton": {
+    "max_influences_per_vertex": 4,
+    "bones": [
+      {"name": "root",    "world_position": [0.0, 0.0, 0.0]},
+      {"name": "WHL_FL",  "world_position": [-78.0, 34.0, 132.0]},
+      {"name": "WHL_FR",  "world_position": [78.4, 34.0, 132.0]},
+      {"name": "WHL_RL",  "world_position": [-78.0, 34.0, -128.0]},
+      {"name": "joint23", "world_position": [78.0, 37.9, -128.0]}
+    ]
+  }
+}

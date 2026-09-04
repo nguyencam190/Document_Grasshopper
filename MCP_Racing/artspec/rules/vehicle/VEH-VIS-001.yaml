@@ -1,0 +1,23 @@
+id: VEH-VIS-001
+title: "Decal nhà tài trợ không bị che"
+asset_class: vehicle_exterior
+category: visual
+tier: C
+severity: warn
+stage: G3
+
+check:
+  type: manual
+  ask: >
+    Nhìn xe từ 3 góc camera gameplay (sau xe, replay bên hông, cận cảnh garage):
+    decal nhà tài trợ có bị gương, cánh gió hay tay nắm che khuất phần nào không?
+
+why: >
+  Vị trí decal nằm trong hợp đồng tài trợ của khách hàng. Che decal là vấn đề
+  hợp đồng, không phải vấn đề thẩm mỹ — sửa muộn rất tốn.
+how_to_fix:
+  - "Dời decal sang vùng trống gần nhất, vẫn trong panel được chỉ định"
+  - "Nếu không có chỗ, báo Art Lead để hỏi lại khách — đừng tự quyết"
+version: 1
+effective_from: 2026-08-01
+status: active

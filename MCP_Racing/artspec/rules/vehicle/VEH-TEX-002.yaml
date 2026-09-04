@@ -1,0 +1,28 @@
+id: VEH-TEX-002
+title: "Kích thước texture phải là luỹ thừa của 2 và trong budget"
+asset_class: vehicle_exterior
+category: texture
+tier: B
+severity: fail
+stage: G2
+
+check:
+  type: custom
+  function: "vehicle.texture_size"
+  applies_to: { collection: textures }
+  params:
+    max_size: 4096      # ⚠️ SỐ VÍ DỤ
+    require_square: false
+
+why: >
+  Kích thước không phải luỹ thừa của 2 khiến UE5 không tạo được mipmap và không
+  nén được — texture chiếm gấp nhiều lần bộ nhớ và gây nhấp nháy ở xa.
+how_to_fix:
+  - "Xuất lại ở kích thước luỹ thừa của 2 gần nhất (1024 / 2048 / 4096)"
+  - "Không scale trong Photoshop từ kích thước lẻ — bake lại từ Substance"
+common_mistakes:
+  - "Bake ở 1500x1500 cho 'nhẹ hơn 2K'"
+  - "Crop ảnh reference rồi dùng thẳng làm texture"
+version: 1
+effective_from: 2026-08-01
+status: active

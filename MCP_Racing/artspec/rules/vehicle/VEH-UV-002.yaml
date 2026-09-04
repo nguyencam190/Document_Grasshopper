@@ -1,0 +1,34 @@
+id: VEH-UV-002
+title: "Mọi hard edge phải là UV seam"
+asset_class: vehicle_exterior
+category: uv
+tier: B
+severity: fail
+stage: G2
+
+check:
+  type: custom
+  function: "vehicle.hard_edges_are_uv_seams"
+  applies_to: { collection: meshes }
+  params:
+    max_report: 8
+
+why: >
+  Hard edge mà không phải UV seam làm tangent basis bị nội suy sai qua cạnh đó.
+  Kết quả trong UE5 là vệt tối/sáng chạy dọc cạnh — trong Maya nhìn vẫn bình
+  thường, nên lỗi này chỉ lộ ra sau khi đã import.
+how_to_check: "UV Editor > bật hiển thị seam; so với hard edge (Display > Polygons > Soft/Hard Edges)."
+how_to_fix:
+  - "Với mỗi cạnh bị báo: hoặc cắt UV seam tại đó, hoặc chuyển cạnh về soft edge"
+  - "Nguyên tắc: quyết định hard edge TRƯỚC, rồi mới cắt seam theo"
+  - "Sau khi sửa phải layout lại UV"
+common_mistakes:
+  - "Áp Weighted Normal / Harden Edge sau khi đã UV xong"
+  - "Copy UV từ mesh khác nhưng hard edge của hai mesh không giống nhau"
+reference:
+  golden_asset: SUV_Base
+  note: "Xem cách đặt seam ở nắp capo của SUV_Base"
+version: 2
+effective_from: 2026-08-15
+status: active
+changed_by_update: CU-2026-041

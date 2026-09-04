@@ -1,0 +1,43 @@
+id: VEH-TRI-001
+title: "Giới hạn tricount thân xe ngoại thất"
+asset_class: vehicle_exterior
+category: geometry
+tier: A
+severity: fail
+stage: G1
+
+check:
+  type: threshold_table
+  applies_to: { collection: meshes }
+  metric: triangle_count
+  op: "<="
+  # ⚠️ SỐ VÍ DỤ — thay bằng budget thật của dự án
+  table:
+    - { lod: 0, platform: pc,      value: 120000 }
+    - { lod: 1, platform: pc,      value: 45000 }
+    - { lod: 2, platform: pc,      value: 12000 }
+    - { lod: 0, platform: console, value: 90000 }
+    - { lod: 1, platform: console, value: 35000 }
+    - { lod: 2, platform: console, value: 10000 }
+
+why: >
+  Ngân sách GPU tính cho 12 xe hiển thị đồng thời trong cảnh đua. Vượt budget ở
+  một xe nghĩa là phải cắt ở xe khác.
+how_to_check: "Maya > Display > Heads Up Display > Poly Count, đọc dòng Tris của selection."
+how_to_fix:
+  - "Xác định chỗ tốn tri nhất (thường là lưới tản nhiệt, mâm xe, khe cửa)"
+  - "Chuyển chi tiết nhỏ sang normal map thay vì hình học"
+  - "Giảm số cạnh trên các đường bo tròn không nằm ở silhouette"
+  - "Nếu vẫn không đủ, xin waiver qua Art Lead — đừng tự vượt"
+common_mistakes:
+  - "Đếm cả bánh xe — bánh có ngân sách riêng ở VEH-TRI-002"
+  - "Đọc nhầm Faces thay vì Tris (mesh quad: Faces × 2 ≈ Tris)"
+  - "Quên rằng mesh đã có Smooth Preview đang bật"
+reference:
+  golden_asset: SUV_Base
+  note: "So với SUV_Base_LOD0 để thấy mức chi tiết hợp lý"
+source: { system: confluence, url: "<điền link techspec>", section: "3.2 Vehicle Geometry Budget" }
+
+version: 1
+effective_from: 2026-08-15
+status: active

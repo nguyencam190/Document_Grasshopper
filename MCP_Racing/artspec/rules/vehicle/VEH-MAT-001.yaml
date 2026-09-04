@@ -1,0 +1,27 @@
+id: VEH-MAT-001
+title: "Giới hạn số material slot"
+asset_class: vehicle_exterior
+category: material
+tier: A
+severity: warn
+stage: G2
+
+check:
+  type: threshold
+  applies_to: { collection: meshes, where: { lod: 0 } }
+  metric: material_slots
+  op: "<="
+  value: 4          # ⚠️ SỐ VÍ DỤ
+
+why: >
+  Mỗi material slot là một draw call cho mỗi xe hiển thị. Với 12 xe trên đường
+  đua, thêm 1 slot là thêm 12 draw call mỗi frame.
+how_to_fix:
+  - "Gộp các bộ phận dùng chung shader vào một material"
+  - "Dùng mask trong ORM để phân biệt vùng thay vì tách material"
+  - "Giữ material riêng cho kính và đèn (cần shader khác thật sự)"
+common_mistakes:
+  - "Mỗi bộ phận một material vì tiện lúc làm"
+version: 1
+effective_from: 2026-08-01
+status: active

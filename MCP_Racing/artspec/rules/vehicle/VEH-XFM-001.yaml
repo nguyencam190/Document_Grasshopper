@@ -1,0 +1,29 @@
+id: VEH-XFM-001
+title: "Transform phải được freeze trước khi export"
+asset_class: vehicle_exterior
+category: transform
+tier: B
+severity: fail
+stage: G1
+
+check:
+  type: custom
+  function: "vehicle.transform_frozen"
+  applies_to: { collection: meshes }
+  params:
+    epsilon: 0.001
+
+why: >
+  UE5 nhận transform từ FBX. Scale khác 1 làm lệch collision và physics; scale âm
+  làm mesh lộn mặt trong ra ngoài mà trong Maya vẫn nhìn bình thường.
+how_to_check: "Chọn mesh > Channel Box: Scale phải 1/1/1, Rotate phải 0/0/0."
+how_to_fix:
+  - "Modify > Freeze Transformations (chọn Scale + Rotate)"
+  - "Nếu scale âm: Mesh > Conform hoặc đảo lại normal sau khi freeze"
+  - "Kiểm tra lại pivot sau khi freeze — freeze không dời pivot"
+common_mistakes:
+  - "Scale bằng cách kéo trong viewport rồi quên freeze"
+  - "Mirror bằng scale -1 → mesh lộn mặt, chỉ lộ ra trong engine"
+version: 1
+effective_from: 2026-08-01
+status: active

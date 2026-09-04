@@ -1,0 +1,30 @@
+asset_class: vehicle_exterior
+title: "Checklist gate — Vehicle Exterior"
+stages:
+  G0:
+    title: "Blockout — duyệt tỉ lệ & art direction"
+    auto: false
+    items:
+      - "Scale thật: đặt cạnh mannequin/xe chuẩn để so"
+      - "Tỉ lệ khớp reference trong sai số cho phép"
+      - "Silhouette nhận ra được từ 4 hướng khi tô đen"
+      - "Đã xác định vị trí pivot dự kiến"
+  G1:
+    title: "Model Freeze — model đóng băng, không sửa topology nữa"
+    auto: true
+    signature_required: true
+    extra_items:
+      - "Đã quyết định LOD: số lượng và cách sinh"
+      - "Đã quyết định collision: tự vẽ hay auto"
+      - "Tôi xác nhận model ĐÃ XONG và hiểu rằng sửa topology sau gate này phải xin duyệt"
+  G2:
+    title: "Tech Check — máy kiểm, chạy trước khi submit"
+    auto: true
+  G3:
+    title: "In-game QC — kiểm trong engine, ánh sáng thật"
+    auto: true
+    extra_items:
+      - "Xoay quanh asset dưới ánh sáng level thật, không thấy vệt/seam"
+      - "Lùi camera từ từ: LOD chuyển không giật hình"
+      - "Lái đâm vào từ nhiều hướng: collision đúng"
+      - "Đặt cạnh asset đã duyệt: texel density và tông màu khớp"

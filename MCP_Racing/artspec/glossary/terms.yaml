@@ -1,0 +1,39 @@
+# Thuật ngữ giải thích theo cách DỰ ÁN NÀY hiểu, không phải định nghĩa chung.
+- term: texel density
+  aliases: [texel, mật độ texel, td]
+  definition: >
+    Số pixel texture trên mỗi centimet bề mặt model. Đo bằng px/cm.
+  why_it_matters: >
+    Hai asset đứng cạnh nhau mà texel density lệch thì một cái nhìn nét, cái kia
+    nhìn mờ. Người chơi nhận ra ngay dù không gọi tên được vấn đề.
+  how_to_measure: "Dán checker map của dự án; ô vuông trên mọi bộ phận phải bằng nhau."
+  related_rules: [VEH-UV-001]
+
+- term: hard edge
+  aliases: [cạnh cứng, hard normal]
+  definition: >
+    Cạnh mà hai mặt hai bên KHÔNG chia sẻ normal, tạo góc gãy rõ khi đổ bóng.
+    Ngược lại là soft edge (bo mềm).
+  why_it_matters: >
+    Trong dự án này, mọi hard edge bắt buộc phải là UV seam. Vi phạm gây vệt tối
+    dọc cạnh trong UE5 mà trong Maya không nhìn thấy.
+  related_rules: [VEH-UV-002]
+
+- term: tangent basis
+  aliases: [tangent, tangent space]
+  definition: >
+    Hệ trục cục bộ tại mỗi vertex mà normal map dùng để biết "lên" là hướng nào.
+    Tính từ normal + hướng UV.
+  why_it_matters: >
+    Vì nó phụ thuộc UV, nên UV sai làm normal map hiển thị sai dù texture đúng.
+    Đây là lý do phải export tangent từ DCC thay vì để UE5 tự tính lại.
+  related_rules: [VEH-UV-002]
+
+- term: waiver
+  aliases: [ngoại lệ, miễn trừ]
+  definition: >
+    Giấy phép chính thức cho một asset được vi phạm một luật cụ thể, có lý do,
+    người duyệt và ngày hết hạn.
+  why_it_matters: >
+    Không có đường xin ngoại lệ chính thức thì hoạ sĩ sẽ tự lách — bỏ qua
+    validator, submit thẳng. Lúc đó Lead mất khả năng nhìn thấy vấn đề.

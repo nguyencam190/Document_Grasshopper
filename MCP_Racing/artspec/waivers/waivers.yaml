@@ -1,0 +1,7 @@
+# Ngoại lệ đã được duyệt. Validator đọc file này và hạ FAIL xuống WARN.
+# Waiver hết hạn thì tự động mất tác dụng — không cần ai dọn.
+- rule: VEH-TRI-001
+  asset: SUV_Hero
+  reason: "Xe hero dùng trong cutscene mở đầu, Lead duyệt +15k tri ở LOD0"
+  approved_by: "<Art Lead>"
+  expires: 2026-12-31

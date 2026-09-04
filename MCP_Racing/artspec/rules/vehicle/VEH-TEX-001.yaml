@@ -1,0 +1,34 @@
+id: VEH-TEX-001
+title: "Color space theo hậu tố texture"
+asset_class: vehicle_exterior
+category: texture
+tier: B
+severity: fail
+stage: G2
+
+check:
+  type: custom
+  function: "vehicle.texture_color_space"
+  applies_to: { collection: textures }
+  # ⚠️ QUY ƯỚC VÍ DỤ — thay bằng convention thật của dự án
+  params:
+    suffix_map:
+      _BC: sRGB
+      _N: Linear
+      _ORM: Linear
+      _M: Linear
+
+why: >
+  Roughness/Normal để nhầm sRGB làm engine giải mã sai giá trị: vật liệu nhìn
+  bóng hoặc mờ hẳn so với ý đồ, và không sửa được bằng chỉnh material.
+how_to_check: "Trong UE5: mở texture, xem checkbox sRGB. Trong Substance: Output color space."
+how_to_fix:
+  - "Xuất lại texture với color space đúng theo bảng quy ước"
+  - "Trong UE5 tắt checkbox sRGB cho Normal / ORM / Mask"
+  - "Normal map phải đặt Compression Settings = TC_Normalmap"
+common_mistakes:
+  - "Xuất cả bộ texture bằng một preset duy nhất nên map nào cũng thành sRGB"
+  - "Đổi tên file sau khi xuất nên hậu tố không còn khớp nội dung"
+version: 1
+effective_from: 2026-08-01
+status: active
