@@ -106,3 +106,4 @@ def run_all(config: list[dict[str, Any]], path: str | Path,
 
 
 from . import builtin as _b  # noqa: E402,F401  (import để chạy decorator)
+from . import maya as _m  # noqa: E402,F401

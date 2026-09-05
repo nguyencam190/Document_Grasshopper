@@ -29,6 +29,32 @@
   pattern: '^(?P<code>[A-Z_]+)\s+(?P<object>\S+)\s+(?P<detail>.*)$'
   # nhóm bắt buộc: code. Tuỳ chọn: object, detail, severity
 
+# ── Kiểu 3: validator CHẠY TRONG MAYA, kiểm file hoạ sĩ nộp ──────────────────
+# Mở Maya không giao diện, mở scene, gọi hàm của bạn. Dùng cho Lead kiểm file
+# nộp và batch chạy đêm. CHẬM (30 giây – vài phút mỗi scene) và CHIẾM 1 LICENSE.
+- name: maya_val
+  type: maya_batch
+  mayapy: "C:/Program Files/Autodesk/Maya2026/bin/mayapy.exe"
+  module: studio.validate         # module Python của bạn
+  function: run_all               # hàm trả về danh sách lỗi
+  kwargs: {strict: true}          # tham số truyền vào hàm đó (tuỳ chọn)
+  fields: {code: type, object: node, detail: message}
+  pythonpath: ["D:/pipeline/scripts"]   # nơi chứa module của bạn
+  applies_to_ext: [".ma", ".mb"]
+  timeout: 600
+
+# ── Kiểu 4: validator chạy trong Maya ĐANG MỞ ────────────────────────────────
+# Kiểm scene hoạ sĩ đang làm dở. NHANH (scene đã nạp sẵn), không tốn license.
+# Trong Maya phải bật trước:  cmds.commandPort(name=":7001", sourceType="python")
+# ĐỌC BAO_MAT.md §5 TRƯỚC KHI BẬT — commandPort không có xác thực.
+- name: maya_live
+  type: maya_port
+  port: 7001
+  module: studio.validate
+  function: run_all
+  fields: {code: type, object: node, detail: message}
+  open_scene: false               # false = kiểm scene đang mở, KHÔNG mở đè
+
 # ── Tạm tắt một tool mà không phải xoá ───────────────────────────────────────
 - name: tool_dang_sua
   type: json_cli
@@ -37,6 +63,13 @@
   enabled: false
 
 # ─────────────────────────────────────────────────────────────────────────────
+# HÀM VALIDATOR CỦA BẠN TRẢ VỀ GÌ CŨNG ĐƯỢC — runner tự chuẩn hoá:
+#   [{"type": "X", "node": "Y", "message": "Z"}]      list các dict
+#   [Issue(type="X", node="Y", message="Z")]          list các object
+#   {"issues": [...]}  /  {"errors": [...]}           dict bọc ngoài
+#   []                                                 sạch, không lỗi
+# Chỉ cần khai `fields` để nói tên field nào ứng với code / object / detail.
+#
 # SAU KHI KHAI BÁO XONG: nối mã lỗi của tool vào luật, để báo cáo có kèm
 # "vì sao" và "sửa thế nào". Trong file luật, thêm một dòng:
 #

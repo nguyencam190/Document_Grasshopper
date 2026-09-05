@@ -123,6 +123,24 @@ hai kiểu tool phổ biến nhất **không cần viết Python**:
 |---|---|---|
 | `json_cli` | Tool in ra JSON | `command` + `findings_path` + `fields` |
 | `regex_text` | Tool chỉ in text | `command` + `pattern` |
+| `maya_batch` | Validator chạy trong Maya — kiểm file nộp | `mayapy` + `module` + `function` |
+| `maya_port` | Validator chạy trong Maya **đang mở** | `port` + `module` + `function` |
+
+Hai kiểu Maya dùng chung `adapters/maya_runner.py` chạy bên trong Maya. Hàm
+validator của bạn trả về `list[dict]`, `list[object]` hay `{"issues": [...]}`
+đều được — runner tự chuẩn hoá, bạn chỉ khai `fields`.
+
+| | `maya_batch` | `maya_port` |
+|---|---|---|
+| Dùng khi | Lead kiểm file nộp, batch đêm | Hoạ sĩ kiểm scene đang làm |
+| Cần Maya mở sẵn | Không | Có |
+| Tốn license | **Có** | Không |
+| Tốc độ | 30 giây – vài phút/scene | Nhanh (scene đã nạp) |
+| Rủi ro | Không | Phải bật commandPort — [`BAO_MAT.md`](../BAO_MAT.md) §5 |
+
+`maya_port` mặc định `open_scene: false` — kiểm đúng scene hoạ sĩ đang mở, không
+đụng tới nó. Adapter cũng **từ chối nối tới host khác localhost**, vì commandPort
+không có xác thực.
 
 Rồi nối mã lỗi vào luật để báo cáo có đủ 5 phần:
 
@@ -323,6 +341,7 @@ python tests/test_updates.py   # 11 check — changelog + tool whats_changed_for
 python tests/test_meshcheck.py # 29 check — phân tích mesh + luật MESH-* đầu-cuối
 python tests/test_importer.py  # 27 check — CSV → luật, gồm cả bắt lỗi dòng hỏng
 python tests/test_adapters.py  # 20 check — nối tool ngoài, gồm cả tool hỏng
+python tests/test_maya_adapter.py  # 16 check — hai adapter Maya, chạy với Maya giả
 python tests/test_security.py  # 11 check — giới hạn thư mục + chống điều khiển qua tên mesh
 python tests/bench.py          # đo tốc độ trên MÁY CỦA BẠN (thêm --big cho mesh 500k)
 ```
