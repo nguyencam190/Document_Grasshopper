@@ -18,7 +18,7 @@ from artspec.readers import fbxfile  # noqa: E402
 
 # Một quad (4 đỉnh ⇒ 2 tris) + một tam giác (1 tri) = 3 tris.
 POLY = [0, 1, 2, -4, 0, 2, -5]   # chỉ số cuối mỗi polygon bị đảo bit
-VERTS = [0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 1.0, 1.0, 0.0, 0.0, 1.0, 0.0]
+VERTS = [0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 1.0, 1.0, 0.0, 0.0, 1.0, 0.0, -1.0, 0.5, 0.0]
 
 
 def build(tmp: Path) -> Path:
@@ -75,7 +75,7 @@ def run(tmp: Path) -> None:
     geo = root.find("Objects").find("Geometry")
     verts = geo.find("Vertices").prop(0)
     checks.append(("mảng double nén zlib giải đúng",
-                   len(verts) == 12 and abs(verts[3] - 1.0) < 1e-9, str(verts[:4])))
+                   len(verts) == 15 and abs(verts[3] - 1.0) < 1e-9, str(verts[:4])))
     checks.append(("mảng int nén zlib giải đúng",
                    geo.find("PolygonVertexIndex").prop(0) == POLY, ""))
 
@@ -92,6 +92,11 @@ def run(tmp: Path) -> None:
          str(mesh["material_slots"])),
         ("nhận UV set theo tên", mesh["uv_sets"] == ["map1"], str(mesh["uv_sets"])),
         ("nhận custom normal", mesh["has_custom_normals"] is True, ""),
+        ("phân tích mesh: đếm quad", mesh["quads"] == 1, str(mesh.get("quads"))),
+        ("phân tích mesh: mesh hở nên có cạnh biên",
+         mesh["boundary_edges"] > 0, str(mesh.get("boundary_edges"))),
+        ("phân tích mesh: không có index hỏng",
+         mesh["invalid_index_faces"] == 0, str(mesh.get("invalid_index_faces"))),
         ("lấy tên texture từ RelativeFilename",
          [t["name"] for t in m["textures"]] == ["T_SuvA_BC"], str(m["textures"])),
     ]

@@ -150,6 +150,54 @@ def enum(rule: Rule, metrics: dict[str, Any]) -> CheckOutcome:
                         actual=f"{len(bad)} đối tượng sai giá trị" if bad else "đạt")
 
 
+@builtin_check("mesh_defect")
+def mesh_defect(rule: Rule, metrics: dict[str, Any]) -> CheckOutcome:
+    """Lỗi hình học: báo số lượng KÈM id của mặt/cạnh/đỉnh vi phạm.
+
+    Báo "có 12 n-gon" mà không nói ở đâu thì hoạ sĩ vẫn phải tự dò cả mesh.
+    """
+    c = rule.check
+    count_metric = c["count_metric"]
+    id_metric = c.get("id_metric")
+    limit = c.get("max", 0)
+    label = c.get("id_label", "f")
+    bad: list[Location] = []
+    total = 0
+    for it in items_for(rule, metrics):
+        n = _need(rule, it, count_metric)
+        if n is None or n <= limit:
+            continue
+        total += n
+        ids = it.get(id_metric) or [] if id_metric else []
+        shown = ", ".join(f"{label}[{i}]" for i in ids)
+        more = "" if len(ids) >= n or not ids else f" … và {n - len(ids)} cái nữa"
+        detail = f"{n} lỗi" + (f": {shown}{more}" if shown else "")
+        bad.append(Location(_label(it), detail))
+    return CheckOutcome(ok=not bad, locations=bad,
+                        expected=f"{count_metric} <= {limit}",
+                        actual=f"{total} lỗi trên {len(bad)} mesh" if bad else "sạch")
+
+
+@builtin_check("flag")
+def flag(rule: Rule, metrics: dict[str, Any]) -> CheckOutcome:
+    """Cờ boolean phải bằng một giá trị nhất định (vd inverted_normals phải False).
+
+    Giá trị None nghĩa là "không xác định được" — bỏ qua, không kết luận.
+    """
+    c = rule.check
+    metric, want = c["metric"], c.get("equals", False)
+    bad = []
+    for it in items_for(rule, metrics):
+        val = _need(rule, it, metric)
+        if val is None:
+            continue          # không xác định được thì không kết luận
+        if val != want:
+            bad.append(Location(_label(it), f"{metric} = {val}, phải là {want}"))
+    return CheckOutcome(ok=not bad, locations=bad,
+                        expected=f"{metric} = {want}",
+                        actual=f"{len(bad)} mesh vi phạm" if bad else "đạt")
+
+
 @builtin_check("manual")
 def manual(rule: Rule, metrics: dict[str, Any]) -> CheckOutcome:
     """Tier C — máy không kết luận, chỉ đặt câu hỏi cho người."""

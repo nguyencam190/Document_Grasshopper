@@ -6,7 +6,7 @@ Mỗi quy tắc = 1 file YAML trong `rules/<asset_class>/`. Tên file = `id` c�
 |---|---|---|
 | `id` | ✅ | Mã trích dẫn, vd `VEH-TRI-001`. Duy nhất toàn hệ thống |
 | `title` | ✅ | Tên ngắn của luật |
-| `asset_class` | ✅ | Class áp dụng, vd `vehicle_exterior` |
+| `asset_class` | ✅ | Class áp dụng, vd `vehicle_exterior`. Dùng `"*"` cho luật áp dụng mọi class (xem `rules/common/`) |
 | `category` | ✅ | `geometry` `uv` `texture` `material` `naming` `transform` `rig` `lod` `export` `visual` |
 | `tier` | ✅ | `A` = số/regex máy kiểm · `B` = logic riêng cần hàm · `C` = người kiểm |
 | `severity` | ✅ | `fail` (chặn gate) · `warn` (cho qua, ghi lại) · `info` |
@@ -32,7 +32,12 @@ Mỗi quy tắc = 1 file YAML trong `rules/<asset_class>/`. Tên file = `id` c�
 | `regex` | A | Kiểm tên | `applies_to` `metric` `pattern` |
 | `enum` | A | Giá trị phải nằm trong tập cho phép | `applies_to` `metric` `allowed` |
 | `custom` | B | Logic riêng của dự án | `function` `params` |
+| `mesh_defect` | A | Lỗi hình học — báo số lượng kèm id | `applies_to` `count_metric` `id_metric` `id_label` `max` |
+| `flag` | A | Cờ boolean phải bằng giá trị nào | `applies_to` `metric` `equals` |
 | `manual` | C | Người kiểm, máy chỉ nhắc | `ask` |
+
+`flag` bỏ qua giá trị `None` — "không xác định được" thì không kết luận, vd
+`inverted_normals` chỉ tính được khi mesh kín và hướng đã nhất quán.
 
 `check.requires` (tuỳ chọn) = danh sách đường dẫn dữ liệu mà luật cần mới có
 nghĩa, vd `requires: [skeleton.bones]`. Thiếu thì luật báo **SKIP**, không báo

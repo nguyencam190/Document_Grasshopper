@@ -1,0 +1,28 @@
+id: MESH-009
+title: "Mesh không được hở (có lỗ thủng)"
+asset_class: "*"
+category: geometry
+tier: A
+severity: warn
+stage: G1
+
+check:
+  type: mesh_defect
+  applies_to: { collection: meshes }
+  count_metric: boundary_edges
+  id_metric: boundary_edge_ids
+  id_label: e
+  max: 0
+
+why: >
+  Mesh hở làm hỏng collision tự sinh và bake ambient occlusion. Để mức WARN vì
+  nhiều asset hở một cách hợp lệ — mặt phẳng, decal, lá cây, vỏ mỏng.
+how_to_check: "Maya > Select > Select Border Edges, hoặc bật Display > Polygons > Border Edges."
+how_to_fix:
+  - "Nếu lẽ ra phải kín: chọn border edge > Mesh > Fill Hole"
+  - "Nếu hở là cố ý (decal, lá cây, vỏ mỏng): xin waiver, đừng bịt bừa"
+common_mistakes:
+  - "Xoá mặt để giảm tri nhưng quên chỗ đó lộ ra trong game"
+version: 1
+effective_from: 2026-08-01
+status: active

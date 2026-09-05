@@ -1,0 +1,27 @@
+id: MESH-005
+title: "Không được có đỉnh trùng chưa hàn"
+asset_class: "*"
+category: geometry
+tier: A
+severity: warn
+stage: G1
+
+check:
+  type: mesh_defect
+  applies_to: { collection: meshes }
+  count_metric: duplicate_vertices
+  max: 0
+
+why: >
+  Hai đỉnh nằm cùng một chỗ nhưng không hàn làm mesh nứt khi deform, làm hỏng
+  smoothing qua chỗ đó, và làm tăng vertex count vô ích. Để mức WARN vì đôi khi
+  hoạ sĩ cố ý tách đỉnh để giữ hard edge.
+how_to_check: "Maya > Mesh > Cleanup, hoặc Edit Mesh > Merge với threshold nhỏ."
+how_to_fix:
+  - "Chọn cả mesh > Edit Mesh > Merge, threshold ~0.001 (đừng để lớn)"
+  - "Sau khi merge, kiểm lại hard edge — merge có thể làm mất chúng"
+common_mistakes:
+  - "Combine nhiều mesh mà quên merge chỗ tiếp giáp"
+version: 1
+effective_from: 2026-08-01
+status: active

@@ -1,0 +1,31 @@
+id: MESH-003
+title: "Không được có mặt bị lật"
+asset_class: "*"
+category: geometry
+tier: A
+severity: fail
+stage: G1
+
+check:
+  type: mesh_defect
+  applies_to: { collection: meshes }
+  count_metric: flipped_faces
+  id_metric: flipped_face_ids
+  id_label: f
+  max: 0
+
+why: >
+  Mặt lật hướng ngược với hàng xóm sẽ đen hoặc trong suốt trong UE5 vì engine
+  cull mặt sau. Trong Maya bật two-sided lighting thì KHÔNG nhìn thấy, nên lỗi
+  này gần như luôn lọt tới khi import.
+how_to_check: "Maya > tắt Lighting > Two Sided Lighting, mặt lật sẽ thành đen."
+how_to_fix:
+  - "Chọn mặt bị báo > Mesh Display > Reverse"
+  - "Hoặc chọn cả mesh > Mesh Display > Conform để đồng bộ theo đa số"
+  - "Kiểm lại bằng cách tắt Two Sided Lighting"
+common_mistakes:
+  - "Mirror bằng scale âm mà không Conform lại"
+  - "Fill Hole ở chỗ khuất sinh mặt ngược hướng"
+version: 1
+effective_from: 2026-08-01
+status: active

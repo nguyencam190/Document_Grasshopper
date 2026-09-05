@@ -58,6 +58,53 @@ Theo thứ tự ưu tiên: tham số truyền vào → sidecar `<tên file>.subm
 tên thư mục cha (`submit/vehicle_exterior/…`). Không suy được thì báo lỗi rõ
 ràng chứ không áp bừa bộ luật.
 
+## Hai loại lỗi được kiểm
+
+| Loại | Nguồn | Ví dụ luật |
+|---|---|---|
+| **Lỗi mesh** — sức khoẻ hình học | Tính thẳng từ đỉnh + mặt trong file, không cần biết techspec | `MESH-001` n-gon · `MESH-002` non-manifold · `MESH-003` mặt lật · `MESH-004` lộn cả khối · `MESH-005` đỉnh chưa hàn · `MESH-006` mặt diện tích 0 · `MESH-007` mặt trùng · `MESH-008` đỉnh rời · `MESH-009` lỗ thủng · `MESH-010` index hỏng |
+| **Sai techspec** — quy định của dự án | So với số trong `rules/` | `VEH-TRI-001` tricount · `VEH-UV-001` texel density · `VEH-RIG-004` bone bánh xe … |
+
+Luật mesh đặt trong `rules/common/` với `asset_class: "*"` nên áp dụng cho **mọi**
+asset class — không phải chép lại cho từng class.
+
+### Cách phát hiện lỗi mesh
+
+Module [`artspec/readers/meshcheck.py`](artspec/readers/meshcheck.py) nhận (đỉnh, mặt)
+và trả về **số lượng kèm id** của từng loại lỗi, để thông điệp chỉ đúng chỗ cần sửa:
+
+```
+❌ FAIL · MESH-003 — Không được có mặt bị lật
+  Ở ĐÂU
+    • SM_SuvA_Body_LOD0            2 lỗi: f[54], f[55]
+```
+
+Hai chi tiết đáng chú ý:
+
+- **Mặt lật** không dùng phép so từng cặp (nó gắn cờ oan cả mặt hàng xóm). Thay vào
+  đó lan truyền hướng qua toàn khối liên thông rồi lấy **nhóm thiểu số** — lật 1 mặt
+  thì báo đúng 1 mặt.
+- **Lộn cả khối** (`MESH-004`) tách riêng khỏi mặt lật lẻ: khi mọi mặt đều nhất quán
+  nhưng thể tích có dấu âm, cả vật thể đang hướng vào trong. Trong Maya nhìn bình
+  thường, vào UE5 thì biến mất.
+
+### Chỉ số mesh theo từng định dạng
+
+| | FBX | glTF/GLB | OBJ | metrics.json (Maya) |
+|---|:--:|:--:|:--:|:--:|
+| n-gon, quad, tris | ✅ | ⊘¹ | ✅ | ✅ |
+| non-manifold, lỗ thủng, mặt lật, lộn khối | ✅ | ✅ | ✅ | ✅ |
+| mặt diện tích 0, mặt trùng, index hỏng | ✅ | ✅ | ✅ | ✅ |
+| đỉnh trùng chưa hàn | ✅ | ⊘¹ | ✅² | ✅ |
+| đỉnh rời | ✅ | ✅ | ⊘² | ✅ |
+
+¹ glTF luôn tam giác hoá và tách đỉnh ở mỗi UV seam → các chỉ số này không phản ánh
+topology hoạ sĩ dựng. Reader khai `_unavailable`, engine báo `SKIP` chứ không đoán.
+² OBJ dùng kho đỉnh toàn cục dùng chung giữa các nhóm.
+
+Collector Maya (`collectors/maya_collect.py`) gọi **cùng module** `meshcheck` — nên
+validator trong Maya và validator đọc FBX không bao giờ cho hai kết quả khác nhau.
+
 ## Kiến trúc
 
 ```
@@ -176,6 +223,7 @@ người duyệt và **ngày hết hạn** — hết hạn thì tự mất tác 
 python tests/test_fbx.py       # 16 check — reader FBX, fixture tự sinh
 python tests/test_readers.py   # 18 check — glTF/OBJ + luồng inbox đầu-cuối
 python tests/test_updates.py   # 11 check — changelog + tool whats_changed_for
+python tests/test_meshcheck.py # 23 check — phân tích mesh + luật MESH-* đầu-cuối
 ```
 
 `test_fbx.py` tự sinh FBX nhị phân rồi đọc lại — kiểm chứng phần đọc container
@@ -202,7 +250,8 @@ glTF tay theo spec rồi **đối chiếu chéo số tam giác với `trimesh`**
 ## Cấu trúc
 
 ```
-rules/<class>/*.yaml   luật — thứ bạn phải điền
+rules/<class>/*.yaml   luật riêng theo class — thứ bạn phải điền
+rules/common/*.yaml    luật mesh dùng chung mọi class (asset_class: "*")
 changelog/*.yaml       update khách hàng — nối vào luật bị ảnh hưởng
 checklists/*.yaml      checklist theo gate G0-G3
 glossary/*.yaml        thuật ngữ theo cách dự án hiểu
@@ -212,6 +261,7 @@ collectors/            sinh metrics.json từ DCC (Maya)
 tests/                 test tự chạy, không cần pytest
 artspec/               engine — hiếm khi phải sửa
   readers/     đọc thẳng file nộp: fbxfile.py · gltf.py · obj.py · images.py
+               meshcheck.py — phân tích sức khoẻ hình học, dùng chung mọi định dạng
   inbox.py     kiểm 1 file / cả thư mục, bảng tóm tắt cho Lead
   registry.py  đọc & kiểm tính hợp lệ của luật
   checks/      builtin.py (Tier A) · vehicle.py (Tier B, đặc thù dự án)

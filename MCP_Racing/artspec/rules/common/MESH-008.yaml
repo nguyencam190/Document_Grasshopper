@@ -1,0 +1,26 @@
+id: MESH-008
+title: "Không được có đỉnh rời không thuộc mặt nào"
+asset_class: "*"
+category: geometry
+tier: A
+severity: warn
+stage: G1
+
+check:
+  type: mesh_defect
+  applies_to: { collection: meshes }
+  count_metric: isolated_vertices
+  id_metric: isolated_vertex_ids
+  id_label: v
+  max: 0
+
+why: >
+  Đỉnh rời không hiển thị nhưng vẫn nằm trong file, làm bounding box sai và làm
+  lệch tính toán LOD tự động.
+how_to_fix:
+  - "Maya > Mesh > Cleanup, tích Lamina faces và Loose edges/vertices"
+common_mistakes:
+  - "Xoá mặt bằng phím Delete thay vì Edit Mesh > Delete Edge/Vertex"
+version: 1
+effective_from: 2026-08-01
+status: active

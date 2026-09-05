@@ -30,6 +30,16 @@ except ImportError:  # cho phép import ngoài Maya để đọc code / lint
 
 LOD_RE = re.compile(r"_LOD(\d+)$", re.IGNORECASE)
 
+# Dùng chung module phân tích mesh với các reader, để validator trong Maya và
+# validator đọc file FBX không bao giờ cho hai kết quả khác nhau.
+try:
+    import sys as _sys
+    from pathlib import Path as _P
+    _sys.path.insert(0, str(_P(__file__).resolve().parent.parent))
+    from artspec.readers import meshcheck
+except ImportError:
+    meshcheck = None
+
 
 def _lod_of(name: str) -> int | None:
     m = LOD_RE.search(name)
@@ -78,6 +88,15 @@ def _edges(dag) -> tuple[list[int], list[int]]:
 def _local_index(mesh, face_id: int, vertex_id: int) -> int:
     verts = mesh.getPolygonVertices(face_id)
     return list(verts).index(vertex_id)
+
+
+def _geometry(dag) -> dict:
+    """Đỉnh + mặt của mesh, để đưa qua meshcheck."""
+    mesh = om.MFnMesh(dag)
+    pts = mesh.getPoints(om.MSpace.kObject)
+    verts = [(p.x, p.y, p.z) for p in pts]
+    polys = [list(mesh.getPolygonVertices(i)) for i in range(mesh.numPolygons)]
+    return {"vertices": verts, "polygons": polys}
 
 
 def _texture_size_for(transform: str) -> int | None:
@@ -132,7 +151,12 @@ def collect(asset: str | None = None, asset_class: str = "",
         hard, seam = _edges(dag)
         tex_size = _texture_size_for(transform)
         sgs = cmds.listConnections(shape, type="shadingEngine") or []
+        health = {}
+        if meshcheck is not None:
+            g = _geometry(dag)
+            health = meshcheck.analyze(g["vertices"], g["polygons"])
         meshes.append({
+            **health,
             "name": short,
             "lod": _lod_of(short),
             "triangle_count": int(tri) if isinstance(tri, int) else 0,

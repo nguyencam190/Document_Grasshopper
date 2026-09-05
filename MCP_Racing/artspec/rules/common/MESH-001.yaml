@@ -1,0 +1,31 @@
+id: MESH-001
+title: "Không được có n-gon"
+asset_class: "*"
+category: geometry
+tier: A
+severity: fail
+stage: G1
+
+check:
+  type: mesh_defect
+  applies_to: { collection: meshes }
+  count_metric: ngons
+  id_metric: ngon_faces
+  id_label: f
+  max: 0
+
+why: >
+  Mặt hơn 4 cạnh được engine tam giác hoá tự động và không kiểm soát được cách
+  chia. Kết quả là shading vỡ ở chỗ đó, và LOD tự sinh cũng cho kết quả khác nhau
+  giữa các lần build.
+how_to_check: "Maya > Select > Select Using Constraints > Polygon > Sides = 5+."
+how_to_fix:
+  - "Chọn mặt bị báo, dùng Mesh Tools > Multi-Cut để chia thành quad hoặc tam giác"
+  - "Với mặt phẳng lớn không cong: chia thành quad theo lưới đều"
+  - "Nếu n-gon nằm ở chỗ khuất và không cong, xin waiver thay vì chia bừa"
+common_mistakes:
+  - "Boolean xong không dọn lại topology"
+  - "Bridge / Fill Hole tự sinh n-gon mà không để ý"
+version: 1
+effective_from: 2026-08-01
+status: active

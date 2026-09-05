@@ -1,0 +1,28 @@
+id: MESH-007
+title: "Không được có mặt trùng nhau"
+asset_class: "*"
+category: geometry
+tier: A
+severity: fail
+stage: G1
+
+check:
+  type: mesh_defect
+  applies_to: { collection: meshes }
+  count_metric: duplicate_faces
+  id_metric: duplicate_face_ids
+  id_label: f
+  max: 0
+
+why: >
+  Hai mặt chồng khít lên nhau gây z-fighting (nhấp nháy khi camera di chuyển) và
+  làm hỏng bake vì tia không biết chạm mặt nào.
+how_to_fix:
+  - "Xoá mặt thừa được liệt kê"
+  - "Nếu do combine hai bản sao: xoá hẳn một bản rồi combine lại"
+common_mistakes:
+  - "Duplicate rồi combine nhầm cả bản gốc"
+  - "Extrude với offset 0"
+version: 1
+effective_from: 2026-08-01
+status: active

@@ -7,31 +7,146 @@
   "platform": "pc",
   "meshes": [
     {
-      "name": "SM_SuvBase_Body_LOD0", "lod": 0, "triangle_count": 118200,
-      "scale": [1, 1, 1], "rotation": [0, 0, 0],
-      "uv_sets": ["map1"], "texel_density_px_cm": 10.24, "material_slots": 3,
-      "hard_edges": [12, 44, 190], "uv_seam_edges": [12, 44, 190, 210]
+      "name": "SM_SuvBase_Body_LOD0",
+      "lod": 0,
+      "triangle_count": 118200,
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "uv_sets": [
+        "map1"
+      ],
+      "texel_density_px_cm": 10.24,
+      "material_slots": 3,
+      "hard_edges": [
+        12,
+        44,
+        190
+      ],
+      "uv_seam_edges": [
+        12,
+        44,
+        190,
+        210
+      ],
+      "ngons": 0,
+      "non_manifold_edges": 0,
+      "flipped_faces": 0,
+      "inverted_normals": false,
+      "duplicate_vertices": 0,
+      "zero_area_faces": 0,
+      "duplicate_faces": 0,
+      "isolated_vertices": 0,
+      "boundary_edges": 0,
+      "invalid_index_faces": 0
     },
     {
-      "name": "SM_SuvBase_Body_LOD1", "lod": 1, "triangle_count": 42000,
-      "scale": [1, 1, 1], "rotation": [0, 0, 0],
-      "uv_sets": ["map1"], "texel_density_px_cm": 10.3, "material_slots": 3,
-      "hard_edges": [7], "uv_seam_edges": [7]
+      "name": "SM_SuvBase_Body_LOD1",
+      "lod": 1,
+      "triangle_count": 42000,
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "uv_sets": [
+        "map1"
+      ],
+      "texel_density_px_cm": 10.3,
+      "material_slots": 3,
+      "hard_edges": [
+        7
+      ],
+      "uv_seam_edges": [
+        7
+      ],
+      "ngons": 0,
+      "non_manifold_edges": 0,
+      "flipped_faces": 0,
+      "inverted_normals": false,
+      "duplicate_vertices": 0,
+      "zero_area_faces": 0,
+      "duplicate_faces": 0,
+      "isolated_vertices": 0,
+      "boundary_edges": 0,
+      "invalid_index_faces": 0
     }
   ],
   "textures": [
-    {"name": "T_SuvBase_BC",  "width": 4096, "height": 4096, "color_space": "sRGB"},
-    {"name": "T_SuvBase_N",   "width": 4096, "height": 4096, "color_space": "Linear"},
-    {"name": "T_SuvBase_ORM", "width": 2048, "height": 2048, "color_space": "Linear"}
+    {
+      "name": "T_SuvBase_BC",
+      "width": 4096,
+      "height": 4096,
+      "color_space": "sRGB"
+    },
+    {
+      "name": "T_SuvBase_N",
+      "width": 4096,
+      "height": 4096,
+      "color_space": "Linear"
+    },
+    {
+      "name": "T_SuvBase_ORM",
+      "width": 2048,
+      "height": 2048,
+      "color_space": "Linear"
+    }
   ],
   "skeleton": {
     "max_influences_per_vertex": 4,
     "bones": [
-      {"name": "root",   "world_position": [0.0, 0.0, 0.0]},
-      {"name": "WHL_FL", "world_position": [-78.0, 34.0, 132.0]},
-      {"name": "WHL_FR", "world_position": [78.0, 34.0, 132.0]},
-      {"name": "WHL_RL", "world_position": [-78.0, 34.0, -128.0]},
-      {"name": "WHL_RR", "world_position": [78.0, 34.0, -128.0]}
+      {
+        "name": "root",
+        "world_position": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "name": "WHL_FL",
+        "world_position": [
+          -78.0,
+          34.0,
+          132.0
+        ]
+      },
+      {
+        "name": "WHL_FR",
+        "world_position": [
+          78.0,
+          34.0,
+          132.0
+        ]
+      },
+      {
+        "name": "WHL_RL",
+        "world_position": [
+          -78.0,
+          34.0,
+          -128.0
+        ]
+      },
+      {
+        "name": "WHL_RR",
+        "world_position": [
+          78.0,
+          34.0,
+          -128.0
+        ]
+      }
     ]
   }
 }

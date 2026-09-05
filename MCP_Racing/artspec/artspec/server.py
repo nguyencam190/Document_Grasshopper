@@ -141,6 +141,16 @@ def supported_formats() -> dict[str, Any]:
             ".ma/.mb": "Chạy collectors/maya_collect.py trong Maya, hoặc yêu cầu "
                        "hoạ sĩ nộp kèm FBX.",
         },
+        "mesh_health": {
+            "all_formats": ["non_manifold_edges", "boundary_edges", "flipped_faces",
+                            "inverted_normals", "zero_area_faces", "duplicate_faces",
+                            "invalid_index_faces"],
+            "not_from_gltf": ["ngons", "quads", "tris", "duplicate_vertices"],
+            "not_from_obj": ["isolated_vertices"],
+            "why": "glTF luôn tam giác hoá và tách đỉnh ở UV seam; OBJ dùng kho "
+                   "đỉnh toàn cục. Các chỉ số đó ở hai định dạng này không phản "
+                   "ánh topology hoạ sĩ dựng nên bị báo SKIP thay vì đoán bừa.",
+        },
         "note": "Chỉ số nào định dạng không có thì luật báo SKIP, không báo FAIL. "
                 "Muốn kiểm đủ mọi luật thì cần metrics từ collector Maya.",
     }

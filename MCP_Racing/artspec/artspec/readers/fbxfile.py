@@ -19,6 +19,8 @@ from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any
 
+from . import meshcheck
+
 MAGIC = b"Kaydara FBX Binary  \x00\x1a\x00"
 
 
@@ -152,15 +154,22 @@ def _name_of(node: Node) -> str:
     return raw.split("::", 1)[1] if "::" in raw else raw
 
 
-def _triangles(poly_index: list[int]) -> int:
-    """PolygonVertexIndex: chỉ số cuối của mỗi polygon bị đảo bit (~i)."""
-    tris = n = 0
+def _polygons(poly_index: list[int]) -> list[list[int]]:
+    """PolygonVertexIndex: chỉ số cuối của mỗi polygon bị đảo bit (~i = -i-1)."""
+    polys: list[list[int]] = []
+    cur: list[int] = []
     for idx in poly_index:
-        n += 1
         if idx < 0:
-            tris += max(n - 2, 0)
-            n = 0
-    return tris
+            cur.append(-idx - 1)
+            polys.append(cur)
+            cur = []
+        else:
+            cur.append(idx)
+    return polys
+
+
+def _vertices(flat: list[float]) -> list[tuple[float, float, float]]:
+    return [(flat[i], flat[i + 1], flat[i + 2]) for i in range(0, len(flat) - 2, 3)]
 
 
 def to_metrics(path: str | Path) -> dict[str, Any]:
@@ -189,6 +198,10 @@ def to_metrics(path: str | Path) -> dict[str, Any]:
         if geo is None:
             continue
         pvi = geo.find("PolygonVertexIndex")
+        vtx = geo.find("Vertices")
+        polys = _polygons(pvi.prop(0) or []) if pvi else []
+        verts = _vertices(vtx.prop(0) or []) if vtx else []
+        health = meshcheck.analyze(verts, polys) if verts and polys else {}
         uv_layers = [str(u.find("Name").prop(0)) if u.find("Name") else f"uv{i}"
                      for i, u in enumerate(geo.find_all("LayerElementUV"))]
         scale = _p70(model, "Lcl Scaling") or [1.0, 1.0, 1.0]
@@ -196,9 +209,10 @@ def to_metrics(path: str | Path) -> dict[str, Any]:
         n_mats = sum(1 for cid, parents in child_to_parents.items()
                      if mid in parents and cid in mats)
         meshes.append({
+            **health,
             "name": _name_of(model),
             "lod": _lod_of(_name_of(model)),
-            "triangle_count": _triangles(pvi.prop(0) or []) if pvi else 0,
+            "triangle_count": health.get("triangle_count", 0),
             "scale": [round(float(v), 6) for v in scale[:3]],
             "rotation": [round(float(v), 6) for v in rot[:3]],
             "uv_sets": uv_layers,

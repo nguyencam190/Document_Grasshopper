@@ -1,0 +1,31 @@
+id: MESH-002
+title: "Không được có cạnh non-manifold"
+asset_class: "*"
+category: geometry
+tier: A
+severity: fail
+stage: G1
+
+check:
+  type: mesh_defect
+  applies_to: { collection: meshes }
+  count_metric: non_manifold_edges
+  id_metric: non_manifold_edge_ids
+  id_label: e
+  max: 0
+
+why: >
+  Cạnh có từ 3 mặt trở lên dùng chung là hình học không tồn tại được ngoài đời.
+  Nó làm hỏng tính normal, hỏng bake, hỏng collision, và một số engine từ chối
+  import thẳng.
+how_to_check: "Maya > Mesh > Cleanup, tích Nonmanifold geometry, chọn Select matching polygons."
+how_to_fix:
+  - "Maya > Mesh > Cleanup với tuỳ chọn Nonmanifold geometry"
+  - "Nếu do merge nhầm: undo rồi merge lại với ngưỡng nhỏ hơn"
+  - "Kiểm tra lại sau khi cleanup — Maya đôi khi tách mesh làm đôi"
+common_mistakes:
+  - "Merge vertex với threshold quá lớn"
+  - "Extrude rồi undo một nửa, để lại mặt nằm trong"
+version: 1
+effective_from: 2026-08-01
+status: active

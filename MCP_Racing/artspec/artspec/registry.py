@@ -40,7 +40,8 @@ class Registry:
                   stage: str | None = None) -> list[Rule]:
         out = [r for r in self.rules.values() if r.status == "active"]
         if asset_class:
-            out = [r for r in out if r.asset_class == asset_class]
+            # "*" = luật dùng chung cho mọi class (vd sức khoẻ mesh)
+            out = [r for r in out if r.asset_class in (asset_class, "*")]
         if stage:
             out = [r for r in out if r.stage == stage]
         return sorted(out, key=lambda r: r.id)

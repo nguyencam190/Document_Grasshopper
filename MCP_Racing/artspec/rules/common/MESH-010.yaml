@@ -1,0 +1,25 @@
+id: MESH-010
+title: "File không được chứa mặt tham chiếu đỉnh không tồn tại"
+asset_class: "*"
+category: geometry
+tier: A
+severity: fail
+stage: G1
+
+check:
+  type: mesh_defect
+  applies_to: { collection: meshes }
+  count_metric: invalid_index_faces
+  id_metric: invalid_index_face_ids
+  id_label: f
+  max: 0
+
+why: >
+  Mặt trỏ tới đỉnh không có trong file nghĩa là file đã hỏng khi export. Engine
+  có thể import được nhưng hình học sẽ sai ở chỗ đó.
+how_to_fix:
+  - "Export lại từ scene gốc"
+  - "Nếu lặp lại: chạy Mesh > Cleanup trên scene trước khi export"
+version: 1
+effective_from: 2026-08-01
+status: active

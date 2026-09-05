@@ -1,0 +1,26 @@
+id: MESH-004
+title: "Toàn bộ mesh không được lộn mặt trong ra ngoài"
+asset_class: "*"
+category: geometry
+tier: A
+severity: fail
+stage: G1
+
+check:
+  type: flag
+  applies_to: { collection: meshes }
+  metric: inverted_normals
+  equals: false
+
+why: >
+  Khác với MESH-003 (vài mặt lẻ bị lật), đây là cả khối kín bị lộn — mọi mặt
+  đều hướng vào trong. Trong Maya nhìn hoàn toàn bình thường; vào UE5 thì vật
+  thể biến mất hoặc chỉ thấy phần bên trong.
+how_to_fix:
+  - "Chọn cả mesh > Mesh Display > Reverse"
+  - "Kiểm lại: tắt Two Sided Lighting, mesh phải sáng bình thường"
+common_mistakes:
+  - "Mirror bằng scale -1 trên cả object rồi freeze transform"
+version: 1
+effective_from: 2026-08-01
+status: active

@@ -1,0 +1,27 @@
+id: MESH-006
+title: "Không được có mặt diện tích bằng không"
+asset_class: "*"
+category: geometry
+tier: A
+severity: fail
+stage: G1
+
+check:
+  type: mesh_defect
+  applies_to: { collection: meshes }
+  count_metric: zero_area_faces
+  id_metric: zero_area_face_ids
+  id_label: f
+  max: 0
+
+why: >
+  Mặt suy biến (3 đỉnh thẳng hàng hoặc trùng nhau) không tính được normal, gây
+  vệt đen khi bake và có thể làm crash một số công cụ tính LOD.
+how_to_fix:
+  - "Maya > Mesh > Cleanup, tích Faces with zero geometry area"
+  - "Kiểm lại vùng vừa dọn — cleanup có thể để lại lỗ thủng"
+common_mistakes:
+  - "Scale một loop về 0 để tạo mũi nhọn thay vì collapse nó"
+version: 1
+effective_from: 2026-08-01
+status: active
