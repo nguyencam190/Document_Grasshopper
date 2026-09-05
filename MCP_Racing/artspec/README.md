@@ -116,6 +116,28 @@ tool B ──adapter──┼──> ExternalFinding ──> ánh xạ rule_id �
 tool C ──adapter──┘                         (kèm why, how_to_fix, golden asset)
 ```
 
+### Chưa biết bộ tool của studio có những gì? Quét trước
+
+```bash
+python -m artspec.cli scan-validators D:/pipeline/scripts
+```
+
+**Chỉ đọc mã nguồn, không chạy gì** — dùng `ast` để phân tích cú pháp, không
+import module nào, nên **không cần Maya** và không có rủi ro thực thi code.
+
+Nó liệt kê hàm nào là validator, mỗi hàm phát ra mã lỗi gì, nhận ra **hàm tổng
+hợp** (kiểu `run_all`) và xếp lên đầu, rồi **dựng sẵn khối `adapters.yaml`** cùng
+danh sách mã lỗi để dán vào `external_codes`.
+
+```
+studio.runner.run_all                     TỔNG HỢP   Chạy toàn bộ validator
+studio.checks.geometry.check_topology     3 mã       Kiểm topology
+studio.checks.uv.check_uv                 3 mã       Kiểm UV
+```
+
+Thêm `--json` để xuất bản tóm tắt gửi đi. Bản tóm tắt chỉ chứa tên hàm, mã lỗi
+và dòng mô tả đầu — không chứa logic nghiệp vụ.
+
 Khai báo trong `adapters.yaml` (mẫu: [`adapters.example.yaml`](adapters.example.yaml)) —
 hai kiểu tool phổ biến nhất **không cần viết Python**:
 
@@ -342,6 +364,7 @@ python tests/test_meshcheck.py # 29 check — phân tích mesh + luật MESH-* �
 python tests/test_importer.py  # 27 check — CSV → luật, gồm cả bắt lỗi dòng hỏng
 python tests/test_adapters.py  # 20 check — nối tool ngoài, gồm cả tool hỏng
 python tests/test_maya_adapter.py  # 16 check — hai adapter Maya, chạy với Maya giả
+python tests/test_scanner.py   # 18 check — quét mã nguồn validator, không import gì
 python tests/test_security.py  # 11 check — giới hạn thư mục + chống điều khiển qua tên mesh
 python tests/bench.py          # đo tốc độ trên MÁY CỦA BẠN (thêm --big cho mesh 500k)
 ```
@@ -386,6 +409,7 @@ artspec/               engine — hiếm khi phải sửa
                meshcheck.py — phân tích sức khoẻ hình học, dùng chung mọi định dạng
   inbox.py     kiểm 1 file / cả thư mục, bảng tóm tắt cho Lead
   importer.py  chuyển bảng CSV của Art Lead thành file luật YAML
+  scanner.py   quét bộ tool validate của studio (chỉ đọc mã nguồn)
   registry.py  đọc & kiểm tính hợp lệ của luật
   checks/      builtin.py (Tier A) · vehicle.py (Tier B, đặc thù dự án)
   engine.py    chạy luật, áp waiver

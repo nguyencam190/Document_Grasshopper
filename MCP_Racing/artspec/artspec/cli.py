@@ -13,7 +13,7 @@ import json
 import sys
 from pathlib import Path
 
-from . import engine, importer, inbox, registry, render
+from . import engine, importer, inbox, registry, render, scanner
 
 DEFAULT_ROOT = Path(__file__).resolve().parent.parent
 
@@ -54,6 +54,12 @@ def main(argv: list[str] | None = None) -> int:
     r.add_argument("--asset-class")
     r.add_argument("--stage")
 
+    sc = sub.add_parser("scan-validators",
+                        help="quét bộ tool validate của studio (chỉ đọc, không chạy)")
+    sc.add_argument("folder", type=Path)
+    sc.add_argument("--all", action="store_true", help="liệt kê mọi hàm, không chỉ hàm nghi là validator")
+    sc.add_argument("--json", action="store_true", help="xuất JSON để gửi đi")
+
     im = sub.add_parser("import-rules",
                         help="chuyển bảng CSV (Excel) thành file luật YAML")
     im.add_argument("csv", type=Path)
@@ -73,6 +79,37 @@ def main(argv: list[str] | None = None) -> int:
     c.add_argument("stage")
 
     a = ap.parse_args(argv)
+
+    if a.cmd == "scan-validators":
+        try:
+            res = scanner.scan(a.folder, include_all=a.all)
+        except NotADirectoryError as e:
+            print(f"LỖI: {e}", file=sys.stderr)
+            return 2
+        if a.json:
+            print(json.dumps(res, ensure_ascii=False, indent=2))
+            return 0
+        print(f"Đã đọc {res['python_files_scanned']} file .py trong {res['root']}")
+        print(f"Tìm thấy {len(res['candidates'])} hàm nghi là validator, "
+              f"{len(res['error_codes'])} mã lỗi\n")
+        rows = res["candidates"][:20]
+        w = max((len(f"{c['module']}.{c['function']}") for c in rows), default=30)
+        for c in rows:
+            full = f"{c['module']}.{c['function']}"
+            mark = "TỔNG HỢP" if c.get("is_aggregator") else (
+                f"{len(c['error_codes'])} mã" if c["error_codes"] else "—")
+            print(f"  {full.ljust(w)}  {mark:<10} {c['doc'][:44]}")
+        if len(res["candidates"]) > 20:
+            print(f"  … và {len(res['candidates']) - 20} hàm nữa")
+        if res["unreadable"]:
+            print(f"\n{len(res['unreadable'])} file không đọc được (lỗi cú pháp):")
+            for u in res["unreadable"][:5]:
+                print(f"   {u}")
+        print("\n" + "=" * 72 + "\nGỢI Ý adapters.yaml\n" + "=" * 72)
+        print(scanner.suggest_adapters(res))
+        print("=" * 72 + "\nMÃ LỖI ĐỂ GẮN VÀO LUẬT\n" + "=" * 72)
+        print(scanner.suggest_rule_codes(res))
+        return 0
 
     if a.cmd == "import-rules":
         try:
