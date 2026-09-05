@@ -186,6 +186,23 @@ Prompt: `pre_submit_review`.
 `instructions` của server cấm model tự suy ra con số khi tool trả `found=false` —
 đây là hàng rào chính chống việc AI bịa spec.
 
+## Điền luật bằng Excel, không sửa YAML
+
+Art Lead điền bảng `checklists/_MAU_THU_THAP.csv` rồi chạy một lệnh:
+
+```bash
+python -m artspec.cli import-rules checklists/luat_xe.csv              # xem trước
+python -m artspec.cli import-rules checklists/luat_xe.csv --out rules/vehicle
+```
+
+Cột `check` dùng cú pháp rút gọn: `triangle_count <= 96000 where lod=0` ·
+`name matches ^SM_.+$` · `ngons <= 0 ids ngon_faces` · `inverted_normals is false` ·
+`manual: <câu hỏi>` · `custom: <tên hàm>`.
+
+Dòng nào hỏng thì bị bỏ qua kèm báo lỗi **có số dòng để tìm trong Excel**; dòng
+đúng vẫn chạy. `why` và `how_to_fix` bắt buộc — thiếu là loại dòng đó. Cách viết:
+[`VIET_CHECKLIST.md`](../VIET_CHECKLIST.md).
+
 ## Thêm một luật đặc thù của dự án
 
 | Tier | Ví dụ | Phải làm gì |
@@ -224,6 +241,7 @@ python tests/test_fbx.py       # 16 check — reader FBX, fixture tự sinh
 python tests/test_readers.py   # 18 check — glTF/OBJ + luồng inbox đầu-cuối
 python tests/test_updates.py   # 11 check — changelog + tool whats_changed_for
 python tests/test_meshcheck.py # 23 check — phân tích mesh + luật MESH-* đầu-cuối
+python tests/test_importer.py  # 27 check — CSV → luật, gồm cả bắt lỗi dòng hỏng
 ```
 
 `test_fbx.py` tự sinh FBX nhị phân rồi đọc lại — kiểm chứng phần đọc container
@@ -254,6 +272,7 @@ rules/<class>/*.yaml   luật riêng theo class — thứ bạn phải điền
 rules/common/*.yaml    luật mesh dùng chung mọi class (asset_class: "*")
 changelog/*.yaml       update khách hàng — nối vào luật bị ảnh hưởng
 checklists/*.yaml      checklist theo gate G0-G3
+checklists/_MAU_THU_THAP.csv   bảng Excel để Art Lead điền luật
 glossary/*.yaml        thuật ngữ theo cách dự án hiểu
 waivers/*.yaml         ngoại lệ đã duyệt
 samples/*.json         metrics mẫu để chạy thử
@@ -263,6 +282,7 @@ artspec/               engine — hiếm khi phải sửa
   readers/     đọc thẳng file nộp: fbxfile.py · gltf.py · obj.py · images.py
                meshcheck.py — phân tích sức khoẻ hình học, dùng chung mọi định dạng
   inbox.py     kiểm 1 file / cả thư mục, bảng tóm tắt cho Lead
+  importer.py  chuyển bảng CSV của Art Lead thành file luật YAML
   registry.py  đọc & kiểm tính hợp lệ của luật
   checks/      builtin.py (Tier A) · vehicle.py (Tier B, đặc thù dự án)
   engine.py    chạy luật, áp waiver

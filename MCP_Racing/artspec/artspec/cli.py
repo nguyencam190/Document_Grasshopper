@@ -13,7 +13,7 @@ import json
 import sys
 from pathlib import Path
 
-from . import engine, inbox, registry, render
+from . import engine, importer, inbox, registry, render
 
 DEFAULT_ROOT = Path(__file__).resolve().parent.parent
 
@@ -54,6 +54,13 @@ def main(argv: list[str] | None = None) -> int:
     r.add_argument("--asset-class")
     r.add_argument("--stage")
 
+    im = sub.add_parser("import-rules",
+                        help="chuyển bảng CSV (Excel) thành file luật YAML")
+    im.add_argument("csv", type=Path)
+    im.add_argument("--out", type=Path, help="thư mục ghi luật (mặc định: xem trước, không ghi)")
+    im.add_argument("--overwrite", action="store_true")
+    im.add_argument("--effective-from", help="ngày hiệu lực mặc định (YYYY-MM-DD)")
+
     u = sub.add_parser("updates", help="update khách hàng ảnh hưởng tới một class")
     u.add_argument("asset_class")
     u.add_argument("--since", help="YYYY-MM-DD")
@@ -66,6 +73,35 @@ def main(argv: list[str] | None = None) -> int:
     c.add_argument("stage")
 
     a = ap.parse_args(argv)
+
+    if a.cmd == "import-rules":
+        try:
+            res = importer.from_csv(a.csv, default_effective=a.effective_from)
+        except importer.ImportError_ as e:
+            print(f"LỖI: {e}", file=sys.stderr)
+            return 2
+        print(f"Đọc được {len(res.rules)} luật từ {a.csv}")
+        for r in res.rules:
+            print(f"  {r['id']:<14} {r['severity'].upper():<5} tier {r['tier']}  "
+                  f"{r['stage']}  {r['title']}")
+        if res.needs_code:
+            print(f"\n⚠  Tier B cần viết hàm (cột check phải là 'custom: <tên hàm>'): "
+                  f"{', '.join(res.needs_code)}")
+        if res.errors:
+            print(f"\n❌ {len(res.errors)} dòng KHÔNG dùng được — sửa rồi chạy lại:")
+            for e in res.errors:
+                print(f"   {e}")
+        if not a.out:
+            print("\n(xem trước — thêm --out <thư mục> để ghi file luật)")
+            return 1 if res.errors else 0
+        try:
+            files = importer.write_rules(res.rules, a.out, overwrite=a.overwrite)
+        except importer.ImportError_ as e:
+            print(f"LỖI: {e}", file=sys.stderr)
+            return 2
+        print(f"\nĐã ghi {len(files)} file vào {a.out}")
+        return 1 if res.errors else 0
+
     reg = _load(a.root)
 
     if a.cmd == "validate":
