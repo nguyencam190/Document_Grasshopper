@@ -101,9 +101,51 @@ Có test: `tests/test_security.py`.
 
 ### 4.2 OAuth 2.1
 
-Chuẩn MCP `2026-07-28` yêu cầu OAuth 2.1, bắt buộc validate `iss` theo RFC 9207,
-và ưu tiên CIMD thay cho Dynamic Client Registration. Chi tiết trong
-[`NGHIEN_CUU_MCP_ARTSPEC.md`](NGHIEN_CUU_MCP_ARTSPEC.md) mục Bảo mật.
+Chuẩn MCP `2026-07-28` **bắt buộc** OAuth 2.1.
+
+**OAuth là gì, nói theo ngôn ngữ studio.** Hình dung bạn thuê một freelancer.
+Có hai cách cho họ vào hệ thống:
+
+| | Cách sai | Cách OAuth |
+|---|---|---|
+| Bạn đưa gì | Tài khoản + mật khẩu của chính bạn | Không đưa gì cả |
+| Họ vào được đâu | **Mọi thứ bạn vào được** | Chỉ đúng phần bạn cho phép |
+| Bao lâu | Mãi mãi, tới khi bạn đổi mật khẩu | Hết hạn sau vài giờ, tự gia hạn nếu còn quyền |
+| Thu hồi | Phải đổi mật khẩu, ảnh hưởng cả bạn | Bấm một nút, chỉ họ bị cắt |
+| Biết ai làm gì | Không — log ghi tên bạn | Có — log ghi tên họ |
+
+OAuth là **cái thẻ ra vào tạm thời**, không phải chìa khoá nhà. Phần mềm nhận
+thẻ đó **không bao giờ biết mật khẩu của bạn**.
+
+**"2.1" là gì.** OAuth 2.0 ra đời 2012, qua thời gian tích tụ nhiều lựa chọn
+trong đó vài lựa chọn hoá ra không an toàn. OAuth 2.1 là bản dọn dẹp: **bỏ hẳn
+các cách cũ nguy hiểm** và **bắt buộc** những thực hành an toàn vốn chỉ là
+khuyến nghị. Đáng chú ý nhất là bắt buộc PKCE — cơ chế chống kẻ thứ ba chặn lấy
+mã cấp quyền giữa đường rồi tự đổi lấy thẻ.
+
+**Vì sao artspec dùng chung BẮT BUỘC phải có.** Không có nó, server không biết
+ai đang hỏi. Hệ quả cụ thể:
+
+- Bất kỳ ai trong mạng studio dò ra địa chỉ đều đọc được toàn bộ techspec
+- Không phân quyền được — không thể cho hoạ sĩ chỉ xem class mình làm, hay chỉ
+  Lead xem được danh sách waiver
+- Không audit được ai hỏi gì, lúc nào
+
+Bản local (stdio) **không cần** vì nó chạy đúng quyền người dùng và không mở
+cổng mạng nào — không có gì để xác thực.
+
+**Hai yêu cầu thêm của chuẩn `2026-07-28`:**
+
+- **Validate `iss` theo RFC 9207** — client phải kiểm nơi cấp thẻ đúng là nơi nó
+  định hỏi. Bịt lỗ hổng "nhầm máy chủ cấp quyền", nơi kẻ tấn công lừa client
+  đem mã đi đổi ở chỗ khác.
+- **CIMD thay cho Dynamic Client Registration** — cách đăng ký client mới, ràng
+  thông tin xác thực với đúng một nơi cấp quyền để không tái sử dụng chỗ khác được.
+
+> **Đừng tự dựng OAuth.** Studio gần như chắc chắn đã có hệ thống đăng nhập
+> (Google Workspace, Microsoft Entra, Okta…). Việc đúng là **cắm artspec vào hệ
+> thống sẵn có đó**, để IT quản lý tài khoản như mọi phần mềm khác. Tự viết phần
+> xác thực là chỗ dễ sai nhất và không đáng.
 
 ### 4.3 Chỉ đọc, không ghi
 
