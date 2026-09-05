@@ -7,7 +7,7 @@ racing game open-world.
 
 | File | Nội dung |
 |---|---|
-| [`BAT_DAU_TU_DAU.md`](BAT_DAU_TU_DAU.md) | **⭐ ĐỌC ĐẦU TIÊN.** Kế hoạch hành động: bạn phải làm gì, theo thứ tự nào, mất bao lâu, ai làm. 6 giai đoạn + 5 việc làm ngay tuần này |
+| [`BAT_DAU_TU_DAU.md`](BAT_DAU_TU_DAU.md) | **⭐ ĐỌC ĐẦU TIÊN.** Lộ trình 6 tuần có lệnh cụ thể và mốc "xong khi" cho từng tuần. Bảng điều khiển hiện trạng, 3 điểm quyết định, bảng theo dõi in ra tick được, và bản rút gọn nếu chỉ có 2 giờ/tuần |
 | [`VIET_CHECKLIST.md`](VIET_CHECKLIST.md) | **Việc chính của Giai đoạn 1.** Cách viết checklist: phép thử một mục tốt, biến câu tệ thành câu dùng được, cây quyết định tier, và quy trình điền Excel → 1 lệnh → ra luật (không phải sửa YAML) |
 | [`QUY_TRINH_6_BUOC_QUAN_LY.md`](QUY_TRINH_6_BUOC_QUAN_LY.md) | Quản lý quy trình 6 bước (Model → Lock Normal → UVW → Texture → Rigging → Import UE5): 4 gate cần thêm, định nghĩa DONE + lỗi hay gặp từng bước, 7 cơ chế quản lý, chỉ số đo lường, checklist mẫu |
 | [`artspec/`](artspec/README.md) | **Code chạy được.** Engine kiểm **lỗi mesh** (n-gon, non-manifold, mặt lật, lỗ thủng…) + **sai techspec**, kèm MCP server (Python). Luật để ngoài dạng YAML — thêm luật đặc thù không phải sửa code. Kèm bộ luật mẫu, collector Maya, metrics mẫu |
@@ -17,6 +17,6 @@ racing game open-world.
 
 **Thứ tự đọc:** `BAT_DAU_TU_DAU.md` → rồi mở tài liệu khác khi kế hoạch đó chỉ tới.
 
-**Trạng thái:** engine + MCP server đã chạy được với bộ luật MẪU (toàn số bịa).
-Phần khó còn lại không phải kỹ thuật mà là nội dung — số thật, quyết định thật.
-Bắt đầu ở [`BAT_DAU_TU_DAU.md`](BAT_DAU_TU_DAU.md) mục "Việc làm trong tuần này".
+**Trạng thái:** engine chạy được, 109 test pass. **10 luật lỗi mesh đã sẵn sàng
+dùng ngay hôm nay** — không cần điền gì. Phần còn lại là số thật cho luật riêng
+của dự án. Bắt đầu ở [`BAT_DAU_TU_DAU.md`](BAT_DAU_TU_DAU.md) mục "Tuần này".

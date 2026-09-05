@@ -1,318 +1,250 @@
-# Bắt đầu từ đâu — kế hoạch hành động cho Art Lead
+# Lộ trình — bạn cần làm gì, theo thứ tự nào
 
-> Tài liệu này trả lời đúng một câu: **tôi phải làm gì, theo thứ tự nào.**
-> Ba tài liệu kia là lý thuyết và code; đây là việc.
-> Ngày soạn: 2026-09-05.
-
----
-
-## 1. Bạn đang ở đâu
-
-| Thứ | Trạng thái | Ai làm |
-|---|---|---|
-| Engine kiểm lỗi (`artspec/`) | ✅ Xong, chạy được, có test | Đã xong |
-| MCP server, 11 tool | ✅ Xong | Đã xong |
-| Đọc thẳng file `.fbx`/`.glb`/`.obj` | ✅ Xong | Đã xong |
-| Khung 10 luật mẫu | ⚠️ **Toàn số bịa** | **Bạn phải thay** |
-| Quy trình + gate | ⚠️ Có đề xuất, chưa chốt | **Bạn quyết** |
-| Golden Asset | ❌ Chưa có | **Bạn làm** |
-| Chạy thử với hoạ sĩ thật | ❌ Chưa | **Bạn tổ chức** |
-
-**Nói thẳng:** phần khó nhất còn lại không phải kỹ thuật. Code đã chạy. Thứ còn
-thiếu là **nội dung** — số thật, quyết định thật — và chỉ bạn làm được.
+> Điểm vào của cả thư mục. Ba tài liệu kia là lý thuyết, `artspec/` là code, đây
+> là **việc**.
+> Cập nhật: 2026-09-05 (viết lại theo hiện trạng code — bản cũ đã lạc hậu).
 
 ---
 
-## 2. Ai làm gì
+## 0. Bảng điều khiển — đang ở đâu
 
-| Vai | Việc | Thời lượng ước tính |
-|---|---|---|
-| **Bạn (Art Lead)** | Điền số thật vào luật · chốt gate · làm Golden Asset · duyệt waiver · đọc Error Log hàng tháng | 5–7 ngày công rải trong 6 tuần |
-| **TA / pipeline TD** *(nếu có)* | Cài Python, chạy thử, nối vào nút Export trong Maya, dựng batch chạy đêm | 3–5 ngày công |
-| **Hoạ sĩ (3 người thử)** | Dùng thật 1 tuần, phản hồi | 30 phút/người |
-| **Producer** | Xác nhận NDA cho phép đưa techspec vào AI | 1 cuộc trao đổi |
-| **Tôi** | Sửa code, thêm luật Tier B, viết collector còn thiếu | theo yêu cầu |
+### ✅ Đã xong, chạy được ngay
 
-> Không có TA cũng làm được đến hết Giai đoạn 4 — chỉ cần chạy được lệnh trong
-> Terminal/CMD. Từ Giai đoạn 6 (tự động hoá) mới thật sự cần người biết code.
-
----
-
-## 3. Toàn cảnh
-
-```
-GĐ0  Chuẩn bị            2 giờ        ──> biết bắt đầu từ class nào, có Error Log
-GĐ1  Điền số thật        3–5 ngày     ──> luật thật, chạy được   ★ QUAN TRỌNG NHẤT
-GĐ2  Chốt gate           1 ngày       ──> checklist in ra dùng được
-GĐ3  Golden Asset        2–3 ngày     ──> chuẩn tham chiếu
-GĐ4  Chạy thử 3 hoạ sĩ   1 tuần       ──> ĐIỂM DỪNG ĐÁNH GIÁ ⛳
-GĐ5  Gắn MCP             1–2 ngày     ──> hoạ sĩ hỏi được trong chat
-GĐ6  Tự động hoá         2–3 tuần     ──> nút Export + batch đêm
-```
-
-**Đừng nhảy cóc.** GĐ5 (MCP) không có ý nghĩa nếu GĐ1 chưa xong — server sẽ trả
-lời bằng số bịa. GĐ6 không có ý nghĩa nếu GĐ4 cho thấy hoạ sĩ không dùng.
-
----
-
-## GIAI ĐOẠN 0 — Chuẩn bị *(2 giờ, làm được ngay hôm nay)*
-
-### 0.1 Chọn asset class thí điểm
-
-Chọn class **nhiều asset nhất và nhiều hoạ sĩ nhất**, không phải class khó nhất.
-Với racing open-world thường là `vehicle_exterior` hoặc `environment_prop`.
-
-Lý do: cần đủ người dùng để biết quy trình có chạy không. Class khó mà chỉ 1
-người làm thì học được rất ít.
-
-**Ghi lại:** class chọn là `________________`
-
-### 0.2 Mở Error Log
-
-Một Google Sheet, 6 cột:
-
-| Ngày | Asset | Bước sinh lỗi | Bước phát hiện | Mô tả lỗi | Giờ mất |
-|---|---|---|---|---|---|
-
-Từ hôm nay, mỗi lần bạn bắt được lỗi khi review thì ghi 1 dòng. **Đây là nguồn
-dữ liệu quan trọng nhất của cả dự án** — nó cho biết luật nào cần viết trước.
-
-### 0.3 Đo baseline
-
-Nhìn lại 1 tháng qua, trả lời 2 câu:
-
-- Bao nhiêu asset phải làm lại vì sai spec? `______`
-- Ước tính tổng số giờ mất vì việc đó? `______`
-
-Hai con số này là thứ bạn dùng để chứng minh hiệu quả với producer sau 3 tháng.
-Không đo bây giờ thì sau này không so được.
-
-### 0.4 Hỏi producer về NDA
-
-> "Techspec dự án có được phép đưa vào một AI assistant nội bộ không? Dữ liệu
-> nằm trên máy studio, không gửi ra ngoài trừ phần chat với Claude."
-
-Câu trả lời **không chặn** Giai đoạn 1–4 (validator chạy hoàn toàn offline).
-Nó chỉ chặn Giai đoạn 5 (MCP).
-
----
-
-## GIAI ĐOẠN 1 — Điền số thật ★ *(3–5 ngày — việc quan trọng nhất)*
-
-Đây là toàn bộ giá trị của hệ thống. Làm cẩu thả ở đây thì mọi thứ sau vô nghĩa.
-
-### 1.1 Gom quy tắc định lượng
-
-Mở techspec, quét từ đầu đến cuối, gom mọi thứ **có con số hoặc có quy tắc rõ ràng**
-vào một bảng nháp:
-
-| Quy tắc | Con số | Áp cho cái gì | Nguồn (trang/mục) |
-|---|---|---|---|
-| Tricount LOD0 PC | 120,000 | thân xe, không tính bánh | Confluence 3.2 |
-| … | | | |
-
-Trong lúc gom, bạn sẽ gặp 3 tình huống — xử lý như sau:
-
-| Gặp gì | Làm gì |
+| Thứ | Chi tiết |
 |---|---|
-| Hai chỗ ghi hai số khác nhau | **Dừng lại, chốt số đúng trước.** Đây là lỗi có sẵn, MCP không cứu được |
-| Quy tắc mơ hồ ("tricount hợp lý") | Hỏi lại người viết, hoặc tự chốt một con số rồi ghi là do bạn chốt |
-| Quy tắc không có số ("phải trông thật") | Để riêng — đây là Tier C, sẽ thành câu hỏi tự kiểm |
+| Engine kiểm lỗi | **109 test** pass, không cần AI, không cần mạng |
+| **10 luật lỗi mesh** | `MESH-001…010` — áp dụng **mọi** asset class. **Bạn không phải viết** |
+| Đọc file trực tiếp | `.fbx` (parser tự viết) · `.gltf/.glb` · `.obj` · `.json` |
+| MCP server | 13 tool, tự nạp lại khi luật đổi |
+| Điền luật bằng Excel | `import-rules` — **không phải sửa YAML** |
+| Bảo mật | Giới hạn thư mục đọc, chống điều khiển qua tên mesh |
 
-> **Việc gom này tự nó đã có giá trị**, kể cả nếu bạn dừng dự án ở đây. Nó lộ ra
-> chỗ techspec đang mâu thuẫn — thứ mà không ai phát hiện cho tới khi có asset hỏng.
+### ⚠️ Chờ bạn
 
-**Ngưỡng để đi tiếp:** gom được ít nhất **30 quy tắc định lượng**. Dưới ngưỡng đó
-thì một file PDF 2 trang là đủ, chưa cần hệ thống này.
-
-### 1.2 Sửa file luật — hướng dẫn từng bước
-
-Mỗi luật là 1 file trong `artspec/rules/vehicle/`. Mở bằng Notepad++ / VS Code /
-bất kỳ trình soạn text nào. **Không cần biết lập trình** — chỉ sửa số và chữ.
-
-**Ví dụ cụ thể.** Mở `VEH-TRI-001.yaml`, tìm khối này:
-
-```yaml
-  # ⚠️ SỐ VÍ DỤ — thay bằng budget thật của dự án
-  table:
-    - { lod: 0, platform: pc,      value: 120000 }
-    - { lod: 1, platform: pc,      value: 45000 }
-```
-
-Sửa thành số thật của bạn, xoá dòng cảnh báo:
-
-```yaml
-  table:
-    - { lod: 0, platform: pc,      value: 96000 }
-    - { lod: 1, platform: pc,      value: 38000 }
-```
-
-Rồi điền tiếp 3 field quan trọng nhất — **đây mới là phần làm nên khác biệt**:
-
-```yaml
-why: >
-  (Vì sao có luật này. Hoạ sĩ hiểu lý do thì tự biết linh hoạt;
-   không hiểu thì hoặc phá luật hoặc làm máy móc.)
-how_to_fix:
-  - (Bước 1 cụ thể, nêu tên lệnh/menu thật trong Maya)
-  - (Bước 2)
-common_mistakes:
-  - (Lỗi bạn đã thật sự bắt gặp khi review — lấy từ Error Log)
-```
-
-Ba field này **vào thẳng thông điệp lỗi** mà hoạ sĩ đọc. Viết tốt = hoạ sĩ tự sửa
-được. Viết qua loa = họ vẫn phải đi hỏi bạn, và hệ thống mất tác dụng.
-
-### 1.3 Quy tắc mới không có file sẵn
-
-| Loại | Bạn tự làm được? | Cách |
+| Thứ | Ước tính | Chặn cái gì |
 |---|---|---|
-| **Có số / so sánh / tên** (Tier A) | ✅ Được | Copy 1 file cũ, đổi `id` + nội dung. Xem `rules/_SCHEMA.md` |
-| **Logic riêng** (Tier B) | ❌ Cần tôi | Mô tả luật bằng lời, tôi viết hàm |
-| **Người kiểm** (Tier C) | ✅ Được | Copy `VEH-VIS-001.yaml`, đổi câu hỏi |
+| Số thật cho luật riêng của class | 2–3 ngày | Chặn mọi thứ phía sau |
+| Chốt 4 gate | 1 ngày | Chặn checklist |
+| Golden Asset | 2–3 ngày | Không chặn, nhưng giá trị cao |
+| Hỏi producer về NDA | 1 tin nhắn | Chỉ chặn phần MCP, không chặn validator |
 
-### 1.4 Chạy thử
+### 🔧 Chờ bạn yêu cầu (việc của tôi)
+
+| Thứ | Khi nào cần |
+|---|---|
+| Texel density + hard edge cho reader FBX | Khi muốn kiểm 2 nhóm luật đó mà không mở Maya |
+| Luật Tier B riêng của dự án | Khi bảng CSV có dòng `custom:` |
+| Cầu nối Maya (chọn hộ mặt lỗi) | Sau khi chạy ổn định vài tháng — xem [`BAO_MAT.md`](BAO_MAT.md) §5 |
+
+---
+
+## 1. Tuần này — 2 giờ, có kết quả thật ngay
+
+**Điểm khác biệt lớn nhất so với kế hoạch cũ:** 10 luật mesh đã sẵn sàng. Bạn bắt
+được lỗi thật **trước khi** điền bất kỳ con số nào.
+
+### Bước 1 · Cài (15 phút)
 
 ```bash
 cd MCP_Racing/artspec
-pip install -r requirements.txt         # chỉ cần 1 lần
-python -m artspec.cli rules             # liệt kê luật đã nạp
-python -m artspec.cli validate samples/metrics_pass.json
+pip install -r requirements.txt
+python -m artspec.cli rules          # phải thấy 20 luật
 ```
 
-Nếu file YAML viết sai, chương trình báo lỗi ngay và chỉ đúng dòng — sửa rồi chạy lại.
+### Bước 2 · Chạy trên asset thật (30 phút)
 
-### 1.5 11 câu cần chốt trong lúc làm
-
-**Kỹ thuật**
-1. Đơn vị dự án và quy ước pivot?
-2. Texel density chuẩn theo từng class? (px/cm)
-3. Ánh sáng: Lumen động hay bake tĩnh? → quyết định có cần UV channel 1 không
-4. Channel packing? (ORM / RMA / khác — kênh nào là gì)
-5. Naming convention cho mesh, texture, bone, material?
-6. Giới hạn influence/vertex khi skin?
-7. Nanite: class nào bật, class nào không?
-8. Budget tricount / texture resolution / material slot theo class?
-
-**Tổ chức**
-9. Ai được quyền merge thay đổi luật khi bạn bận?
-10. Ai duyệt waiver?
-11. Studio có repo git nội bộ để đặt bộ luật không?
-
-### ✅ Xong Giai đoạn 1 khi
-
-- [ ] ≥ 30 luật có số thật, không còn dòng `⚠️ SỐ VÍ DỤ` nào
-- [ ] `python -m artspec.cli rules` chạy không lỗi
-- [ ] Mọi luật có `why` + `how_to_fix` viết cho người mới đọc hiểu được
-- [ ] Techspec không còn mâu thuẫn ở class thí điểm
-
----
-
-## GIAI ĐOẠN 2 — Chốt gate *(1 ngày)*
-
-### 2.1 Quyết định gate
-
-Đề xuất trong [`QUY_TRINH_6_BUOC_QUAN_LY.md`](QUY_TRINH_6_BUOC_QUAN_LY.md): 6 bước
-của bạn + 4 gate (G0 Blockout · **G1 Model Freeze** · G2 Tech Check · G3 In-game QC).
-
-Bạn có thể bỏ bớt, nhưng **đừng bỏ G1**. Lock Normal khoá mesh lại; không có gate
-chặn ở đó thì hoạ sĩ vẫn quay lại sửa model và mất trắng bước 2–3–4. Đây là nguồn
-rework lớn nhất.
-
-### 2.2 Cập nhật checklist
-
-Sửa `artspec/checklists/vehicle.yaml` cho khớp gate bạn chốt. In ra thử:
+Lấy 5 file FBX bất kỳ hoạ sĩ đã nộp, bỏ vào một thư mục:
 
 ```bash
-python -m artspec.cli checklist vehicle_exterior G1
+python -m artspec.cli inbox /duong/dan/toi/submit --stage G1
 ```
 
-### 2.3 Công bố với team
+Gate G1 hiện có **13 luật**, trong đó 10 là luật mesh dùng chung. Kết quả:
 
-Họp 30 phút, nói 4 ý:
-1. Từ tuần sau có 4 gate, mỗi gate có checklist
-2. **Hoạ sĩ tự tick, tự ký trước khi submit**
-3. Lead **không** bắt lỗi có trong checklist — sai là trả về ngay, không sửa hộ
-4. Có đường xin ngoại lệ chính thức (waiver), đừng tự lách
+```
+FILE                    KẾT QUẢ          FAIL  WARN  HỎI   BỎ   LUẬT VI PHẠM
+SM_SuvA_Body_LOD0.fbx   ⛔ KHÔNG QUA         2     1    0    3   MESH-001, MESH-003
+SM_Barrier_LOD0.fbx     ✅ QUA               0     0    0    3
+```
 
-Ý số 3 là thay đổi tâm lý quan trọng nhất: nó đổi câu hỏi trong đầu hoạ sĩ từ
-*"Lead có bắt được không?"* thành *"tôi có dám ký không?"*.
+> Lệnh trả về mã thoát `1` khi có file không qua gate — đó là **bình thường**,
+> không phải lỗi chương trình. Mã `2` mới là lỗi cấu hình. Cột "BỎ" là số luật
+> không kiểm được từ định dạng đó (FBX không cho texel density và hard edge).
 
-### ✅ Xong khi
-- [ ] Checklist in ra dán tường được
-- [ ] Team đã nghe và hiểu quy tắc "Lead không sửa hộ"
+### Bước 3 · Đọc kỹ một báo cáo chi tiết (30 phút)
+
+```bash
+python -m artspec.cli check /duong/dan/SM_SuvA_Body_LOD0.fbx --stage G1
+```
+
+Tự hỏi 3 câu:
+1. Nó có bắt được lỗi **thật** không, hay báo nhầm?
+2. Nếu tôi là hoạ sĩ, đọc xong tôi **sửa được chưa**?
+3. Con số nó đọc ra (tricount, số quad) có **khớp với Maya** không?
+
+### Bước 4 · Đối chiếu bằng tay (45 phút)
+
+Mở đúng file đó trong Maya, so tricount với HUD. **Bắt buộc làm** — reader FBX
+tôi viết chưa từng chạy trên FBX thật do Maya export. Lệch thì báo tôi.
+
+> ### ✅ Xong tuần này khi
+> - [ ] Chạy được `inbox` trên 5 asset thật
+> - [ ] Đọc hết một báo cáo chi tiết
+> - [ ] Đối chiếu tricount với Maya, khớp (hoặc đã báo tôi chỗ lệch)
+> - [ ] Biết được: 10 luật mesh bắt được bao nhiêu lỗi thật trên 5 file đó
+
+**Con số cuối cùng đó quyết định có nên đi tiếp không.** Bắt được 0 lỗi trên 5
+file nghĩa là mesh của team đã sạch — hãy dồn sức vào luật techspec thay vì mesh.
 
 ---
 
-## GIAI ĐOẠN 3 — Golden Asset *(2–3 ngày)*
+## 2. Lộ trình 6 tuần
 
-Chọn 1 asset của class thí điểm, làm đúng 100%, **lưu file riêng của TỪNG BƯỚC**:
+```
+T1  Chạy thử luật mesh          2 giờ    ──> biết engine có bắt được lỗi thật không
+T2  Nền quy trình               1 ngày   ──> Error Log + gate Model Freeze + chọn class
+T3  Điền số thật (Excel)        2-3 ngày ──> ★ VIỆC LỚN NHẤT
+T4  Golden Asset                2-3 ngày ──> chuẩn tham chiếu
+T5  Chạy thử 3 hoạ sĩ           1 tuần   ──> ⛳ ĐIỂM DỪNG ĐÁNH GIÁ
+T6  Gắn MCP + tự động hoá       1-2 tuần ──> hoạ sĩ tự chạy được
+```
+
+---
+
+### Tuần 2 · Nền quy trình *(1 ngày, không cần code)*
+
+| Việc | Cách làm | Xong khi |
+|---|---|---|
+| **Mở Error Log** | 1 Google Sheet, 6 cột: Ngày · Asset · Bước sinh lỗi · Bước phát hiện · Mô tả · Giờ mất | Đã ghi ≥ 3 dòng từ review thật |
+| **Thêm gate Model Freeze** | Form ký ở cuối [`QUY_TRINH_6_BUOC_QUAN_LY.md`](QUY_TRINH_6_BUOC_QUAN_LY.md) | Team đã nghe, có form in ra |
+| **Chọn class thí điểm** | Class nhiều asset nhất + nhiều hoạ sĩ nhất, **không phải class khó nhất** | Đã ghi tên class |
+| **Hỏi producer NDA** | *"Techspec có được đưa vào AI assistant nội bộ không? Dữ liệu nằm trên máy studio."* | Có câu trả lời |
+| **Đo baseline** | Tháng trước bao nhiêu asset làm lại vì sai spec? Mất bao nhiêu giờ? | Có 2 con số |
+
+> Câu trả lời NDA **không chặn** tuần 3–5. Validator chạy hoàn toàn offline.
+> Nó chỉ chặn tuần 6 (phần MCP trong chat).
+
+---
+
+### Tuần 3 · Điền số thật ★ *(2–3 ngày — việc lớn nhất)*
+
+Đây là toàn bộ giá trị còn lại. Chi tiết cách viết:
+[`VIET_CHECKLIST.md`](VIET_CHECKLIST.md).
+
+**Ngày 1 — gom**
+
+Quét techspec, gom mọi quy tắc **có con số hoặc quy tắc rõ ràng** vào bảng nháp.
+Gặp mâu thuẫn (hai chỗ ghi hai số khác nhau) thì **dừng lại chốt trước** — đây là
+lỗi có sẵn, không công cụ nào cứu được.
+
+Mục tiêu: **20–30 quy tắc** cho class thí điểm. Dưới 20 thì chưa cần hệ thống này.
+
+**Ngày 2 — điền vào Excel**
+
+```bash
+# mở file này bằng Excel
+artspec/checklists/_MAU_THU_THAP.csv
+```
+
+Cột `check` dùng cú pháp rút gọn:
+
+| Viết | Nghĩa |
+|---|---|
+| `triangle_count <= 96000 where lod=0` | so sánh số |
+| `texel_density_px_cm within 10.24 +- 0.5` | quanh một giá trị |
+| `name matches ^SM_[A-Z]\w+_LOD[0-3]$` | mẫu chữ |
+| `material_slots <= 4 where lod=0` | so sánh số |
+| `manual: <câu hỏi>` | người kiểm |
+| `custom: vehicle.<tên hàm>` | cần tôi viết |
+
+**`why` và `how_to_fix` bắt buộc.** Thiếu là loại dòng đó.
+
+**Ngày 3 — chuyển và thử**
+
+```bash
+python -m artspec.cli import-rules checklists/luat_xe.csv                  # xem trước
+python -m artspec.cli import-rules checklists/luat_xe.csv --out rules/vehicle
+python -m artspec.cli check /duong/dan/SUV_A.fbx
+```
+
+> ### ✅ Xong tuần 3 khi
+> - [ ] ≥ 20 luật riêng của class, có số thật
+> - [ ] `import-rules` chạy, 0 dòng lỗi
+> - [ ] Mọi luật có `why` + `how_to_fix` mà hoạ sĩ mới đọc hiểu được
+> - [ ] Đã xoá hết luật mẫu cũ trong `rules/vehicle/` (toàn số bịa)
+> - [ ] Techspec không còn mâu thuẫn ở class này
+
+---
+
+### Tuần 4 · Golden Asset *(2–3 ngày)*
+
+Chọn 1 asset của class thí điểm, làm đúng 100%, lưu file **từng bước**:
 
 ```
 GoldenAsset/SUV_Base/
-  01_blockout.mb
-  02_model_freeze.mb
-  03_normal_locked.mb
-  04_uv.mb
-  05_texture/        (đủ bộ, đúng naming, đúng color space)
-  06_rig.mb
-  07_export.fbx
-  08_ue5_screenshot.png
+  01_blockout.mb   02_model_freeze.mb   03_normal_locked.mb   04_uv.mb
+  05_texture/      06_rig.mb            07_export.fbx         08_ue5_screenshot.png
 ```
+
+Rồi điền tên nó vào cột `golden_asset` trong Excel, chạy lại `import-rules` —
+thông điệp lỗi sẽ tự chỉ tới nó.
 
 Dùng để: onboarding người mới · giải quyết tranh cãi "làm sao mới đúng" · test lại
-khi đổi engine/plugin.
+khi đổi engine.
 
-Sau đó điền tên nó vào field `reference.golden_asset` của các luật liên quan — thông
-điệp lỗi sẽ tự chỉ tới nó.
-
-**Đây là khoản đầu tư sinh lời cao nhất trong toàn bộ danh sách.**
+> ### ✅ Xong khi
+> - [ ] Đủ 8 file/thư mục theo từng bước
+> - [ ] `python -m artspec.cli check GoldenAsset/SUV_Base/07_export.fbx` → **QUA GATE**
+>
+> Nếu golden asset của chính bạn không qua gate → **luật đang sai**, không phải
+> asset sai. Sửa luật.
 
 ---
 
-## GIAI ĐOẠN 4 — Chạy thử với 3 hoạ sĩ *(1 tuần)* ⛳
+### Tuần 5 · Chạy thử 3 hoạ sĩ ⛳ *(1 tuần)*
 
-### 4.1 Cách chạy
+**Cách chạy đơn giản nhất — bạn kiểm hộ, hoạ sĩ chưa cần cài gì:**
 
-Chọn 3 người, mỗi người 1 asset thật. Cách dùng đơn giản nhất — **bạn kiểm hộ**:
+Hoạ sĩ nộp FBX vào `submit/<tên class>/`, bạn chạy:
 
 ```bash
-python -m artspec.cli check  submit/vehicle_exterior/SUV_A.fbx
-python -m artspec.cli inbox  submit/
+python -m artspec.cli inbox submit/              # xem toàn cảnh
+python -m artspec.cli check submit/vehicle_exterior/SUV_A.fbx    # gửi lại chi tiết
 ```
 
-Hoạ sĩ nộp FBX vào thư mục `submit/<tên class>/`, bạn chạy 1 lệnh và gửi lại báo cáo.
-Chưa cần cài gì trên máy hoạ sĩ.
+**Theo dõi 3 con số:**
 
-### 4.2 Theo dõi 3 con số
-
-| Đo gì | Cách |
+| Đo gì | Ghi vào đâu |
 |---|---|
-| Bao nhiêu lỗi bị bắt **trước** khi submit | Đếm từ báo cáo |
-| Bao nhiêu lần báo **sai** (false positive) | Ghi lại từng lần — mỗi lần là 1 luật cần sửa |
+| Lỗi bị bắt **trước** khi submit | Error Log |
+| Số lần báo **sai** (false positive) | Error Log — mỗi lần là 1 luật cần sửa |
 | Hoạ sĩ có tự nguyện chạy lại lần 2 không | Quan sát |
 
-### 4.3 ⛳ ĐIỂM DỪNG ĐÁNH GIÁ
-
-Hết tuần, trả lời thật:
-
-| Câu hỏi | Nếu KHÔNG |
-|---|---|
-| Có bắt được lỗi thật không? | Luật viết chưa đúng chỗ đau → quay lại GĐ1, dùng Error Log chọn lại luật |
-| Báo sai < 1 lần/asset? | Sửa hoặc hạ luật hay báo sai xuống `warn` |
-| Hoạ sĩ có **tự nguyện** dùng tiếp? | **Dừng lại.** Vấn đề là quy trình/động lực, không phải thiếu tính năng — làm thêm GĐ5, GĐ6 cũng vô ích |
-
-**Chỉ đi tiếp khi cả 3 câu đều CÓ.**
+> ### ⛳ ĐIỂM DỪNG — trả lời thật
+>
+> | Câu hỏi | Nếu KHÔNG |
+> |---|---|
+> | Bắt được lỗi thật? | Luật chưa đúng chỗ đau → quay lại tuần 3, chọn luật theo Error Log |
+> | Báo sai < 1 lần/asset? | Hạ luật hay báo sai xuống `warn`, hoặc sửa luật |
+> | Hoạ sĩ **tự nguyện** dùng tiếp? | **Dừng lại.** Vấn đề là quy trình/động lực — làm thêm tuần 6 cũng vô ích |
+>
+> Cả 3 câu đều CÓ mới đi tiếp.
 
 ---
 
-## GIAI ĐOẠN 5 — Gắn MCP *(1–2 ngày)*
+### Tuần 6+ · Gắn MCP và tự động hoá
 
-Chỉ làm khi đã qua điểm dừng ở GĐ4 và producer đã đồng ý về NDA.
+Theo thứ tự giá trị giảm dần:
 
-### 5.1 Cài trên máy bạn trước
+**1. Batch chạy đêm** *(giá trị cao nhất, không cần AI)*
 
-Thêm vào file cấu hình Claude Desktop:
+```bash
+python -m artspec.cli inbox /mnt/depot/exports --json > report.json
+```
+
+Cắm vào Task Scheduler / cron. Sáng ra có bảng tổng hợp.
+
+**2. Gắn MCP vào Claude Desktop** *(chỉ khi NDA đã ok)*
 
 ```json
 {
@@ -320,81 +252,99 @@ Thêm vào file cấu hình Claude Desktop:
     "artspec": {
       "command": "python",
       "args": ["-m", "artspec.server"],
-      "cwd": "/duong/dan/toi/MCP_Racing/artspec",
-      "env": { "ARTSPEC_ROOT": "/duong/dan/toi/MCP_Racing/artspec" }
+      "cwd": "/duong/dan/MCP_Racing/artspec",
+      "env": { "ARTSPEC_ROOT": "/duong/dan/MCP_Racing/artspec" }
     }
   }
 }
 ```
 
-Thử hỏi trong Claude:
-- *"kiểm giúp tôi thư mục submit hôm nay"*
-- *"SUV_A sai chỗ nào, giải thích cho hoạ sĩ hiểu"*
-- *"xe LOD2 tối đa bao nhiêu tri?"*
+**Bắt buộc thử bước chống bịa:** hỏi một câu mà techspec **không** quy định
+(vd *"số vertex tối đa cho decal là bao nhiêu?"*). Trả lời đúng phải là *"techspec
+không có quy định này"*. Nó bịa ra số → báo tôi ngay.
 
-### 5.2 Kiểm tra AI không bịa
+**3. Nút Export trong Maya** — chạy validator ngay lúc hoạ sĩ export.
 
-**Bắt buộc làm bước này.** Hỏi một câu mà techspec **không** quy định, ví dụ:
+**4. Nhân rộng class còn lại** — 0.5–1 ngày/class khi đã quen bảng Excel.
 
-> "Dự án quy định số vertex tối đa cho decal là bao nhiêu?"
-
-Trả lời đúng phải là *"techspec không có quy định này"*. Nếu nó bịa ra một con số
-→ báo tôi ngay, phải siết lại `instructions` của server.
-
-### 5.3 Mở rộng cho team
-
-Máy hoạ sĩ cài giống bạn (stdio, chạy local). Chỉ khi muốn **một server chung**
-mới cần chuyển sang `streamable-http` — và lúc đó **bắt buộc bật OAuth 2.1**,
-xem [`NGHIEN_CUU_MCP_ARTSPEC.md`](NGHIEN_CUU_MCP_ARTSPEC.md) mục Bảo mật.
+**5. Server dùng chung** — chuyển `streamable-http`, **bắt buộc** OAuth 2.1 +
+`ARTSPEC_FILE_ROOT`. Xem [`BAO_MAT.md`](BAO_MAT.md) §4.
 
 ---
 
-## GIAI ĐOẠN 6 — Tự động hoá *(2–3 tuần, cần TA)*
+## 3. Ba điểm quyết định
 
-Theo thứ tự giá trị giảm dần:
+| Khi nào | Quyết định gì | Dữ liệu để quyết |
+|---|---|---|
+| Cuối tuần 1 | Có đáng đầu tư tiếp không | Số lỗi mesh bắt được trên 5 asset thật |
+| Cuối tuần 3 | Techspec đủ chín chưa | Có ≥ 20 luật rõ ràng, không mâu thuẫn |
+| **Cuối tuần 5** | **Nhân rộng hay dừng** | Hoạ sĩ có tự nguyện dùng không |
 
-1. **Batch chạy đêm** — quét toàn bộ FBX trong depot, sáng ra có bảng tổng hợp.
-   Không cần AI, không cần MCP, và thường là thứ tiết kiệm thời gian nhất.
-2. **Nút Export trong Maya** — chạy validator ngay lúc export, chặn lỗi sớm nhất.
-3. **Bổ sung texel density + hard edge cho reader FBX** — hiện đang SKIP, phải
-   dùng collector Maya. *(Việc của tôi, nói khi cần.)*
-4. **Chuẩn hoá các class còn lại** — 0.5–1 ngày/class khi đã quen format.
-5. **Sync tự động Confluence → luật** — dạng Pull Request chờ bạn duyệt.
+Điểm thứ ba quan trọng nhất. Đừng bỏ qua nó chỉ vì đã bỏ công 5 tuần.
 
 ---
 
-## 4. Việc làm trong tuần này
+## 4. Bảng theo dõi — in ra tick
 
-Nếu chỉ làm được 5 việc, làm đúng 5 việc này:
+```
+TUẦN 1  [ ] Cài đặt        [ ] Chạy inbox 5 asset   [ ] Đọc 1 báo cáo chi tiết
+        [ ] Đối chiếu tricount với Maya
+        → Bắt được ______ lỗi mesh thật / 5 file
 
-- [ ] **Chọn asset class thí điểm** *(15 phút)*
-- [ ] **Mở Error Log** và bắt đầu ghi *(15 phút)*
-- [ ] **Thêm gate Model Freeze** vào quy trình, kèm form ký *(1 giờ)*
-- [ ] **Bắt đầu gom quy tắc định lượng** vào bảng nháp *(nửa ngày)*
-- [ ] **Hỏi producer về NDA** *(1 tin nhắn)*
+TUẦN 2  [ ] Error Log mở   [ ] Gate Model Freeze    [ ] Chọn class: ____________
+        [ ] Hỏi NDA        [ ] Baseline: ____ asset làm lại, ____ giờ
 
-Ba việc đầu không cần code, không cần tôi, không cần đợi ai — và tự chúng đã chặn
-được phần lớn rework.
+TUẦN 3  [ ] Gom ____ quy tắc   [ ] Điền Excel   [ ] import-rules 0 lỗi
+        [ ] Xoá luật mẫu cũ    [ ] Chạy thử trên asset thật
+
+TUẦN 4  [ ] Golden Asset đủ 8 bước    [ ] Golden asset QUA GATE
+
+TUẦN 5  [ ] 3 hoạ sĩ dùng 1 tuần
+        → Bắt trước submit: ____   Báo sai: ____   Tự nguyện dùng tiếp: Có / Không
+        ⛳ ĐI TIẾP  /  QUAY LẠI T3  /  DỪNG
+
+TUẦN 6  [ ] Batch đêm   [ ] MCP + thử chống bịa   [ ] Nút Export Maya
+```
 
 ---
 
-## 5. Khi bí thì nhắn tôi
+## 5. Nếu bạn chỉ có 2 giờ mỗi tuần
 
-| Tình huống | Đưa tôi cái gì |
+Lộ trình rút gọn, cùng thứ tự nhưng giãn ra:
+
+| Tuần | Việc duy nhất |
 |---|---|
-| Muốn tôi điền luật hộ | Bảng số thật (Excel/ảnh chụp techspec cũng được) |
-| Cần luật Tier B | Mô tả luật bằng lời + ví dụ đúng/sai |
-| Reader FBX đọc sai số | 1 file FBX mẫu + con số đúng đọc từ HUD Maya |
-| Cần collector FBX đầy đủ hơn | Nói rõ thiếu chỉ số nào |
-| MCP bịa số | Câu hỏi đã hỏi + câu trả lời nó bịa |
+| 1 | Cài + chạy `inbox` trên 5 asset |
+| 2 | Mở Error Log, bắt đầu ghi |
+| 3 | Thêm gate Model Freeze |
+| 4–7 | Mỗi tuần điền 6–8 dòng Excel |
+| 8 | `import-rules` + chạy thử |
+| 9–11 | Golden Asset |
+| 12 | Chạy thử với 3 hoạ sĩ |
+
+Chậm hơn nhưng **không bỏ bước nào**. Thứ tự quan trọng hơn tốc độ.
 
 ---
 
-## Đọc thêm
+## 6. Gửi tôi cái gì để tôi làm tiếp
 
-| File | Khi nào cần |
+| Bạn có | Tôi làm |
 |---|---|
-| [`QUY_TRINH_6_BUOC_QUAN_LY.md`](QUY_TRINH_6_BUOC_QUAN_LY.md) | Làm GĐ2 — chi tiết từng gate, lỗi hay gặp từng bước |
-| [`artspec/README.md`](artspec/README.md) | Làm GĐ1, GĐ4, GĐ5 — cách chạy, cách thêm luật |
-| [`artspec/rules/_SCHEMA.md`](artspec/rules/_SCHEMA.md) | Làm GĐ1 — ý nghĩa từng field trong file luật |
-| [`NGHIEN_CUU_MCP_ARTSPEC.md`](NGHIEN_CUU_MCP_ARTSPEC.md) | Làm GĐ5, hoặc khi cần giải thích cho sếp MCP là gì |
+| Bảng số thật (Excel / PDF / ảnh chụp techspec) | Điền hộ cả bộ luật |
+| Một dòng `custom:` trong Excel | Viết hàm Tier B |
+| Tricount reader đọc lệch so với Maya | Sửa parser FBX |
+| Muốn kiểm texel density mà không mở Maya | Bổ sung cho reader FBX |
+| Đã chạy ổn vài tháng, muốn chọn hộ mặt lỗi trong viewport | Cầu nối Maya |
+
+---
+
+## Bản đồ tài liệu
+
+| File | Đọc khi |
+|---|---|
+| [`VIET_CHECKLIST.md`](VIET_CHECKLIST.md) | **Tuần 3** — cách viết từng mục |
+| [`QUY_TRINH_6_BUOC_QUAN_LY.md`](QUY_TRINH_6_BUOC_QUAN_LY.md) | **Tuần 2** — chi tiết 4 gate |
+| [`artspec/README.md`](artspec/README.md) | Tuần 1, 5, 6 — cách chạy |
+| [`BAO_MAT.md`](BAO_MAT.md) | Trước khi nói chuyện với IT / producer |
+| [`TAO_TOOL_MCP.md`](TAO_TOOL_MCP.md) | Khi muốn thêm tool mới |
+| [`NGHIEN_CUU_MCP_ARTSPEC.md`](NGHIEN_CUU_MCP_ARTSPEC.md) | Khi cần giải thích MCP cho sếp |
