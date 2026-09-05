@@ -250,13 +250,13 @@ không bao giờ được "làm nóng"). Máy đo: Xeon 2.8 GHz 4 nhân.
 |---|---|---|---|
 | Prop môi trường | 13k | 0.1 s | ~100 MB |
 | Xe LOD1 | 45k | 0.5 s | ~100 MB |
-| Xe LOD0 | 120k | 1.2–1.9 s | ~200 MB |
-| Mesh nặng | 500k | 4–8 s | ~0.9 GB |
+| Xe LOD0 | 120k | 2–3 s | ~200 MB |
+| Mesh nặng | 500k | 9–12 s | ~0.9 GB |
 | **High-poly** | **2M** | **~37 s** | **~3.1 GB** |
 | High-poly | 3M | ~57 s | ~5.0 GB |
 
-Ngoại suy: 1 xe 3 LOD ≈ **1.5 s** · 12 xe ≈ **18 s** · 200 prop ≈ **8 s** ·
-depot 2000 asset ≈ **2 phút**.
+Ngoại suy: 1 xe 3 LOD ≈ **3 s** · 12 xe ≈ **35 s** · 200 prop ≈ **15 s** ·
+depot 2000 asset ≈ **4 phút**.
 
 **RAM là ràng buộc thật, không phải thời gian:** ~1.6–1.8 GB mỗi triệu tam giác.
 Máy 16 GB xử lý được tới ~8M tris một file; muốn chạy song song nhiều file thì
@@ -276,7 +276,7 @@ mất dưới 1 ms — thêm luật gần như miễn phí. Muốn nhanh hơn th
 python tests/test_fbx.py       # 16 check — reader FBX, fixture tự sinh
 python tests/test_readers.py   # 18 check — glTF/OBJ + luồng inbox đầu-cuối
 python tests/test_updates.py   # 11 check — changelog + tool whats_changed_for
-python tests/test_meshcheck.py # 23 check — phân tích mesh + luật MESH-* đầu-cuối
+python tests/test_meshcheck.py # 29 check — phân tích mesh + luật MESH-* đầu-cuối
 python tests/test_importer.py  # 27 check — CSV → luật, gồm cả bắt lỗi dòng hỏng
 python tests/test_security.py  # 11 check — giới hạn thư mục + chống điều khiển qua tên mesh
 python tests/bench.py          # đo tốc độ trên MÁY CỦA BẠN (thêm --big cho mesh 500k)

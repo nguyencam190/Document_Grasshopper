@@ -54,6 +54,18 @@ def run() -> None:
 
     r = meshcheck.analyze(V + [(0, 0, 0)], P)
     c.append(("đỉnh trùng vị trí", r["duplicate_vertices"] == 1, str(r["duplicate_vertices"])))
+
+    # Cặp đỉnh gần nhau nhưng NẰM HAI BÊN RANH GIỚI Ô của lưới hàn.
+    # Bản đầu chỉ so ô của chính điểm nên bỏ lọt các cặp này — tức bỏ lọt seam
+    # chưa hàn. Giữ test để không tái phạm.
+    quad = [[0, 1, 2, 3], [4, 6, 7, 5]]
+    for a, b, want in ((1.0, 1.00005, 1), (1.00004, 1.00006, 1), (1.0, 1.00009, 1),
+                       (1.0, 1.0, 1), (1.0, 1.0002, 0), (1.0, 1.5, 0)):
+        vs = [(0, 0, 0), (a, 0, 0), (a, 1, 0), (0, 1, 0),
+              (b, 0, 0), (b, 1, 0), (2, 0, 0), (2, 1, 0)]
+        got = 1 if meshcheck.analyze(vs, quad)["duplicate_vertices"] else 0
+        c.append((f"hàn đúng khi cách {abs(b - a):.5f} (ranh giới ô)", got == want,
+                  f"mong {want} được {got}"))
     c.append(("đỉnh rời không thuộc mặt nào",
               meshcheck.analyze(V + [(9, 9, 9)], P)["isolated_vertices"] == 1, ""))
 

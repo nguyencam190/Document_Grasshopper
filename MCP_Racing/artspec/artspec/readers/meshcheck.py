@@ -91,6 +91,41 @@ def _flipped_faces(polys: Sequence[Sequence[int]],
     return flipped
 
 
+_NEIGHBOURS = [(dx, dy, dz) for dx in (-1, 0, 1) for dy in (-1, 0, 1) for dz in (-1, 0, 1)]
+
+
+def _weld(vertices: Sequence[Vec3], eps: float) -> list[int]:
+    """Gộp các đỉnh cách nhau <= eps về cùng một đại diện.
+
+    Chia không gian thành ô cạnh eps, NHƯNG phải dò cả 26 ô kề chứ không chỉ ô
+    của chính nó: hai đỉnh cách nhau chưa tới eps vẫn có thể rơi vào hai ô khác
+    nhau nếu chúng nằm hai bên ranh giới ô. Chỉ so ô của chính nó sẽ BỎ LỌT
+    những cặp đó — tức bỏ lọt seam chưa hàn.
+
+    Sau khi tìm ứng viên trong 27 ô, vẫn kiểm khoảng cách thật để không gộp nhầm
+    hai đỉnh ở hai góc chéo của ô (xa nhau tới eps*sqrt(3)).
+    """
+    inv = 1.0 / eps
+    eps2 = eps * eps
+    cells: dict[tuple[int, int, int], list[int]] = {}
+    rep = list(range(len(vertices)))
+    for i, v in enumerate(vertices):
+        cx, cy, cz = int(v[0] * inv), int(v[1] * inv), int(v[2] * inv)
+        found = -1
+        for dx, dy, dz in _NEIGHBOURS:
+            for j in cells.get((cx + dx, cy + dy, cz + dz), ()):
+                w = vertices[j]
+                if ((v[0] - w[0]) ** 2 + (v[1] - w[1]) ** 2
+                        + (v[2] - w[2]) ** 2) <= eps2:
+                    found = rep[j]
+                    break
+            if found >= 0:
+                break
+        rep[i] = i if found < 0 else found
+        cells.setdefault((cx, cy, cz), []).append(i)
+    return rep
+
+
 def analyze(vertices: Sequence[Vec3], polygons: Sequence[Sequence[int]], *,
             weld_topology: bool = False, weld_epsilon: float = 1e-4,
             area_epsilon: float = 1e-9) -> dict[str, Any]:
@@ -111,14 +146,9 @@ def analyze(vertices: Sequence[Vec3], polygons: Sequence[Sequence[int]], *,
     out.update(invalid_index_faces=len(bad_faces),
                invalid_index_face_ids=bad_faces[:MAX_IDS])
 
-    # ── hàn theo vị trí: dùng để phát hiện đỉnh trùng, và để dựng topology cho glTF
-    key_of: dict[tuple[int, int, int], int] = {}
-    weld_map: list[int] = [0] * nv
-    inv = 1.0 / weld_epsilon
-    for i, v in enumerate(vertices):
-        k = (int(round(v[0] * inv)), int(round(v[1] * inv)), int(round(v[2] * inv)))
-        weld_map[i] = key_of.setdefault(k, i)
-    out["duplicate_vertices"] = nv - len(key_of)
+    # ── hàn theo vị trí
+    weld_map = _weld(vertices, weld_epsilon)
+    out["duplicate_vertices"] = nv - len(set(weld_map))
 
     topo = [[weld_map[i] for i in p] for p in polygons] if weld_topology else polygons
 
