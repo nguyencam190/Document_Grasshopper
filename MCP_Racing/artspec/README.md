@@ -241,6 +241,26 @@ sẽ tự lách — bỏ qua validator, submit thẳng, và Lead mất khả nă
 `waivers/waivers.yaml` hạ `FAIL` xuống `WARN` cho đúng cặp (luật, asset), có lý do,
 người duyệt và **ngày hết hạn** — hết hạn thì tự mất tác dụng, không cần ai dọn.
 
+## Tốc độ
+
+Đo trên mesh tổng hợp, FBX nhị phân (`python tests/bench.py`):
+
+| Asset | tris | Thời gian kiểm |
+|---|---|---|
+| Prop môi trường | 13k | 0.04 s |
+| Xe LOD1 | 45k | 0.19 s |
+| Xe LOD0 | 120k | 0.59 s |
+| Mesh rất nặng | 500k | 3.4 s |
+
+Ngoại suy: 1 xe đầy đủ 3 LOD ≈ **0.8 giây** · 12 xe ≈ **10 giây** · 200 prop ≈
+**4 giây** · cả depot 2000 asset ≈ **1 phút**.
+
+**Nút cổ chai là phân tích hình học (~83%), không phải đọc file.** Chạy 20 luật
+mất dưới 1 ms — thêm luật gần như miễn phí. Muốn nhanh hơn thì tối ưu
+`meshcheck.py`, không phải reader.
+
+Con số phụ thuộc CPU — chạy `tests/bench.py` trên máy bạn để có số thật.
+
 ## Test
 
 ```bash
@@ -250,6 +270,7 @@ python tests/test_updates.py   # 11 check — changelog + tool whats_changed_for
 python tests/test_meshcheck.py # 23 check — phân tích mesh + luật MESH-* đầu-cuối
 python tests/test_importer.py  # 27 check — CSV → luật, gồm cả bắt lỗi dòng hỏng
 python tests/test_security.py  # 11 check — giới hạn thư mục + chống điều khiển qua tên mesh
+python tests/bench.py          # đo tốc độ trên MÁY CỦA BẠN (thêm --big cho mesh 500k)
 ```
 
 `test_fbx.py` tự sinh FBX nhị phân rồi đọc lại — kiểm chứng phần đọc container
