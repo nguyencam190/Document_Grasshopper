@@ -249,6 +249,59 @@ def list_rules(asset_class: str | None = None, stage: str | None = None) -> dict
 
 
 @mcp.tool()
+def whats_changed_for(asset_class: str, since: str | None = None) -> dict[str, Any]:
+    """Khách hàng đã đổi gì ảnh hưởng tới một loại asset, từ mốc thời gian nào tới nay.
+
+    Dùng khi hoạ sĩ hỏi "tuần này có gì mới với xe không", "tôi nghỉ 2 tuần, đã bỏ
+    lỡ gì", hoặc khi họ chuẩn bị bắt tay vào một asset mới và cần biết luật hiện
+    hành đã đổi so với lần trước.
+
+    `since` dạng YYYY-MM-DD. Bỏ trống = lấy toàn bộ lịch sử.
+
+    Mỗi update kèm danh sách luật bị ảnh hưởng và VERSION HIỆN TẠI của luật đó —
+    hãy nêu cả hai khi trả lời, và nhắc `action_required` vì đó là phần quyết
+    định hoạ sĩ có phải sửa asset cũ hay không.
+
+    Danh sách rỗng nghĩa là không có thay đổi nào — nói thẳng như vậy, đừng suy
+    đoán từ nội dung các luật.
+    """
+    reg = _reg()
+    ups = reg.updates_for(asset_class, since)
+    if not ups:
+        return {"found": False, "asset_class": asset_class, "since": since,
+                "updates": [],
+                "error": (f"Không có update nào của khách ảnh hưởng tới "
+                          f"'{asset_class}'" + (f" từ {since}." if since else "."))}
+    out = []
+    for u in ups:
+        rules = []
+        for rid in u.get("affects_rules", []):
+            r = reg.get(rid)
+            rules.append({"rule_id": rid, "title": r.title if r else "(luật đã bị xoá)",
+                          "current_version": r.version if r else None,
+                          "severity": r.severity if r else None})
+        out.append({"update_id": u["id"], "effective_from": u.get("effective_from"),
+                    "date_received": u.get("date_received"),
+                    "summary": u.get("summary_vi"), "source": u.get("source"),
+                    "action_required": u.get("action_required"),
+                    "status": u.get("status"), "affected_rules": rules})
+    return {"found": True, "asset_class": asset_class, "since": since,
+            "count": len(out), "updates": out}
+
+
+@mcp.tool()
+def get_update(update_id: str) -> dict[str, Any]:
+    """Chi tiết một update của khách hàng theo mã (vd CU-2026-041), kèm trích dẫn gốc.
+
+    Dùng khi cần đối chiếu chính xác khách đã nói gì — `raw_excerpt` là nguyên
+    văn, ưu tiên nó hơn phần tóm tắt khi hai bên có vẻ khác nhau.
+    """
+    u = _reg().update(update_id)
+    return {"found": True, **u} if u else _err(
+        f"Không có update '{update_id}' trong changelog.")
+
+
+@mcp.tool()
 def list_waivers() -> dict[str, Any]:
     """Danh sách ngoại lệ đã duyệt (asset nào được phép vi phạm luật nào, tới khi nào)."""
     ws = _reg().waivers

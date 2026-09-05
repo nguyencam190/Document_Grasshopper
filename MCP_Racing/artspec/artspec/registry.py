@@ -29,6 +29,7 @@ class Registry:
     checklists: dict[str, dict[str, Any]] = field(default_factory=dict)
     glossary: list[dict[str, Any]] = field(default_factory=list)
     waivers: list[dict[str, Any]] = field(default_factory=list)
+    updates: list[dict[str, Any]] = field(default_factory=list)
 
     # ---- truy vấn ----
 
@@ -72,6 +73,23 @@ class Registry:
             if n in [str(a).lower() for a in t.get("aliases", [])]:
                 return t
         return None
+
+    def updates_for(self, asset_class: str | None = None,
+                    since: str | None = None) -> list[dict[str, Any]]:
+        """Update khách hàng, mới nhất trước. Lọc theo class và mốc thời gian."""
+        out = list(self.updates)
+        if asset_class:
+            out = [u for u in out
+                   if asset_class in (u.get("affects_asset_classes") or [])]
+        if since:
+            cut = _as_date(since)
+            out = [u for u in out
+                   if _as_date(u.get("effective_from") or u.get("date_received")) >= cut]
+        return sorted(out, key=lambda u: str(u.get("effective_from", "")), reverse=True)
+
+    def update(self, update_id: str) -> dict[str, Any] | None:
+        uid = update_id.strip().upper()
+        return next((u for u in self.updates if str(u.get("id", "")).upper() == uid), None)
 
     def waiver_for(self, rule_id: str, asset: str,
                    today: date | None = None) -> dict[str, Any] | None:
@@ -136,6 +154,17 @@ def load(root: str | Path) -> Registry:
     if gdir.is_dir():
         for p in sorted(gdir.glob("*.yaml")):
             reg.glossary.extend(_load_yaml(p) or [])
+
+    cdir = root / "changelog"
+    if cdir.is_dir():
+        for p in sorted(cdir.glob("*.yaml")):
+            data = _load_yaml(p)
+            if not isinstance(data, dict) or "id" not in data:
+                raise RegistryError(f"{p}: file changelog phải là object YAML có 'id'")
+            for k in ("effective_from", "date_received"):
+                if k in data:
+                    data[k] = str(_as_date(data[k]))
+            reg.updates.append(data)
 
     wdir = root / "waivers"
     if wdir.is_dir():

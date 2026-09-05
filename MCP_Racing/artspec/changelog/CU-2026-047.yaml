@@ -1,0 +1,15 @@
+id: CU-2026-047
+date_received: 2026-08-28
+source: "Ghi chú họp review tuần 35 với khách"
+raw_excerpt: |
+  (Dán nguyên văn phần liên quan.)
+summary_vi: >
+  Khách yêu cầu giảm số material slot tối đa của xe từ 6 xuống 4 vì draw call
+  vượt ngưỡng trên console.
+affects_rules: [VEH-MAT-001]
+affects_asset_classes: [vehicle_exterior]
+action_required: >
+  Xe đã submit giữ nguyên. Xe đang làm phải gộp material trước khi submit.
+approved_by: "<Art Lead>"
+effective_from: 2026-09-01
+status: applied

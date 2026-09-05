@@ -87,6 +87,7 @@ python -m artspec.cli validate samples/metrics_fail.json      # 8 FAIL, 1 WARN, 
 python -m artspec.cli validate samples/metrics_pass.json      # qua gate
 python -m artspec.cli validate samples/metrics_fail.json --stage G2   # chỉ gate G2
 python -m artspec.cli validate samples/metrics_fail.json --json       # cho script/CI
+python -m artspec.cli updates vehicle_exterior --since 2026-08-20
 python -m artspec.cli explain VEH-UV-002
 python -m artspec.cli checklist vehicle_exterior G1
 ```
@@ -128,6 +129,8 @@ Server tự nạp lại khi file YAML đổi — sửa luật không cần resta
 | `get_rule` | "VEH-UV-002 nói gì?" |
 | `get_checklist` | "Trước khi submit tôi phải kiểm gì?" |
 | `explain_term` | "Texel density là gì?" |
+| `whats_changed_for` | "Tôi nghỉ 2 tuần, khách đổi gì với xe?" |
+| `get_update` | "CU-2026-047 khách nói chính xác là gì?" |
 | `list_rules` / `list_waivers` | Tổng quan cho Lead |
 
 Resource: `spec://index` · `spec://rules/{asset_class}` · `spec://glossary`.
@@ -172,6 +175,7 @@ người duyệt và **ngày hết hạn** — hết hạn thì tự mất tác 
 ```bash
 python tests/test_fbx.py       # 16 check — reader FBX, fixture tự sinh
 python tests/test_readers.py   # 18 check — glTF/OBJ + luồng inbox đầu-cuối
+python tests/test_updates.py   # 11 check — changelog + tool whats_changed_for
 ```
 
 `test_fbx.py` tự sinh FBX nhị phân rồi đọc lại — kiểm chứng phần đọc container
@@ -199,6 +203,7 @@ glTF tay theo spec rồi **đối chiếu chéo số tam giác với `trimesh`**
 
 ```
 rules/<class>/*.yaml   luật — thứ bạn phải điền
+changelog/*.yaml       update khách hàng — nối vào luật bị ảnh hưởng
 checklists/*.yaml      checklist theo gate G0-G3
 glossary/*.yaml        thuật ngữ theo cách dự án hiểu
 waivers/*.yaml         ngoại lệ đã duyệt

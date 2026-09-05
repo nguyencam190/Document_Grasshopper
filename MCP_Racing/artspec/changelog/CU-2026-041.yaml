@@ -1,0 +1,17 @@
+id: CU-2026-041
+date_received: 2026-08-10
+source: "Email từ <Producer khách hàng>, tiêu đề 'Vehicle budget revision'"
+raw_excerpt: |
+  (Dán nguyên văn phần liên quan trong mail của khách vào đây — để truy vết.
+   Không diễn giải lại, không tóm tắt ở field này.)
+summary_vi: >
+  Khách nâng ngân sách tricount LOD0 xe PC từ 100k lên 120k sau khi tối ưu shader.
+  Đồng thời siết quy tắc hard edge phải trùng UV seam vì phát hiện seam đen trên build.
+affects_rules: [VEH-TRI-001, VEH-UV-002]
+affects_asset_classes: [vehicle_exterior]
+action_required: >
+  Không phải làm lại asset cũ. Asset mới từ 15/08 dùng ngân sách mới.
+  Asset đang làm dở: kiểm lại hard edge trước khi submit.
+approved_by: "<Art Lead>"
+effective_from: 2026-08-15
+status: applied

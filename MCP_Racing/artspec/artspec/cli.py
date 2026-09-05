@@ -54,6 +54,10 @@ def main(argv: list[str] | None = None) -> int:
     r.add_argument("--asset-class")
     r.add_argument("--stage")
 
+    u = sub.add_parser("updates", help="update khách hàng ảnh hưởng tới một class")
+    u.add_argument("asset_class")
+    u.add_argument("--since", help="YYYY-MM-DD")
+
     e = sub.add_parser("explain", help="xem chi tiết một luật")
     e.add_argument("rule_id")
 
@@ -98,6 +102,21 @@ def main(argv: list[str] | None = None) -> int:
         for rule in rows:
             print(f"  {rule.id:<14} {rule.severity.upper():<5} tier {rule.tier}  "
                   f"{rule.stage}  {rule.title}")
+        return 0
+
+    if a.cmd == "updates":
+        ups = reg.updates_for(a.asset_class, a.since)
+        if not ups:
+            print(f"Không có update nào ảnh hưởng tới '{a.asset_class}'"
+                  + (f" từ {a.since}." if a.since else "."))
+            return 0
+        for up in ups:
+            print(f"\n{up['id']}  ·  hiệu lực {up.get('effective_from')}  "
+                  f"·  {up.get('status')}")
+            print(f"  nguồn      : {up.get('source', '')}")
+            print(f"  tóm tắt    : {str(up.get('summary_vi', '')).strip()}")
+            print(f"  luật đổi   : {', '.join(up.get('affects_rules', [])) or '—'}")
+            print(f"  phải làm gì: {str(up.get('action_required', '')).strip()}")
         return 0
 
     if a.cmd == "explain":
