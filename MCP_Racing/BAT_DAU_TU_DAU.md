@@ -246,6 +246,8 @@ Cắm vào Task Scheduler / cron. Sáng ra có bảng tổng hợp.
 
 **2. Gắn MCP vào Claude Desktop** *(chỉ khi NDA đã ok)*
 
+Hướng dẫn từng bước: [`CAI_DAT_CLAUDE.md`](CAI_DAT_CLAUDE.md).
+
 ```json
 {
   "mcpServers": {
@@ -344,6 +346,7 @@ Chậm hơn nhưng **không bỏ bước nào**. Thứ tự quan trọng hơn t�
 |---|---|
 | [`VIET_CHECKLIST.md`](VIET_CHECKLIST.md) | **Tuần 3** — cách viết từng mục |
 | [`QUY_TRINH_6_BUOC_QUAN_LY.md`](QUY_TRINH_6_BUOC_QUAN_LY.md) | **Tuần 2** — chi tiết 4 gate |
+| [`CAI_DAT_CLAUDE.md`](CAI_DAT_CLAUDE.md) | **Tuần 6** — cài vào Claude Desktop |
 | [`artspec/README.md`](artspec/README.md) | Tuần 1, 5, 6 — cách chạy |
 | [`BAO_MAT.md`](BAO_MAT.md) | Trước khi nói chuyện với IT / producer |
 | [`TAO_TOOL_MCP.md`](TAO_TOOL_MCP.md) | Khi muốn thêm tool mới |
