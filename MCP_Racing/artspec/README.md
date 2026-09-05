@@ -243,23 +243,32 @@ người duyệt và **ngày hết hạn** — hết hạn thì tự mất tác 
 
 ## Tốc độ
 
-Đo trên mesh tổng hợp, FBX nhị phân (`python tests/bench.py`):
+Đo trên mesh tổng hợp, FBX nhị phân, **lần chạy đầu** (mỗi file chỉ kiểm một lần,
+không bao giờ được "làm nóng"). Máy đo: Xeon 2.8 GHz 4 nhân.
 
-| Asset | tris | Thời gian kiểm |
-|---|---|---|
-| Prop môi trường | 13k | 0.04 s |
-| Xe LOD1 | 45k | 0.19 s |
-| Xe LOD0 | 120k | 0.59 s |
-| Mesh rất nặng | 500k | 3.4 s |
+| Asset | tris | Thời gian | RAM đỉnh |
+|---|---|---|---|
+| Prop môi trường | 13k | 0.1 s | ~100 MB |
+| Xe LOD1 | 45k | 0.5 s | ~100 MB |
+| Xe LOD0 | 120k | 1.2–1.9 s | ~200 MB |
+| Mesh nặng | 500k | 4–8 s | ~0.9 GB |
+| **High-poly** | **2M** | **~37 s** | **~3.1 GB** |
+| High-poly | 3M | ~57 s | ~5.0 GB |
 
-Ngoại suy: 1 xe đầy đủ 3 LOD ≈ **0.8 giây** · 12 xe ≈ **10 giây** · 200 prop ≈
-**4 giây** · cả depot 2000 asset ≈ **1 phút**.
+Ngoại suy: 1 xe 3 LOD ≈ **1.5 s** · 12 xe ≈ **18 s** · 200 prop ≈ **8 s** ·
+depot 2000 asset ≈ **2 phút**.
 
-**Nút cổ chai là phân tích hình học (~83%), không phải đọc file.** Chạy 20 luật
-mất dưới 1 ms — thêm luật gần như miễn phí. Muốn nhanh hơn thì tối ưu
-`meshcheck.py`, không phải reader.
+**RAM là ràng buộc thật, không phải thời gian:** ~1.6–1.8 GB mỗi triệu tam giác.
+Máy 16 GB xử lý được tới ~8M tris một file; muốn chạy song song nhiều file thì
+chia RAM cho số tiến trình.
 
-Con số phụ thuộc CPU — chạy `tests/bench.py` trên máy bạn để có số thật.
+**Nút cổ chai là phân tích hình học (~85%), không phải đọc file.** Chạy 20 luật
+mất dưới 1 ms — thêm luật gần như miễn phí. Muốn nhanh hơn thì vector hoá
+`meshcheck.py` bằng numpy, không phải sửa reader.
+
+> ⚠️ **Máy ảo dùng chung chênh nhau tới 2 lần giữa các lần đo.** Cùng một
+> benchmark trên cùng máy này lúc ra 0.6 s, lúc ra 1.2 s cho 120k tris. Đừng tin
+> con số của máy khác — chạy `python tests/bench.py --big` trên máy bạn, vài lần.
 
 ## Test
 

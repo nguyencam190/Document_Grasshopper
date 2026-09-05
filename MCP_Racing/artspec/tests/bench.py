@@ -9,7 +9,7 @@ Sinh mesh lưới tổng hợp ở nhiều kích thước rồi bấm giờ từ
 """
 from __future__ import annotations
 
-import json
+import resource
 import statistics
 import sys
 import tempfile
@@ -34,7 +34,8 @@ SIZES = [
     ("xe LOD1      ~45k tris", 150),
     ("xe LOD0     ~120k tris", 245),
 ]
-BIG = [("mesh rất nặng ~500k tris", 500)]
+BIG = [("mesh rất nặng ~500k tris", 500), ("high-poly    ~1M tris", 707),
+       ("high-poly    ~2M tris", 1000)]
 
 
 def grid(n: int) -> tuple[list, list]:
@@ -82,14 +83,25 @@ def write_fbx(path: Path, verts, polys, name: str) -> Path:
     return path
 
 
-def timeit(fn, repeat: int = 3) -> float:
-    """Thời gian nhanh nhất trong `repeat` lần — bớt nhiễu từ tiến trình khác."""
-    best = float("inf")
-    for _ in range(repeat):
+def rss_mb() -> float:
+    return resource.getrusage(resource.RUSAGE_SELF).ru_maxrss / 1024
+
+
+def timeit(fn, repeat: int = 3) -> tuple[float, float]:
+    """Trả (lần chạy ĐẦU, lần nhanh nhất).
+
+    Lần đầu mới là con số người dùng thật sự gặp — mỗi file chỉ kiểm một lần,
+    không bao giờ được "làm nóng". Lần nhanh nhất chỉ để biết trần lý thuyết.
+    """
+    t = time.perf_counter()
+    fn()
+    first = time.perf_counter() - t
+    best = first
+    for _ in range(repeat - 1):
         t = time.perf_counter()
         fn()
         best = min(best, time.perf_counter() - t)
-    return best
+    return first, best
 
 
 def run(include_big: bool) -> None:
@@ -106,26 +118,26 @@ def run(include_big: bool) -> None:
             fb = write_fbx(tmp / f"m{n}.fbx", verts, polys, f"SM_Bench{n}_LOD0")
             mb_o, mb_f = fo.stat().st_size / 1e6, fb.stat().st_size / 1e6
 
-            t_mesh = timeit(lambda: meshcheck.analyze(verts, polys))
-            t_obj = timeit(lambda: obj.to_metrics(fo))
-            t_fbx = timeit(lambda: fbxfile.to_metrics(fb))
+            t_mesh, _ = timeit(lambda: meshcheck.analyze(verts, polys), 1)
+            t_obj, _ = timeit(lambda: obj.to_metrics(fo), 1)
+            t_fbx, t_fbx_warm = timeit(lambda: fbxfile.to_metrics(fb), 2)
             metrics = {**fbxfile.to_metrics(fb), "asset_class": "vehicle_exterior"}
-            t_rules = timeit(lambda: engine.run(reg, metrics))
-            rows.append((label, tris, mb_o, mb_f, t_obj, t_fbx, t_mesh, t_rules))
+            t_rules, _ = timeit(lambda: engine.run(reg, metrics), 1)
+            rows.append((label, tris, mb_o, mb_f, t_obj, t_fbx, t_fbx_warm,
+                         t_mesh, t_rules, rss_mb()))
+            del verts, polys, metrics
 
-    print(f"{'':26}{'tris':>9} │{'OBJ':>7}{'FBX':>7} MB │"
-          f"{'OBJ':>8}{'FBX':>8}  ← tổng thời gian kiểm")
-    print("─" * 80)
-    for label, tris, mo, mf, to_, tf, tm, tru in rows:
-        print(f"{label:26}{tris:>9,} │{mo:>7.1f}{mf:>7.1f}    │{to_:>7.2f}s{tf:>7.2f}s")
-    print("─" * 80)
-    print(f"{'trong đó phân tích mesh':26}{'':>9} │{'':>7}{'':>7}    │"
-          f"{rows[-1][6]:>7.2f}s  (phần chung cả hai định dạng)")
-    print(f"{'trong đó chạy 20 luật':26}{'':>9} │{'':>7}{'':>7}    │"
-          f"{rows[-1][7]:>7.3f}s")
+    print(f"{'':26}{'tris':>10}{'FBX MB':>8} │{'OBJ':>8}{'FBX':>8}{'(warm)':>8} │"
+          f"{'luật':>7}{'RAM':>9}")
+    print("─" * 88)
+    for label, tris, mo, mf, to_, tf, tw, tm, tru, ram in rows:
+        print(f"{label:26}{tris:>10,}{mf:>8.1f} │{to_:>7.1f}s{tf:>7.1f}s{tw:>7.1f}s │"
+              f"{tru:>6.3f}s{ram:>8.0f}MB")
+    print("─" * 88)
+    print("Cột FBX = lần chạy đầu (con số thật). (warm) = chạy lại, chỉ để tham khảo.")
 
     # ── ngoại suy cho các lô thực tế
-    per_tri = statistics.median(tf / tris for _, tris, _, _, _, tf, _, _ in rows)
+    per_tri = statistics.median(tf / tris for _, tris, _, _, _, tf, _, _, _, _ in rows)
     print("\nƯỚC TÍNH CHO LÔ THẬT (ngoại suy tuyến tính theo số tam giác)\n")
     scenarios = [
         ("1 xe đầy đủ (LOD0+1+2 ≈ 180k tris)", 180_000),
@@ -138,8 +150,12 @@ def run(include_big: bool) -> None:
         unit = f"{s:.1f} giây" if s < 90 else f"{s/60:.1f} phút"
         print(f"  {name:42} {tris:>10,} tris   ≈ {unit}")
 
-    print(f"\nTốc độ FBX đo được: ~{1/per_tri/1000:,.0f}k tris/giây (chỉ máy này).")
-    print("Chạy lại trên máy bạn để có số thật của máy đó.")
+    ram_per_m = statistics.median(ram / (tris / 1e6)
+                                  for _, tris, _, _, _, _, _, _, _, ram in rows if tris > 100_000)
+    print(f"\nTốc độ FBX: ~{1/per_tri/1000:,.0f}k tris/giây · RAM ~{ram_per_m:,.0f} MB "
+          f"mỗi triệu tris (chỉ máy này).")
+    print("CẢNH BÁO: máy ảo dùng chung có thể chênh nhau 2 lần giữa các lần đo.")
+    print("Chạy lại trên máy bạn, vài lần, để có số thật của máy đó.")
 
 
 if __name__ == "__main__":
