@@ -157,9 +157,16 @@ trong hook export hoặc CI.
 }
 ```
 
-Mặc định transport `stdio` (chạy trên máy hoạ sĩ). Khi triển khai chung cho cả
-team thì đặt `ARTSPEC_TRANSPORT=streamable-http` — nhưng lúc đó **phải bật OAuth
-2.1**, xem `NGHIEN_CUU_MCP_ARTSPEC.md` mục Bảo mật.
+Mặc định transport `stdio` (chạy trên máy hoạ sĩ, không mở cổng mạng nào). Khi
+triển khai chung cho cả team thì đặt `ARTSPEC_TRANSPORT=streamable-http` — lúc đó
+**bắt buộc** bật OAuth 2.1 và giới hạn thư mục đọc:
+
+```bash
+export ARTSPEC_FILE_ROOT=/mnt/project/submit:/mnt/project/golden
+```
+
+Không đặt = không giới hạn (chấp nhận được với bản local, vì server chạy đúng
+quyền của chính người dùng). Chi tiết: [`BAO_MAT.md`](../BAO_MAT.md).
 
 Server tự nạp lại khi file YAML đổi — sửa luật không cần restart.
 
@@ -242,6 +249,7 @@ python tests/test_readers.py   # 18 check — glTF/OBJ + luồng inbox đầu-cu
 python tests/test_updates.py   # 11 check — changelog + tool whats_changed_for
 python tests/test_meshcheck.py # 23 check — phân tích mesh + luật MESH-* đầu-cuối
 python tests/test_importer.py  # 27 check — CSV → luật, gồm cả bắt lỗi dòng hỏng
+python tests/test_security.py  # 11 check — giới hạn thư mục + chống điều khiển qua tên mesh
 ```
 
 `test_fbx.py` tự sinh FBX nhị phân rồi đọc lại — kiểm chứng phần đọc container

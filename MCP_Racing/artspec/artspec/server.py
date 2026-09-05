@@ -17,6 +17,7 @@ from typing import Any
 from mcp.server import MCPServer
 
 from . import engine, inbox, registry, render
+from .readers import ReaderError
 from .registry import Registry, RegistryError
 
 ROOT = Path(os.environ.get("ARTSPEC_ROOT", Path(__file__).resolve().parent.parent))
@@ -75,8 +76,13 @@ def check_asset(metrics_json: str, stage: str | None = None) -> str:
     """
     raw = metrics_json.strip()
     try:
-        metrics = json.loads(raw) if raw.startswith("{") else json.loads(
-            Path(raw).read_text(encoding="utf-8"))
+        if raw.startswith("{"):
+            metrics = json.loads(raw)
+        else:
+            inbox.ensure_allowed(Path(raw))
+            metrics = json.loads(Path(raw).read_text(encoding="utf-8"))
+    except ReaderError as e:
+        return str(e)
     except (json.JSONDecodeError, OSError) as e:
         return f"Không đọc được metrics: {e}"
     try:

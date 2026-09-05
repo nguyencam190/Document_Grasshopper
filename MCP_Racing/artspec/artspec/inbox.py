@@ -6,6 +6,7 @@
 """
 from __future__ import annotations
 
+import os
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
@@ -14,6 +15,35 @@ from . import engine
 from .model import Report
 from .readers import SUPPORTED, ReaderError, read
 from .registry import Registry
+
+
+def allowed_roots() -> list[Path] | None:
+    """Thư mục được phép đọc, lấy từ biến môi trường ARTSPEC_FILE_ROOT.
+
+    Không đặt = không giới hạn. Với bản chạy local (stdio) điều đó chấp nhận
+    được: server chạy đúng quyền của chính người dùng, nên họ không đọc thêm
+    được gì so với mở File Explorer.
+
+    Bắt buộc đặt khi triển khai DÙNG CHUNG (Streamable HTTP) — lúc đó server
+    chạy bằng một tài khoản khác và ai gọi được tool cũng đọc được file của
+    tài khoản đó.
+    """
+    raw = os.environ.get("ARTSPEC_FILE_ROOT", "").strip()
+    if not raw:
+        return None
+    return [Path(x).expanduser().resolve() for x in raw.split(os.pathsep) if x.strip()]
+
+
+def ensure_allowed(path: Path) -> None:
+    roots = allowed_roots()
+    if roots is None:
+        return
+    target = path.expanduser().resolve()
+    if not any(target == r or r in target.parents for r in roots):
+        raise ReaderError(
+            f"Đường dẫn nằm ngoài phạm vi cho phép: {path}\n"
+            f"Chỉ đọc được trong: {', '.join(str(r) for r in roots)}\n"
+            f"(giới hạn đặt bằng biến môi trường ARTSPEC_FILE_ROOT)")
 
 
 @dataclass
@@ -34,6 +64,7 @@ def check_file(reg: Registry, path: str | Path, asset_class: str | None = None,
                stage: str | None = None, platform: str | None = None) -> Outcome:
     p = Path(path)
     try:
+        ensure_allowed(p)
         metrics = read(p, asset_class=asset_class, platform=platform)
         if not metrics.get("asset_class"):
             return Outcome(p, error=(
@@ -51,6 +82,10 @@ def check_file(reg: Registry, path: str | Path, asset_class: str | None = None,
 def check_folder(reg: Registry, folder: str | Path, stage: str | None = None,
                  platform: str | None = None) -> list[Outcome]:
     root = Path(folder)
+    try:
+        ensure_allowed(root)
+    except ReaderError as e:
+        return [Outcome(root, error=str(e))]
     if not root.is_dir():
         return [Outcome(root, error=f"Không thấy thư mục: {root}")]
     files = sorted(p for p in root.rglob("*")

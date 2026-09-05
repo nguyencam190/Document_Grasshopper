@@ -12,6 +12,7 @@ racing game open-world.
 | [`QUY_TRINH_6_BUOC_QUAN_LY.md`](QUY_TRINH_6_BUOC_QUAN_LY.md) | Quản lý quy trình 6 bước (Model → Lock Normal → UVW → Texture → Rigging → Import UE5): 4 gate cần thêm, định nghĩa DONE + lỗi hay gặp từng bước, 7 cơ chế quản lý, chỉ số đo lường, checklist mẫu |
 | [`artspec/`](artspec/README.md) | **Code chạy được.** Engine kiểm **lỗi mesh** (n-gon, non-manifold, mặt lật, lỗ thủng…) + **sai techspec**, kèm MCP server (Python). Luật để ngoài dạng YAML — thêm luật đặc thù không phải sửa code. Kèm bộ luật mẫu, collector Maya, metrics mẫu |
 | [`TAO_TOOL_MCP.md`](TAO_TOOL_MCP.md) | Tạo tool cho MCP là làm những gì: cái AI thực sự nhìn thấy, giải phẫu 1 tool, 4 bước tạo, ví dụ đầy đủ `whats_changed_for`, 7 nguyên tắc + 4 sai lầm, việc nào bạn tự làm được |
+| [`BAO_MAT.md`](BAO_MAT.md) | Mức rủi ro từng phần, giới hạn thư mục đọc, vì sao kết luận do engine chứ không do AI, cảnh báo về Maya commandPort, bảng trả lời nhanh cho IT |
 | [`NGHIEN_CUU_MCP_ARTSPEC.md`](NGHIEN_CUU_MCP_ARTSPEC.md) | Tài liệu nghiên cứu & thiết kế MCP: MCP là gì, audit quy trình hiện tại, kiến trúc 3 lớp, schema Spec Registry, danh sách Tools/Resources/Prompts, so sánh 3 phương án, stack Python, bảo mật, roadmap 8 phase, rủi ro |
 
 **Thứ tự đọc:** `BAT_DAU_TU_DAU.md` → rồi mở tài liệu khác khi kế hoạch đó chỉ tới.
