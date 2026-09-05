@@ -13,7 +13,7 @@ import json
 import sys
 from pathlib import Path
 
-from . import engine, registry, render
+from . import engine, inbox, registry, render
 
 DEFAULT_ROOT = Path(__file__).resolve().parent.parent
 
@@ -36,6 +36,19 @@ def main(argv: list[str] | None = None) -> int:
     v.add_argument("--stage", help="chỉ chạy luật của gate này (G0/G1/G2/G3)")
     v.add_argument("--json", action="store_true", help="xuất JSON thay vì text")
     v.add_argument("--show-pass", action="store_true", help="hiện cả luật đã đạt")
+
+    ck = sub.add_parser("check", help="kiểm thẳng một file 3D hoạ sĩ nộp (.fbx/.glb/.obj)")
+    ck.add_argument("file", type=Path)
+    ck.add_argument("--asset-class")
+    ck.add_argument("--stage")
+    ck.add_argument("--platform")
+    ck.add_argument("--show-pass", action="store_true")
+
+    ib = sub.add_parser("inbox", help="quét cả thư mục nộp bài, in bảng tóm tắt cho Lead")
+    ib.add_argument("folder", type=Path)
+    ib.add_argument("--stage")
+    ib.add_argument("--platform")
+    ib.add_argument("--json", action="store_true")
 
     r = sub.add_parser("rules", help="liệt kê luật")
     r.add_argument("--asset-class")
@@ -60,6 +73,24 @@ def main(argv: list[str] | None = None) -> int:
         else:
             print(render.report_text(report, show_pass=a.show_pass))
         return 1 if report.blocked else 0
+
+    if a.cmd == "check":
+        out = inbox.check_file(reg, a.file, asset_class=a.asset_class,
+                               stage=a.stage, platform=a.platform)
+        if out.error:
+            print(f"⛔ Không kiểm được {a.file.name}:\n{out.error}", file=sys.stderr)
+            return 2
+        print(render.report_text(out.report, show_pass=a.show_pass))
+        return 1 if out.report.blocked else 0
+
+    if a.cmd == "inbox":
+        outs = inbox.check_folder(reg, a.folder, stage=a.stage, platform=a.platform)
+        rows = inbox.summary_rows(outs)
+        if a.json:
+            print(json.dumps(rows, ensure_ascii=False, indent=2))
+        else:
+            print(render.inbox_text(rows))
+        return 1 if any(r["verdict"] != "QUA" for r in rows) else 0
 
     if a.cmd == "rules":
         rows = reg.rules_for(a.asset_class, a.stage)

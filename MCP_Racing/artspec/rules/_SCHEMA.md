@@ -34,6 +34,11 @@ Mỗi quy tắc = 1 file YAML trong `rules/<asset_class>/`. Tên file = `id` c�
 | `custom` | B | Logic riêng của dự án | `function` `params` |
 | `manual` | C | Người kiểm, máy chỉ nhắc | `ask` |
 
+`check.requires` (tuỳ chọn) = danh sách đường dẫn dữ liệu mà luật cần mới có
+nghĩa, vd `requires: [skeleton.bones]`. Thiếu thì luật báo **SKIP**, không báo
+FAIL — một file body mesh không rig thì luật về bone bánh xe không liên quan
+đến nó, báo FAIL là báo sai.
+
 `applies_to` = `{collection: meshes|textures|bones, where: {field: value}}`.
 `where` khớp trên **ngữ cảnh gộp**: field của item + các field vô hướng ở gốc metrics
 (vd `platform`), nên viết `where: {lod: 0, platform: pc}` được.

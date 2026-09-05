@@ -9,7 +9,7 @@ from __future__ import annotations
 from .model import Finding, Report
 
 _ICON = {"FAIL": "❌", "ERROR": "🛠", "WARN": "⚠️", "MANUAL": "❓",
-         "INFO": "ℹ️", "PASS": "✅", "SKIP": "–"}
+         "INFO": "ℹ️", "PASS": "✅", "SKIP": "⊘"}
 
 
 def finding_text(f: Finding) -> str:
@@ -26,6 +26,11 @@ def finding_text(f: Finding) -> str:
         if r.how_to_fix:
             out += ["", "  NẾU KHÔNG ĐẠT"] + [f"    {i}. {s}" for i, s in enumerate(r.how_to_fix, 1)]
         return "\n".join(out)
+
+    if f.status == "SKIP":
+        return (f"{_ICON['SKIP']} SKIP · {r.id} — {r.title}\n"
+                f"    KHÔNG KIỂM ĐƯỢC TỪ NGUỒN NÀY: {f.actual}\n"
+                f"    {f.note}")
 
     if f.status == "PASS":
         return f"{_ICON['PASS']} PASS · {r.id} — {r.title}"
@@ -71,7 +76,12 @@ def report_text(report: Report, show_pass: bool = False) -> str:
     parts = ["═" * 72, head, "─" * 72, summary, verdict, "═" * 72, ""]
 
     shown = [f for f in report.findings
-             if f.status != "PASS" or show_pass]
+             if f.status not in ("PASS", "SKIP") or show_pass]
+    skipped = [f for f in report.findings if f.status == "SKIP"]
+    if skipped and not show_pass:
+        parts += [f"⊘ {len(skipped)} luật không kiểm được từ nguồn này: "
+                  + ", ".join(f.rule.id for f in skipped),
+                  f"  {skipped[0].note}", ""]
     if not shown:
         parts.append("Không có vấn đề nào.")
     for f in shown:
@@ -97,3 +107,24 @@ def rule_text(rule) -> str:
     if rule.source and rule.source.get("url"):
         out += [f"NGUỒN  {rule.source['url']} ({rule.source.get('section', '')})"]
     return "\n".join(out).rstrip()
+
+
+def inbox_text(rows: list[dict]) -> str:
+    """Bảng tóm tắt cho Art Lead — nhìn 5 giây biết file nào cần xem, file nào bỏ qua."""
+    if not rows:
+        return "Không có file nào đọc được trong thư mục."
+    w = max(len(r["file"]) for r in rows) + 2
+    head = f"{'FILE'.ljust(w)}{'KẾT QUẢ'.ljust(16)}{'FAIL':>5}{'WARN':>6}{'HỎI':>5}{'BỎ':>5}   LUẬT VI PHẠM"
+    out = [head, "─" * (len(head) + 6)]
+    for r in rows:
+        if r["fail"] is None:
+            out.append(f"{r['file'].ljust(w)}{'⛔ KHÔNG ĐỌC ĐƯỢC'.ljust(16)}"
+                       f"{'':>21}   {r['detail']}")
+            continue
+        mark = "⛔ KHÔNG QUA" if r["verdict"] == "KHÔNG QUA" else "✅ QUA"
+        out.append(f"{r['file'].ljust(w)}{mark.ljust(16)}{r['fail']:>5}{r.get('warn', 0):>6}"
+                   f"{r.get('manual', 0):>5}{r.get('skip', 0):>5}   {r['detail']}")
+    bad = sum(1 for r in rows if r["verdict"] != "QUA")
+    out += ["─" * (len(head) + 6),
+            f"{len(rows)} file · {bad} cần xử lý · {len(rows) - bad} qua gate"]
+    return "\n".join(out)

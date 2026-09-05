@@ -37,10 +37,54 @@ def _resolve(rule: Rule):
     return fn
 
 
+def _is_unavailable(metric: str | None, metrics: dict[str, Any]) -> bool:
+    """Reader đã khai trước là không lấy được chỉ số này?"""
+    if not metric:
+        return False
+    declared = metrics.get("_unavailable") or []
+    return any(metric == d or metric in d or d in metric for d in declared)
+
+
+def _resolve_path(metrics: dict[str, Any], dotted: str) -> Any:
+    cur: Any = metrics
+    for part in dotted.split("."):
+        if not isinstance(cur, dict) or part not in cur:
+            return None
+        cur = cur[part]
+    return cur
+
+
+def _missing_requirement(rule: Rule, metrics: dict[str, Any]) -> str | None:
+    """`check.requires` liệt kê dữ liệu mà luật cần mới có nghĩa.
+
+    Vd luật về bone bánh xe chỉ áp dụng cho file CÓ skeleton — một file body mesh
+    không rig thì luật đó không liên quan, phải SKIP chứ không phải FAIL.
+    """
+    for dotted in rule.check.get("requires", []):
+        val = _resolve_path(metrics, dotted)
+        if val is None or (isinstance(val, (list, dict, str)) and len(val) == 0):
+            return dotted
+    return None
+
+
 def run_rule(rule: Rule, metrics: dict[str, Any]) -> Finding:
+    missing = _missing_requirement(rule, metrics)
+    if missing:
+        return Finding(rule=rule, status="SKIP",
+                       note=f"Asset này không có '{missing}' nên luật không áp dụng.",
+                       expected=f"chỉ áp dụng khi có '{missing}'",
+                       actual="không áp dụng cho asset này")
     try:
         outcome = _resolve(rule)(rule, metrics)
     except CheckError as e:
+        if _is_unavailable(getattr(e, "metric", None), metrics):
+            # Không phải lỗi luật, cũng không phải lỗi hoạ sĩ: nguồn dữ liệu này
+            # đơn giản là không có chỉ số đó. Nói rõ cần gì để kiểm được.
+            return Finding(rule=rule, status="SKIP",
+                           note=(metrics.get("_unavailable_reason")
+                                 or f"Nguồn dữ liệu không có '{e.metric}'."),
+                           expected=f"cần chỉ số '{e.metric}'",
+                           actual=f"nguồn '{metrics.get('reader', 'metrics')}' không cung cấp")
         return Finding(rule=rule, status="ERROR", note=str(e),
                        expected="luật chạy được", actual="luật không chạy được")
     except Exception as e:  # noqa: BLE001 — một luật hỏng không được làm sập cả lượt kiểm

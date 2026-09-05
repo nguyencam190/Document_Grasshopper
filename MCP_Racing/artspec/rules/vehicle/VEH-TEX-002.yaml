@@ -9,6 +9,7 @@ stage: G2
 check:
   type: custom
   function: "vehicle.texture_size"
+  requires: [textures]             # chỉ áp dụng khi file có texture
   applies_to: { collection: textures }
   params:
     max_size: 4096      # ⚠️ SỐ VÍ DỤ

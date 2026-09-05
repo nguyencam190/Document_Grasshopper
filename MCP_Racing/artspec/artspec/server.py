@@ -16,7 +16,7 @@ from typing import Any
 
 from mcp.server import MCPServer
 
-from . import engine, registry, render
+from . import engine, inbox, registry, render
 from .registry import Registry, RegistryError
 
 ROOT = Path(os.environ.get("ARTSPEC_ROOT", Path(__file__).resolve().parent.parent))
@@ -84,6 +84,66 @@ def check_asset(metrics_json: str, stage: str | None = None) -> str:
     except (RegistryError, Exception) as e:  # noqa: BLE001
         return f"Không chạy được kiểm tra: {type(e).__name__}: {e}"
     return render.report_text(report)
+
+
+@mcp.tool()
+def check_file(path: str, asset_class: str | None = None,
+               stage: str | None = None, platform: str | None = None) -> str:
+    """Kiểm THẲNG một file 3D hoạ sĩ nộp lên — người hỏi không cần mở file.
+
+    Dùng khi Art Lead đưa đường dẫn tới file vừa nhận (.fbx, .glb, .gltf, .obj,
+    hoặc metrics .json) và hỏi "file này có đạt checklist không".
+
+    `asset_class` bỏ trống thì suy từ tên thư mục (vd .../vehicle_exterior/...)
+    hoặc từ sidecar `<tên file>.submit.json`.
+    `stage` giới hạn theo gate: G0 / G1 / G2 / G3.
+
+    File .ma/.mb sẽ bị từ chối kèm hướng dẫn — nói lại đúng hướng dẫn đó, đừng
+    tự nghĩ cách khác.
+
+    Trong báo cáo:
+      FAIL  hoạ sĩ phải sửa
+      SKIP  định dạng file này không chứa chỉ số đó — KHÔNG phải lỗi của hoạ sĩ,
+            đừng bảo họ sửa; nói rõ cần nộp thêm gì mới kiểm được
+      ERROR lỗi của validator, báo Art Lead
+    """
+    out = inbox.check_file(_reg(), path, asset_class=asset_class,
+                           stage=stage, platform=platform)
+    if out.error:
+        return f"Không kiểm được {Path(path).name}:\n{out.error}"
+    return render.report_text(out.report)
+
+
+@mcp.tool()
+def check_inbox(folder: str, stage: str | None = None) -> str:
+    """Quét cả thư mục nộp bài và trả bảng tóm tắt: file nào qua, file nào không.
+
+    Dùng khi Art Lead hỏi "sáng nay có gì cần xem" hoặc "lô này ai làm sai".
+    Sau khi đọc bảng, nếu người dùng muốn biết chi tiết một file thì gọi
+    check_file cho đúng file đó.
+    """
+    outs = inbox.check_folder(_reg(), folder, stage=stage)
+    rows = inbox.summary_rows(outs)
+    return render.inbox_text(rows)
+
+
+@mcp.tool()
+def supported_formats() -> dict[str, Any]:
+    """Định dạng file nào kiểm trực tiếp được, và chỉ số nào từng định dạng thiếu."""
+    return {
+        "direct": {
+            ".fbx": "FBX nhị phân — định dạng chính vào UE5. Không đọc được FBX ASCII.",
+            ".gltf/.glb": "glTF 2.0 — đọc đầy đủ nhất.",
+            ".obj": "Chỉ tricount / tên / số material. Không có transform, bone, color space.",
+            ".json": "metrics do collector sinh ra — đầy đủ nhất.",
+        },
+        "not_direct": {
+            ".ma/.mb": "Chạy collectors/maya_collect.py trong Maya, hoặc yêu cầu "
+                       "hoạ sĩ nộp kèm FBX.",
+        },
+        "note": "Chỉ số nào định dạng không có thì luật báo SKIP, không báo FAIL. "
+                "Muốn kiểm đủ mọi luật thì cần metrics từ collector Maya.",
+    }
 
 
 @mcp.tool()

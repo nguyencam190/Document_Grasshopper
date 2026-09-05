@@ -18,7 +18,15 @@ _OPS = {
 
 
 class CheckError(Exception):
-    """Luật viết sai hoặc metrics thiếu field — lỗi của hệ thống, không phải của hoạ sĩ."""
+    """Luật viết sai hoặc metrics thiếu field — lỗi của hệ thống, không phải của hoạ sĩ.
+
+    `metric` cho engine biết chỉ số nào đang thiếu, để phân biệt "reader không lấy
+    được chỉ số này" (→ SKIP, bình thường) với "luật viết sai" (→ ERROR, phải sửa).
+    """
+
+    def __init__(self, message: str, metric: str | None = None):
+        super().__init__(message)
+        self.metric = metric
 
 
 def root_scalars(metrics: dict[str, Any]) -> dict[str, Any]:
@@ -54,7 +62,7 @@ def _need(rule: Rule, item: dict[str, Any], metric: str) -> Any:
     if metric not in item:
         raise CheckError(
             f"{rule.id}: '{_label(item)}' thiếu metric '{metric}'. "
-            f"Collector chưa xuất field này — xem collectors/README.md")
+            f"Collector chưa xuất field này — xem collectors/README.md", metric=metric)
     return item[metric]
 
 

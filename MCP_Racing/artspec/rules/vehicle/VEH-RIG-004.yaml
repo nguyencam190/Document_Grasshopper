@@ -9,6 +9,7 @@ stage: G3
 check:
   type: custom
   function: "vehicle.wheel_bone_layout"
+  requires: [skeleton.bones]      # chỉ áp dụng cho file có rig
   params:
     # ⚠️ TÊN VÍ DỤ — thay bằng convention thật của dự án
     required_bones: [WHL_FL, WHL_FR, WHL_RL, WHL_RR]

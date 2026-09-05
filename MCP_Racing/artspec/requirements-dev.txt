@@ -1,0 +1,1 @@
+trimesh>=4.0   # chỉ dùng để đối chiếu chéo trong tests/test_readers.py

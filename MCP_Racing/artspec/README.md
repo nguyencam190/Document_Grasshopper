@@ -16,15 +16,59 @@ Tìm chỗ hoạ sĩ chưa làm đúng techspec, và giải thích cho họ hi�
 Validator quan trọng hơn và phải làm trước. MCP chỉ thêm phần "vì sao" và "sửa
 thế nào" — nó không tìm ra thêm lỗi nào cả.
 
+## Lead kiểm file hoạ sĩ nộp — không cần mở file 3D
+
+```bash
+python -m artspec.cli check  submit/vehicle_exterior/SUV_A.fbx
+python -m artspec.cli inbox  submit/            # quét cả lô, bảng tóm tắt
+```
+
+```
+FILE                    KẾT QUẢ          FAIL  WARN  HỎI   BỎ   LUẬT VI PHẠM
+──────────────────────────────────────────────────────────────────────────────
+SM_SuvA_Body_LOD0.fbx   ⛔ KHÔNG QUA         2     1    1    3   VEH-TRI-001, VEH-XFM-001
+SM_SuvA_Glass_LOD0.fbx  ✅ QUA               0     0    1    3
+──────────────────────────────────────────────────────────────────────────────
+2 file · 1 cần xử lý · 1 qua gate
+```
+
+Trong Claude: *"kiểm giúp tôi thư mục submit hôm nay"* → tool `check_inbox`;
+*"file SUV_A sai chỗ nào"* → tool `check_file` trả báo cáo đầy đủ kèm cách sửa.
+
+### Định dạng đọc trực tiếp được
+
+| Định dạng | Đọc được gì | Không có gì |
+|---|---|---|
+| **`.fbx`** (nhị phân) | tricount, transform, UV set, material slot, custom normal, tên + vị trí bone, tên texture | texel density, hard edge / UV seam, color space |
+| **`.gltf` / `.glb`** | như trên, thêm kích thước texture nếu file ảnh nằm cạnh | như trên |
+| **`.obj`** | tricount, tên, số material | transform, bone, color space |
+| **`.json`** | đầy đủ — do collector Maya sinh ra | — |
+
+`.ma` / `.mb` **không đọc trực tiếp**: `.mb` là nhị phân đóng của Autodesk, `.ma`
+là script MEL nên tự parse rất dễ sai. Reader từ chối kèm 2 hướng xử lý: yêu cầu
+hoạ sĩ nộp thêm FBX, hoặc chạy `collectors/maya_collect.py` bằng `mayapy`.
+
+> **Chỉ số nào định dạng không có thì báo `SKIP`, không bao giờ đoán.** Báo cáo
+> ghi rõ "nguồn này không cung cấp chỉ số đó" — hoạ sĩ không bị đổ oan, và Lead
+> biết chính xác khi nào cần thêm file từ Maya.
+
+### Suy `asset_class` để Lead không phải gõ
+
+Theo thứ tự ưu tiên: tham số truyền vào → sidecar `<tên file>.submit.json` →
+tên thư mục cha (`submit/vehicle_exterior/…`). Không suy được thì báo lỗi rõ
+ràng chứ không áp bừa bộ luật.
+
 ## Kiến trúc
 
 ```
 rules/*.yaml ─┐
               ├─> registry ─> engine ─┬─> CLI          (hoạ sĩ chạy lúc export)
 waivers/*.yaml┘                       ├─> nightly batch (Lead xem dashboard)
-                                      └─> MCP server    (hoạ sĩ hỏi trong chat)
-
-Maya/Max/Blender ──collector──> metrics.json ──┘
+                                      └─> MCP server    (Lead & hoạ sĩ hỏi trong chat)
+                          ▲
+       ┌──────────────────┴───────────────────┐
+  readers/ (fbx, gltf, obj)          collectors/maya_collect.py
+  đọc thẳng file nộp lên             chạy trong Maya, đủ chỉ số nhất
 ```
 
 **Một bộ luật, một engine, nhiều cửa gọi.** Đừng viết luật hai lần — validator
@@ -37,6 +81,8 @@ mất niềm tin vào cả hai.
 pip install -r requirements.txt
 
 python -m artspec.cli rules                                   # liệt kê luật
+python -m artspec.cli check   submit/vehicle_exterior/SUV_A.fbx   # kiểm 1 file nộp
+python -m artspec.cli inbox   submit/                             # kiểm cả lô
 python -m artspec.cli validate samples/metrics_fail.json      # 8 FAIL, 1 WARN, 1 MANUAL
 python -m artspec.cli validate samples/metrics_pass.json      # qua gate
 python -m artspec.cli validate samples/metrics_fail.json --stage G2   # chỉ gate G2
@@ -73,7 +119,10 @@ Server tự nạp lại khi file YAML đổi — sửa luật không cần resta
 
 | Tool | Trả lời câu hỏi kiểu |
 |---|---|
-| `check_asset` | "Asset của tôi có đạt không?" |
+| `check_file` | "File hoạ sĩ vừa nộp có đạt không?" — đọc thẳng .fbx/.glb/.obj |
+| `check_inbox` | "Lô submit hôm nay file nào cần xem?" |
+| `supported_formats` | "Định dạng nào kiểm được, thiếu chỉ số gì?" |
+| `check_asset` | "Asset của tôi có đạt không?" — từ metrics đã có sẵn |
 | `get_budget` | "Xe LOD2 tối đa bao nhiêu tri?" |
 | `search_spec` | "Dự án quy định gì về texel density?" |
 | `get_rule` | "VEH-UV-002 nói gì?" |
@@ -98,13 +147,14 @@ Prompt: `pre_submit_review`.
 Không trường hợp nào phải sửa `server.py` hay `engine.py`. Chi tiết field:
 [`rules/_SCHEMA.md`](rules/_SCHEMA.md).
 
-## Bốn trạng thái
+## Năm trạng thái
 
 | | Nghĩa |
 |---|---|
 | `FAIL` | Chặn gate. Chỉ dành cho luật cứng, máy chắc chắn đúng |
 | `WARN` | Cho qua nhưng ghi lại. Dùng khi luật có ngoại lệ hợp lệ, hoặc máy không chắc |
 | `MANUAL` | Câu hỏi cho người (Tier C) |
+| `SKIP` | Luật không áp dụng cho asset này (`check.requires`), hoặc nguồn dữ liệu không có chỉ số đó. **Không phải lỗi hoạ sĩ** |
 | `ERROR` | **Lỗi của validator**, không phải của hoạ sĩ — luật viết sai hoặc metrics thiếu field. Báo cáo nói rõ điều này để hoạ sĩ không sửa asset theo báo cáo sai |
 
 > Một lần báo sai giết chết mười lần báo đúng. Nghi ngờ thì để `WARN`.
@@ -117,14 +167,31 @@ sẽ tự lách — bỏ qua validator, submit thẳng, và Lead mất khả nă
 `waivers/waivers.yaml` hạ `FAIL` xuống `WARN` cho đúng cặp (luật, asset), có lý do,
 người duyệt và **ngày hết hạn** — hết hạn thì tự mất tác dụng, không cần ai dọn.
 
+## Test
+
+```bash
+python tests/test_fbx.py       # 16 check — reader FBX, fixture tự sinh
+python tests/test_readers.py   # 18 check — glTF/OBJ + luồng inbox đầu-cuối
+```
+
+`test_fbx.py` tự sinh FBX nhị phân rồi đọc lại — kiểm chứng phần đọc container
+(offset, kiểu property, mảng nén zlib, node lồng nhau). `test_readers.py` viết
+glTF tay theo spec rồi **đối chiếu chéo số tam giác với `trimesh`** (một cài đặt
+độc lập) để chắc chắn không phải tôi tự hiểu sai định dạng.
+
+> ⚠️ **Reader FBX chưa chạy trên FBX thật do Maya/Max export.** Test chỉ chứng
+> minh phần container đúng. Phần dịch semantic (node nào chứa gì) bám theo cấu
+> trúc chuẩn nhưng mỗi DCC ghi hơi khác — **chạy thử trên golden asset và đối
+> chiếu tricount với HUD của Maya trước khi tin.**
+
 ## Việc còn phải làm
 
 1. **Thay toàn bộ số trong `rules/` bằng số thật.** Không có bước này thì mọi thứ
    còn lại vô nghĩa.
-2. Viết collector FBX/USD (`collectors/`) — nhanh hơn Maya, không tốn license, và
-   kiểm đúng cái thật sự đi vào engine.
-3. Chạy thử `collectors/maya_collect.py` trên golden asset, đối chiếu vài con số
-   bằng tay (script này **chưa được kiểm chứng trên Maya thật**).
+2. Bổ sung tính texel density và hard edge / UV seam cho reader FBX — hiện đang
+   báo SKIP, phải dùng collector Maya mới kiểm được 2 nhóm luật đó.
+3. Chạy thử reader FBX **và** `collectors/maya_collect.py` trên golden asset, đối
+   chiếu tricount / texel density bằng tay (cả hai **chưa kiểm chứng trên Maya thật**).
 4. Nối vào nút Export trong Maya và vào batch chạy đêm.
 5. Bổ sung `common_mistakes` cho từng luật sau mỗi tháng đọc Error Log.
 
@@ -136,8 +203,11 @@ checklists/*.yaml      checklist theo gate G0-G3
 glossary/*.yaml        thuật ngữ theo cách dự án hiểu
 waivers/*.yaml         ngoại lệ đã duyệt
 samples/*.json         metrics mẫu để chạy thử
-collectors/            sinh metrics.json từ DCC
+collectors/            sinh metrics.json từ DCC (Maya)
+tests/                 test tự chạy, không cần pytest
 artspec/               engine — hiếm khi phải sửa
+  readers/     đọc thẳng file nộp: fbxfile.py · gltf.py · obj.py · images.py
+  inbox.py     kiểm 1 file / cả thư mục, bảng tóm tắt cho Lead
   registry.py  đọc & kiểm tính hợp lệ của luật
   checks/      builtin.py (Tier A) · vehicle.py (Tier B, đặc thù dự án)
   engine.py    chạy luật, áp waiver

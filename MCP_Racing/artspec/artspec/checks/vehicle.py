@@ -31,7 +31,8 @@ def transform_frozen(rule: Rule, metrics: dict[str, Any]) -> CheckOutcome:
         scale = it.get("scale")
         rot = it.get("rotation")
         if scale is None or rot is None:
-            raise CheckError(f"{rule.id}: '{name}' thiếu 'scale' hoặc 'rotation' trong metrics")
+            raise CheckError(f"{rule.id}: '{name}' thiếu 'scale' hoặc 'rotation' trong metrics",
+                             metric="meshes[].scale")
         if any(s < 0 for s in scale):
             bad.append(Location(name, f"scale ÂM {tuple(scale)} — mesh đang bị lộn mặt trong ra ngoài"))
         elif any(abs(s - 1.0) > eps for s in scale):
@@ -54,7 +55,8 @@ def hard_edges_are_uv_seams(rule: Rule, metrics: dict[str, Any]) -> CheckOutcome
         if "hard_edges" not in it or "uv_seam_edges" not in it:
             raise CheckError(
                 f"{rule.id}: '{name}' thiếu 'hard_edges' hoặc 'uv_seam_edges'. "
-                f"Collector phải xuất danh sách id cạnh — xem collectors/README.md")
+                f"Collector phải xuất danh sách id cạnh — xem collectors/README.md",
+                metric="hard_edges")
         orphans = sorted(set(it["hard_edges"]) - set(it["uv_seam_edges"]))
         total += len(orphans)
         if orphans:
@@ -83,7 +85,8 @@ def texture_color_space(rule: Rule, metrics: dict[str, Any]) -> CheckOutcome:
         want = smap[suffix]
         got = it.get("color_space")
         if got is None:
-            raise CheckError(f"{rule.id}: texture '{name}' thiếu 'color_space'")
+            raise CheckError(f"{rule.id}: texture '{name}' thiếu 'color_space'",
+                             metric="textures[].color_space")
         if str(got).lower() != want.lower():
             bad.append(Location(name, f"color space = {got}, hậu tố {suffix} yêu cầu {want}"))
     note = ""
@@ -105,7 +108,8 @@ def texture_size(rule: Rule, metrics: dict[str, Any]) -> CheckOutcome:
         name = _label(it)
         w, h = it.get("width"), it.get("height")
         if w is None or h is None:
-            raise CheckError(f"{rule.id}: texture '{name}' thiếu 'width'/'height'")
+            raise CheckError(f"{rule.id}: texture '{name}' thiếu 'width'/'height'",
+                             metric="textures[].width / height")
         for axis, v in (("width", w), ("height", h)):
             if v <= 0 or (v & (v - 1)) != 0:
                 bad.append(Location(name, f"{axis} = {v} không phải luỹ thừa của 2"))
@@ -129,7 +133,8 @@ def wheel_bone_layout(rule: Rule, metrics: dict[str, Any]) -> CheckOutcome:
 
     skel = metrics.get("skeleton")
     if not skel or "bones" not in skel:
-        raise CheckError(f"{rule.id}: metrics thiếu 'skeleton.bones'")
+        raise CheckError(f"{rule.id}: metrics thiếu 'skeleton.bones'",
+                         metric="skeleton.bones[].world_position")
     bones = {b["name"]: b for b in skel["bones"]}
     bad: list[Location] = []
 
@@ -149,7 +154,8 @@ def wheel_bone_layout(rule: Rule, metrics: dict[str, Any]) -> CheckOutcome:
             return None
         wp = b.get("world_position")
         if wp is None:
-            raise CheckError(f"{rule.id}: bone '{n}' thiếu 'world_position'")
+            raise CheckError(f"{rule.id}: bone '{n}' thiếu 'world_position'",
+                             metric="skeleton.bones[].world_position")
         return wp
 
     # Cặp trái/phải phải đối xứng qua trục giữa, và cùng độ cao.
