@@ -105,6 +105,50 @@ topology hoạ sĩ dựng. Reader khai `_unavailable`, engine báo `SKIP` chứ 
 Collector Maya (`collectors/maya_collect.py`) gọi **cùng module** `meshcheck` — nên
 validator trong Maya và validator đọc FBX không bao giờ cho hai kết quả khác nhau.
 
+## Đã có sẵn bộ tool validate? Nối vào, đừng viết lại
+
+Studio thường đã có 5–10 tool kiểm khác nhau. Nối từng cái vào từng chỗ sẽ không
+bảo trì nổi, nên tất cả đi qua **một hợp đồng chung**:
+
+```
+tool A ──adapter──┐
+tool B ──adapter──┼──> ExternalFinding ──> ánh xạ rule_id ──> MỘT báo cáo
+tool C ──adapter──┘                         (kèm why, how_to_fix, golden asset)
+```
+
+Khai báo trong `adapters.yaml` (mẫu: [`adapters.example.yaml`](adapters.example.yaml)) —
+hai kiểu tool phổ biến nhất **không cần viết Python**:
+
+| Kiểu | Dùng cho | Khai báo |
+|---|---|---|
+| `json_cli` | Tool in ra JSON | `command` + `findings_path` + `fields` |
+| `regex_text` | Tool chỉ in text | `command` + `pattern` |
+
+Rồi nối mã lỗi vào luật để báo cáo có đủ 5 phần:
+
+```yaml
+# rules/vehicle/VEH-TRI-001.yaml
+external_codes: [TRICOUNT_OVER]
+```
+
+```
+❌ FAIL · VEH-TRI-001 — Giới hạn tricount thân xe ngoại thất
+  Ở ĐÂU            SM_Body_LOD0    132450 / 96000        ← tool của bạn
+                   SM_Glass_LOD0   9000 / 4000           ← tool của bạn
+  GHI CHÚ          Nguồn: tool ngoài 'maya_validator'
+  VÌ SAO           Ngân sách GPU cho 12 xe...            ← artspec
+  SỬA THẾ NÀO      1. Xác định chỗ tốn tri nhất...       ← artspec
+```
+
+**Bốn tính chất quan trọng:**
+
+- Các tool chạy **song song**; một tool hỏng hoặc treo thành một dòng `ERROR`,
+  các tool còn lại vẫn chạy
+- Mã lỗi **chưa nối** không bị bỏ im lặng — hiện thành `WARN` kèm hướng dẫn khai báo
+- Một luật chỉ hiện **một dòng** trong báo cáo, kể cả khi vừa kiểm nội bộ vừa có
+  tool ngoài báo: lấy trạng thái xấu hơn, cộng dồn chỗ vi phạm
+- Hai luật cùng nhận một mã → **báo lỗi lúc nạp**, không đoán
+
 ## Kiến trúc
 
 ```
@@ -278,6 +322,7 @@ python tests/test_readers.py   # 18 check — glTF/OBJ + luồng inbox đầu-cu
 python tests/test_updates.py   # 11 check — changelog + tool whats_changed_for
 python tests/test_meshcheck.py # 29 check — phân tích mesh + luật MESH-* đầu-cuối
 python tests/test_importer.py  # 27 check — CSV → luật, gồm cả bắt lỗi dòng hỏng
+python tests/test_adapters.py  # 20 check — nối tool ngoài, gồm cả tool hỏng
 python tests/test_security.py  # 11 check — giới hạn thư mục + chống điều khiển qua tên mesh
 python tests/bench.py          # đo tốc độ trên MÁY CỦA BẠN (thêm --big cho mesh 500k)
 ```
@@ -317,6 +362,7 @@ samples/*.json         metrics mẫu để chạy thử
 collectors/            sinh metrics.json từ DCC (Maya)
 tests/                 test tự chạy, không cần pytest
 artspec/               engine — hiếm khi phải sửa
+  adapters/    nối tool validate sẵn có của studio
   readers/     đọc thẳng file nộp: fbxfile.py · gltf.py · obj.py · images.py
                meshcheck.py — phân tích sức khoẻ hình học, dùng chung mọi định dạng
   inbox.py     kiểm 1 file / cả thư mục, bảng tóm tắt cho Lead

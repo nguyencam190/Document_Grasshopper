@@ -31,6 +31,7 @@ class Rule:
     reference: dict[str, Any] | None = None
     source: dict[str, Any] | None = None
     changed_by_update: str | None = None
+    external_codes: list[str] = field(default_factory=list)
     path: str = ""
 
     @property

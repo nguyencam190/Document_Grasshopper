@@ -1,0 +1,46 @@
+# Khai báo các tool validate sẵn có của studio.
+#
+# Đổi tên file này thành `adapters.yaml` để engine tự dùng. Không có file đó thì
+# engine chỉ chạy luật nội bộ, không gọi tool ngoài nào.
+#
+# Mỗi mục = một tool. Chúng chạy SONG SONG; một tool hỏng không làm sập cả lượt.
+# `{file}` trong command được thay bằng đường dẫn file đang kiểm.
+
+# ── Kiểu 1: tool in ra JSON — dễ nối nhất, nên ưu tiên ────────────────────────
+- name: maya_validator            # tên hiện trong báo cáo
+  type: json_cli
+  command: ["python", "D:/tools/maya_val.py", "--json", "{file}"]
+  findings_path: issues           # chỗ chứa danh sách lỗi trong JSON ("a.b.c" nếu lồng)
+  fields:                         # tên field của tool  →  tên chuẩn
+    code: type                    #   BẮT BUỘC — mã lỗi, dùng để ánh xạ sang luật
+    object: node                  #   đối tượng vi phạm
+    detail: message               #   mô tả
+  # severity: level               #   nếu tool tự nêu mức (thường bỏ, dùng mức của luật)
+  applies_to_ext: [".ma", ".mb"]  # chỉ chạy với các đuôi này. Bỏ = chạy với mọi file
+  timeout: 300                    # giây, mặc định 300
+  ok_exit_codes: [0, 1]           # mã thoát coi là chạy xong. Mặc định [0, 1]
+
+# ── Kiểu 2: tool chỉ in text cho người đọc ───────────────────────────────────
+# Dễ vỡ khi tool đổi cách in. Nếu xin được người viết tool thêm `--json` thì
+# luôn ưu tiên kiểu 1.
+- name: uv_checker
+  type: regex_text
+  command: "D:/tools/uvcheck.exe {file}"
+  pattern: '^(?P<code>[A-Z_]+)\s+(?P<object>\S+)\s+(?P<detail>.*)$'
+  # nhóm bắt buộc: code. Tuỳ chọn: object, detail, severity
+
+# ── Tạm tắt một tool mà không phải xoá ───────────────────────────────────────
+- name: tool_dang_sua
+  type: json_cli
+  command: ["python", "D:/tools/wip.py", "{file}"]
+  findings_path: errors
+  enabled: false
+
+# ─────────────────────────────────────────────────────────────────────────────
+# SAU KHI KHAI BÁO XONG: nối mã lỗi của tool vào luật, để báo cáo có kèm
+# "vì sao" và "sửa thế nào". Trong file luật, thêm một dòng:
+#
+#     external_codes: [TRICOUNT_OVER, TRI_EXCEEDED]
+#
+# Mã nào chưa nối thì KHÔNG bị bỏ qua — nó hiện ra dưới dạng WARN kèm hướng dẫn
+# cách khai báo, để bạn biết mà bổ sung dần.

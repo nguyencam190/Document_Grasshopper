@@ -11,7 +11,7 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
 
-from . import engine
+from . import adapters, engine
 from .model import Report
 from .readers import SUPPORTED, ReaderError, read
 from .registry import Registry
@@ -72,7 +72,11 @@ def check_file(reg: Registry, path: str | Path, asset_class: str | None = None,
                 "theo class (vd submit/vehicle_exterior/), thêm sidecar "
                 f"'{p.stem}.submit.json' chứa {{\"asset_class\": \"...\"}}, "
                 "hoặc truyền asset_class khi gọi."))
-        return Outcome(p, report=engine.run(reg, metrics, stage=stage))
+        ext = None
+        cfg = Path(reg.root) / "adapters.yaml"
+        if cfg.is_file():
+            ext = adapters.run_all(adapters.load_config(cfg), p)
+        return Outcome(p, report=engine.run(reg, metrics, stage=stage, external=ext))
     except ReaderError as e:
         return Outcome(p, error=str(e))
     except Exception as e:  # noqa: BLE001 — một file hỏng không được làm dừng cả lô

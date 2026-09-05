@@ -12,7 +12,7 @@ from typing import Any
 
 from .checks import get_builtin, get_custom
 from .checks.builtin import CheckError
-from .model import Finding, Report, Rule, STATUS_ORDER
+from .model import Finding, Location, Report, Rule, STATUS_ORDER
 from .registry import Registry
 
 _SEVERITY_TO_STATUS = {"fail": "FAIL", "warn": "WARN", "info": "INFO"}
@@ -103,8 +103,77 @@ def run_rule(rule: Rule, metrics: dict[str, Any]) -> Finding:
                    expected=outcome.expected, actual=outcome.actual, note=outcome.note)
 
 
+def _unmapped_rule(code: str, source: str) -> Rule:
+    """Luật giả cho mã lỗi chưa được khai báo trong rules/.
+
+    KHÔNG bao giờ im lặng bỏ qua lỗi mà tool ngoài đã báo. Nó hiện ra dưới dạng
+    WARN kèm hướng dẫn khai báo, để Lead biết mà bổ sung.
+    """
+    return Rule(
+        id=f"EXT:{code}", title=f"Lỗi từ '{source}' chưa được khai báo",
+        asset_class="*", category="external", tier="A", severity="warn",
+        stage="G2", check={"type": "external"},
+        why=(f"Tool '{source}' báo mã '{code}' nhưng chưa luật nào trong rules/ "
+             f"nhận mã này, nên không có giải thích và cách sửa đi kèm."),
+        how_to_fix=[f"Thêm `external_codes: [{code}]` vào luật tương ứng "
+                    f"trong rules/, hoặc tạo luật mới cho mã này",
+                    "Xem VIET_CHECKLIST.md nếu chưa rõ cách viết luật"],
+        version=0, effective_from="1970-01-01")
+
+
+def _from_external(registry: Registry, ext: Any) -> list[Finding]:
+    """Gộp lỗi của các tool ngoài, ánh xạ sang luật để lấy why/how_to_fix."""
+    if ext is None:
+        return []
+    out: list[Finding] = []
+
+    for msg in getattr(ext, "errors", []):
+        out.append(Finding(
+            rule=_unmapped_rule("TOOL_ERROR", "adapter"), status="ERROR",
+            note=msg, expected="tool ngoài chạy được",
+            actual="tool ngoài không chạy được"))
+
+    # Nhiều lỗi cùng mã thì gộp thành một mục, mỗi đối tượng là một dòng "Ở ĐÂU".
+    groups: dict[tuple[str, str], list[Any]] = {}
+    for f in getattr(ext, "findings", []):
+        groups.setdefault((f.code.strip().upper(), f.source), []).append(f)
+
+    for (code, source), items in groups.items():
+        rule = registry.by_code(code)
+        status = _SEVERITY_TO_STATUS.get(rule.severity, "FAIL") if rule else "WARN"
+        out.append(Finding(
+            rule=rule or _unmapped_rule(code, source), status=status,
+            locations=[Location(i.object or "(không nêu)", i.detail) for i in items],
+            expected=f"không có lỗi '{code}'",
+            actual=f"{len(items)} lỗi do '{source}' báo",
+            note=f"Nguồn: tool ngoài '{source}', mã '{code}'."))
+    return out
+
+
+def _merge_by_rule(findings: list[Finding]) -> list[Finding]:
+    """Một luật chỉ hiện MỘT dòng trong báo cáo.
+
+    Cùng một luật có thể vừa được kiểm nội bộ vừa được tool ngoài báo. Hiện cả
+    hai (một PASS một FAIL) thì người đọc không biết tin cái nào. Gộp lại: lấy
+    trạng thái XẤU HƠN, cộng dồn các chỗ vi phạm.
+    """
+    order = {s: i for i, s in enumerate(STATUS_ORDER)}
+    merged: dict[str, Finding] = {}
+    for f in findings:
+        cur = merged.get(f.rule.id)
+        if cur is None:
+            merged[f.rule.id] = f
+            continue
+        keep, drop = ((f, cur) if order[f.status] < order[cur.status] else (cur, f))
+        keep.locations = keep.locations + drop.locations
+        notes = [n for n in (keep.note, drop.note) if n]
+        keep.note = " · ".join(dict.fromkeys(notes))
+        merged[f.rule.id] = keep
+    return list(merged.values())
+
+
 def run(registry: Registry, metrics: dict[str, Any], stage: str | None = None,
-        today: date | None = None) -> Report:
+        today: date | None = None, external: Any = None) -> Report:
     asset = str(metrics.get("asset") or metrics.get("name") or "<không tên>")
     asset_class = str(metrics.get("asset_class") or "")
     if not asset_class:
@@ -120,6 +189,9 @@ def run(registry: Registry, metrics: dict[str, Any], stage: str | None = None,
                 f.status = "WARN"
                 f.waiver = w
         findings.append(f)
+
+    findings.extend(_from_external(registry, external))
+    findings = _merge_by_rule(findings)
 
     findings.sort(key=lambda f: (STATUS_ORDER.index(f.status), f.rule.id))
     return Report(asset=asset, asset_class=asset_class, stage=stage,

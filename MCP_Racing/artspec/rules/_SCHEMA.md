@@ -22,6 +22,7 @@ Mỗi quy tắc = 1 file YAML trong `rules/<asset_class>/`. Tên file = `id` c�
 | `effective_from` | ✅ | Ngày hiệu lực (YYYY-MM-DD) |
 | `status` | ✅ | `active` · `draft` · `superseded` (chỉ `active` mới được chạy) |
 | `changed_by_update` | | Mã update khách hàng đã sinh ra thay đổi này |
+| `external_codes` | | Mã lỗi của tool validate ngoài ánh xạ tới luật này, vd `[TRICOUNT_OVER]`. Xem `adapters.example.yaml` |
 
 ## Các `check.type` có sẵn
 

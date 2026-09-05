@@ -30,6 +30,7 @@ class Registry:
     glossary: list[dict[str, Any]] = field(default_factory=list)
     waivers: list[dict[str, Any]] = field(default_factory=list)
     updates: list[dict[str, Any]] = field(default_factory=list)
+    by_external_code: dict[str, Rule] = field(default_factory=dict)
 
     # ---- truy vấn ----
 
@@ -48,6 +49,10 @@ class Registry:
 
     def get(self, rule_id: str) -> Rule | None:
         return self.rules.get(rule_id.strip().upper())
+
+    def by_code(self, external_code: str) -> Rule | None:
+        """Luật tương ứng với mã lỗi của một tool ngoài."""
+        return self.by_external_code.get(str(external_code).strip().upper())
 
     def search(self, query: str, asset_class: str | None = None) -> list[Rule]:
         q = query.lower().strip()
@@ -146,6 +151,15 @@ def load(root: str | Path) -> Registry:
         known = {f for f in Rule.__dataclass_fields__}
         reg.rules[rid] = Rule(path=str(p.relative_to(root)),
                               **{k: v for k, v in data.items() if k in known and k != "path"})
+
+    for rule in reg.rules.values():
+        for code in rule.external_codes:
+            key = str(code).strip().upper()
+            if key in reg.by_external_code:
+                raise RegistryError(
+                    f"mã ngoài '{key}' được khai ở cả {reg.by_external_code[key].id} "
+                    f"và {rule.id} — mỗi mã chỉ ánh xạ tới một luật")
+            reg.by_external_code[key] = rule
 
     for p in sorted((root / "checklists").glob("*.yaml")):
         data = _load_yaml(p) or {}
