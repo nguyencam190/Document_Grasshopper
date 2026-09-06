@@ -38,9 +38,40 @@ python cai_dat_mcp.py --maya-mcp ... --artspec ...     # cả hai cùng lúc
 |---|---|
 | 1 | Kiểm Python ≥ 3.10 |
 | 2 | Tạo `.venv` và cài `requirements.txt` cho từng server |
-| 3 | Tìm file cấu hình Claude Desktop theo hệ điều hành |
-| 4 | **Gộp** mục mới vào — giữ nguyên server đang có, sao lưu trước khi ghi |
-| 5 | In ra việc còn lại phải làm bằng tay |
+| 3 | **Chạy thử server** — cài xong mà không chạy được thì báo ngay, không để Claude im lặng không hiện tool |
+| 4 | **Tự vá lỗi phiên bản `mcp`** của MayaMCP (xem dưới) |
+| 5 | Tìm file cấu hình Claude Desktop theo hệ điều hành |
+| 6 | **Gộp** mục mới vào — giữ nguyên server đang có, sao lưu trước khi ghi |
+| 7 | In ra việc còn lại phải làm bằng tay |
+
+## Lỗi của MayaMCP mà script tự vá
+
+`requirements.txt` của MayaMCP chỉ ghi `mcp`, **không ghim phiên bản**. Nhưng code
+viết cho **mcp 1.x**. Cài mặc định sẽ kéo về mcp 2.x và server vỡ ngay:
+
+```
+ModuleNotFoundError: No module named 'mcp.server.fastmcp'
+```
+
+Đây là lỗi của repo gốc, không phải máy bạn. Script phát hiện đúng lỗi này rồi
+tự hạ xuống `mcp<2`. Đã kiểm chứng trên bản MayaMCP thật:
+
+| `mcp` | Kết quả |
+|---|---|
+| 2.1.1 (mặc định) | ❌ vỡ |
+| 1.29.1 (`mcp<2`) | ✅ chạy |
+
+## Cổng lệnh Maya — bước README của MayaMCP không nhắc
+
+MayaMCP nối tới Maya qua **cổng 50007**, ghi cứng trong code (`DEFAULT_COMMAND_PORT`),
+không đổi được qua cấu hình. Maya **không tự mở cổng này** — mỗi phiên Maya phải chạy:
+
+```python
+cmds.commandPort(name=":50007", sourceType="mel")
+```
+
+**Phải là `sourceType="mel"`**, không phải `"python"` — vì MayaMCP bọc code Python
+trong lệnh MEL `python("...")` trước khi gửi đi.
 
 ## Nó KHÔNG làm gì
 

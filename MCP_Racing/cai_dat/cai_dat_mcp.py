@@ -72,6 +72,33 @@ def make_venv(root: Path, label: str) -> Path:
     return py
 
 
+def verify(py: Path, code: str, label: str, root: Path) -> str | None:
+    """Chạy thử import server. Trả về thông báo lỗi, hoặc None nếu chạy được.
+
+    Cài xong mà không thử thì Claude Desktop sẽ im lặng không hiện tool nào và
+    rất khó đoán vì sao.
+    """
+    proc = subprocess.run([str(py), "-c", code], capture_output=True, text=True,
+                          cwd=str(root))
+    if proc.returncode == 0:
+        return None
+    return (proc.stderr or proc.stdout).strip()
+
+
+def fix_mcp_v1(py: Path, err: str, label: str) -> bool:
+    """MayaMCP viết cho mcp 1.x nhưng requirements.txt không ghim phiên bản.
+
+    `pip install mcp` kéo về 2.x và code vỡ ngay. Phát hiện đúng lỗi đó thì hạ
+    xuống 1.x. Đây là lỗi của repo gốc, không phải của máy bạn.
+    """
+    if "fastmcp" not in err and "mcp 2" not in err.lower():
+        return False
+    say("!", f"{label}: repo này viết cho mcp 1.x nhưng requirements.txt không ghim")
+    say("·", f"{label}: đang hạ xuống mcp<2…")
+    subprocess.run([str(py), "-m", "pip", "install", "-q", "mcp<2"], check=True)
+    return True
+
+
 def entry_maya_mcp(root: Path) -> dict:
     server = root / "src" / "maya_mcp_server.py"
     if not server.is_file():
@@ -144,18 +171,37 @@ def main(argv: list[str] | None = None) -> int:
 
     print(f"\nPython {sys.version.split()[0]} · {platform.system()}\n")
     servers: dict[str, dict] = {}
+    problems: list[str] = []
     try:
         if a.maya_mcp:
             root = a.maya_mcp.expanduser().resolve()
             entry = entry_maya_mcp(root)
             if not a.dry_run:
-                make_venv(root, "MayaMCP")
+                py = make_venv(root, "MayaMCP")
+                code = (f"import sys; sys.path.insert(0, r'{root / 'src'}'); "
+                        f"import maya_mcp_server")
+                err = verify(py, code, "MayaMCP", root)
+                if err and fix_mcp_v1(py, err, "MayaMCP"):
+                    err = verify(py, code, "MayaMCP", root)
+                if err:
+                    say("✗", f"MayaMCP: server KHÔNG chạy được:\n     "
+                             + err.splitlines()[-1][:150])
+                    problems.append("MayaMCP")
+                else:
+                    say("✓", "MayaMCP: server chạy thử OK")
             servers["MayaMCP"] = entry
         if a.artspec:
             root = a.artspec.expanduser().resolve()
             entry = entry_artspec(root)
             if not a.dry_run:
-                make_venv(root, "artspec")
+                py = make_venv(root, "artspec")
+                err = verify(py, "import artspec.server", "artspec", root)
+                if err:
+                    say("✗", f"artspec: server KHÔNG chạy được:\n     "
+                             + err.splitlines()[-1][:150])
+                    problems.append("artspec")
+                else:
+                    say("✓", "artspec: server chạy thử OK")
             servers["artspec"] = entry
     except (FileNotFoundError, subprocess.CalledProcessError) as e:
         print(f"\nLỖI: {e}")
@@ -192,6 +238,13 @@ def main(argv: list[str] | None = None) -> int:
     if "MayaMCP" in servers:
         steps.append(("Mở Maya. Lần đầu kết nối Maya sẽ hiện hộp thoại bảo mật",
                       ["→ bấm 'Allow All'. Phải làm lại MỖI PHIÊN Maya."]))
+    if "MayaMCP" in servers:
+        steps.append(("Trong Maya, mở cổng lệnh — CHẠY MỖI PHIÊN MAYA:", [
+            'cmds.commandPort(name=":50007", sourceType="mel")',
+            "",
+            "Dán dòng trên vào Script Editor tab Python.",
+            "MayaMCP dùng đúng cổng 50007 (ghi cứng trong code, không đổi được),",
+            "và phải là sourceType='mel' vì nó bọc Python trong lệnh MEL."]))
     steps.append(("Hỏi thử trong Claude: \"bạn có tool nào?\"", []))
     if "artspec" in servers:
         steps.append(("Test chống bịa (BẮT BUỘC): hỏi một điều techspec KHÔNG quy định,",
@@ -201,8 +254,13 @@ def main(argv: list[str] | None = None) -> int:
         print(f"{'' if i == 1 else chr(10)}{i}. {head}")
         for line in rest:
             print(f"   {line}")
-    print()
-    return 0
+    if problems:
+        print("=" * 66)
+        print(f"⚠  {', '.join(problems)} cài xong nhưng CHẠY THỬ KHÔNG QUA.")
+        print("   Cấu hình vẫn được ghi, nhưng Claude sẽ không thấy tool.")
+        print("   Gửi thông báo lỗi phía trên cho người hỗ trợ.")
+        print()
+    return 1 if problems else 0
 
 
 if __name__ == "__main__":
