@@ -1,0 +1,101 @@
+=========================================================
+ CÀI MCP CHO CLAUDE DESKTOP — LÀM ĐÚNG 6 BƯỚC DƯỚI ĐÂY
+=========================================================
+
+Giải nén nguyên thư mục MCP_cai_dat này ra một chỗ cố định,
+ví dụ  D:\MAYA_TOOLS\MCP_cai_dat\  — về sau đừng di chuyển nó,
+vì Claude nhớ đường dẫn tuyệt đối.
+
+Máy cần Python 3.10 trở lên. Mở CMD gõ:  python --version
+Chưa có thì tải ở python.org, lúc cài NHỚ TICK "Add Python to PATH".
+
+
+BƯỚC 1 — Sửa MỘT dòng trong cai_dat_mcp.bat
+-------------------------------------------
+Chuột phải file cai_dat_mcp.bat > Edit. Sửa dòng:
+
+    set MAYA_MCP=D:\MAYA_TOOLS\MayaMCP-main
+
+cho đúng chỗ bạn để MayaMCP (thư mục CHỨA src\maya_mcp_server.py).
+Chưa có MayaMCP thì kệ nó — bộ cài sẽ tự bỏ qua và chỉ cài artspec.
+
+artspec nằm sẵn cạnh file .bat, KHÔNG cần khai báo gì thêm.
+
+
+BƯỚC 2 — Chạy thử khô (chưa ghi gì cả)
+--------------------------------------
+Mở CMD trong thư mục này (gõ  cmd  vào thanh địa chỉ của File Explorer)
+rồi chạy:
+
+    cai_dat_mcp.bat --dry-run
+
+Nó in ra đoạn JSON và dòng "(--dry-run: chưa ghi gì cả)". Xem qua thấy
+đường dẫn đúng thì sang bước 3.
+
+
+BƯỚC 3 — Cài thật
+-----------------
+BẤM ĐÚP vào cai_dat_mcp.bat.
+
+Lần đầu chạy mất vài phút (tạo môi trường ảo, tải thư viện). Xong phải
+thấy các dòng:
+
+    ✓  MayaMCP: server chạy thử OK
+    ✓  artspec: server chạy thử OK
+    ✓  đã ghi 2 server vào cấu hình
+
+Cấu hình cũ của Claude được sao lưu tự động, không mất gì.
+
+
+BƯỚC 4 — THOÁT HẲN Claude Desktop rồi mở lại
+--------------------------------------------
+Bấm X đóng cửa sổ KHÔNG đủ. Claude chỉ đọc cấu hình lúc khởi động.
+
+    Windows: chuột phải icon ở khay hệ thống (góc phải taskbar) > Quit
+    Mac:     Cmd + Q
+
+Rồi mở lại Claude.
+
+
+BƯỚC 5 — Mở cổng lệnh trong Maya  (chỉ cần nếu dùng MayaMCP)
+------------------------------------------------------------
+Mở Maya > Windows > General Editors > Script Editor > tab Python.
+Dán toàn bộ nội dung file mo_cong_maya.py vào, bấm Ctrl+Enter.
+
+Thấy dòng "Đã mở cổng 50007" là được.
+
+Lần đầu Claude gọi sang, Maya hiện hộp thoại bảo mật > bấm "Allow All".
+
+  >> Hai việc này phải làm lại MỖI PHIÊN MAYA. Cổng không tự mở lại. <<
+
+
+BƯỚC 6 — Kiểm tra
+-----------------
+Trong Claude gõ:  bạn có tool nào?
+Phải liệt kê ra tool của MayaMCP và artspec.
+
+Rồi thử bài test chống bịa (BẮT BUỘC làm một lần):
+hỏi một điều techspec KHÔNG hề quy định, ví dụ
+"số vertex tối đa cho decal là bao nhiêu?"
+Trả lời ĐÚNG phải là "techspec không có quy định này".
+Nếu nó bịa ra một con số thì báo lại ngay, đừng dùng tiếp.
+
+
+HỎNG THÌ SAO
+------------
+'python' is not recognized ....... Python chưa vào PATH, cài lại + tick
+Claude không thấy tool nào ....... chưa Quit hẳn ở bước 4
+Gọi Maya báo lỗi kết nối ......... chưa làm bước 5, hoặc Maya đã đóng
+
+Chép nguyên đoạn chữ cửa sổ đen in ra (nhất là dòng "LỖI:" hoặc "⚠")
+gửi lại cho tôi.
+
+
+TRONG GÓI CÓ GÌ
+---------------
+cai_dat_mcp.bat ..... bấm đúp để cài
+cai_dat_mcp.py ...... ruột của bộ cài
+mo_cong_maya.py ..... dán vào Maya, mở cổng 50007
+README.md ........... giải thích chi tiết bộ cài
+artspec/ ............ MCP kiểm file theo techspec (engine + luật)
+tai_lieu/ ........... toàn bộ tài liệu quy trình, đọc BAT_DAU_TU_DAU.md trước
