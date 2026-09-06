@@ -59,10 +59,23 @@ Rồi mở lại Claude.
 
 BƯỚC 5 — Mở cổng lệnh trong Maya  (chỉ cần nếu dùng MayaMCP)
 ------------------------------------------------------------
-Mở Maya > Windows > General Editors > Script Editor > tab Python.
-Dán toàn bộ nội dung file mo_cong_maya.py vào, bấm Ctrl+Enter.
+Mở Maya > Windows > General Editors > Script Editor.
 
-Thấy dòng "Đã mở cổng 50007" là được.
+  >> PHẢI DÁN VÀO TAB "Python", KHÔNG PHẢI TAB "MEL". <<
+  Hàng tab nằm ở NỬA DƯỚI cửa sổ Script Editor. Không thấy tab Python thì
+  chuột phải vào hàng tab > New Tab > chọn Python.
+  Dán nhầm tab MEL sẽ báo:  // Error: Line 1.2: Syntax error
+
+Dán toàn bộ nội dung file mo_cong_maya.py vào, bấm Ctrl+Enter.
+Thấy dòng "Da mo cong 50007" là được.
+
+Lười thì dán đúng 2 dòng này cũng đủ:
+
+    from maya import cmds
+    cmds.commandPort(name=":50007", sourceType="mel")
+
+(chữ sourceType="mel" KHÔNG liên quan đến tab bạn đang dán — nó là kiểu
+lệnh MayaMCP gửi qua cổng. Vẫn phải dán vào tab Python.)
 
 Lần đầu Claude gọi sang, Maya hiện hộp thoại bảo mật > bấm "Allow All".
 
@@ -85,6 +98,7 @@ HỎNG THÌ SAO
 ------------
 'python' is not recognized ....... Python chưa vào PATH, cài lại + tick
 Claude không thấy tool nào ....... chưa Quit hẳn ở bước 4
+// Error: Line 1.2: Syntax error .. dán nhầm tab MEL, xem bước 5
 Gọi Maya báo lỗi kết nối ......... chưa làm bước 5, hoặc Maya đã đóng
 
 Chép nguyên đoạn chữ cửa sổ đen in ra (nhất là dòng "LỖI:" hoặc "⚠")
