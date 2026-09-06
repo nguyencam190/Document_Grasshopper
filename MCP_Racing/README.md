@@ -8,6 +8,7 @@ racing game open-world.
 | File | Nội dung |
 |---|---|
 | [`BAT_DAU_TU_DAU.md`](BAT_DAU_TU_DAU.md) | **⭐ ĐỌC ĐẦU TIÊN.** Lộ trình 6 tuần có lệnh cụ thể và mốc "xong khi" cho từng tuần. Bảng điều khiển hiện trạng, 3 điểm quyết định, bảng theo dõi in ra tick được, và bản rút gọn nếu chỉ có 2 giờ/tuần |
+| [`cai_dat/`](cai_dat/README.md) | **Script cài tự động.** Bấm đúp là xong — tạo môi trường ảo, cài thư viện, gộp cấu hình Claude Desktop mà không làm mất server đang có (có sao lưu) |
 | [`CAI_DAT_CLAUDE.md`](CAI_DAT_CLAUDE.md) | **Làm ngay sau khi đọc lộ trình.** Cài artspec vào Claude Desktop từng bước: cấu hình cho Windows/Mac, 5 câu kiểm tra (gồm test chống bịa số), bảng lỗi hay gặp |
 | [`VIET_CHECKLIST.md`](VIET_CHECKLIST.md) | **Việc chính của Giai đoạn 1.** Cách viết checklist: phép thử một mục tốt, biến câu tệ thành câu dùng được, cây quyết định tier, và quy trình điền Excel → 1 lệnh → ra luật (không phải sửa YAML) |
 | [`QUY_TRINH_6_BUOC_QUAN_LY.md`](QUY_TRINH_6_BUOC_QUAN_LY.md) | Quản lý quy trình 6 bước (Model → Lock Normal → UVW → Texture → Rigging → Import UE5): 4 gate cần thêm, định nghĩa DONE + lỗi hay gặp từng bước, 7 cơ chế quản lý, chỉ số đo lường, checklist mẫu |
