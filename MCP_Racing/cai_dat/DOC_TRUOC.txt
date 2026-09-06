@@ -6,11 +6,18 @@ Giải nén nguyên thư mục MCP_cai_dat này ra một chỗ cố định,
 ví dụ  D:\MAYA_TOOLS\MCP_cai_dat\  — về sau đừng di chuyển nó,
 vì Claude nhớ đường dẫn tuyệt đối.
 
-Máy cần Python 3.10 trở lên. Mở CMD gõ:  python --version
-Chưa có thì tải ở python.org, lúc cài NHỚ TICK "Add Python to PATH".
+Máy cần Python 3.10 trở lên (khuyên 3.12).
+
+  >> CHƯA CÓ PYTHON? BẤM ĐÚP cai_python.bat, nó lo hết. <<
+  Máy đã có sẵn rồi thì nó báo "khong can cai gi them" rồi thoát,
+  chạy nhầm cũng không hỏng gì.
+
+Python này KHÔNG liên quan đến Python bên trong Maya. Maya có Python
+riêng, không cài đè được và cũng không cần.
 
 
 BƯỚC 1 — Sửa MỘT dòng trong cai_dat_mcp.bat
+       (chưa có Python thì bấm đúp cai_python.bat trước)
 -------------------------------------------
 Chuột phải file cai_dat_mcp.bat > Edit. Sửa dòng:
 
@@ -107,7 +114,9 @@ gửi lại cho tôi.
 
 TRONG GÓI CÓ GÌ
 ---------------
-cai_dat_mcp.bat ..... bấm đúp để cài
+cai_python.bat ...... bấm đúp để cài Python (chỉ khi máy chưa có)
+cai_python.ps1 ...... ruột của bộ cài Python
+cai_dat_mcp.bat ..... bấm đúp để cài hai MCP server
 cai_dat_mcp.py ...... ruột của bộ cài
 mo_cong_maya.py ..... dán vào Maya, mở cổng 50007
 README.md ........... giải thích chi tiết bộ cài
