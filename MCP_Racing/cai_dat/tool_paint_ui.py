@@ -14,6 +14,7 @@
 #  Maya hay lam hong ky tu co dau khi dan vao.
 # ==========================================================================
 import math
+import time
 
 from maya import cmds
 from maya.api import OpenMaya as om
@@ -37,9 +38,12 @@ SPACING = 0.25
 # So muc luong tu hoa mau khi ghi lai net vao undo stack. Xem commit().
 LEVELS = 12
 
-# Qua nguong nay thi so o phai duyet (span^3) dat hon quet thang toan bo
-# vertex - xay ra khi zoom xa lam co phu gan het mesh.
-MAX_SPAN = 6
+# Trong so phai tang them it nhat chung nay thi moi to lai vertex. Duoi muc do
+# mat khong phan biet duoc, to lai chi ton cong.
+WEIGHT_STEP = 0.02
+
+# Mat do dich khi bam nut tao ban nhe de ve.
+PROXY_TARGET = 60000
 
 
 # ----------------------- luoi bam khong gian -----------------------
@@ -67,7 +71,11 @@ class Hash(object):
         out = []
         span = int(math.ceil(radius / self.cell))
 
-        if span > MAX_SPAN:
+        # Chi quet thang khi so O phai duyet con nhieu hon so VERTEX. Truoc day
+        # dat nguong cung theo span, hoa ra sai huong: zoom xa mot chut la roi
+        # vao quet thang toan bo mesh bang Python - cham hon han duyet o, vi o
+        # rong chi ton mot lan tra tu dien.
+        if (2 * span + 1) ** 3 > len(self.pts):
             for i, p in enumerate(self.pts):
                 dx, dy, dz = p[0] - c[0], p[1] - c[1], p[2] - c[2]
                 d2 = dx * dx + dy * dy + dz * dz
@@ -123,8 +131,12 @@ class Brush(object):
             self.colors = [[0.0, 0.0, 0.0] for _ in self.pts]
 
         self.before = {}       # mau goc truoc net dang ve
+        self.stroke_w = {}     # trong so lon nhat moi vertex da nhan trong net
         self.touched = set()
         self.tip = None        # vi tri dau co (pixel)
+        self.radius_world = None   # ban kinh co quy ra don vi the gioi
+        self.dabs = 0              # so dau co trong net dang ve
+        self.spent = 0.0           # thoi gian ve net dang ve, giay
 
 
 B = None                       # con co dang bat, None neu chua bat
@@ -156,8 +168,13 @@ def _world_radius(x, y, depth, px):
     return max(math.sqrt((ax - bx) ** 2 + (ay - by) ** 2 + (az - bz) ** 2), 1e-6)
 
 
-def dab(x, y):
-    """Dat mot dau co tai toa do pixel (x, y)."""
+def dab(x, y, radius=None, collect=None):
+    """Dat mot dau co tai toa do pixel (x, y).
+
+    `radius` tinh san mot lan cho ca luot keo (xem on_drag) de khoi goi
+    viewToWorld hai lan cho moi dau co. `collect` la dict gom thay doi cua ca
+    luot keo lai ghi mot the, thay vi moi dau co mot lenh ghi mesh.
+    """
     if B is None:
         return
     src, vec = _ray(x, y)
@@ -170,29 +187,42 @@ def dab(x, y):
 
     hp = hit[0]
     centre = (hp.x, hp.y, hp.z)
-    depth = math.sqrt((hp.x - src.x) ** 2 + (hp.y - src.y) ** 2
-                      + (hp.z - src.z) ** 2)
-    radius = _world_radius(x, y, depth, B.radius_px)
+    if radius is None:
+        depth = math.sqrt((hp.x - src.x) ** 2 + (hp.y - src.y) ** 2
+                          + (hp.z - src.z) ** 2)
+        radius = _world_radius(x, y, depth, B.radius_px)
 
-    target = [0.0, 0.0, 0.0] if B.erase else B.color
-    idx, cols = [], []
+    t0, t1, t2 = [0.0, 0.0, 0.0] if B.erase else B.color
+    out = {} if collect is None else collect
     for i, d in B.hash.near(centre, radius):
         # Falloff muot: dam deu o giua, tat dan ve mep, khong cat cung.
-        t = 1.0 - (d / radius) ** 2
-        w = (t * t if t > 0.0 else 0.0) * B.opacity
+        f = 1.0 - (d / radius) ** 2
+        w = (f * f if f > 0.0 else 0.0) * B.opacity
         if w <= 1e-4:
             continue
+
+        # Trong MOT net, moi vertex chi giu trong so LON NHAT no tung gap, va
+        # mau luon tron tu mau goc truoc net chu khong tron chong len ket qua
+        # cua dau co truoc. Hai cai loi cung mot luc:
+        #  - nhanh: cac dau co chong nhau rat nhieu, dau co sau phan lon cho
+        #    trong so nho hon nen bo qua duoc ngay, khoi ghi lai
+        #  - dep: keo cham khong con bi dam cuc lai o cho dau co don nhau
+        if w <= B.stroke_w.get(i, 0.0) + WEIGHT_STEP:
+            continue
+        B.stroke_w[i] = w
+
         if i not in B.before:
             B.before[i] = list(B.colors[i])
+        base = B.before[i]
         cur = B.colors[i]
-        for k in range(3):
-            cur[k] = cur[k] * (1.0 - w) + target[k] * w
+        cur[0] = base[0] + (t0 - base[0]) * w
+        cur[1] = base[1] + (t1 - base[1]) * w
+        cur[2] = base[2] + (t2 - base[2]) * w
         B.touched.add(i)
-        idx.append(i)
-        cols.append(cur)
+        out[i] = cur
 
-    if idx:
-        _push(idx, cols)
+    if collect is None and out:
+        _push(list(out.keys()), list(out.values()))
 
 
 def _push(idx, cols):
@@ -209,37 +239,76 @@ def on_press():
     if B is None:
         return
     B.before = {}
+    B.stroke_w = {}
     B.touched = set()
+    B.dabs = 0
+    B.spent = 0.0
     mod = cmds.draggerContext(CTX, query=True, modifier=True) or ""
     B.erase = "ctrl" in mod or bool(cmds.checkBox(UI["erase"], query=True, value=True))
     pos = cmds.draggerContext(CTX, query=True, anchorPoint=True)
     B.tip = [float(pos[0]), float(pos[1])]
-    dab(B.tip[0], B.tip[1])
+    B.radius_world = None
+    on_drag(first=True)
 
 
-def on_drag():
+def on_drag(first=False):
     if B is None or B.tip is None:
         return
-    raw = cmds.draggerContext(CTX, query=True, dragPoint=True)
-    gx = B.tip[0] + (float(raw[0]) - B.tip[0]) * B.lazy      # LazyMouse
-    gy = B.tip[1] + (float(raw[1]) - B.tip[1]) * B.lazy
+    clock = time.time()
+
+    if first:
+        gx, gy = B.tip
+    else:
+        raw = cmds.draggerContext(CTX, query=True, dragPoint=True)
+        gx = B.tip[0] + (float(raw[0]) - B.tip[0]) * B.lazy      # LazyMouse
+        gy = B.tip[1] + (float(raw[1]) - B.tip[1]) * B.lazy
+
+    # Ban kinh the gioi tinh MOT lan cho ca luot keo: no chi doi khi camera
+    # hoac do sau doi, ma trong mot luot keo thi gan nhu khong. Tinh lai o moi
+    # dau co ton them hai lan viewToWorld moi dau.
+    if B.radius_world is None:
+        src, vec = _ray(gx, gy)
+        hit = B.fn.closestIntersection(
+            om.MFloatPoint(src.x, src.y, src.z),
+            om.MFloatVector(vec.x, vec.y, vec.z),
+            om.MSpace.kWorld, 1e6, False, accelParams=B.accel)
+        if hit:
+            hp = hit[0]
+            depth = math.sqrt((hp.x - src.x) ** 2 + (hp.y - src.y) ** 2
+                              + (hp.z - src.z) ** 2)
+            B.radius_world = _world_radius(gx, gy, depth, B.radius_px)
 
     # Chen them dau giua hai vi tri neu tay re nhanh, tranh net dut thanh cham.
     # Dau cuoi luon dat tai dich: re cham thi quang duong ngan hon mot buoc
     # chen, khong co dau nao o giua, thieu no la net ve mat han.
+    changed = {}
     step = max(B.radius_px * SPACING, 1.0)
     gap = math.sqrt((gx - B.tip[0]) ** 2 + (gy - B.tip[1]) ** 2)
-    n = int(gap / step)
-    for k in range(1, n + 1):
+    for k in range(1, int(gap / step) + 1):
         f = (k * step) / max(gap, 1e-9)
-        dab(B.tip[0] + (gx - B.tip[0]) * f, B.tip[1] + (gy - B.tip[1]) * f)
-    dab(gx, gy)
+        dab(B.tip[0] + (gx - B.tip[0]) * f, B.tip[1] + (gy - B.tip[1]) * f,
+            B.radius_world, changed)
+        B.dabs += 1
+    dab(gx, gy, B.radius_world, changed)
+    B.dabs += 1
+
+    # Gom ca luot keo lai ghi MOT lan: moi lan ghi mesh la mot lan Maya nap lai
+    # mau len card do hoa, goi nhieu lan trong cung mot luot keo rat ton.
+    if changed:
+        _push(list(changed.keys()), list(changed.values()))
+
     B.tip = [gx, gy]
+    B.spent += time.time() - clock
 
 
 def on_release():
+    if B is None:
+        return
+    clock = time.time()
+    n = len(B.touched)
     commit()
-    _say("Da ve xong mot net (%d vertex)." % len(B.touched) if B else "")
+    _say("Net vua ve: %d vertex | %d dau co | ve %.0f ms | ghi lai %.0f ms"
+         % (n, B.dabs, B.spent * 1000.0, (time.time() - clock) * 1000.0))
 
 
 def commit():
@@ -277,6 +346,7 @@ def commit():
         cmds.undoInfo(closeChunk=True)
 
     B.before = {}
+    B.stroke_w = {}
     B.touched = set()
 
 
@@ -354,6 +424,37 @@ def _make_test_mesh():
     _say("Da tao '%s'. Bam BAT CO roi ve thu len no." % name)
 
 
+def _make_proxy():
+    """Tao ban giam mat do de ve cho nhe tay.
+
+    Moi luot keo la mot lan Maya nap lai mau vertex cua CA mesh len card do
+    hoa, nen mesh cang nang thi co cang giat - do la gioi han cua Maya, khong
+    phai cua doan Python nay. Scan hang trieu diem thi phai ve tren ban nhe.
+    Vet mau ve tren ban nhe van dung de dung luoi, vi luoi bam theo hinh dang
+    be mat chu khong theo tung vertex mot.
+    """
+    mesh = cmds.textFieldGrp(UI["mesh"], query=True, text=True).strip()
+    if not mesh or not cmds.objExists(mesh):
+        _say("Chua co mesh de giam mat do.")
+        return
+    n = cmds.polyEvaluate(mesh, vertex=True)
+    if n <= PROXY_TARGET:
+        _say("'%s' co %d vertex, da du nhe roi." % (mesh, n))
+        return
+
+    _say("Dang giam mat do %s (%d vertex)..." % (mesh, n))
+    cmds.refresh()
+    dup = cmds.duplicate(mesh, name="%s_nhe" % mesh)[0]
+    cmds.polyReduce(dup, version=1, percentage=100.0 * (1.0 - float(PROXY_TARGET) / n),
+                    keepBorder=True, keepQuadsWeight=0.0, constructionHistory=False)
+    cmds.delete(dup, constructionHistory=True)
+    cmds.setAttr("%s.visibility" % mesh, 0)
+    cmds.select(dup)
+    cmds.textFieldGrp(UI["mesh"], edit=True, text=dup)
+    _say("Da tao '%s' (%d vertex) va an ban goc. Bam BAT CO de ve tren no."
+         % (dup, cmds.polyEvaluate(dup, vertex=True)))
+
+
 def _prepare(mesh):
     """Tao color set va bat hien thi mau - khong bat thi ve xong khong thay gi."""
     shape = (cmds.listRelatives(mesh, shapes=True, noIntermediate=True) or [mesh])[0]
@@ -390,8 +491,10 @@ def start_brush():
                         releaseCommand=on_release, cursor="crossHair",
                         space="screen")
     cmds.setToolTo(CTX)
-    _say("Co da bat tren '%s' (%d vertex). Keo chuot trong viewport de ve."
-         % (mesh, len(B.pts)))
+    canh = ("" if len(B.pts) <= PROXY_TARGET else
+            " MESH NANG - neu co giat thi bam 'Tao ban nhe de ve'.")
+    _say("Co da bat tren '%s' (%d vertex). Keo chuot trong viewport de ve.%s"
+         % (mesh, len(B.pts), canh))
 
 
 def stop_brush():
@@ -437,6 +540,8 @@ def show_ui():
     cmds.button(label="Tao mesh thu", height=26,
                 command=lambda *a: _make_test_mesh())
     cmds.setParent("..")
+    cmds.button(label="Tao ban nhe de ve (mesh nang thi co giat)", height=26,
+                command=lambda *a: _make_proxy())
     cmds.setParent("..")
     cmds.setParent("..")
 
