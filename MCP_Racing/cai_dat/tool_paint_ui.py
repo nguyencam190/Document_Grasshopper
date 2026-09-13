@@ -37,8 +37,8 @@ LAZY = 0.35
 # Re chuot nhanh ma khong chen dau o giua thi net bi dut thanh cac cham roi.
 SPACING = 0.25
 
-# So muc luong tu hoa mau khi ghi lai net vao undo stack. Xem commit().
-LEVELS = 12
+# Giu bao nhieu net gan nhat de lui duoc.
+UNDO_DEPTH = 30
 
 # Trong so phai tang them it nhat chung nay thi moi to lai vertex. Duoi muc do
 # mat khong phan biet duoc, to lai chi ton cong.
@@ -144,6 +144,7 @@ class Brush(object):
         self.saved = np.zeros(n, dtype=bool)        # da luu mau goc chua
         self.weight = np.zeros(n, dtype=float)      # trong so lon nhat trong net
 
+        self.history = []          # (chi so, mau truoc net) de lui tung net
         self.pending = []          # cac chi so doi ghi len mesh
         self.tip = None            # vi tri dau co (pixel)
         self.radius_world = None   # ban kinh co quy ra don vi the gioi
@@ -170,6 +171,26 @@ B = None                       # con co dang bat, None neu chua bat
 
 
 # ----------------------- mot dau co -----------------------
+
+_BULK_OK = [True]      # MColorArray co nhan thang mot danh sach hay khong
+
+
+def _color_array(rows):
+    """MColorArray tu mang (N,4).
+
+    Dung mot lan tu danh sach neu ban Maya nay chap nhan - nhanh hon han vong
+    lap tao tung MColor mot khi net rong.
+    """
+    if _BULK_OK[0]:
+        try:
+            return om.MColorArray(rows.tolist())
+        except Exception:                                     # noqa: BLE001
+            _BULK_OK[0] = False
+    arr = om.MColorArray()
+    for r in rows.tolist():
+        arr.append(om.MColor(r))
+    return arr
+
 
 def _ray(x, y):
     """Tia ban tu camera qua diem (x, y) tren man hinh: (goc, huong).
@@ -247,16 +268,24 @@ def dab(x, y, radius):
 
 
 def _push():
-    """Ghi mau len mesh bang API - nhanh, dung de xem truoc luc dang ve."""
+    """Ghi mau len mesh, CHI bang API.
+
+    Truoc day cuoi moi net con goi them `polyColorPerVertex` de Ctrl+Z hoan
+    tac duoc. Bo han vi lenh do them mot node lich su vao mesh sau MOI net:
+    net sau danh de len ket qua cua net truoc (ve duong moi la duong cu bien
+    mat), va mesh cu tich them node nen cang ve cang ri du da xoa lich su.
+    Doi lai Ctrl+Z khong lui duoc net - dung nut 'Hoan tac net'.
+    """
     if not B.pending:
         return
     idx = np.unique(np.concatenate(B.pending))
     B.pending = []
 
     clock = time.time()
-    arr = om.MColorArray()
-    for r, g, b in B.colors[idx]:
-        arr.append(om.MColor((float(r), float(g), float(b))))
+    rows = np.empty((idx.size, 4), dtype=float)
+    rows[:, :3] = B.colors[idx]
+    rows[:, 3] = 1.0
+    arr = _color_array(rows)
     B.fn.setVertexColors(arr, [int(i) for i in idx])
 
     B.push_cost = time.time() - clock
@@ -328,68 +357,35 @@ def on_release():
     if B is None:
         return
     _push()
-    touched = int(B.saved.sum())
-    ve, hien, lan = B.spent, B.pushed, B.writes
-
-    clock = time.time()
-    commit()
-    _say("Net vua ve: %d vertex | %d dau co | tinh %.0f ms | hien mau %.0f ms "
-         "(%d lan) | ghi lai %.0f ms"
-         % (touched, B.dabs, ve * 1000.0, hien * 1000.0, lan,
-            (time.time() - clock) * 1000.0))
-
-
-def commit():
-    """Ghi lai net vua ve vao undo stack cua Maya.
-
-    Luc dang ve ta ghi mau bang API cho nhanh, nhung API bo qua undo queue -
-    Ctrl+Z se khong hoan tac duoc net ve. Nen khi nha chuot: tra mesh ve mau
-    goc (van bang API, khong ai thay vi Maya chua ve lai man hinh), roi ap lai
-    dung mau do qua polyColorPerVertex - lenh nay co undo.
-
-    Mau duoc gom ve LEVELS muc de so lenh goi khong phu thuoc so vertex: ve voi
-    opacity 1 thi gan nhu moi vertex nhan dung mau co, chi ton 1-2 lenh.
-    """
-    if B is None:
-        return
     idx = np.flatnonzero(B.saved)
-    if idx.size == 0:
-        return
-
-    final = B.colors[idx].copy()
-    B.colors[idx] = B.base[idx]
-    B.pending = [idx]
-    _push()                                   # tra mesh ve mau goc
-
-    quant = np.round(final * LEVELS) / LEVELS
-    B.colors[idx] = quant
-
-    cmds.undoInfo(openChunk=True, chunkName="flowPaintStroke")
-    try:
-        for col in np.unique(quant, axis=0):
-            verts = idx[np.all(quant == col, axis=1)]
-            cmds.polyColorPerVertex(_components(B.mesh, verts),
-                                    rgb=[float(c) for c in col],
-                                    colorDisplayOption=True)
-    finally:
-        cmds.undoInfo(closeChunk=True)
-
+    if idx.size:
+        # Nho mau truoc net de con hoan tac duoc. Chi giu vai net gan nhat cho
+        # do ton bo nho tren mesh nang.
+        B.history.append((idx, B.base[idx].copy()))
+        del B.history[:-UNDO_DEPTH]
     B.saved.fill(False)
     B.weight.fill(0.0)
+    _say("Net vua ve: %d vertex | %d dau co | tinh %.0f ms | hien mau %.0f ms "
+         "(%d lan). Lui mot net: nut 'Hoan tac net'."
+         % (idx.size, B.dabs, B.spent * 1000.0, B.pushed * 1000.0, B.writes))
 
 
-def _components(mesh, idx):
-    """Gop chi so lien tiep thanh mesh.vtx[a:b] cho lenh ngan lai."""
-    out, start, prev = [], None, None
-    for i in [int(v) for v in idx] + [None]:
-        if prev is not None and i == prev + 1:
-            prev = i
-            continue
-        if start is not None:
-            out.append("%s.vtx[%d]" % (mesh, start) if start == prev
-                       else "%s.vtx[%d:%d]" % (mesh, start, prev))
-        start = prev = i
-    return out
+def undo_stroke():
+    """Tra lai mau truoc net gan nhat.
+
+    Phai tu lam thay vi dua vao Ctrl+Z, vi tool khong con dung
+    `polyColorPerVertex` nua - xem ghi chu o dau ham `_push`.
+    """
+    if B is None or not B.history:
+        _say("Khong con net nao de lui.")
+        return
+    idx, cols = B.history.pop()
+    B.colors[idx] = cols
+    B.pending = [idx]
+    B.last_push = 0.0
+    _push()
+    _say("Da lui mot net (%d vertex). Con %d net lui duoc."
+         % (idx.size, len(B.history)))
 
 
 # ----------------------- giao dien -----------------------
@@ -523,20 +519,17 @@ def stop_brush():
 
 def clear_colors():
     mesh = cmds.textFieldGrp(UI["mesh"], query=True, text=True).strip()
-    if not mesh or not cmds.objExists(mesh):
-        _say("Chua co mesh de xoa mau.")
+    if B is None or B.mesh != mesh:
+        _say("Bat co tren mesh truoc da, roi moi xoa mau.")
         return
-    count = cmds.polyEvaluate(mesh, vertex=True)
-    cmds.undoInfo(openChunk=True, chunkName="flowPaintClear")
-    try:
-        _prepare(mesh)
-        cmds.polyColorPerVertex("%s.vtx[0:%d]" % (mesh, count - 1),
-                                rgb=[0.0, 0.0, 0.0], colorDisplayOption=True)
-    finally:
-        cmds.undoInfo(closeChunk=True)
-    if B is not None and B.mesh == mesh:
-        B.colors.fill(0.0)
-    _say("Da xoa mau tren '%s'." % mesh)
+    idx = np.arange(len(B.pts))
+    B.history.append((idx, B.colors.copy()))
+    del B.history[:-UNDO_DEPTH]
+    B.colors.fill(0.0)
+    B.pending = [idx]
+    B.last_push = 0.0
+    _push()
+    _say("Da xoa mau tren '%s'. Lui lai duoc bang 'Hoan tac net'." % mesh)
 
 
 def show_ui():
@@ -615,16 +608,21 @@ def show_ui():
     cmds.button(label="TAT CO", height=34,
                 command=lambda *a: stop_brush())
     cmds.setParent("..")
+    cmds.rowLayout(numberOfColumns=2, columnWidth2=(185, 185),
+                   columnAttach=[(1, "both", 2), (2, "both", 2)])
+    cmds.button(label="Hoan tac net", height=26,
+                command=lambda *a: undo_stroke())
     cmds.button(label="Xoa het mau tren mesh", height=26,
                 command=lambda *a: clear_colors())
+    cmds.setParent("..")
     cmds.setParent("..")
     cmds.setParent("..")
 
     cmds.separator(height=6, style="in")
     UI["status"] = cmds.text(label="San sang. Chon mesh hoac bam 'Tao mesh thu'.",
                              align="left")
-    cmds.text(label="Ctrl + keo = xoa mau | Ctrl+Z hoan tac tung net",
-              align="left")
+    cmds.text(label="Ctrl + keo = xoa mau | lui net bang nut 'Hoan tac net', "
+                    "KHONG phai Ctrl+Z", align="left")
 
     cmds.showWindow(win)
 
