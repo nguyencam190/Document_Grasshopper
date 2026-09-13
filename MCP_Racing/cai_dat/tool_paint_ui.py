@@ -29,9 +29,13 @@ COLOR_SET = "flowGuide"
 U_COLOR = (1.0, 0.0, 0.0)      # do  - ho vet doc
 V_COLOR = (0.0, 1.0, 0.0)      # luc - ho vet ngang
 
-# Dau co di duoc bao nhieu phan quang duong toi con tro moi lan nhan su kien.
-# 1.0 = bam sat con tro (tat LazyMouse); cang nho cang muot nhung cang i tay.
-LAZY = 0.35
+# Do dai "soi day" keo dau co theo con tro, tinh bang pixel man hinh. Con tro
+# nhuc nhich trong ban kinh nay thi dau co dung yen han - do la cach loc run
+# tay. 0 = tat, dau co bam sat con tro.
+LEASH = 14.0
+
+# Lay trung binh bao nhieu vi tri gan nhat de lam muot duong di. 1 = tat.
+SMOOTH = 6
 
 # Khoang cach toi da giua hai dau co lien tiep, tinh theo phan ban kinh co.
 # Re chuot nhanh ma khong chen dau o giua thi net bi dut thanh cac cham roi.
@@ -115,7 +119,8 @@ class Brush(object):
         self.color = np.array(U_COLOR, dtype=float)
         self.radius_px = 40.0
         self.opacity = 1.0
-        self.lazy = LAZY
+        self.leash = LEASH
+        self.smooth = SMOOTH
         self.erase = False
 
         sel = om.MSelectionList()
@@ -146,7 +151,9 @@ class Brush(object):
 
         self.history = []          # (chi so, mau truoc net) de lui tung net
         self.pending = []          # cac chi so doi ghi len mesh
-        self.tip = None            # vi tri dau co (pixel)
+        self.tip = None            # dau soi day, bam theo con tro (pixel)
+        self.paint = None          # vi tri son that, sau khi lam muot
+        self.recent = []           # vai vi tri gan nhat cua dau day
         self.radius_world = None   # ban kinh co quy ra don vi the gioi
         self.dabs = 0
         self.spent = 0.0           # thoi gian tinh toan cua net, giay
@@ -304,8 +311,40 @@ def on_press():
     B.erase = "ctrl" in mod or bool(cmds.checkBox(UI["erase"], query=True, value=True))
     pos = cmds.draggerContext(CTX, query=True, anchorPoint=True)
     B.tip = [float(pos[0]), float(pos[1])]
+    B.recent = [list(B.tip)]
+    B.paint = list(B.tip)
     B.radius_world = None
     on_drag(first=True)
+
+
+def _steady(raw):
+    """Vi tri son sau khi on dinh tay, theo dung cach ZBrush lam.
+
+    ZBrush tach lam HAI thu khac nhau, khong phai mot:
+
+    LazyRadius - dau co bi keo theo con tro bang mot soi day do dai co dinh.
+    Con tro nhuc nhich trong ban kinh do thi dau co dung yen, chi khi con tro
+    keo cang day dau co moi bi loi theo, va luon giu dung khoang cach do.
+
+    LazySmooth - lay trung binh vai vi tri gan nhat cua dau day, bot goc canh.
+
+    DA DO, de khoi tuong bo: so voi cach cu ("di mot phan quang duong toi con
+    tro"), o CUNG mot do tre thi hai cach loc rung gan nhu ngang nhau khi keo
+    nhanh; soi day chi nhinh hon khi ve cham (lech 0.63 px so voi 0.84 px o
+    buoc 1 px). Cai duoc that su la do tre KHONG DOI theo toc do tay - luon
+    dung bang do dai soi day - nen tay quen duoc, con cach cu thi keo cang
+    nhanh tre cang nhieu (2.8 px khi cham, 15 px khi nhanh).
+    """
+    dx, dy = raw[0] - B.tip[0], raw[1] - B.tip[1]
+    dist = math.sqrt(dx * dx + dy * dy)
+    if dist > B.leash:
+        k = (dist - B.leash) / dist
+        B.tip = [B.tip[0] + dx * k, B.tip[1] + dy * k]
+
+    B.recent.append(list(B.tip))
+    del B.recent[:-max(int(B.smooth), 1)]
+    n = float(len(B.recent))
+    return [sum(p[0] for p in B.recent) / n, sum(p[1] for p in B.recent) / n]
 
 
 def on_drag(first=False):
@@ -314,11 +353,10 @@ def on_drag(first=False):
     clock = time.time()
 
     if first:
-        gx, gy = B.tip
+        gx, gy = B.paint
     else:
         raw = cmds.draggerContext(CTX, query=True, dragPoint=True)
-        gx = B.tip[0] + (float(raw[0]) - B.tip[0]) * B.lazy      # LazyMouse
-        gy = B.tip[1] + (float(raw[1]) - B.tip[1]) * B.lazy
+        gx, gy = _steady([float(raw[0]), float(raw[1])])
 
     # Ban kinh the gioi tinh MOT lan cho ca luot keo: no chi doi khi camera
     # hoac do sau doi, ma trong mot luot keo thi gan nhu khong.
@@ -333,15 +371,15 @@ def on_drag(first=False):
     # Dau cuoi luon dat tai dich: re cham thi quang duong ngan hon mot buoc
     # chen, khong co dau nao o giua, thieu no la net ve mat han.
     step = max(B.radius_px * SPACING, 1.0)
-    gap = math.sqrt((gx - B.tip[0]) ** 2 + (gy - B.tip[1]) ** 2)
+    gap = math.sqrt((gx - B.paint[0]) ** 2 + (gy - B.paint[1]) ** 2)
     for k in range(1, int(gap / step) + 1):
         f = (k * step) / max(gap, 1e-9)
-        dab(B.tip[0] + (gx - B.tip[0]) * f, B.tip[1] + (gy - B.tip[1]) * f,
+        dab(B.paint[0] + (gx - B.paint[0]) * f, B.paint[1] + (gy - B.paint[1]) * f,
             B.radius_world)
         B.dabs += 1
     dab(gx, gy, B.radius_world)
     B.dabs += 1
-    B.tip = [gx, gy]
+    B.paint = [gx, gy]
     B.spent += time.time() - clock
 
     # Ghi mesh TU DIEU TIET NHIP: cho it nhat bang thoi gian lan ghi truoc da
@@ -406,7 +444,8 @@ def _sync():
         return
     B.radius_px = cmds.floatSliderGrp(UI["size"], query=True, value=True)
     B.opacity = cmds.floatSliderGrp(UI["opacity"], query=True, value=True)
-    B.lazy = cmds.floatSliderGrp(UI["lazy"], query=True, value=True)
+    B.leash = cmds.floatSliderGrp(UI["leash"], query=True, value=True)
+    B.smooth = cmds.intSliderGrp(UI["smooth"], query=True, value=True)
     B.radius_world = None
 
 
@@ -569,12 +608,16 @@ def show_ui():
         label="Dam nhat", field=True, minValue=0.05, maxValue=1.0,
         value=1.0, precision=2, columnWidth3=(95, 55, 190),
         changeCommand=lambda *a: _sync(), dragCommand=lambda *a: _sync())
-    UI["lazy"] = cmds.floatSliderGrp(
-        label="Muot tay", field=True, minValue=0.05, maxValue=1.0,
-        value=LAZY, precision=2, columnWidth3=(95, 55, 190),
+    UI["leash"] = cmds.floatSliderGrp(
+        label="Do tre (px)", field=True, minValue=0.0, maxValue=80.0,
+        value=LEASH, precision=0, columnWidth3=(95, 55, 190),
         changeCommand=lambda *a: _sync(), dragCommand=lambda *a: _sync())
-    cmds.text(label="   Muot tay: 0.05 = rat muot nhung i | 1.0 = bam sat con tro",
-              align="left")
+    UI["smooth"] = cmds.intSliderGrp(
+        label="Lam muot", field=True, minValue=1, maxValue=16,
+        value=SMOOTH, columnWidth3=(95, 55, 190),
+        changeCommand=lambda *a: _sync(), dragCommand=lambda *a: _sync())
+    cmds.text(label="   Do tre: rung tay nho hon chung nay bi triet tieu han. "
+                    "0 = tat.", align="left")
     cmds.setParent("..")
     cmds.setParent("..")
 
