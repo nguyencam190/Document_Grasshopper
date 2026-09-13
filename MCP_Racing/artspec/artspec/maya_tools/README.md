@@ -3,6 +3,47 @@
 Các module ở đây **không import gì của `artspec`** để bỏ thẳng vào Maya chạy độc
 lập được, giống quy ước của `adapters/maya_runner.py`.
 
+Quy trình gồm hai bước, mỗi bước một module:
+
+| Bước | Module | Ai làm |
+|---|---|---|
+| Sơn hướng lưới lên mặt scan | `paint_flow.py` | Hoạ sĩ, bằng tay |
+| Dựng lưới quad theo vệt đã sơn | `retopo_paint.py` | Máy |
+
+---
+
+## paint_flow.py — cọ sơn hướng lưới kiểu ZBrush
+
+Cọ sơn vertex color chạy thẳng trong viewport. So với `Paint Vertex Color Tool`
+sẵn có của Maya, cọ này thêm ba thứ cần cho việc vẽ hướng lưới:
+
+- **LazyMouse** — đầu cọ bám trễ sau con trỏ nên nét mượt dù tay run. Xử lý
+  nhiễu ngay lúc vẽ, đỡ phải lọc nhiễu ở bước dựng lưới.
+- **Đổi nhanh hai màu U/V** — `paint_flow.u()` / `paint_flow.v()`, gán phím tắt
+  được, không phải mở bảng màu mỗi lần đổi hướng.
+- **Bán kính theo pixel màn hình** — cọ giữ nguyên độ lớn cảm nhận khi zoom, cọ
+  theo đơn vị thế giới thì zoom ra là cọ bé tí.
+
+```python
+import sys; sys.path.append(r"<thư mục maya_tools>")
+import paint_flow
+
+paint_flow.start("scan_hood")   # bật cọ, tự tạo color set + bật hiển thị màu
+paint_flow.size(60)             # bán kính 60 pixel
+paint_flow.lazy(0.2)            # mượt hơn (0.05 rất ì · 1.0 tắt LazyMouse)
+paint_flow.v()                  # đổi sang lục = họ vệt ngang
+paint_flow.stop()               # trả về công cụ chọn
+```
+
+`Ctrl` + kéo = xoá màu. `Ctrl+Z` hoàn tác được từng nét.
+
+**Nét thật mảnh hơn vòng tròn cọ.** Cọ tô đậm ở giữa và nhạt dần ra mép, còn
+bước dựng lưới chỉ nhận phần đủ đậm (`color_tol`) — nên vệt được dùng chỉ rộng
+khoảng **1/3 đường kính cọ**. Muốn nét dày hơn thì tăng `size()`, hoặc nới
+`color_tol` khi gọi `build_from_paint`.
+
+---
+
 ## retopo_paint.py — dựng lưới quad từ vệt màu hoạ sĩ vẽ
 
 Phân vai: **hoạ sĩ vẽ hướng lưới, máy dựng mesh.** Hoạ sĩ sơn hai họ vệt màu chỉ
@@ -14,13 +55,12 @@ chỉ chạm vào Maya ở hai đầu (đọc màu vertex vào, ghi mesh quad ra
 
 ### Bước 1 — Hoạ sĩ sơn màu
 
-1. Chọn mesh scan → `Mesh Display > Paint Vertex Color Tool`.
-2. Bật hiển thị màu: `Display > Polygons > Color Set` — không bật thì vẽ xong
-   không thấy gì, dễ tưởng brush hỏng.
-3. Sơn **hai họ vệt cắt ngang nhau**, mỗi họ một màu (mặc định: đỏ = dọc,
-   lục = ngang). Một họ vệt song song với nhau thôi thì không tạo được ô lưới.
-4. Để **Opacity = 1** và tắt falloff mềm — brush mờ làm màu bị pha, khó tách
-   đâu là điểm thuộc vệt.
+Dùng `paint_flow` ở trên (hoặc `Mesh Display > Paint Vertex Color Tool` sẵn có
+của Maya, nhớ bật `Display > Polygons > Color Set` để thấy màu).
+
+Sơn **hai họ vệt cắt ngang nhau**, mỗi họ một màu (mặc định đỏ = dọc,
+lục = ngang). Hai họ phải CẮT nhau mới thành ô lưới — các nét song song cùng
+hướng thì không có điểm giao nào.
 
 ### Bước 2 — Chạy dựng lưới
 
@@ -58,13 +98,17 @@ print(retopo_paint.report_text(bao_cao))
 | Độ vênh | Góc thứ 4 lệch khỏi mặt phẳng 3 góc kia | Như trên — ô nhỏ lại thì hết vênh |
 | Pole | Đỉnh trong lòng lưới có số cạnh khác 4, dễ vỡ shading | Sửa tay, hoặc vẽ lại cho lưới đều |
 
-### Giới hạn hiện tại
+## Giới hạn hiện tại
 
-- **Chưa chạy thử trong Maya thật.** Phần toán học (tách nét, sắp thứ tự, tìm
-  giao, xếp lưới, nối quad) đã kiểm bằng dữ liệu giả trên mặt cong có nhiễu; phần
-  gọi API Maya (đọc vertex color, snap lên mặt, tạo mesh) cần chạy thử lần đầu.
+- **Chưa chạy thử trong Maya thật.** Phần logic thuần của cả hai module đã kiểm
+  bằng Maya giả lập (cọ: lưới băm, falloff, LazyMouse, chèn dấu, undo, xoá màu —
+  dựng lưới: tách nét, sắp thứ tự, tìm giao trên mặt cong có nhiễu, nối quad).
+  Phần gọi API Maya thật (raycast, đọc/ghi vertex color, tạo mesh) cần chạy thử
+  lần đầu.
 - **Ô lưới thiếu góc bị bỏ qua**, không ép thành quad méo — chỗ hở sửa tay sau.
 - **Chưa conform vào biên part**: hàng/cột ngoài cùng dừng ở điểm giao cuối, chưa
   tự kéo khít vào đường viền part.
+- **Cọ chưa có vòng tròn xem trước** quanh con trỏ như ZBrush — hiện phải ước
+  lượng độ lớn cọ qua nét vừa vẽ.
 - Scan nhiều triệu điểm nên **giảm mật độ trước** (`polyReduce`/`polyRemesh`) rồi
   mới sơn và dựng lưới trên bản nhẹ.
