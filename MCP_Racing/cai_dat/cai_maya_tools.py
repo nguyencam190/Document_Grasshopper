@@ -24,11 +24,7 @@ THU_MUC = ""
 _DUOI = os.path.join("MCP_Racing", "artspec", "artspec", "maya_tools")
 
 
-def tim_thu_muc():
-    """Tim thu muc maya_tools trong cac cho hay dat repo."""
-    if THU_MUC:
-        return THU_MUC if os.path.isdir(THU_MUC) else None
-
+def _cac_goc():
     goc = [os.path.expanduser("~")]
     for bien in ("USERPROFILE", "OneDrive", "OneDriveConsumer"):
         if os.environ.get(bien):
@@ -39,6 +35,12 @@ def tim_thu_muc():
     for chu in "CDEF":
         goc.append(chu + ":\\")
 
+    return goc
+
+
+def tim_thu_muc():
+    """Tim thu muc maya_tools trong cac cho hay dat repo."""
+    goc = _cac_goc()
     for g in goc:
         thu = os.path.join(g, "Document_Grasshopper", _DUOI)
         if os.path.isdir(thu):
@@ -58,13 +60,24 @@ def tim_thu_muc():
     return None
 
 
-def cai():
-    thu = tim_thu_muc()
+def cai(duong_dan=""):
+    """Nap hai module. Truyen duong dan thu muc maya_tools neu tu tim khong ra."""
+    thu = duong_dan or THU_MUC or tim_thu_muc()
+    if thu and not os.path.isdir(thu):
+        print("Duong dan khong ton tai: %s" % thu)
+        thu = None
     if not thu:
-        print("KHONG TIM RA thu muc maya_tools.")
-        print("  Mo file nay, dien duong dan vao dong THU_MUC o dau file,")
-        print("  roi dan lai. Duong dan can tro toi thu muc chua")
-        print("  paint_flow.py va retopo_paint.py")
+        print("KHONG TIM RA thu muc maya_tools. Da tim trong:")
+        for g in _cac_goc():
+            print("    %s" % os.path.join(g, "Document_Grasshopper", _DUOI))
+        print("")
+        print("  Cach 1: goi thang voi duong dan cua ban, vi du")
+        print("     cai(r'D:\\repo\\Document_Grasshopper%s')" % (os.sep + _DUOI))
+        print("  Cach 2: dien vao dong THU_MUC o dau file nay roi dan lai.")
+        print("")
+        print("  Chua co repo tren may thi:  git clone "
+              "https://github.com/nguyencam190/Document_Grasshopper")
+        print("  Da co roi thi nho:  git pull   (hai module nay moi them)")
         return None
 
     if thu not in sys.path:
