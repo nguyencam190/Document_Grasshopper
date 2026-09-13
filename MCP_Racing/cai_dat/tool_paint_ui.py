@@ -53,8 +53,10 @@ UNDO_DEPTH = 30
 # mat khong phan biet duoc, to lai chi ton cong.
 WEIGHT_STEP = 0.02
 
-# Cho it nhat chung nay giua hai lan ghi mesh, du keo nhanh den may.
-MIN_GAP = 0.016
+# So lan hien mau moi giay khi keo. Moi lan hien la mot lan Maya nap lai mau
+# CA mesh len card do hoa - chi phi do ti le voi so vertex chu khong voi vung
+# co quet qua, nen mesh nang thi phai ha so nay xuong. 20 la du muot mat.
+FPS = 20.0
 
 
 # ----------------------- luoi bam khong gian -----------------------
@@ -126,6 +128,8 @@ class Brush(object):
         self.opacity = 1.0
         self.leash = LEASH
         self.smooth = SMOOTH
+        self.fps = FPS
+        self.deep_redraw = False
         self.erase = False
 
         sel = om.MSelectionList()
@@ -162,6 +166,7 @@ class Brush(object):
         self.radius_world = None   # ban kinh co quy ra don vi the gioi
         self.dabs = 0
         self.spent = 0.0           # thoi gian tinh toan cua net, giay
+        self.rays = 0.0            # trong do, ban tia tim diem cham het bao lau
         self.pushed = 0.0          # thoi gian ghi mesh cua net, giay
         self.writes = 0
         self.last_push = 0.0       # luc ghi mesh gan nhat
@@ -173,6 +178,7 @@ class Brush(object):
         self.pending = []
         self.dabs = 0
         self.spent = 0.0
+        self.rays = 0.0
         self.pushed = 0.0
         self.writes = 0
         self.push_cost = 0.0
@@ -186,20 +192,30 @@ B = None                       # con co dang bat, None neu chua bat
 
 _BULK_OK = [True]      # MColorArray co nhan thang mot danh sach hay khong
 _DIRTY_OK = [True]     # bao duoc cho viewport biet mesh da doi hay khong
+_VIEW_OK = [True]      # ve lai duoc rieng khung nhin dang lam viec hay khong
 
 
-def _show_now(node):
+def _show_now(node, deep=False):
     """Bao viewport biet mau da doi roi bat no ve lai NGAY.
 
     Ghi mau bang API la ghi thang vao du lieu mesh, khong di qua do thi phu
     thuoc cua Maya, nen Viewport 2.0 khong he biet la phai nap lai mau len card
     do hoa - no cu ve tiep bang bo dem cu. Ket qua: keo chuot thi khong thay
     gi, nha chuot xong mot viec khac moi vo tinh kich hoat ve lai va mau hien
-    ra mot the. Phai tu danh dau mesh la ban roi goi refresh.
+    ra mot the. Phai tu danh dau mesh la ban roi bat ve lai.
+
+    Hai cho phai dung cho dung, khong la ve lai rat dat:
+
+    `deep=False` - bao la CHI MAU doi. Bao nham la topology doi thi Maya dung
+    lai toan bo hinh hoc cho mesh (chia lai tam giac, nap lai ca vi tri va
+    phap tuyen) chu khong chi nap lai mau. Chi bat khi mau khong chiu hien.
+
+    Ve lai DUNG KHUNG NHIN dang lam viec, khong goi `cmds.refresh` - lenh do
+    ve lai moi khung nhin dang mo cung mot luc.
     """
     if _DIRTY_OK[0] and omr is not None:
         try:
-            omr.MRenderer.setGeometryDrawDirty(node, True)
+            omr.MRenderer.setGeometryDrawDirty(node, bool(deep))
         except Exception:                                     # noqa: BLE001
             try:
                 omr.MRenderer.setGeometryDrawDirty(node)
@@ -207,6 +223,12 @@ def _show_now(node):
                 _DIRTY_OK[0] = False
                 print("[flow paint] Khong danh dau duoc mesh la ban; mau co the "
                       "chi hien khi nha chuot.")
+    if _VIEW_OK[0]:
+        try:
+            omui.M3dView.active3dView().refresh(False, False)
+            return
+        except Exception:                                     # noqa: BLE001
+            _VIEW_OK[0] = False
     cmds.refresh()
 
 
@@ -241,11 +263,13 @@ def _ray(x, y):
 
 def _hit(x, y):
     """Diem tren mesh ma con tro dang chi vao, kem do sau tu camera."""
+    clock = time.time()
     src, vec = _ray(x, y)
     got = B.fn.closestIntersection(
         om.MFloatPoint(src.x, src.y, src.z),
         om.MFloatVector(vec.x, vec.y, vec.z),
         om.MSpace.kWorld, 1e6, False, accelParams=B.accel)
+    B.rays += time.time() - clock
     if not got:
         return None, 0.0
     hp = got[0]
@@ -322,7 +346,7 @@ def _push():
     rows[:, 3] = 1.0
     arr = _color_array(rows)
     B.fn.setVertexColors(arr, [int(i) for i in idx])
-    _show_now(B.dag.node())
+    _show_now(B.dag.node(), B.deep_redraw)
 
     B.push_cost = time.time() - clock
     B.pushed += B.push_cost
@@ -416,7 +440,11 @@ def on_drag(first=False):
     # cang nang thi cang lau. Neu cu ghi moi luot keo thi cac luot keo don lai
     # va dau co tut hau sau con tro - do la cai cam giac "ve bi cham". Cho theo
     # chi phi that giup dau co luon bam kip tay, chi la mau hien lai thua hon.
-    if time.time() - B.last_push >= max(MIN_GAP, B.push_cost):
+    # Cho it nhat bang thoi gian lan hien truoc da ton, va khong vuot nhip da
+    # dat. Hien mau la viec dat nhat trong ca vong ve; co ghi lai chi phi that
+    # cua lan truoc nen mesh cang nang thi tu dong hien thua ra, dau co van bam
+    # kip tay thay vi don viec lai roi tut hau.
+    if time.time() - B.last_push >= max(1.0 / max(B.fps, 1.0), B.push_cost):
         _push()
 
 
@@ -432,9 +460,11 @@ def on_release():
         del B.history[:-UNDO_DEPTH]
     B.saved.fill(False)
     B.weight.fill(0.0)
-    _say("Net vua ve: %d vertex | %d dau co | tinh %.0f ms | hien mau %.0f ms "
-         "(%d lan). Lui mot net: nut 'Hoan tac net'."
-         % (idx.size, B.dabs, B.spent * 1000.0, B.pushed * 1000.0, B.writes))
+    _say("Net vua ve: %d vertex | %d dau co | tinh %.0f ms (ban tia %.0f) | "
+         "hien mau %.0f ms / %d lan = %.0f ms moi lan"
+         % (idx.size, B.dabs, B.spent * 1000.0, B.rays * 1000.0,
+            B.pushed * 1000.0, B.writes,
+            B.pushed * 1000.0 / max(B.writes, 1)))
 
 
 def undo_stroke():
@@ -475,6 +505,8 @@ def _sync():
     B.opacity = cmds.floatSliderGrp(UI["opacity"], query=True, value=True)
     B.leash = cmds.floatSliderGrp(UI["leash"], query=True, value=True)
     B.smooth = cmds.intSliderGrp(UI["smooth"], query=True, value=True)
+    B.fps = cmds.floatSliderGrp(UI["fps"], query=True, value=True)
+    B.deep_redraw = bool(cmds.checkBox(UI["deep"], query=True, value=True))
     B.radius_world = None
 
 
@@ -645,8 +677,15 @@ def show_ui():
         label="Lam muot", field=True, minValue=1, maxValue=16,
         value=SMOOTH, columnWidth3=(95, 55, 190),
         changeCommand=lambda *a: _sync(), dragCommand=lambda *a: _sync())
-    cmds.text(label="   Do tre: rung tay nho hon chung nay bi triet tieu han. "
-                    "0 = tat.", align="left")
+    UI["fps"] = cmds.floatSliderGrp(
+        label="Hien mau /giay", field=True, minValue=4.0, maxValue=60.0,
+        value=FPS, precision=0, columnWidth3=(95, 55, 190),
+        changeCommand=lambda *a: _sync(), dragCommand=lambda *a: _sync())
+    UI["deep"] = cmds.checkBox(
+        label="Ve lai ky (chi bat neu mau khong chiu hien khi keo)", value=False,
+        changeCommand=lambda *a: _sync())
+    cmds.text(label="   Mesh cang nang thi ha 'Hien mau /giay' xuong cho do ri.",
+              align="left")
     cmds.setParent("..")
     cmds.setParent("..")
 
