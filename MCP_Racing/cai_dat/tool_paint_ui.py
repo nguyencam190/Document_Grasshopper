@@ -22,6 +22,11 @@ from maya import cmds
 from maya.api import OpenMaya as om
 from maya.api import OpenMayaUI as omui
 
+try:
+    from maya.api import OpenMayaRender as omr
+except ImportError:                                           # pragma: no cover
+    omr = None
+
 WIN = "flowPaintWin"
 CTX = "flowPaintCtx"
 COLOR_SET = "flowGuide"
@@ -180,6 +185,29 @@ B = None                       # con co dang bat, None neu chua bat
 # ----------------------- mot dau co -----------------------
 
 _BULK_OK = [True]      # MColorArray co nhan thang mot danh sach hay khong
+_DIRTY_OK = [True]     # bao duoc cho viewport biet mesh da doi hay khong
+
+
+def _show_now(node):
+    """Bao viewport biet mau da doi roi bat no ve lai NGAY.
+
+    Ghi mau bang API la ghi thang vao du lieu mesh, khong di qua do thi phu
+    thuoc cua Maya, nen Viewport 2.0 khong he biet la phai nap lai mau len card
+    do hoa - no cu ve tiep bang bo dem cu. Ket qua: keo chuot thi khong thay
+    gi, nha chuot xong mot viec khac moi vo tinh kich hoat ve lai va mau hien
+    ra mot the. Phai tu danh dau mesh la ban roi goi refresh.
+    """
+    if _DIRTY_OK[0] and omr is not None:
+        try:
+            omr.MRenderer.setGeometryDrawDirty(node, True)
+        except Exception:                                     # noqa: BLE001
+            try:
+                omr.MRenderer.setGeometryDrawDirty(node)
+            except Exception:                                 # noqa: BLE001
+                _DIRTY_OK[0] = False
+                print("[flow paint] Khong danh dau duoc mesh la ban; mau co the "
+                      "chi hien khi nha chuot.")
+    cmds.refresh()
 
 
 def _color_array(rows):
@@ -294,6 +322,7 @@ def _push():
     rows[:, 3] = 1.0
     arr = _color_array(rows)
     B.fn.setVertexColors(arr, [int(i) for i in idx])
+    _show_now(B.dag.node())
 
     B.push_cost = time.time() - clock
     B.pushed += B.push_cost
