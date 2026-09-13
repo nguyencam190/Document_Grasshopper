@@ -355,6 +355,31 @@ def create_mesh(verts: list[np.ndarray], faces: list[tuple[int, ...]],
 
 # ───────────────────────── conform vào biên part ─────────────────────────
 
+def polygons(fn: om.MFnMesh) -> list[tuple[int, ...]]:
+    """Danh sách đỉnh của từng mặt.
+
+    Đọc qua `MFnMesh` chứ không dùng `MItMeshPolygon`/`MItMeshEdge`/
+    `MItMeshVertex`: các lớp iterator đó có chữ ký khác nhau giữa các bản Maya
+    (đúng kiểu lỗi `viewToWorld` nhận tham số ra), còn `numPolygons` và
+    `getPolygonVertices` thì ổn định. Mọi thứ khác — cạnh biên, bậc đỉnh — suy
+    ra được từ danh sách này.
+    """
+    return [tuple(fn.getPolygonVertices(i)) for i in range(fn.numPolygons)]
+
+
+def _count_poles(faces) -> int:
+    """Số đỉnh trong lòng lưới có bậc khác 4 — chỗ dễ vỡ shading."""
+    on_border = {v for e in boundary_edges(faces) for v in e}
+    degree: dict[int, set] = {}
+    for f in faces:
+        for k in range(len(f)):
+            a, b = f[k], f[(k + 1) % len(f)]
+            degree.setdefault(a, set()).add(b)
+            degree.setdefault(b, set()).add(a)
+    return sum(1 for v, nb in degree.items()
+               if v not in on_border and len(nb) != 4)
+
+
 def boundary_edges(faces) -> list[tuple[int, int]]:
     """Cạnh chỉ thuộc đúng một mặt — tức cạnh nằm ở rìa lưới."""
     count: dict[tuple[int, int], int] = {}
@@ -505,32 +530,26 @@ def score(new_mesh: str, src_fn: om.MFnMesh) -> dict:
     """
     fn = om.MFnMesh(_dag(new_mesh))
     pts = _points(fn)
+    faces = polygons(fn)
 
     dev, ratio, warp = [], [], []
-    it = om.MItMeshPolygon(_dag(new_mesh))
-    while not it.isDone():
-        idx = list(it.getVertices())
-        if len(idx) == 4:
-            q = pts[idx]
-            centre = q.mean(axis=0)
-            dev.append(float(np.linalg.norm(snap(src_fn, centre) - centre)))
+    for idx in faces:
+        if len(idx) != 4:
+            continue
+        q = pts[list(idx)]
+        centre = q.mean(axis=0)
+        dev.append(float(np.linalg.norm(snap(src_fn, centre) - centre)))
 
-            edges = np.linalg.norm(np.diff(np.vstack([q, q[:1]]), axis=0), axis=1)
-            if edges.min() > 1e-9:
-                ratio.append(float(edges.max() / edges.min()))
+        edges = np.linalg.norm(np.diff(np.vstack([q, q[:1]]), axis=0), axis=1)
+        if edges.min() > 1e-9:
+            ratio.append(float(edges.max() / edges.min()))
 
-            nrm = np.cross(q[1] - q[0], q[2] - q[0])
-            ln = np.linalg.norm(nrm)
-            if ln > 1e-12 and edges.mean() > 1e-9:
-                warp.append(float(abs((q[3] - q[0]) @ (nrm / ln)) / edges.mean()))
-        it.next()
+        nrm = np.cross(q[1] - q[0], q[2] - q[0])
+        ln = np.linalg.norm(nrm)
+        if ln > 1e-12 and edges.mean() > 1e-9:
+            warp.append(float(abs((q[3] - q[0]) @ (nrm / ln)) / edges.mean()))
 
-    poles = 0
-    itv = om.MItMeshVertex(_dag(new_mesh))
-    while not itv.isDone():
-        if not itv.onBoundary() and len(itv.getConnectedEdges()) != 4:
-            poles += 1
-        itv.next()
+    poles = _count_poles(faces)
 
     def stat(vals):
         return {"tb": round(float(np.mean(vals)), 4),
@@ -548,13 +567,7 @@ def source_boundary(mesh: str, pts: np.ndarray) -> np.ndarray | None:
     Part tách ra từ scan luôn có viền hở tại chỗ cắt. Mesh kín (chưa tách part)
     thì không có viền nào — trả None, bỏ qua bước conform.
     """
-    edges = []
-    it = om.MItMeshEdge(_dag(mesh))
-    while not it.isDone():
-        if it.onBoundary():
-            edges.append((it.vertexId(0), it.vertexId(1)))
-        it.next()
-    loops = ordered_loops(edges)
+    loops = ordered_loops(boundary_edges(polygons(om.MFnMesh(_dag(mesh)))))
     return pts[max(loops, key=len)] if loops else None
 
 

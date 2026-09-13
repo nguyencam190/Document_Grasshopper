@@ -141,8 +141,14 @@ def _read_colors(fn: om.MFnMesh, color_set: str, count: int) -> np.ndarray:
 # ───────────────────────── một dấu cọ ─────────────────────────
 
 def _ray(x: float, y: float):
+    """Tia bắn từ camera qua điểm (x, y) trên màn hình: (gốc, hướng).
+
+    `viewToWorld` nhận điểm và vector làm THAM SỐ RA chứ không trả về chúng —
+    gọi kiểu `src, vec = viewToWorld(x, y)` sẽ báo "takes exactly 4 arguments".
+    """
     view = omui.M3dView.active3dView()
-    src, vec = view.viewToWorld(int(x), int(y))
+    src, vec = om.MPoint(), om.MVector()
+    view.viewToWorld(int(x), int(y), src, vec)
     return src, vec
 
 

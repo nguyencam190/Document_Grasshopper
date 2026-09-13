@@ -23,7 +23,8 @@ TOOLS = Path(__file__).resolve().parent.parent / "artspec" / "maya_tools"
 
 class _V3:
     def __init__(s, *a):
-        s.x, s.y, s.z = (float(v) for v in a[:3])
+        vals = [float(v) for v in a[:3]] or [0.0, 0.0, 0.0]
+        s.x, s.y, s.z = vals
 
     def __sub__(s, o):
         return _V3(s.x - o.x, s.y - o.y, s.z - o.z)
@@ -44,6 +45,7 @@ class _ColorArray(list):
 
 CALLS: dict[str, list] = {"setVertexColors": [], "polyColorPerVertex": []}
 PTS = np.zeros((1, 3))
+POLYS: list = []
 SURFACE_Z = 0.0
 SCALE = 0.1                      # 1 pixel = 0.1 đơn vị thế giới
 
@@ -57,6 +59,13 @@ class _FnMesh:
 
     def getPoints(s, space):
         return [_V3(*p) for p in PTS]
+
+    @property
+    def numPolygons(s):
+        return len(POLYS)
+
+    def getPolygonVertices(s, i):
+        return POLYS[i]
 
     def getVertexColors(s, cs=None):
         return [(0.0, 0.0, 0.0)] * len(PTS)
@@ -90,8 +99,15 @@ def _install_fake_maya() -> None:
               "MFnDagNode", "MDagPath"):
         setattr(om, n, type(n, (), {}))
 
+    # viewToWorld nhận điểm và vector làm THAM SỐ RA, không trả về chúng — Maya
+    # giả phải theo đúng chữ ký này, không thì bộ kiểm bỏ lọt lỗi gọi sai.
+    def view_to_world(x, y, pt, vec):
+        pt.x, pt.y, pt.z = x * SCALE, y * SCALE, 10.0
+        vec.x, vec.y, vec.z = 0.0, 0.0, -1.0
+        return True
+
     omui.M3dView = types.SimpleNamespace(active3dView=lambda: types.SimpleNamespace(
-        viewToWorld=lambda x, y: (_V3(x * SCALE, y * SCALE, 10.0), _V3(0, 0, -1))))
+        viewToWorld=view_to_world))
 
     cmds.exactWorldBoundingBox = lambda m: [-5, -5, -1, 5, 5, 1]
     cmds.polyColorPerVertex = lambda c, **k: CALLS["polyColorPerVertex"].append((c, k))
@@ -270,6 +286,20 @@ def check_conform() -> None:
     assert not rp.conform(verts, closed, square_loop(-1.0, 3.0, 10))["da_conform"]
 
 
+def check_polygons_and_poles() -> None:
+    """Hai ham doc mesh qua MFnMesh, thay cho ba lop iterator de sai chu ky."""
+    global POLYS
+    POLYS = [(0, 1, 2, 3), (1, 4, 5, 2)]
+    assert rp.polygons(_FnMesh()) == POLYS
+
+    # Lưới 2×2 quad: đỉnh giữa có đúng 4 cạnh, các đỉnh còn lại nằm trên biên.
+    assert rp._count_poles(grid_mesh(3)[1]) == 0
+
+    # Quạt 5 tam giác quanh một đỉnh: đỉnh giữa bậc 5 và không nằm trên biên.
+    fan = [(0, 1 + k, 1 + (k + 1) % 5) for k in range(5)]
+    assert rp._count_poles(fan) == 1
+
+
 def check_loop_helpers() -> None:
     loop = square_loop(-1.0, 3.0, 10)
     cum, total, seg = rp._arc(loop)
@@ -399,7 +429,8 @@ def check_guard() -> None:
 
 def run_checks() -> None:
     for fn in (check_thin, check_split_and_intersect, check_grid_order,
-               check_assemble, check_conform, check_loop_helpers,
+               check_assemble, check_conform, check_polygons_and_poles,
+               check_loop_helpers,
                check_hash, check_dab, check_stroke, check_commit,
                check_components, check_guard):
         fn()

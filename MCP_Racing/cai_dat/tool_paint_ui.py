@@ -133,8 +133,15 @@ B = None                       # con co dang bat, None neu chua bat
 # ----------------------- mot dau co -----------------------
 
 def _ray(x, y):
+    """Tia ban tu camera qua diem (x, y) tren man hinh: (goc, huong).
+
+    viewToWorld nhan diem va vector lam THAM SO RA chu khong tra ve chung -
+    goi kieu `src, vec = viewToWorld(x, y)` se bao "takes exactly 4 arguments".
+    """
     view = omui.M3dView.active3dView()
-    return view.viewToWorld(int(x), int(y))
+    src, vec = om.MPoint(), om.MVector()
+    view.viewToWorld(int(x), int(y), src, vec)
+    return src, vec
 
 
 def _world_radius(x, y, depth, px):
