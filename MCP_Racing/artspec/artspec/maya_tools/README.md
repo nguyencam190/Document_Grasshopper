@@ -3,6 +3,19 @@
 Các module ở đây **không import gì của `artspec`** để bỏ thẳng vào Maya chạy độc
 lập được, giống quy ước của `adapters/maya_runner.py`.
 
+## Cài vào Maya
+
+Mở `cai_dat/cai_maya_tools.py`, copy toàn bộ, dán vào **tab Python** của Script
+Editor trong Maya rồi chạy. Script tự tìm thư mục này, nạp hai module và in
+hướng dẫn dùng. Chạy lại mỗi phiên Maya.
+
+Chạy `tu_kiem()` ngay sau đó để thử cả quy trình trên một mặt cong nhân tạo —
+script tự tạo cảnh thử, tự sơn sẵn hai họ vệt, dựng lưới rồi in báo cáo. Nếu
+hỏng, nó báo rõ hỏng ở bước nào để gửi lại cho Claude sửa. Cảnh thử nằm trong
+nhóm `retopoTuKiem_grp`, xoá bằng `cmds.delete('retopoTuKiem_grp')`.
+
+---
+
 Quy trình gồm hai bước, mỗi bước một module:
 
 | Bước | Module | Ai làm |
@@ -112,11 +125,13 @@ viền hở" và bỏ qua bước này.
 
 ## Giới hạn hiện tại
 
-- **Chưa chạy thử trong Maya thật.** Phần logic thuần của cả hai module đã kiểm
-  bằng Maya giả lập (cọ: lưới băm, falloff, LazyMouse, chèn dấu, undo, xoá màu —
-  dựng lưới: tách nét, sắp thứ tự, tìm giao trên mặt cong có nhiễu, nối quad).
-  Phần gọi API Maya thật (raycast, đọc/ghi vertex color, tạo mesh) cần chạy thử
-  lần đầu.
+- **Chưa chạy thử trong Maya thật.** Phần logic thuần của cả hai module có bộ
+  kiểm chạy bằng Maya giả (`tests/test_maya_tools.py`). Phần gọi API Maya thật
+  (raycast, đọc/ghi vertex color, tạo mesh) phải chạy `tu_kiem()` mới biết.
+- **Nét cọ càng rộng, đường tâm càng kém chính xác** ở hai đầu nét: vùng đầu mút
+  được dựng lại bằng ngoại suy thẳng nên nét cong hụt độ cong trong đoạn đó. Sai
+  số còn lại khoảng 1/5 khoảng cách vertex — muốn chính xác hơn thì vẽ nét mảnh
+  hơn, hoặc vẽ dài quá chỗ cần giao một chút rồi để phần thừa ra ngoài.
 - **Ô lưới thiếu góc bị bỏ qua**, không ép thành quad méo — chỗ hở sửa tay sau.
 - **Dải conform chỉ dày một hàng quad.** Nếu rìa lưới cách viền part quá xa
   (xem "Biên · kéo xa" trong báo cáo), dải đó sẽ dài và méo — vẽ nét sát viền

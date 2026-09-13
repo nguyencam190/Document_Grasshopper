@@ -97,30 +97,100 @@ def split_strokes(pts: np.ndarray, gap: float) -> list[np.ndarray]:
     return out
 
 
-def order_stroke(pts: np.ndarray) -> np.ndarray:
-    """Sắp các điểm của một nét theo thứ tự dọc theo nét.
+def _params_on(poly: np.ndarray, pts: np.ndarray) -> np.ndarray:
+    """Vị trí 0..1 của từng điểm khi chiếu lên đường gấp khúc HỞ `poly`."""
+    a, b = poly[:-1], poly[1:]
+    ab = b - a
+    l2 = np.einsum("ij,ij->i", ab, ab)
+    seg = np.sqrt(l2)
+    cum = np.concatenate([[0.0], np.cumsum(seg)])
+    total = max(float(cum[-1]), 1e-12)
 
-    Bắt đầu từ đầu mút (điểm xa nhất theo trục chính PCA), sau đó liên tục nhảy
-    sang điểm chưa duyệt gần nhất. PCA đơn thuần sẽ sai với nét cong (vd vòm
-    bánh xe) nên chỉ dùng nó để CHỌN ĐIỂM XUẤT PHÁT, còn thứ tự thì đi theo
-    láng giềng gần nhất.
+    d = pts[:, None, :] - a[None, :, :]
+    t = np.clip(np.einsum("ijk,jk->ij", d, ab) / np.maximum(l2, 1e-12), 0.0, 1.0)
+    proj = a[None, :, :] + ab[None, :, :] * t[..., None]
+    k = np.argmin(np.linalg.norm(proj - pts[:, None, :], axis=2), axis=1)
+    rows = np.arange(len(pts))
+    return (cum[k] + t[rows, k] * seg[k]) / total
+
+
+DEGREE = 6      # bậc đa thức khớp đường tâm — đủ tả cung tròn và nét chữ S
+EDGE = 2        # số nhóm ở mỗi đầu nét bị đa thức làm lệch, phải dựng lại
+
+
+def _bin_average(pts: np.ndarray, key: np.ndarray, steps: int) -> np.ndarray:
+    """Gom điểm theo vị trí dọc nét rồi lấy trung bình mỗi nhóm."""
+    lo, hi = float(key.min()), float(key.max())
+    b = np.clip(((key - lo) / max(hi - lo, 1e-12) * steps).astype(int), 0, steps - 1)
+    return np.asarray([pts[b == k].mean(axis=0) for k in range(steps)
+                       if np.any(b == k)])
+
+
+def thin(pts: np.ndarray, spacing: float) -> np.ndarray:
+    """Bóp dải điểm đã sơn về một đường tâm mảnh, theo đúng thứ tự dọc nét.
+
+    Cọ thật sơn ra DẢI rộng nhiều vertex chứ không phải đường một điểm. Nếu chỉ
+    nhảy từ điểm sang điểm gần nhất để sắp thứ tự thì đường đi zigzag ngang qua
+    bề rộng dải — nét dài gấp mấy lần thực tế và điểm giao lệch hẳn.
+
+    Làm hai nhịp:
+
+    1. Khớp một ĐA THỨC BẬC THẤP cho từng toạ độ theo vị trí dọc trục chính PCA.
+       Đa thức này chưa dùng làm kết quả — nó chỉ để biết thứ tự dọc nét, kể cả
+       khi nét cong (trục PCA thẳng thì xếp sai thứ tự ở nét cong).
+    2. Chiếu mọi điểm lên đường vừa khớp, gom các điểm nằm ngang nhau rồi lấy
+       trung bình. Đây mới là đường tâm trả về.
+
+    Vì sao không dùng thẳng đa thức ở nhịp 1: nó PHÌNH RA Ở HAI ĐẦU nét (sai số
+    dồn hết vào biên miền khớp — bỏ hai đầu thì rất khớp). Bình quân theo nhóm
+    không bị vậy, vì nhóm đầu mút đúng bằng trung bình thật của lát cắt ở đó.
+
+    Cũng đã thử lặp bình quân-theo-nhóm nhiều vòng (principal curve) rồi bỏ: nó
+    PHÂN KỲ — chỗ đường tâm phình nhẹ về một bên hút thêm điểm bên đó, bình quân
+    lại kéo phình thêm; thêm bước làm mượt để ghìm thì chỉ cân bằng ở mức dập
+    dềnh cỡ một khoảng cách vertex, không về không.
     """
-    if len(pts) < 3:
+    if len(pts) < 4:
         return pts
+
     centred = pts - pts.mean(axis=0)
     axis = np.linalg.svd(centred, full_matrices=False)[2][0]
-    cur = int(np.argmin(centred @ axis))
+    key = centred @ axis
+    param = (key - key.min()) / max(float(np.ptp(key)), 1e-12)
 
-    left = np.ones(len(pts), dtype=bool)
-    left[cur] = False
-    order = [cur]
-    while left.any():
-        idx = np.flatnonzero(left)
-        nxt = idx[int(np.argmin(np.linalg.norm(pts[idx] - pts[cur], axis=1)))]
-        order.append(int(nxt))
-        left[nxt] = False
-        cur = int(nxt)
-    return pts[order]
+    count = max(int(float(np.ptp(key)) / max(spacing, 1e-9)), 4)
+    degree = max(2, min(DEGREE, len(pts) // 4))
+    fit = [np.polynomial.Polynomial.fit(param, pts[:, k], degree) for k in range(3)]
+    guide = np.stack([f(np.linspace(0.0, 1.0, count)) for f in fit], axis=1)
+
+    centre = _bin_average(pts, _params_on(guide, pts), count)
+    if len(centre) < 2:
+        return guide
+
+    # Vài nhóm ĐẦU MÚT vẫn lệch: chỗ đa thức phình ra ở đầu hút mất các điểm
+    # phía ngoài dải, nên trung bình nhóm đó lệch theo (không phải do thiếu
+    # điểm — số điểm vẫn xấp xỉ các nhóm khác). Bỏ hẳn chúng rồi dựng lại vị trí
+    # bằng ngoại suy thẳng từ phần sạch, giữ nguyên chiều dài nét. Phải bỏ đủ
+    # EDGE nhóm: ngoại suy từ nhóm kề vốn cũng đã lệch thì càng sai thêm.
+    if len(centre) >= 2 * EDGE + 3:
+        core = centre[EDGE:-EDGE]
+        head = _extend(core, EDGE)[::-1]
+        tail = _extend(core[::-1], EDGE)
+        centre = np.vstack([head, core, tail[::-1]])
+    return centre
+
+
+def _extend(core: np.ndarray, count: int) -> np.ndarray:
+    """Dựng `count` điểm nối thêm phía trước `core[0]`, cách đều như trong core.
+
+    Lấy hướng bằng cách khớp đường thẳng qua vài điểm đầu chứ không chỉ hai
+    điểm: vùng lệch ở đầu nét đôi khi lan quá `EDGE` nhóm, khớp nhiều điểm thì
+    một điểm còn lệch không kéo được cả hướng đi sai.
+    """
+    m = min(len(core), 2 * EDGE + 1)
+    t = np.arange(m)
+    step = np.array([np.polyfit(t, core[:m, k], 1)[0] for k in range(3)])
+    return np.array([core[0] - step * j for j in range(1, count + 1)])
 
 
 def resample(pts: np.ndarray, count: int = SAMPLES) -> np.ndarray:
@@ -516,9 +586,10 @@ def build_from_paint(mesh: str, u_color=(1.0, 0.0, 0.0), v_color=(0.0, 1.0, 0.0)
                 "Kiểm tra: đã sơn đúng color set chưa, và màu sơn có khớp tham "
                 "số truyền vào không.")
         painted = pts[idx]
-        gap = _gap(painted)
-        strokes = [resample(order_stroke(painted[g]))
-                   for g in split_strokes(painted, gap) if len(g) >= 4]
+        spacing = _spacing(painted)
+        strokes = [resample(thin(painted[g], spacing))
+                   for g in split_strokes(painted, spacing * GAP_FACTOR)
+                   if len(g) >= 4]
         families[label] = strokes
 
     grid, hits = build_grid(families["u"], families["v"], fn, cross_tol)
@@ -542,12 +613,12 @@ def build_from_paint(mesh: str, u_color=(1.0, 0.0, 0.0), v_color=(0.0, 1.0, 0.0)
             "so_diem_giao": len(hits), "bien": bien, "cham_diem": score(name, fn)}
 
 
-def _gap(painted: np.ndarray) -> float:
-    """Ngưỡng khoảng cách coi hai điểm là cùng một nét."""
+def _spacing(painted: np.ndarray) -> float:
+    """Khoảng cách điển hình giữa hai vertex kề nhau trong vùng đã sơn."""
     sample = painted[:400]
     d = np.linalg.norm(sample[:, None, :] - sample[None, :, :], axis=2)
     np.fill_diagonal(d, np.inf)
-    return float(np.median(d.min(axis=1))) * GAP_FACTOR
+    return float(np.median(d.min(axis=1)))
 
 
 def report_text(rep: dict) -> str:
