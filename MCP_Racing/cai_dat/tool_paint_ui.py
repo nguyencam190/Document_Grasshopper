@@ -53,6 +53,14 @@ UNDO_DEPTH = 30
 # mat khong phan biet duoc, to lai chi ton cong.
 WEIGHT_STEP = 0.02
 
+# Ban kinh co toi thieu, tinh theo khoang cach giua hai vertex canh nhau. Nho
+# hon nguong nay thi co khong trum noi vertex nao va net ra thanh cham roi rac.
+MIN_SPAN = 1.2
+
+# Be rong net khi khoa theo mo hinh, tinh theo % duong cheo bao cua mesh. Dung
+# % chu khong dung don vi tuyet doi de khoi phu thuoc scene to hay nho.
+SIZE_PCT = 2.0
+
 # So lan hien mau moi giay khi keo. Moi lan hien la mot lan Maya nap lai mau
 # CA mesh len card do hoa - chi phi do ti le voi so vertex chu khong voi vung
 # co quet qua, nen mesh nang thi phai ha so nay xuong. 20 la du muot mat.
@@ -118,6 +126,20 @@ class Hash(object):
         return idx[keep], d[keep]
 
 
+def _estimate_spacing(grid, pts, sample=400):
+    """Khoang cach dien hinh giua hai vertex canh nhau, uoc tu mot nhum mau."""
+    rng = np.random.default_rng(0)
+    take = rng.choice(len(pts), size=min(sample, len(pts)), replace=False)
+    found = []
+    for i in take:
+        idx, d = grid.near(pts[i], grid.cell * 2.0)
+        if idx is not None and idx.size > 1:
+            d = d[d > 1e-12]
+            if d.size:
+                found.append(float(d.min()))
+    return float(np.median(found)) if found else grid.cell
+
+
 # ----------------------- trang thai co -----------------------
 
 class Brush(object):
@@ -129,6 +151,8 @@ class Brush(object):
         self.leash = LEASH
         self.smooth = SMOOTH
         self.fps = FPS
+        self.lock_world = False    # khoa be rong net theo mo hinh, khong theo zoom
+        self.size_pct = SIZE_PCT
         self.deep_redraw = False
         self.erase = False
 
@@ -146,7 +170,9 @@ class Brush(object):
 
         bb = cmds.exactWorldBoundingBox(mesh)
         diag = math.sqrt(sum((bb[k + 3] - bb[k]) ** 2 for k in range(3)))
+        self.diag = diag
         self.hash = Hash(self.pts, diag / 60.0)
+        self.vspacing = _estimate_spacing(self.hash, self.pts)
 
         try:
             cols = self.fn.getVertexColors(COLOR_SET)
@@ -164,6 +190,8 @@ class Brush(object):
         self.paint = None          # vi tri son that, sau khi lam muot
         self.recent = []           # vai vi tri gan nhat cua dau day
         self.radius_world = None   # ban kinh co quy ra don vi the gioi
+        self.world_per_px = 1.0    # mot pixel man hinh bang bao nhieu don vi
+        self.clamped = False       # co bi chan o nguong toi thieu chua
         self.dabs = 0
         self.spent = 0.0           # thoi gian tinh toan cua net, giay
         self.rays = 0.0            # trong do, ban tia tim diem cham het bao lau
@@ -183,6 +211,7 @@ class Brush(object):
         self.writes = 0
         self.push_cost = 0.0
         self.last_push = 0.0
+        self.clamped = False
 
 
 B = None                       # con co dang bat, None neu chua bat
@@ -370,6 +399,34 @@ def on_press():
     on_drag(first=True)
 
 
+def _radius_now():
+    """Ban kinh co quy ra don vi the gioi cho luot keo dang chay.
+
+    Hai che do:
+
+    Theo man hinh - vong co luon bang nhau tren man hinh (ZBrush lam vay),
+    nhung vung no phu tren vat the doi theo zoom: zoom xa net beo ra, zoom can
+    net gay di. Tien khi son tu do.
+
+    Theo mo hinh - be rong net co dinh theo vat the, zoom the nao cung the.
+    Dung cai nay khi son huong luoi, vi buoc dung luoi doc vet theo toa do vat
+    the chu khong theo man hinh.
+
+    Duoi cung chan mot nguong: co khong the nho hon khoang cach giua hai vertex
+    canh nhau, vi khi do co dab khong trum len vertex nao ca va net ra thanh
+    cac cham roi rac. Khong the ve net manh hon mat do luoi.
+    """
+    if B.lock_world:
+        r = B.size_pct * 0.01 * B.diag
+    else:
+        r = B.radius_px * B.world_per_px
+    floor = B.vspacing * MIN_SPAN
+    if r < floor:
+        B.clamped = True
+        return floor
+    return r
+
+
 def _steady(raw):
     """Vi tri son sau khi on dinh tay, theo dung cach ZBrush lam.
 
@@ -411,19 +468,20 @@ def on_drag(first=False):
         raw = cmds.draggerContext(CTX, query=True, dragPoint=True)
         gx, gy = _steady([float(raw[0]), float(raw[1])])
 
-    # Ban kinh the gioi tinh MOT lan cho ca luot keo: no chi doi khi camera
-    # hoac do sau doi, ma trong mot luot keo thi gan nhu khong.
+    # Ti le doi pixel <-> don vi the gioi tinh MOT lan cho ca luot keo: no chi
+    # doi khi camera hoac do sau doi, ma trong mot luot keo thi gan nhu khong.
     if B.radius_world is None:
         centre, depth = _hit(gx, gy)
         if centre is not None:
-            B.radius_world = _world_radius(gx, gy, depth, B.radius_px)
+            B.world_per_px = _world_radius(gx, gy, depth, 1.0)
+            B.radius_world = _radius_now()
     if B.radius_world is None:
         return
 
     # Chen them dau giua hai vi tri neu tay re nhanh, tranh net dut thanh cham.
     # Dau cuoi luon dat tai dich: re cham thi quang duong ngan hon mot buoc
     # chen, khong co dau nao o giua, thieu no la net ve mat han.
-    step = max(B.radius_px * SPACING, 1.0)
+    step = max(SPACING * B.radius_world / max(B.world_per_px, 1e-12), 1.0)
     gap = math.sqrt((gx - B.paint[0]) ** 2 + (gy - B.paint[1]) ** 2)
     for k in range(1, int(gap / step) + 1):
         f = (k * step) / max(gap, 1e-9)
@@ -460,11 +518,17 @@ def on_release():
         del B.history[:-UNDO_DEPTH]
     B.saved.fill(False)
     B.weight.fill(0.0)
-    _say("Net vua ve: %d vertex | %d dau co | tinh %.0f ms (ban tia %.0f) | "
-         "hien mau %.0f ms / %d lan = %.0f ms moi lan"
-         % (idx.size, B.dabs, B.spent * 1000.0, B.rays * 1000.0,
+    canh = ""
+    if B.clamped:
+        canh = (" CO DA CHAM DAY: luoi chi day toi %.4g don vi nen khong the ve "
+                "net manh hon. Muon net manh hon thi phai chia nho luoi."
+                % B.vspacing)
+    _say("Net vua ve: %d vertex | %d dau co | be rong net %.4g don vi | "
+         "tinh %.0f ms (ban tia %.0f) | hien mau %.0f ms / %d lan = %.0f ms moi lan.%s"
+         % (idx.size, B.dabs, (B.radius_world or 0.0) * 2.0,
+            B.spent * 1000.0, B.rays * 1000.0,
             B.pushed * 1000.0, B.writes,
-            B.pushed * 1000.0 / max(B.writes, 1)))
+            B.pushed * 1000.0 / max(B.writes, 1), canh))
 
 
 def undo_stroke():
@@ -506,6 +570,8 @@ def _sync():
     B.leash = cmds.floatSliderGrp(UI["leash"], query=True, value=True)
     B.smooth = cmds.intSliderGrp(UI["smooth"], query=True, value=True)
     B.fps = cmds.floatSliderGrp(UI["fps"], query=True, value=True)
+    B.lock_world = bool(cmds.checkBox(UI["lock"], query=True, value=True))
+    B.size_pct = cmds.floatSliderGrp(UI["pct"], query=True, value=True)
     B.deep_redraw = bool(cmds.checkBox(UI["deep"], query=True, value=True))
     B.radius_world = None
 
@@ -665,6 +731,13 @@ def show_ui():
         fieldMinValue=1.0, fieldMaxValue=500.0, value=40.0, precision=0,
         columnWidth3=(95, 55, 190), changeCommand=lambda *a: _sync(),
         dragCommand=lambda *a: _sync())
+    UI["lock"] = cmds.checkBox(
+        label="Giu nguyen be rong net khi zoom (theo mo hinh)", value=False,
+        changeCommand=lambda *a: _sync())
+    UI["pct"] = cmds.floatSliderGrp(
+        label="Be rong (% mo hinh)", field=True, minValue=0.1, maxValue=15.0,
+        value=SIZE_PCT, precision=2, columnWidth3=(95, 55, 190),
+        changeCommand=lambda *a: _sync(), dragCommand=lambda *a: _sync())
     UI["opacity"] = cmds.floatSliderGrp(
         label="Dam nhat", field=True, minValue=0.05, maxValue=1.0,
         value=1.0, precision=2, columnWidth3=(95, 55, 190),
@@ -684,8 +757,8 @@ def show_ui():
     UI["deep"] = cmds.checkBox(
         label="Ve lai ky (chi bat neu mau khong chiu hien khi keo)", value=False,
         changeCommand=lambda *a: _sync())
-    cmds.text(label="   Mesh cang nang thi ha 'Hien mau /giay' xuong cho do ri.",
-              align="left")
+    cmds.text(label="   Mesh nang thi ha 'Hien mau /giay'. Khoa be rong theo mo "
+                    "hinh khi son huong luoi.", align="left")
     cmds.setParent("..")
     cmds.setParent("..")
 
