@@ -245,32 +245,182 @@ def build_grid(us: list[np.ndarray], vs: list[np.ndarray], fn: om.MFnMesh,
     return grid, hits
 
 
-def build_quads(grid: dict[tuple[int, int], np.ndarray], name: str) -> str:
-    """Nối các điểm lưới thành mặt quad và tạo mesh mới trong scene.
+def assemble(grid: dict[tuple[int, int], np.ndarray]):
+    """Nối các điểm lưới thành mặt quad — trả (danh sách đỉnh, danh sách mặt).
 
     Ô nào thiếu góc (hoạ sĩ vẽ nét ngắn không cắt hết) thì bỏ qua ô đó — thà
     hở một ô để sửa tay còn hơn ép ra quad méo.
+
+    Chưa tạo mesh ở đây để bước conform biên còn kịp thêm dải quad vào, rồi mới
+    tạo một lần — tránh phải khâu hai mesh rời lại với nhau.
     """
     ids: dict[tuple[int, int], int] = {}
-    verts = om.MPointArray()
+    verts: list[np.ndarray] = []
     for key, pos in sorted(grid.items()):
-        ids[key] = len(ids)
-        verts.append(om.MPoint(*pos))
+        ids[key] = len(verts)
+        verts.append(pos)
 
-    counts, connects = [], []
+    faces: list[tuple[int, ...]] = []
     for (r, c) in sorted(grid):
         corners = [(r, c), (r + 1, c), (r + 1, c + 1), (r, c + 1)]
         if all(k in ids for k in corners):
-            counts.append(4)
-            connects.extend(ids[k] for k in corners)
+            faces.append(tuple(ids[k] for k in corners))
 
-    if not counts:
+    if not faces:
         raise RuntimeError(
             "Không ô lưới nào đủ 4 góc. Thường là do các nét vẽ chưa cắt nhau "
             "thành lưới — cần vẽ đủ hai họ vệt cắt ngang nhau.")
+    return verts, faces
 
-    obj = om.MFnMesh().create(verts, counts, connects)
+
+def create_mesh(verts: list[np.ndarray], faces: list[tuple[int, ...]],
+                name: str) -> str:
+    pts = om.MPointArray()
+    for p in verts:
+        pts.append(om.MPoint(float(p[0]), float(p[1]), float(p[2])))
+    obj = om.MFnMesh().create(pts, [len(f) for f in faces],
+                              [i for f in faces for i in f])
     return cmds.rename(om.MFnDagNode(obj).name(), name)
+
+
+# ───────────────────────── conform vào biên part ─────────────────────────
+
+def boundary_edges(faces) -> list[tuple[int, int]]:
+    """Cạnh chỉ thuộc đúng một mặt — tức cạnh nằm ở rìa lưới."""
+    count: dict[tuple[int, int], int] = {}
+    for f in faces:
+        for k in range(len(f)):
+            e = (f[k], f[(k + 1) % len(f)])
+            key = (min(e), max(e))
+            count[key] = count.get(key, 0) + 1
+    return [e for e, c in count.items() if c == 1]
+
+
+def ordered_loops(edges) -> list[list[int]]:
+    """Xâu các cạnh rời thành vòng có thứ tự đi vòng quanh."""
+    adj: dict[int, list[int]] = {}
+    for a, b in edges:
+        adj.setdefault(a, []).append(b)
+        adj.setdefault(b, []).append(a)
+
+    used: set[int] = set()
+    loops: list[list[int]] = []
+    for seed in adj:
+        if seed in used:
+            continue
+        loop, cur, prev = [seed], seed, None
+        used.add(seed)
+        while True:
+            nxt = next((n for n in adj[cur] if n != prev and n not in used), None)
+            if nxt is None:
+                break
+            loop.append(nxt)
+            used.add(nxt)
+            prev, cur = cur, nxt
+        loops.append(loop)
+    return loops
+
+
+def _arc(loop: np.ndarray):
+    """Chiều dài cộng dồn tới đầu mỗi đoạn của vòng kín, và tổng chu vi."""
+    seg = np.linalg.norm(np.roll(loop, -1, axis=0) - loop, axis=1)
+    return np.concatenate([[0.0], np.cumsum(seg)[:-1]]), float(seg.sum()), seg
+
+
+def _closest(loop, cum, total, seg, p):
+    """Điểm gần `p` nhất trên vòng kín, kèm vị trí 0..1 dọc theo vòng."""
+    a = loop
+    ab = np.roll(loop, -1, axis=0) - a
+    l2 = np.einsum("ij,ij->i", ab, ab)
+    t = np.clip(np.einsum("ij,ij->i", p - a, ab) / np.maximum(l2, 1e-12), 0.0, 1.0)
+    proj = a + ab * t[:, None]
+    k = int(np.argmin(np.linalg.norm(proj - p, axis=1)))
+    return proj[k], (cum[k] + t[k] * seg[k]) / total, float(
+        np.linalg.norm(proj[k] - p))
+
+
+def _at(loop, cum, total, seg, param: float) -> np.ndarray:
+    """Toạ độ tại vị trí `param` (0..1) dọc theo vòng kín."""
+    d = (param % 1.0) * total
+    k = int(np.searchsorted(cum, d, side="right") - 1)
+    k = max(0, min(k, len(loop) - 1))
+    nxt = loop[(k + 1) % len(loop)]
+    return loop[k] + (nxt - loop[k]) * ((d - cum[k]) / max(seg[k], 1e-12))
+
+
+def _unwrap(params: np.ndarray) -> np.ndarray:
+    """Bỏ chỗ nhảy 0.99 → 0.01 để dãy vị trí liên tục, so sánh được."""
+    out = [float(params[0])]
+    for p in params[1:]:
+        step = float(p) - (out[-1] % 1.0)
+        out.append(out[-1] + step - round(step))
+    return np.array(out)
+
+
+def _increasing(u: np.ndarray, min_gap: float) -> np.ndarray:
+    """Ép dãy tăng dần hẳn để dải quad không tự cắt chéo nhau.
+
+    Hai đỉnh biên cạnh nhau có thể cùng chiếu về một chỗ trên viền (hoặc chiếu
+    lộn thứ tự) — cứ để nguyên thì dải quad nối ra viền bị xoắn. Đẩy nhẹ cho
+    thứ tự đúng lại, đổi lấy việc vài điểm trượt đi một chút trên viền.
+    """
+    out = u.astype(float).copy()
+    for i in range(1, len(out)):
+        out[i] = max(out[i], out[i - 1] + min_gap)
+    span = out[-1] - out[0]
+    if span > 0.999:                       # đã đẩy quá một vòng, co lại
+        out = out[0] + (out - out[0]) * (0.999 / span)
+    return out
+
+
+def conform(verts: list[np.ndarray], faces: list[tuple[int, ...]],
+            src_loop: np.ndarray) -> dict:
+    """Nối dải quad từ vòng biên của lưới ra đúng đường viền của part.
+
+    Lưới dựng từ điểm giao luôn dừng ở nét vẽ ngoài cùng, còn hở một vành so
+    với viền part. Thay vì kéo giãn hàng ngoài cùng ra cho khít (làm méo cả
+    vùng rìa), ta giữ nguyên lưới và thêm MỘT dải quad nối ra viền — đúng cách
+    hoạ sĩ vá biên bằng tay.
+
+    Đỉnh mới nằm chính xác trên viền part nên hai part cạnh nhau khâu lại được
+    bằng cách merge đỉnh trùng vị trí.
+    """
+    loops = ordered_loops(boundary_edges(faces))
+    if not loops:
+        return {"da_conform": False, "ly_do": "lưới không có biên hở"}
+    ring = max(loops, key=len)
+
+    cum, total, seg = _arc(src_loop)
+    if total <= 0:
+        return {"da_conform": False, "ly_do": "viền part rỗng"}
+
+    def project(order):
+        got = [_closest(src_loop, cum, total, seg, verts[i]) for i in order]
+        return np.array([g[1] for g in got]), np.array([g[2] for g in got])
+
+    params, dists = project(ring)
+    if _unwrap(params)[-1] < _unwrap(params)[0]:
+        ring = ring[::-1]                  # lưới đi ngược chiều viền
+        params, dists = project(ring)
+
+    u = _increasing(_unwrap(params), min_gap=0.2 / max(len(ring), 1))
+    new_pts = [_at(src_loop, cum, total, seg, p) for p in u]
+
+    base = len(verts)
+    verts.extend(new_pts)
+
+    # Giữ chiều quay khớp mặt bên trong, không thì dải mới bị lật mặt.
+    directed = {(f[k], f[(k + 1) % len(f)]) for f in faces for k in range(len(f))}
+    n = len(ring)
+    for i in range(n):
+        j = (i + 1) % n
+        a, b = ring[i], ring[j]
+        faces.append((b, a, base + i, base + j) if (a, b) in directed
+                     else (a, b, base + j, base + i))
+
+    return {"da_conform": True, "so_dinh_bien": n,
+            "khoang_cach_tb": round(float(np.mean(dists)), 4),
+            "khoang_cach_max": round(float(np.max(dists)), 4)}
 
 
 # ───────────────────────── chấm điểm lưới ─────────────────────────
@@ -322,13 +472,32 @@ def score(new_mesh: str, src_fn: om.MFnMesh) -> dict:
 
 # ───────────────────────── điểm vào chính ─────────────────────────
 
+def source_boundary(mesh: str, pts: np.ndarray) -> np.ndarray | None:
+    """Đường viền hở của part (vòng dài nhất), theo thứ tự đi vòng quanh.
+
+    Part tách ra từ scan luôn có viền hở tại chỗ cắt. Mesh kín (chưa tách part)
+    thì không có viền nào — trả None, bỏ qua bước conform.
+    """
+    edges = []
+    it = om.MItMeshEdge(_dag(mesh))
+    while not it.isDone():
+        if it.onBoundary():
+            edges.append((it.vertexId(0), it.vertexId(1)))
+        it.next()
+    loops = ordered_loops(edges)
+    return pts[max(loops, key=len)] if loops else None
+
+
 def build_from_paint(mesh: str, u_color=(1.0, 0.0, 0.0), v_color=(0.0, 1.0, 0.0),
                      color_set: str | None = None, color_tol: float = 0.25,
-                     out_name: str = "retopo_grid") -> dict:
+                     out_name: str = "retopo_grid", conform_border: bool = True) -> dict:
     """Đọc vệt màu trên `mesh` và dựng lưới quad bám theo hướng đã vẽ.
 
     `u_color` / `v_color` là màu của hai họ vệt (dọc và ngang). `color_tol` là
     sai số so màu — nới rộng nếu hoạ sĩ vẽ với brush mềm làm màu bị pha.
+
+    `conform_border` nối thêm một dải quad từ rìa lưới ra đúng đường viền part,
+    để hai part cạnh nhau khâu lại được. Tắt đi nếu chỉ muốn phần lưới bên trong.
     """
     dag = _dag(mesh)
     fn = om.MFnMesh(dag)
@@ -359,10 +528,18 @@ def build_from_paint(mesh: str, u_color=(1.0, 0.0, 0.0), v_color=(0.0, 1.0, 0.0)
             f"{len(families['v'])} nét ngang). Lưới quad cần hai họ vệt CẮT "
             "NGANG nhau, không phải các nét song song cùng hướng.")
 
-    name = build_quads(grid, out_name)
+    verts, faces = assemble(grid)
+
+    bien = {"da_conform": False, "ly_do": "đã tắt"}
+    if conform_border:
+        loop = source_boundary(mesh, pts)
+        bien = (conform(verts, faces, loop) if loop is not None
+                else {"da_conform": False, "ly_do": "part không có viền hở"})
+
+    name = create_mesh(verts, faces, out_name)
     return {"mesh": name,
             "so_net_doc": len(families["u"]), "so_net_ngang": len(families["v"]),
-            "so_diem_giao": len(hits), "cham_diem": score(name, fn)}
+            "so_diem_giao": len(hits), "bien": bien, "cham_diem": score(name, fn)}
 
 
 def _gap(painted: np.ndarray) -> float:
@@ -380,6 +557,12 @@ def report_text(rep: dict) -> str:
         f"  {rep['so_net_doc']} nét dọc × {rep['so_net_ngang']} nét ngang "
         f"→ {rep['so_diem_giao']} điểm giao → {s['so_quad']} quad",
     ]
+    b = rep["bien"]
+    lines.append(
+        f"  Biên: nối {b['so_dinh_bien']} đỉnh ra viền part "
+        f"(kéo xa tb {b['khoang_cach_tb']} · max {b['khoang_cach_max']})"
+        if b["da_conform"] else f"  Biên: chưa conform — {b['ly_do']}")
+
     for key, label in (("lech_so_voi_scan", "Lệch so với scan"),
                        ("ty_le_canh", "Tỉ lệ cạnh"), ("do_venh", "Độ vênh")):
         if s[key]:

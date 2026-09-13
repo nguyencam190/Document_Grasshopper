@@ -76,15 +76,26 @@ bao_cao = retopo_paint.build_from_paint(
     v_color=(0, 1, 0),        # lục = họ vệt ngang
     color_tol=0.25,           # nới rộng nếu brush mềm làm màu bị pha
     out_name="hood_retopo",
+    conform_border=True,      # nối thêm dải quad từ rìa lưới ra viền part
 )
 print(retopo_paint.report_text(bao_cao))
 ```
+
+Lưới dựng từ điểm giao luôn dừng ở nét vẽ ngoài cùng, còn hở một vành so với
+viền part. `conform_border` **không kéo giãn hàng ngoài cùng ra cho khít** (làm
+méo cả vùng rìa) mà giữ nguyên lưới rồi **thêm một dải quad nối ra viền** —
+đúng cách hoạ sĩ vá biên bằng tay. Đỉnh mới nằm chính xác trên viền part nên hai
+part cạnh nhau khâu lại được bằng cách merge đỉnh trùng vị trí.
+
+Chỉ chạy được với part đã tách rời (có viền hở). Mesh kín thì báo "part không có
+viền hở" và bỏ qua bước này.
 
 ### Bước 3 — Đọc báo cáo chấm điểm
 
 ```
 Đã dựng: hood_retopo
   4 nét dọc × 3 nét ngang → 12 điểm giao → 6 quad
+  Biên: nối 8 đỉnh ra viền part (kéo xa tb 0.31 · max 0.44)
   Lệch so với scan: tb 0.0268 · max 0.0465
   Tỉ lệ cạnh: tb 1.12 · max 1.84
   Độ vênh: tb 0.004 · max 0.02
@@ -93,6 +104,7 @@ print(retopo_paint.report_text(bao_cao))
 
 | Chỉ số | Ý nghĩa | Xử lý khi số xấu |
 |---|---|---|
+| Biên · kéo xa | Rìa lưới cách viền part bao xa — dải quad nối ra phải kéo chừng đó | Vẽ nét sát viền part hơn để dải biên khỏi bị kéo dài |
 | Lệch so với scan | Tâm quad cách mặt scan bao xa — quad phẳng cắt góc ở chỗ cong | Vẽ thêm nét ở vùng cong để chia nhỏ ô |
 | Tỉ lệ cạnh | Cạnh dài / cạnh ngắn, càng gần 1 càng vuông vắn | Vẽ nét đều tay hơn, tránh chỗ dày chỗ thưa |
 | Độ vênh | Góc thứ 4 lệch khỏi mặt phẳng 3 góc kia | Như trên — ô nhỏ lại thì hết vênh |
@@ -106,8 +118,9 @@ print(retopo_paint.report_text(bao_cao))
   Phần gọi API Maya thật (raycast, đọc/ghi vertex color, tạo mesh) cần chạy thử
   lần đầu.
 - **Ô lưới thiếu góc bị bỏ qua**, không ép thành quad méo — chỗ hở sửa tay sau.
-- **Chưa conform vào biên part**: hàng/cột ngoài cùng dừng ở điểm giao cuối, chưa
-  tự kéo khít vào đường viền part.
+- **Dải conform chỉ dày một hàng quad.** Nếu rìa lưới cách viền part quá xa
+  (xem "Biên · kéo xa" trong báo cáo), dải đó sẽ dài và méo — vẽ nét sát viền
+  hơn thay vì trông chờ dải tự chia nhỏ.
 - **Cọ chưa có vòng tròn xem trước** quanh con trỏ như ZBrush — hiện phải ước
   lượng độ lớn cọ qua nét vừa vẽ.
 - Scan nhiều triệu điểm nên **giảm mật độ trước** (`polyReduce`/`polyRemesh`) rồi
