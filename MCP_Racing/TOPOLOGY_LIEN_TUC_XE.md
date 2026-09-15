@@ -4,6 +4,8 @@
 > chảy xuyên qua ranh giới giữa các mảnh vỏ (part) kề nhau.
 > **KHÔNG BAO GIỜ** dựng lưới riêng lẻ cho từng mảnh rồi đặt cạnh nhau.
 
+Bản tiếng Anh của tài liệu này: [`VEHICLE_TOPOLOGY_CONTINUITY.md`](VEHICLE_TOPOLOGY_CONTINUITY.md)
+
 Áp dụng cho: model vỏ ngoài xe (`vehicle_exterior`) và cho mọi ảnh overlay topology sinh ra để
 minh hoạ. Đây là luật cứng — không phải gợi ý.
 
